@@ -1,0 +1,10 @@
+/* Content layout for the kit's supplied terminal landing design. */
+.wrap{align-items:flex-start;padding-top:2vh}
+.term-panel-title h1{font-weight:400;font-synthesis:none}
+.handoff-step{font:400 13.5px/1.7 'IBM Plex Mono',monospace;color:#15160A;padding:22px 0;border-top:1px solid rgba(21,22,10,.25)}
+.handoff-step h2{font:400 30px/1.2 'VT323',monospace;margin-bottom:12px}
+.handoff-step ol{padding-left:24px}.handoff-step li{margin:9px 0}.handoff-step p{color:#4B4F1C;margin-top:12px}
+strong{font-weight:600}
+code{font:inherit;background:rgba(21,22,10,.07);padding:2px 4px;overflow-wrap:anywhere}
+footer{border-top:1px solid rgba(21,22,10,.25);margin-top:24px;padding-top:18px;font:11px/1.7 'IBM Plex Mono',monospace;color:#5C6122}footer p{margin-top:12px}
+@media(max-width:520px){.term-body{padding:20px}.term-panel-title{padding:20px}.handoff-step{font-size:13.5px}.term-project-link{font-size:14px}}

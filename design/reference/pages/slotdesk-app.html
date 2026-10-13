@@ -1,0 +1,1608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Slot Desk</title>
+<style>
+
+:root{
+  --bg:#f7f6f3; --sunk:#eeece7; --sunk-2:#e5e2db; --card:#fffefc;
+  --ink:#1b1a17; --ink-2:#57544d; --ink-3:#8b877e;
+  --line:#e4e1da; --line-2:#d2cec5;
+  --acc:#1b1a17; --acc-ink:#fbfaf8; --acc-soft:#e8e5de;
+  --good:#2f6b4f; --good-bg:#e2efe7; --good-ln:#a9cdb9;
+  --warn:#8a5a16; --warn-bg:#f6ead7; --warn-ln:#dfbe84;
+  --stop:#a03b34; --stop-bg:#f7e5e2; --stop-ln:#e0aaa3;
+  --r:10px; --r-lg:16px;
+  --e1:0 1px 1px rgba(27,26,23,.04);
+  --e2:0 1px 2px rgba(27,26,23,.06), 0 8px 24px -14px rgba(27,26,23,.24);
+  --e3:0 2px 6px rgba(27,26,23,.08), 0 28px 60px -28px rgba(27,26,23,.4);
+  --f:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --fn:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#131211; --sunk:#1d1c19; --sunk-2:#272521; --card:#191816;
+    --ink:#f0eee9; --ink-2:#a8a49b; --ink-3:#7a766e;
+    --line:#2a2824; --line-2:#3d3a34;
+    --acc:#f0eee9; --acc-ink:#131211; --acc-soft:#2a2824;
+    --good:#7cc39d; --good-bg:#17281f; --good-ln:#39543f;
+    --warn:#e0b06a; --warn-bg:#2c2416; --warn-ln:#5c4a2a;
+    --stop:#e79b91; --stop-bg:#2e1d1a; --stop-ln:#5e3a34;
+    --e1:0 1px 1px rgba(0,0,0,.3);
+    --e2:0 1px 2px rgba(0,0,0,.5), 0 8px 24px -14px rgba(0,0,0,.7);
+    --e3:0 2px 6px rgba(0,0,0,.55), 0 28px 60px -28px rgba(0,0,0,.9);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#131211; --sunk:#1d1c19; --sunk-2:#272521; --card:#191816;
+  --ink:#f0eee9; --ink-2:#a8a49b; --ink-3:#7a766e;
+  --line:#2a2824; --line-2:#3d3a34;
+  --acc:#f0eee9; --acc-ink:#131211; --acc-soft:#2a2824;
+  --good:#7cc39d; --good-bg:#17281f; --good-ln:#39543f;
+  --warn:#e0b06a; --warn-bg:#2c2416; --warn-ln:#5c4a2a;
+  --stop:#e79b91; --stop-bg:#2e1d1a; --stop-ln:#5e3a34;
+  --e1:0 1px 1px rgba(0,0,0,.3);
+  --e2:0 1px 2px rgba(0,0,0,.5), 0 8px 24px -14px rgba(0,0,0,.7);
+  --e3:0 2px 6px rgba(0,0,0,.55), 0 28px 60px -28px rgba(0,0,0,.9);
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f);
+  font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;
+  font-feature-settings:"cv11","ss01";text-rendering:optimizeLegibility}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;font-family:var(--f)}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px;border-radius:5px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+h1,h2,h3{margin:0;text-wrap:balance;letter-spacing:-.022em;font-weight:640}
+
+/* ---------- header ---------- */
+header.bar{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 88%,transparent);
+  backdrop-filter:saturate(180%) blur(14px);-webkit-backdrop-filter:saturate(180%) blur(14px);
+  border-bottom:1px solid var(--line);padding:13px 26px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:9px;font-weight:640;font-size:15.5px;letter-spacing:-.02em}
+.logo .mk{width:22px;height:22px;border-radius:6px;background:var(--acc);color:var(--acc-ink);
+  display:grid;place-items:center;font-size:10.5px;font-weight:700;letter-spacing:0;flex:none}
+.logo .ver{font-family:var(--fn);font-size:10.5px;font-weight:400;color:var(--ink-3);
+  letter-spacing:.04em;margin-left:2px}
+.bar .sp{flex:1}
+.pill{display:inline-flex;align-items:center;gap:7px;padding:0;font-size:13px;font-weight:500;
+  white-space:nowrap;color:var(--ink-2)}
+.pill .dot{width:6px;height:6px;border-radius:50%;flex:none}
+.pill.ok .dot{background:var(--good)} .pill.hold .dot{background:var(--warn)}
+.ghost{background:transparent;border:0;color:var(--ink-2);padding:5px 10px;border-radius:var(--r);
+  font-size:13.5px;font-weight:500}
+.ghost:hover{background:var(--sunk);color:var(--ink)}
+
+.demo{background:var(--sunk);color:var(--ink-2);padding:9px 26px;font-size:13px;
+  display:flex;gap:12px;align-items:center;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+.demo button{background:var(--card);border:1px solid var(--line-2);color:var(--ink);
+  padding:3px 11px;border-radius:999px;font-size:12.5px;font-weight:500}
+.demo button:hover{border-color:var(--ink-3)}
+
+/* ---------- flow ---------- */
+main{max-width:940px;margin:0 auto;padding:14px 26px 110px;display:flex;flex-direction:column}
+.step{padding:34px 0;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:16px}
+.step:first-of-type{border-top:0;padding-top:26px}
+.step>.num{font-family:var(--fn);font-size:11px;color:var(--ink-3);letter-spacing:.1em;
+  display:block;margin-bottom:-8px}
+.step>.body{display:flex;flex-direction:column;gap:14px;min-width:0}
+.step h2{font-size:26px;line-height:1.2}
+.step .sub{font-size:14.5px;color:var(--ink-2);margin:-8px 0 2px;max-width:62ch}
+
+/* ---------- who ---------- */
+.execs{display:flex;gap:8px;flex-wrap:wrap}
+.execcard{background:var(--sunk);border:1px solid transparent;border-radius:var(--r-lg);
+  padding:12px 16px;text-align:left;display:flex;flex-direction:column;gap:1px;min-width:168px}
+.execcard:hover{background:var(--sunk-2)}
+.execcard[aria-pressed="true"]{background:var(--acc);border-color:var(--acc)}
+.execcard .nm{font-weight:640;font-size:15px;letter-spacing:-.015em}
+.execcard .mt{font-size:12.5px;color:var(--ink-3)}
+.execcard[aria-pressed="true"] .nm{color:var(--acc-ink)}
+.execcard[aria-pressed="true"] .mt{color:var(--acc-ink);opacity:.62}
+.addsm{background:transparent;border:1px dashed var(--line-2);color:var(--ink-3);
+  border-radius:var(--r-lg);padding:12px 16px;font-size:14px;min-width:62px}
+.addsm:hover{border-color:var(--ink-3);color:var(--ink-2)}
+
+.chips{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+.chip{display:inline-flex;align-items:center;gap:8px;background:transparent;border:1px solid var(--line-2);
+  border-radius:999px;padding:5px 6px 5px 13px;font-size:13.5px}
+.chip b{font-weight:600}
+.chip .loc{color:var(--ink-3);font-size:12.5px}
+.chip .now{font-family:var(--fn);font-size:11.5px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.chip .x{background:transparent;border:0;color:var(--ink-3);width:19px;height:19px;border-radius:50%;
+  display:grid;place-items:center;font-size:14px;line-height:1;padding:0}
+.chip .x:hover{background:var(--stop-bg);color:var(--stop)}
+.chipadd{border-style:dashed;color:var(--ink-3);padding:5px 13px}
+.chipadd:hover{border-color:var(--ink-3);color:var(--ink-2)}
+
+/* ---------- picker ---------- */
+.entry{display:flex;flex-direction:column;gap:20px}
+.lenrow{display:flex;gap:10px;align-items:center;font-size:13.5px;color:var(--ink-3);flex-wrap:wrap}
+.lens{display:inline-flex;background:var(--sunk);border-radius:999px;padding:3px;gap:2px}
+.lens button{background:transparent;border:0;border-radius:999px;padding:5px 14px;font-size:13px;
+  color:var(--ink-2);font-variant-numeric:tabular-nums}
+.lens button:hover{color:var(--ink)}
+.lens button[aria-pressed="true"]{background:var(--card);color:var(--ink);font-weight:600;box-shadow:var(--e1)}
+.pick{display:grid;grid-template-columns:280px minmax(0,1fr);gap:34px}
+@media (max-width:760px){.pick{grid-template-columns:1fr;gap:26px}}
+.cal{display:flex;flex-direction:column;gap:11px}
+.mhead{display:flex;align-items:center;justify-content:space-between;gap:6px}
+.mhead span{font-weight:640;font-size:15.5px;letter-spacing:-.015em}
+.mnav{background:transparent;border:0;border-radius:8px;width:28px;height:28px;font-size:18px;
+  line-height:1;color:var(--ink-3);display:grid;place-items:center}
+.mnav:hover{background:var(--sunk);color:var(--ink)}
+.dow,.dgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.dow span{text-align:center;font-size:11px;font-weight:500;color:var(--ink-3);padding-bottom:4px}
+.dgrid button{aspect-ratio:1;border:0;background:transparent;border-radius:10px;font-size:14px;
+  color:var(--ink);position:relative;display:grid;place-items:center;padding:0;
+  font-variant-numeric:tabular-nums;transition:background .12s}
+.dgrid button:hover:not(:disabled){background:var(--sunk-2)}
+.dgrid button.pad{visibility:hidden}
+.dgrid button:disabled{color:var(--ink-3);opacity:.3;cursor:not-allowed}
+.dgrid button.offday{color:var(--ink-3)}
+.dgrid button.today{font-weight:700;box-shadow:inset 0 0 0 1px var(--line-2)}
+.dgrid button.on{background:var(--acc);color:var(--acc-ink);font-weight:640;box-shadow:none}
+.dgrid button .mark{position:absolute;bottom:5px;left:50%;transform:translateX(-50%);display:flex;gap:2px}
+.dgrid button .mark i{width:3px;height:3px;border-radius:50%;background:var(--ink-3);display:block}
+.dgrid button.on .mark i{background:var(--acc-ink);opacity:.75}
+.dgrid button .fly{position:absolute;top:3px;right:4px;font-size:8px;color:var(--ink-3);line-height:1}
+.dgrid button.on .fly{color:var(--acc-ink);opacity:.8}
+.ckey,.tkey{display:flex;flex-wrap:wrap;gap:7px 14px;font-size:11.5px;color:var(--ink-3);align-items:center}
+.ckey span,.tkey span{display:flex;align-items:center;gap:5px}
+.cd{width:10px;height:10px;border-radius:3px;display:inline-block;flex:none}
+.cd.sel{background:var(--acc)} .cd.offd{background:var(--sunk-2)}
+.cd.trav{background:transparent;box-shadow:inset 0 0 0 1px var(--line-2)}
+.sq{width:10px;height:10px;border-radius:3px;display:inline-block;flex:none}
+.sq.good{background:var(--good-bg);box-shadow:inset 0 0 0 1px var(--good-ln)}
+.sq.warn{background:var(--warn-bg);box-shadow:inset 0 0 0 1px var(--warn-ln)}
+.sq.stop{background:var(--stop-bg);box-shadow:inset 0 0 0 1px var(--stop-ln)}
+.sq.off{background:var(--sunk-2)}
+
+.tcol{display:flex;flex-direction:column;gap:12px;min-width:0}
+.thead{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.thead span{font-weight:640;font-size:17px;letter-spacing:-.02em;flex:1;min-width:0}
+.tmore{background:transparent;border:0;color:var(--ink-3);font-size:12.5px;padding:0;text-decoration:underline;
+  text-underline-offset:3px;text-decoration-color:var(--line-2)}
+.tmore:hover{color:var(--ink)}
+.times{display:flex;flex-wrap:wrap;gap:7px;align-content:flex-start;min-height:36px}
+.times .none{font-size:13.5px;color:var(--ink-3);max-width:48ch}
+.t{border-radius:9px;padding:8px 13px;font-size:13.5px;border:0;background:var(--sunk-2);
+  color:var(--ink-3);font-variant-numeric:tabular-nums;transition:transform .1s,box-shadow .12s}
+.t:hover{transform:translateY(-1px)}
+.t.good{background:var(--good-bg);color:var(--good);font-weight:600}
+.t.warn{background:var(--warn-bg);color:var(--warn);font-weight:600}
+.t.stop{background:var(--stop-bg);color:var(--stop);font-weight:600}
+.t.off{background:transparent;color:var(--ink-3);box-shadow:inset 0 0 0 1px var(--line)}
+.t.on{background:var(--acc);color:var(--acc-ink);font-weight:640;box-shadow:var(--e2)}
+.t.on::after{content:"✓";margin-left:7px}
+.caveat{margin:0;font-size:12.5px;color:var(--ink-3);line-height:1.55;max-width:54ch}
+.caveat em{font-style:normal;font-weight:600;color:var(--ink-2)}
+.typeline{display:flex;flex-direction:column;gap:10px}
+.tlink{background:transparent;border:0;color:var(--ink-3);font-size:13px;padding:0;align-self:flex-start;
+  text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--line-2)}
+.tlink:hover{color:var(--ink)}
+.erow{display:flex;gap:8px;max-width:520px}
+#quick{flex:1;background:var(--sunk);border:1px solid transparent;border-radius:var(--r);
+  padding:11px 14px;font-size:15px;min-width:0}
+#quick:focus{background:var(--card);border-color:var(--line-2);outline:none}
+.go{background:var(--acc);color:var(--acc-ink);border:0;border-radius:var(--r);padding:0 20px;
+  font-weight:600;font-size:14.5px;white-space:nowrap}
+.oops{background:var(--stop-bg);color:var(--stop);border-radius:var(--r);padding:9px 13px;
+  font-size:13.5px;max-width:520px}
+
+/* ---------- slots ---------- */
+.slots{display:flex;flex-direction:column;gap:8px}
+.slot{background:var(--card);border-radius:var(--r-lg);padding:16px 18px;display:flex;flex-direction:column;
+  gap:12px;position:relative;box-shadow:var(--e1);border:1px solid var(--line)}
+.slot.blocked,.slot.okd{background:var(--bg);border-style:dashed}
+.slot .top{display:flex;align-items:center;gap:11px;flex-wrap:wrap;padding-right:26px}
+.slot .when{font-weight:640;font-size:17px;letter-spacing:-.02em}
+.slot .clock{font-size:13px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.tag{border-radius:999px;padding:3px 10px;font-size:11.5px;font-weight:600;white-space:nowrap;letter-spacing:.01em}
+.tag.ok{background:var(--good-bg);color:var(--good)}
+.tag.no{background:var(--stop-bg);color:var(--stop)}
+.tag.yes{background:var(--warn-bg);color:var(--warn)}
+.tag.trip{background:var(--sunk-2);color:var(--ink-2);font-weight:500}
+.slot .kill{position:absolute;top:12px;right:13px;background:transparent;border:0;color:var(--ink-3);
+  width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:16px;line-height:1;padding:0}
+.slot .kill:hover{background:var(--stop-bg);color:var(--stop)}
+.notes{display:flex;flex-direction:column;gap:4px}
+.note{display:flex;gap:9px;align-items:flex-start;font-size:13.5px;line-height:1.45;color:var(--ink-2)}
+.note .g{flex:none;width:6px;height:6px;border-radius:50%;margin-top:7px}
+.note.hard .g{background:var(--stop)} .note.soft .g{background:var(--warn)}
+.note.hard strong,.note.soft strong{font-weight:600}
+.note.hard{color:var(--ink)} .note.soft{color:var(--ink-2)}
+.confirm{display:flex;align-items:center;gap:11px;flex-wrap:wrap;padding-top:2px}
+.cbtn{background:transparent;border:1px solid var(--line-2);color:var(--ink);border-radius:999px;
+  padding:6px 15px;font-weight:600;font-size:13px}
+.cbtn:hover{background:var(--acc);border-color:var(--acc);color:var(--acc-ink)}
+.undo{background:transparent;border:0;color:var(--ink-3);font-size:12.5px;padding:0;
+  text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--line-2)}
+.undo:hover{color:var(--ink)}
+.aside{font-size:12.5px;color:var(--ink-3)}
+.blank{border:1px dashed var(--line-2);border-radius:var(--r-lg);padding:28px 22px;text-align:center;
+  color:var(--ink-3);font-size:14px}
+.blank b{color:var(--ink-2);font-weight:600}
+
+/* ---------- table ---------- */
+.tbl{overflow-x:auto;margin-top:6px}
+table{border-collapse:collapse;width:100%;min-width:460px;font-size:13.5px}
+th,td{padding:11px 14px 11px 0;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+th:first-child,td:first-child{padding-left:2px}
+thead th{font-size:11.5px;font-weight:500;color:var(--ink-3);border-bottom:1px solid var(--line-2);
+  padding-bottom:7px}
+thead th small{display:block;font-size:11px;opacity:.72}
+tbody tr:last-child td{border-bottom:0}
+tbody tr.dim td{opacity:.36}
+td.wh{font-weight:600}
+td.tt{font-variant-numeric:tabular-nums;color:var(--ink-2)}
+td.tt.w{color:var(--warn);font-weight:600}
+td.tt.s{color:var(--stop);font-weight:600}
+td.tt sup{font-size:9.5px;opacity:.7;margin-left:2px}
+.key{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--ink-3);align-items:center;margin-top:10px}
+.key i{width:10px;height:10px;border-radius:3px;display:inline-block;margin-right:6px;vertical-align:-1px}
+
+/* ---------- send ---------- */
+.send{display:flex;flex-direction:column;gap:14px}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:560px}
+@media (max-width:560px){.fields{grid-template-columns:1fr}}
+label.f{display:flex;flex-direction:column;gap:5px;font-size:12.5px;color:var(--ink-3)}
+label.f input{background:var(--sunk);border:1px solid transparent;border-radius:var(--r);padding:9px 12px;font-size:14.5px}
+label.f input:focus{background:var(--card);border-color:var(--line-2);outline:none}
+.tone{display:inline-flex;background:var(--sunk);border-radius:999px;padding:3px;gap:2px;align-self:flex-start}
+.tone button{background:transparent;border:0;border-radius:999px;padding:6px 17px;font-size:13.5px;color:var(--ink-2)}
+.tone button:hover{color:var(--ink)}
+.tone button[aria-pressed="true"]{background:var(--card);color:var(--ink);font-weight:600;box-shadow:var(--e1)}
+#out{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:18px 20px;
+  font-size:14.5px;line-height:1.65;min-height:210px;resize:vertical;width:100%;font-family:var(--f);
+  box-shadow:var(--e1)}
+#out:focus{border-color:var(--line-2);outline:none}
+.acts{display:flex;gap:8px;flex-wrap:wrap}
+.big{background:var(--acc);color:var(--acc-ink);border:0;border-radius:999px;padding:11px 24px;
+  font-weight:600;font-size:14.5px}
+.big:hover{opacity:.87}
+.med{background:transparent;border:1px solid var(--line-2);color:var(--ink-2);border-radius:999px;
+  padding:11px 19px;font-size:14px}
+.med:hover{border-color:var(--ink-3);color:var(--ink)}
+.safe{display:flex;gap:11px;align-items:flex-start;font-size:13px;color:var(--ink-3);line-height:1.55;
+  border-top:1px solid var(--line);padding-top:18px;margin-top:4px;max-width:70ch}
+.safe b{color:var(--ink-2);font-weight:600}
+
+/* ---------- drawer ---------- */
+.scrim{position:fixed;inset:0;background:rgba(27,26,23,.34);backdrop-filter:blur(2px);z-index:40;
+  opacity:0;pointer-events:none;transition:opacity .2s}
+.scrim.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(440px,100%);background:var(--bg);z-index:41;
+  box-shadow:var(--e3);transform:translateX(103%);transition:transform .26s cubic-bezier(.32,.72,0,1);
+  display:flex;flex-direction:column}
+.drawer.on{transform:none}
+.dhead{display:flex;align-items:center;gap:12px;padding:16px 22px;border-bottom:1px solid var(--line)}
+.dhead h3{font-size:17px;font-weight:640;flex:1;letter-spacing:-.02em}
+.dbody{overflow-y:auto;padding:22px;display:flex;flex-direction:column;gap:26px}
+.sect{display:flex;flex-direction:column;gap:10px}
+.sect h4{margin:0;font-size:13.5px;font-weight:640;color:var(--ink);letter-spacing:-.01em}
+.sect .why{font-size:12.5px;color:var(--ink-3);margin:-5px 0 2px;line-height:1.5}
+.wk{display:flex;flex-direction:column;gap:4px}
+.wd{display:grid;grid-template-columns:30px 30px 1fr 1fr;gap:8px;align-items:center}
+.wd .nm{font-size:12.5px;color:var(--ink-3);font-weight:500}
+.wd input[type=time],.wd input[type=date]{background:var(--sunk);border:1px solid transparent;border-radius:8px;
+  padding:6px 7px;font-size:12.5px;width:100%}
+.wd input:focus{background:var(--card);border-color:var(--line-2);outline:none}
+.wd input:disabled{opacity:.35}
+.sw{position:relative;width:30px;height:18px;flex:none}
+.sw input{position:absolute;inset:0;opacity:0;width:100%;height:100%;margin:0;cursor:pointer}
+.sw .tr{position:absolute;inset:0;background:var(--line-2);border-radius:999px;transition:background .16s;pointer-events:none}
+.sw .kn{position:absolute;top:2px;left:2px;width:14px;height:14px;background:var(--card);border-radius:50%;
+  transition:transform .16s;pointer-events:none;box-shadow:var(--e1)}
+.sw input:checked~.tr{background:var(--acc)}
+.sw input:checked~.kn{transform:translateX(12px)}
+.sw input:focus-visible~.tr{outline:2px solid var(--acc);outline-offset:2px}
+.mini{background:var(--sunk);border-radius:var(--r);padding:11px;display:flex;flex-direction:column;
+  gap:7px;position:relative}
+.mini .x{position:absolute;top:6px;right:8px;background:transparent;border:0;color:var(--ink-3);
+  font-size:15px;padding:2px 4px;line-height:1}
+.mini .x:hover{color:var(--stop)}
+.mini input,.mini select{background:var(--card);border:1px solid transparent;border-radius:7px;
+  padding:7px 9px;font-size:13px;width:100%}
+.mini input:focus,.mini select:focus{border-color:var(--line-2);outline:none}
+.g3{display:grid;grid-template-columns:66px 1fr 1fr;gap:6px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.dashadd{background:transparent;border:1px dashed var(--line-2);color:var(--ink-3);border-radius:var(--r);
+  padding:10px;font-size:13.5px;width:100%}
+.dashadd:hover{border-color:var(--ink-3);color:var(--ink-2)}
+.dfoot{border-top:1px solid var(--line);padding:15px 22px;display:flex;gap:8px;flex-wrap:wrap}
+
+.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);background:var(--acc);color:var(--acc-ink);
+  padding:11px 20px;border-radius:999px;font-size:14px;font-weight:500;z-index:60;box-shadow:var(--e3)}
+dialog{border:0;border-radius:var(--r-lg);background:var(--card);color:var(--ink);padding:0;
+  max-width:420px;width:92%;box-shadow:var(--e3)}
+dialog::backdrop{background:rgba(27,26,23,.38)}
+.dg{padding:24px;display:flex;flex-direction:column;gap:12px}
+.dg h3{font-size:17px}
+.dg p{margin:0;font-size:14px;color:var(--ink-2)}
+.dg .aa{display:flex;gap:8px;justify-content:flex-end;margin-top:6px}
+
+@media print{
+  header.bar,.demo,.entry,.drawer,.scrim,.acts,.safe,.step>.num{display:none!important}
+  body{background:#fff}
+  .step{border-top:0}
+}
+
+/* ---------- meetings ---------- */
+.mtgs{display:flex;gap:8px;flex-wrap:wrap;align-items:stretch}
+.mtg{background:var(--sunk);border:1px solid transparent;border-radius:var(--r-lg);
+  padding:11px 15px;text-align:left;display:flex;flex-direction:column;gap:2px;min-width:186px;max-width:280px}
+.mtg:hover{background:var(--sunk-2)}
+.mtg[aria-pressed="true"]{background:var(--acc);border-color:var(--acc)}
+.mtg .ti{font-weight:640;font-size:14.5px;letter-spacing:-.012em;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:230px}
+.mtg .mm{font-size:12px;color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mtg[aria-pressed="true"] .ti{color:var(--acc-ink)}
+.mtg[aria-pressed="true"] .mm{color:var(--acc-ink);opacity:.66}
+.mtg .st{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;margin-top:3px}
+.mtg .st i{width:6px;height:6px;border-radius:50%;flex:none}
+.mtg .st.ok{color:var(--good)} .mtg .st.ok i{background:var(--good)}
+.mtg .st.hold{color:var(--warn)} .mtg .st.hold i{background:var(--warn)}
+.mtg .st.none{color:var(--ink-3)} .mtg .st.none i{background:var(--ink-3)}
+.mtg[aria-pressed="true"] .st{color:var(--acc-ink);opacity:.8}
+.mtg[aria-pressed="true"] .st i{background:var(--acc-ink)}
+.newmtg{background:transparent;border:1px dashed var(--line-2);color:var(--ink-3);
+  border-radius:var(--r-lg);padding:11px 17px;font-size:14px;font-weight:500}
+.newmtg:hover{border-color:var(--ink-3);color:var(--ink)}
+
+.mrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;
+  padding-top:4px}
+.mrow label.f{gap:6px}
+.exsel{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.exbtn{background:var(--sunk);border:1px solid transparent;border-radius:999px;padding:7px 15px;
+  font-size:14px;display:inline-flex;align-items:baseline;gap:8px}
+.exbtn:hover{background:var(--sunk-2)}
+.exbtn[aria-pressed="true"]{background:var(--acc);color:var(--acc-ink)}
+.exbtn b{font-weight:600}
+.exbtn s{text-decoration:none;font-size:12px;color:var(--ink-3)}
+.exbtn[aria-pressed="true"] s{color:var(--acc-ink);opacity:.66}
+.exedit{background:transparent;border:0;color:var(--ink-3);font-size:13px;padding:0;
+  text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--line-2)}
+.exedit:hover{color:var(--ink)}
+
+/* ---------- first-run setup ---------- */
+.setup{max-width:560px;margin:0 auto;padding:60px 0 90px;display:flex;flex-direction:column;gap:22px}
+.setup h1{font-size:30px;font-weight:640;letter-spacing:-.025em;margin:0}
+.setup p.i{margin:0;color:var(--ink-2);font-size:15.5px}
+.setup .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);
+  padding:22px;display:flex;flex-direction:column;gap:16px;box-shadow:var(--e1)}
+.setup .g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:520px){.setup .g2{grid-template-columns:1fr}}
+.setup label.f input,.setup label.f select{background:var(--sunk);border:1px solid transparent;
+  border-radius:var(--r);padding:10px 12px;font-size:15px;width:100%}
+.setup label.f input:focus,.setup label.f select:focus{background:var(--card);border-color:var(--line-2);outline:none}
+.setup .note{font-size:13px;color:var(--ink-3);line-height:1.55}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="logo"><span class="mk">SD</span>Slot Desk<span class="ver">build 2026-09-03</span></div>
+  <div class="sp"></div>
+  <span class="pill ok" id="status"><span class="dot"></span><span id="statusT">Ready</span></span>
+  <button class="ghost" id="btnSettings">Executives</button>
+  <button class="ghost" id="btnTheme" aria-label="Switch between light and dark">Theme</button>
+</header>
+
+<div class="demo" id="demo">
+  <span>You're looking at an example — two executives and two meetings, each with its own people and times. Nothing here is real.</span>
+  <button id="btnFresh">Set up my own</button>
+</div>
+
+<!-- ============ FIRST RUN ============ -->
+<div class="setup" id="setupView" hidden>
+  <div>
+    <h1>Let's set up your first executive.</h1>
+    <p class="i">You do this once. Slot Desk remembers their hours and rules, and checks every
+       time you offer against them. You can change any of it later.</p>
+  </div>
+  <div class="card">
+    <div class="g2">
+      <label class="f">Their name<input type="text" id="suName" placeholder="e.g. Dana Cohen" autocomplete="off"></label>
+      <label class="f">Job title <span style="opacity:.7">(optional)</span><input type="text" id="suRole" placeholder="e.g. COO" autocomplete="off"></label>
+    </div>
+    <label class="f">Where are they based?<select id="suTz"></select></label>
+    <div class="g2">
+      <label class="f">Working day starts<input type="time" id="suStart" value="09:00"></label>
+      <label class="f">and ends<input type="time" id="suEnd" value="18:00"></label>
+    </div>
+    <label class="f">Which days do they work?
+      <div class="chips" id="suDays" style="margin-top:4px"></div>
+    </label>
+    <button class="big" id="suGo" style="align-self:flex-start;margin-top:4px">Save and start</button>
+  </div>
+  <p class="note">Everything stays on this computer. Slot Desk has no server, no account and makes
+     no internet connections — you can check in the Network tab.</p>
+</div>
+
+<!-- ============ APP ============ -->
+<main id="appView">
+
+  <section class="step">
+    <span class="num">01</span>
+    <div class="body">
+      <h2>Which meeting are you arranging?</h2>
+      <p class="sub">Each meeting keeps its own guest list and its own times. Your executives' hours are set once, separately.</p>
+
+      <div class="mtgs" id="mtgs"></div>
+
+      <div class="mrow">
+        <label class="f">What's the meeting?<input type="text" id="subject" placeholder="e.g. Partnership intro" autocomplete="off"></label>
+        <label class="f">Who are you writing to?<input type="text" id="toName" placeholder="First name, or leave blank" autocomplete="off"></label>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:9px;padding-top:6px">
+        <span class="mono" style="font-size:11px">Whose diary</span>
+        <div class="exsel" id="exsel"></div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:9px;padding-top:6px">
+        <span class="mono" style="font-size:11px">Who's invited to this one</span>
+        <div class="chips" id="chips"></div>
+        <div class="itemlist" id="people" hidden style="max-width:520px;gap:8px"></div>
+        <button class="tlink" id="guestToggle" hidden style="align-self:flex-start">Hide guest details</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="step">
+    <span class="num">02</span>
+    <div class="body">
+      <h2>Which times are you offering?</h2>
+      <p class="sub" id="sub2">Choose a day, then tap the times you want to offer.</p>
+      <div class="entry">
+        <div class="lenrow">
+          <span>How long is it?</span>
+          <span class="lens" id="lens" role="group" aria-label="Meeting length"></span>
+        </div>
+        <div class="pick">
+          <div class="cal">
+            <div class="mhead">
+              <button class="mnav" id="mPrev" aria-label="Previous month">‹</button>
+              <span id="mLabel"></span>
+              <button class="mnav" id="mNext" aria-label="Next month">›</button>
+            </div>
+            <div class="dow" id="dow"></div>
+            <div class="dgrid" id="dgrid"></div>
+            <div class="ckey">
+              <span><i class="cd sel"></i>Picked</span>
+              <span><i class="cd offd"></i>Not a working day</span>
+              <span><i class="cd trav"></i>Away</span>
+            </div>
+          </div>
+          <div class="tcol">
+            <div class="thead">
+              <span id="tLabel">Pick a day</span>
+              <button class="tmore" id="tMore">Show early &amp; late</button>
+            </div>
+            <div class="times" id="times"></div>
+            <div class="tkey">
+              <span><i class="sq good"></i>Suits everyone</span>
+              <span><i class="sq warn"></i>Early or late for someone</span>
+              <span><i class="sq stop"></i>Unkind to someone</span>
+              <span><i class="sq off"></i>Breaks their own rules</span>
+            </div>
+            <p class="caveat">These colours show how a time <em>lands</em> for the people involved.
+              Slot Desk can't see what's already in the diary — your calendar still decides what's free.</p>
+          </div>
+        </div>
+        <div class="typeline">
+          <button class="tlink" id="tToggle">Rather type it?</button>
+          <div id="typeWrap" hidden>
+            <div class="erow">
+              <input type="text" id="quick" placeholder="tue 4pm, tue 6pm, wed 10am" spellcheck="false"
+                     autocomplete="off" aria-label="Type the times you're offering">
+              <button class="go" id="btnAdd">Add</button>
+            </div>
+            <div class="oops" id="oops" hidden></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="step">
+    <span class="num">03</span>
+    <div class="body">
+      <h2>Here's how each one lands</h2>
+      <p class="sub">Checked against this executive's rules and against everyone invited to this meeting.</p>
+      <div class="slots" id="slots"></div>
+      <div class="tbl" id="tbl"></div>
+      <div class="key">
+        <span><i style="background:var(--warn-bg);box-shadow:inset 0 0 0 1px var(--warn-ln)"></i>Outside their usual hours</span>
+        <span><i style="background:var(--stop-bg);box-shadow:inset 0 0 0 1px var(--stop-ln)"></i>Too early or too late to offer</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="step">
+    <span class="num">04</span>
+    <div class="body">
+      <h2>Send it</h2>
+      <p class="sub">Every time written out in the recipient's own clock, so nobody has to do the maths.</p>
+      <div class="send">
+        <div class="tone" id="tone" role="group" aria-label="Tone of the email"></div>
+        <textarea id="out" spellcheck="false" aria-label="The email, ready to copy"></textarea>
+        <div class="acts">
+          <button class="big" id="btnCopy">Copy the email</button>
+          <button class="med" id="btnTable">Show as a table</button>
+          <button class="med" id="btnIcs">Download holds</button>
+          <button class="med" id="btnIcsText">Copy hold text</button>
+        </div>
+      </div>
+      <div class="safe">
+        <div><b>Nothing leaves this computer.</b> Slot Desk has no server and makes no internet
+        connections at all — it works with the wifi off. Your executives and meetings are saved
+        here only. Press F12, open the Network tab and use it: nothing appears.</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="Executive settings" aria-hidden="true">
+  <div class="dhead">
+    <h3 id="drawerT">Executives</h3>
+    <button class="ghost" id="btnClose">Done</button>
+  </div>
+  <div class="dbody">
+    <div class="sect">
+      <h4>Who you support</h4>
+      <p class="why">Set each person up once. Every meeting you arrange for them is checked against this.</p>
+      <div class="exsel" id="drawerExecs"></div>
+      <button class="dashadd" id="btnAddExec">+ Add an executive</button>
+    </div>
+    <div class="sect">
+      <h4>Who they are</h4>
+      <div class="g2">
+        <input type="text" id="execName" placeholder="Name" aria-label="Executive name">
+        <input type="text" id="execRole" placeholder="Job title" aria-label="Job title">
+      </div>
+      <select id="execTz" aria-label="Home timezone"></select>
+    </div>
+    <div class="sect">
+      <h4>Working days and hours</h4>
+      <p class="why">Times outside these get flagged before you send.</p>
+      <div class="wk" id="wk"></div>
+    </div>
+    <div class="sect">
+      <h4>Never book over these</h4>
+      <p class="why">Focus time, standing meetings, school run — anything that repeats weekly.</p>
+      <div class="sect" id="blocks" style="gap:7px"></div>
+      <button class="dashadd" id="btnAddBlock">+ Add a protected time</button>
+    </div>
+    <div class="sect">
+      <h4>When they're travelling</h4>
+      <p class="why">Their working hours follow them, so a 9am there isn't a 9am here.</p>
+      <div class="sect" id="trips" style="gap:7px"></div>
+      <button class="dashadd" id="btnAddTrip">+ Add a trip</button>
+    </div>
+    <div class="sect">
+      <h4>Guard rails</h4>
+      <div class="g2">
+        <label class="f">Buffer around protected times<input type="number" id="bufMin" min="0" max="120" step="5"></label>
+        <label class="f">Least notice you'll give (hours)<input type="number" id="noticeH" min="0" max="336" step="1"></label>
+      </div>
+    </div>
+    <div class="sect" style="border-top:1px solid var(--line);padding-top:18px">
+      <button class="dashadd" id="btnDelExec"
+              style="border-style:solid;border-color:var(--stop-ln);color:var(--stop)">Remove this executive</button>
+    </div>
+  </div>
+  <div class="dfoot">
+    <button class="med" id="btnExport">Save a backup</button>
+    <button class="med" id="btnImport">Load a backup</button>
+    <input type="file" id="fileIn" accept="application/json,.json" hidden>
+  </div>
+</aside>
+
+<dialog id="dlg"><form method="dialog" class="dg">
+  <h3 id="dlgT"></h3><p id="dlgB"></p>
+  <div class="aa"><button class="med" value="cancel">Cancel</button>
+  <button class="big" value="ok">Yes, do it</button></div>
+</form></dialog>
+
+<script>
+"use strict";
+/* ==========================================================
+   Slot Desk — one file, no dependencies, no network.
+   Executives are configured once. Everything else — who is
+   invited and which times you're offering — belongs to a
+   meeting, so you can have several in flight at once.
+   ========================================================== */
+
+/* ---------- timezone ---------- */
+function tzOffset(date,tz){
+  const dtf=new Intl.DateTimeFormat('en-US',{timeZone:tz,hour12:false,
+    year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  const p={}; for(const q of dtf.formatToParts(date)) p[q.type]=q.value;
+  let h=parseInt(p.hour,10); if(h===24)h=0;
+  return Date.UTC(+p.year,+p.month-1,+p.day,h,+p.minute,+p.second)-date.getTime();
+}
+function zonedToInstant(y,m,d,hh,mm,tz){
+  const guess=Date.UTC(y,m-1,d,hh,mm,0);
+  let off=tzOffset(new Date(guess),tz);
+  off=tzOffset(new Date(guess-off),tz);
+  return new Date(guess-off);
+}
+function partsIn(date,tz){
+  const dtf=new Intl.DateTimeFormat('en-US',{timeZone:tz,hour12:false,weekday:'short',
+    year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'});
+  const p={}; for(const q of dtf.formatToParts(date)) p[q.type]=q.value;
+  let h=parseInt(p.hour,10); if(h===24)h=0;
+  return {y:+p.year,m:+p.month,d:+p.day,hh:h,mm:+p.minute,wd:p.weekday,min:h*60+(+p.minute)};
+}
+function hhmm(o){ return String(o.hh).padStart(2,'0')+':'+String(o.mm).padStart(2,'0'); }
+function tzAbbr(date,tz){
+  try{ const p=new Intl.DateTimeFormat('en-US',{timeZone:tz,timeZoneName:'short'}).formatToParts(date);
+    const t=p.find(x=>x.type==='timeZoneName'); return t?t.value:''; }catch(e){ return ''; }
+}
+
+/* ---------- dates ---------- */
+const DAY3=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const DAYFULL=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const MON=['January','February','March','April','May','June','July','August','September','October','November','December'];
+const MON3=MON.map(m=>m.slice(0,3).toLowerCase());
+function ymd(dt){ return dt.getUTCFullYear()+'-'+String(dt.getUTCMonth()+1).padStart(2,'0')+'-'+String(dt.getUTCDate()).padStart(2,'0'); }
+function fromYmd(s){ const [y,m,d]=s.split('-').map(Number); return new Date(Date.UTC(y,m-1,d)); }
+function addDays(dt,n){ const c=new Date(dt.getTime()); c.setUTCDate(c.getUTCDate()+n); return c; }
+function todayYmdIn(tz){ const p=partsIn(new Date(),tz); return p.y+'-'+String(p.m).padStart(2,'0')+'-'+String(p.d).padStart(2,'0'); }
+function toMin(t){ const [h,m]=t.split(':').map(Number); return h*60+m; }
+function fromMin(v){ return String(Math.floor(v/60)).padStart(2,'0')+':'+String(v%60).padStart(2,'0'); }
+function prettyDate(ds){ const d=fromYmd(ds); return DAYFULL[d.getUTCDay()]+' '+d.getUTCDate()+' '+MON[d.getUTCMonth()]; }
+function shortDate(ds){ const d=fromYmd(ds); return DAY3[d.getUTCDay()]+' '+d.getUTCDate()+' '+MON[d.getUTCMonth()].slice(0,3); }
+
+/* ---------- cities ---------- */
+const CITIES=[
+["Amsterdam","Europe/Amsterdam"],["Athens","Europe/Athens"],["Atlanta","America/New_York"],
+["Auckland","Pacific/Auckland"],["Austin","America/Chicago"],["Bangalore","Asia/Kolkata"],
+["Bangkok","Asia/Bangkok"],["Barcelona","Europe/Madrid"],["Beijing","Asia/Shanghai"],
+["Berlin","Europe/Berlin"],["Bogotá","America/Bogota"],["Boston","America/New_York"],
+["Brisbane","Australia/Brisbane"],["Brussels","Europe/Brussels"],["Bucharest","Europe/Bucharest"],
+["Budapest","Europe/Budapest"],["Buenos Aires","America/Argentina/Buenos_Aires"],
+["Cairo","Africa/Cairo"],["Cape Town","Africa/Johannesburg"],["Chicago","America/Chicago"],
+["Copenhagen","Europe/Copenhagen"],["Dallas","America/Chicago"],["Delhi","Asia/Kolkata"],
+["Denver","America/Denver"],["Doha","Asia/Qatar"],["Dubai","Asia/Dubai"],
+["Dublin","Europe/Dublin"],["Edinburgh","Europe/London"],["Frankfurt","Europe/Berlin"],
+["Geneva","Europe/Zurich"],["Haifa","Asia/Jerusalem"],["Helsinki","Europe/Helsinki"],
+["Hong Kong","Asia/Hong_Kong"],["Honolulu","Pacific/Honolulu"],["Houston","America/Chicago"],
+["Istanbul","Europe/Istanbul"],["Jakarta","Asia/Jakarta"],["Jerusalem","Asia/Jerusalem"],
+["Johannesburg","Africa/Johannesburg"],["Karachi","Asia/Karachi"],["Kraków","Europe/Warsaw"],
+["Kuala Lumpur","Asia/Kuala_Lumpur"],["Kyiv","Europe/Kyiv"],["Lagos","Africa/Lagos"],
+["Lima","America/Lima"],["Lisbon","Europe/Lisbon"],["London","Europe/London"],
+["Los Angeles","America/Los_Angeles"],["Madrid","Europe/Madrid"],["Manila","Asia/Manila"],
+["Melbourne","Australia/Melbourne"],["Mexico City","America/Mexico_City"],["Miami","America/New_York"],
+["Milan","Europe/Rome"],["Minneapolis","America/Chicago"],["Montreal","America/Toronto"],
+["Moscow","Europe/Moscow"],["Mumbai","Asia/Kolkata"],["Munich","Europe/Berlin"],
+["Nairobi","Africa/Nairobi"],["New York","America/New_York"],["Oslo","Europe/Oslo"],
+["Paris","Europe/Paris"],["Perth","Australia/Perth"],["Philadelphia","America/New_York"],
+["Phoenix","America/Phoenix"],["Portland","America/Los_Angeles"],["Prague","Europe/Prague"],
+["Reykjavik","Atlantic/Reykjavik"],["Riyadh","Asia/Riyadh"],["Rome","Europe/Rome"],
+["San Diego","America/Los_Angeles"],["San Francisco","America/Los_Angeles"],
+["Santiago","America/Santiago"],["São Paulo","America/Sao_Paulo"],["Seattle","America/Los_Angeles"],
+["Seoul","Asia/Seoul"],["Shanghai","Asia/Shanghai"],["Singapore","Asia/Singapore"],
+["Stockholm","Europe/Stockholm"],["Sydney","Australia/Sydney"],["Taipei","Asia/Taipei"],
+["Tallinn","Europe/Tallinn"],["Tel Aviv","Asia/Jerusalem"],["Tokyo","Asia/Tokyo"],
+["Toronto","America/Toronto"],["Vancouver","America/Vancouver"],["Vienna","Europe/Vienna"],
+["Warsaw","Europe/Warsaw"],["Washington DC","America/New_York"],["Wellington","Pacific/Auckland"],
+["Zurich","Europe/Zurich"]
+];
+const TZS=Array.from(new Set(CITIES.map(c=>c[1]))).sort();
+const localTz=()=>{ try{ return Intl.DateTimeFormat().resolvedOptions().timeZone||'Europe/London'; }catch(e){ return 'Europe/London'; } };
+
+/* ---------- state ---------- */
+const KEY='slotdesk.v2', OLDKEY='slotdesk.v1';
+const uid=()=>Math.random().toString(36).slice(2,10);
+
+function blankExec(tz){
+  return {id:uid(),name:'',role:'',tz:tz||localTz(),
+    days:{0:{on:false,s:'09:00',e:'17:00'},1:{on:true,s:'09:00',e:'17:00'},2:{on:true,s:'09:00',e:'17:00'},
+          3:{on:true,s:'09:00',e:'17:00'},4:{on:true,s:'09:00',e:'17:00'},5:{on:true,s:'09:00',e:'17:00'},6:{on:false,s:'09:00',e:'17:00'}},
+    blocks:[],travel:[],buffer:15,notice:24};
+}
+function blankMeeting(execId){
+  return {id:uid(),execId:execId,subject:'',toName:'',tone:'neutral',duration:45,
+          participants:[],candidates:[],created:Date.now()};
+}
+function newPerson(city){
+  const c=CITIES.find(x=>x[0]===(city||'London'))||CITIES[0];
+  return {id:uid(),name:'',city:c[0],tz:c[1],cs:'09:00',ce:'18:00',hs:'07:30',he:'21:00'};
+}
+
+function demoState(){
+  const t0=fromYmd(todayYmdIn('Asia/Jerusalem'));
+  const nextTue=(()=>{ let d=addDays(t0,1); while(d.getUTCDay()!==2) d=addDays(d,1); return ymd(d); })();
+  const nextWed=ymd(addDays(fromYmd(nextTue),1));
+  const e1=uid(), e2=uid();
+  return {
+    v:2, demo:true, pickDate:null, pickMonth:null, wideTimes:false,
+    execs:[
+      {id:e1,name:'Dana Cohen',role:'COO',tz:'Asia/Jerusalem',
+       days:{0:{on:true,s:'09:00',e:'18:00'},1:{on:true,s:'09:00',e:'18:00'},2:{on:true,s:'09:00',e:'18:00'},
+             3:{on:true,s:'09:00',e:'18:00'},4:{on:true,s:'09:00',e:'16:00'},5:{on:false,s:'09:00',e:'17:00'},6:{on:false,s:'09:00',e:'17:00'}},
+       blocks:[{id:uid(),day:0,s:'09:00',e:'11:00',label:'Weekly planning'},
+               {id:uid(),day:3,s:'13:00',e:'18:00',label:'Focus afternoon'}],
+       travel:[],buffer:15,notice:24},
+      {id:e2,name:'Marc Ellis',role:'CMO',tz:'Europe/Amsterdam',
+       days:{0:{on:false,s:'09:00',e:'17:00'},1:{on:true,s:'09:00',e:'17:30'},2:{on:true,s:'09:00',e:'17:30'},
+             3:{on:true,s:'09:00',e:'17:30'},4:{on:true,s:'09:00',e:'17:30'},5:{on:true,s:'09:00',e:'14:00'},6:{on:false,s:'09:00',e:'17:00'}},
+       blocks:[{id:uid(),day:1,s:'09:00',e:'10:30',label:'Leadership sync'}],
+       travel:[{id:uid(),from:ymd(addDays(t0,14)),to:ymd(addDays(t0,18)),tz:'America/New_York',label:'New York'}],
+       buffer:30,notice:48}
+    ],
+    meetings:[
+      {id:'m1',execId:e1,subject:'Partnership intro',toName:'Sarah',tone:'neutral',duration:45,
+       participants:[
+         {id:uid(),name:'Sarah',city:'London',tz:'Europe/London',cs:'09:00',ce:'18:00',hs:'07:30',he:'21:00'},
+         {id:uid(),name:'Mike',city:'New York',tz:'America/New_York',cs:'09:00',ce:'18:00',hs:'07:30',he:'21:00'},
+         {id:uid(),name:'Yusuf',city:'Dubai',tz:'Asia/Dubai',cs:'09:00',ce:'18:00',hs:'08:00',he:'21:00'}],
+       candidates:[
+         {id:uid(),date:nextTue,start:16*60,end:16*60+45,ack:false},
+         {id:uid(),date:nextTue,start:18*60+30,end:19*60+15,ack:false},
+         {id:uid(),date:nextWed,start:10*60,end:10*60+45,ack:false}],
+       created:Date.now()-86400000},
+      {id:'m2',execId:e2,subject:'Agency review',toName:'',tone:'formal',duration:60,
+       participants:[
+         {id:uid(),name:'Elena',city:'Madrid',tz:'Europe/Madrid',cs:'09:00',ce:'18:00',hs:'08:00',he:'21:00'}],
+       candidates:[],created:Date.now()}
+    ],
+    activeMeeting:'m1'
+  };
+}
+
+/* migrate a v1 store: its single global guest list becomes one meeting */
+function migrate(old){
+  if(!old||!old.execs||!old.execs.length) return null;
+  const execs=old.execs.map(e=>({id:e.id,name:e.name||'Executive',role:e.role||'',tz:e.tz,
+    days:e.days,blocks:e.blocks||[],travel:e.travel||[],buffer:e.buffer??15,notice:e.notice??24}));
+  const m=blankMeeting(old.activeExec||execs[0].id);
+  m.subject=old.subject||''; m.toName=old.toName||''; m.tone=old.tone||'neutral';
+  m.duration=old.duration||45;
+  m.participants=(old.participants||[]).map(p=>Object.assign({},p));
+  m.candidates=(old.candidates||[]).map(c=>Object.assign({},c));
+  return {v:2,demo:false,execs:execs,meetings:[m],activeMeeting:m.id,
+          pickDate:null,pickMonth:null,wideTimes:false};
+}
+
+let S=null;
+try{
+  const raw=localStorage.getItem(KEY);
+  if(raw) S=JSON.parse(raw);
+  else{
+    const oldRaw=localStorage.getItem(OLDKEY);
+    if(oldRaw) S=migrate(JSON.parse(oldRaw));
+  }
+}catch(e){ S=null; }
+if(!S||!S.execs||!S.meetings) S=demoState();
+if(!S.meetings.length && S.execs.length){
+  const m=blankMeeting(S.execs[0].id); S.meetings=[m]; S.activeMeeting=m.id;
+}
+function save(){ try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){} }
+
+const mtg =()=>S.meetings.find(m=>m.id===S.activeMeeting)||S.meetings[0];
+const exec=()=>{ const m=mtg(); return (m&&S.execs.find(e=>e.id===m.execId))||S.execs[0]; };
+const parts=()=>{ const m=mtg(); return (m&&m.participants)||[]; };
+const cands=()=>{ const m=mtg(); return (m&&m.candidates)||[]; };
+const execName=e=>(e&&e.name)?e.name:'Unnamed';
+
+/* ---------- rules ---------- */
+function effectiveTz(ex,ds){ for(const t of (ex.travel||[])) if(ds>=t.from&&ds<=t.to) return t.tz; return ex.tz; }
+function travelOn(ex,ds){ for(const t of (ex.travel||[])) if(ds>=t.from&&ds<=t.to) return t; return null; }
+function execIssue(ex,ds,minOfDay){
+  const [Y,M,D]=ds.split('-').map(Number);
+  const inst=zonedToInstant(Y,M,D,Math.floor(minOfDay/60),minOfDay%60,ex.tz);
+  if(inst.getTime()<Date.now()) return 'That time has already gone by';
+  const notice=(ex.notice||0)*3600000;
+  if(inst.getTime()<Date.now()+notice) return 'Less than '+ex.notice+' hours’ notice — you said you’d never book that close';
+  const tz=effectiveTz(ex,ds), trip=travelOn(ex,ds);
+  const local=partsIn(inst,tz), wd=DAY3.indexOf(local.wd);
+  const rule=ex.days[wd]||{on:false};
+  const where=trip?(' — they’re in '+(trip.label||trip.tz)+' that day'):'';
+  if(!rule.on) return DAYFULL[wd]+' isn’t a working day for them'+where;
+  if(local.min<toMin(rule.s)||local.min>=toMin(rule.e))
+    return 'Outside their working hours of '+rule.s+'–'+rule.e+(trip?' '+(trip.label||trip.tz)+' time':'')+where;
+  const buf=ex.buffer||0;
+  for(const b of (ex.blocks||[])){
+    if(b.day!==wd) continue;
+    if(local.min>=toMin(b.s)-buf&&local.min<toMin(b.e)+buf)
+      return 'Runs into “'+(b.label||'a protected time')+'” ('+b.s+'–'+b.e+(buf?', plus your '+buf+'-minute buffer':'')+')'+where;
+  }
+  return null;
+}
+function candInstant(c){
+  const ex=exec(), [Y,M,D]=c.date.split('-').map(Number);
+  return zonedToInstant(Y,M,D,Math.floor(c.start/60),c.start%60,ex.tz);
+}
+function band(p,local){
+  if(local.min<toMin(p.hs)||local.min>=toMin(p.he)) return 'stop';
+  if(local.min<toMin(p.cs)||local.min>=toMin(p.ce)) return 'warn';
+  return '';
+}
+function notesFor(c){
+  const ex=exec(), out=[], seen=new Set();
+  for(let m=c.start;m<c.end;m+=15){
+    const w=execIssue(ex,c.date,m);
+    if(w&&!seen.has(w)){ seen.add(w); out.push({sev:'hard',msg:w}); }
+  }
+  const inst=candInstant(c);
+  parts().forEach(p=>{
+    const lp=partsIn(inst,p.tz), b=band(p,lp), who=p.name||p.city;
+    if(b==='stop') out.push({sev:'hard',msg:'That’s '+hhmm(lp)+' for '+who+' in '+p.city+' — too early or late to ask'});
+    else if(b==='warn') out.push({sev:'soft',msg:hhmm(lp)+' for '+who+' in '+p.city+' — just outside their usual hours'});
+  });
+  return out;
+}
+const needsOk=c=>notesFor(c).some(n=>n.sev==='hard');
+const usable =c=>!needsOk(c)||c.ack;
+const offering=()=>cands().filter(usable);
+const sorted=l=>l.slice().sort((a,b)=>(a.date+String(a.start).padStart(4,'0')).localeCompare(b.date+String(b.start).padStart(4,'0')));
+
+/* count for a meeting other than the active one */
+function meetingTally(m){
+  const ex=S.execs.find(e=>e.id===m.execId);
+  if(!ex) return {ok:0,total:(m.candidates||[]).length};
+  const saveA=S.activeMeeting; S.activeMeeting=m.id;
+  let ok=0; try{ ok=(m.candidates||[]).filter(usable).length; }catch(e){}
+  S.activeMeeting=saveA;
+  return {ok:ok,total:(m.candidates||[]).length};
+}
+
+/* ---------- parser ---------- */
+function parseLine(raw,ctx){
+  let s=' '+raw.toLowerCase().trim()+' ';
+  if(!s.trim()) return null;
+  let date=null;
+  const iso=s.match(/\b(\d{4})-(\d{1,2})-(\d{1,2})\b/);
+  if(iso){ date=ymd(new Date(Date.UTC(+iso[1],+iso[2]-1,+iso[3]))); s=s.replace(iso[0],' '); }
+  if(!date){
+    const dm=s.match(/\b(\d{1,2})\s*[\/.]\s*(\d{1,2})(?:\s*[\/.]\s*(\d{2,4}))?\b/);
+    if(dm){
+      let y=dm[3]?+dm[3]:null; if(y&&y<100)y+=2000;
+      const base=fromYmd(todayYmdIn(exec().tz));
+      if(!y) y=base.getUTCFullYear();
+      let d=new Date(Date.UTC(y,+dm[2]-1,+dm[1]));
+      if(!dm[3]&&d<base) d=new Date(Date.UTC(y+1,+dm[2]-1,+dm[1]));
+      date=ymd(d); s=s.replace(dm[0],' ');
+    }
+  }
+  if(!date){
+    const md=s.match(/\b(\d{1,2})\s+([a-z]{3,})\b/)||s.match(/\b([a-z]{3,})\s+(\d{1,2})\b/);
+    if(md){
+      const a=md[1],b=md[2], nm=isNaN(+a)?a:b, dd=isNaN(+a)?+b:+a;
+      const mi=MON3.indexOf(String(nm).slice(0,3));
+      if(mi>=0){
+        const base=fromYmd(todayYmdIn(exec().tz));
+        let d=new Date(Date.UTC(base.getUTCFullYear(),mi,dd));
+        if(d<base) d=new Date(Date.UTC(base.getUTCFullYear()+1,mi,dd));
+        date=ymd(d); s=s.replace(md[0],' ');
+      }
+    }
+  }
+  if(!date){
+    const rel=s.match(/\b(today|tomorrow|tmrw)\b/);
+    if(rel){ const base=fromYmd(todayYmdIn(exec().tz));
+      date=ymd(addDays(base,rel[1]==='today'?0:1)); s=s.replace(rel[0],' '); }
+  }
+  if(!date){
+    const wd=s.match(/\b(next\s+|this\s+)?(sun|mon|tue|wed|thu|fri|sat)[a-z]*\b/);
+    if(wd){
+      const want=['sun','mon','tue','wed','thu','fri','sat'].indexOf(wd[2]);
+      const base=fromYmd(todayYmdIn(exec().tz));
+      let d=addDays(base,1);
+      while(d.getUTCDay()!==want) d=addDays(d,1);
+      if(wd[1]&&wd[1].trim()==='next') d=addDays(d,7);
+      date=ymd(d); s=s.replace(wd[0],' ');
+    }
+  }
+  if(!date) date=ctx.last;
+  if(!date) return {error:'I couldn’t find a day in “'+raw.trim()+'”. Try something like “tue 4pm”.'};
+  const RT=/(\d{1,2})(?:[:.](\d{2}))?\s*(am|pm)?/g;
+  const times=[]; let m;
+  while((m=RT.exec(s))!==null) times.push({h:+m[1],mi:m[2]?+m[2]:0,ap:m[3]||null});
+  if(!times.length) return {error:'I couldn’t find a time in “'+raw.trim()+'”. Add one, like “4pm”.'};
+  const to24=(t,ref)=>{
+    let h=t.h;
+    if(t.ap){ if(t.ap==='pm'&&h<12)h+=12; if(t.ap==='am'&&h===12)h=0; }
+    else if(ref&&ref.ap==='pm'&&h<12&&h<ref.h) h+=12;
+    else if(h>=1&&h<=7) h+=12;
+    return h>23?null:h*60+t.mi;
+  };
+  const isRange=/\d\s*(?:-|–|—|\bto\b|\buntil\b)\s*\d/.test(s)&&times.length>1;
+  const start=to24(times[0],isRange?times[1]:null);
+  if(start===null) return {error:'“'+raw.trim()+'” doesn’t look like a real time.'};
+  let end=isRange?to24(times[1],null):start+mtg().duration;
+  if(end===null||end<=start) end=start+mtg().duration;
+  if(end>24*60) end=24*60;
+  ctx.last=date;
+  return {date,start,end};
+}
+function parseAll(text){
+  const ctx={last:null}, made=[], errs=[];
+  text.split(/[,;\n]+/).forEach(part=>{
+    if(!part.trim()) return;
+    const r=parseLine(part,ctx);
+    if(!r) return;
+    if(r.error){ errs.push(r.error); return; }
+    if(cands().some(c=>c.date===r.date&&c.start===r.start)){
+      errs.push(shortDate(r.date)+' at '+fromMin(r.start)+' is already on your list.'); return; }
+    made.push({id:uid(),date:r.date,start:r.start,end:r.end,ack:false});
+  });
+  return {made,errs};
+}
+
+/* ---------- helpers ---------- */
+const $=id=>document.getElementById(id);
+function el(tag,cls,txt){ const e=document.createElement(tag); if(cls)e.className=cls; if(txt!=null)e.textContent=txt; return e; }
+function tzOptions(sel,val){
+  sel.innerHTML='';
+  for(const t of TZS){ const o=el('option',null,t.replace(/_/g,' ')); o.value=t; if(t===val)o.selected=true; sel.appendChild(o); }
+}
+function hoursSummary(ex){
+  const on=[]; for(let i=0;i<7;i++) if((ex.days[i]||{}).on) on.push(i);
+  if(!on.length) return 'No working days set';
+  const run=on.every((v,i)=>i===0||v===on[i-1]+1);
+  const d=run?DAY3[on[0]]+'–'+DAY3[on[on.length-1]]:on.map(i=>DAY3[i]).join(', ');
+  const f=ex.days[on[0]];
+  return d+' · '+f.s+'–'+f.e;
+}
+function toast(msg){
+  const t=el('div','toast',msg); t.setAttribute('role','status');
+  document.body.appendChild(t); setTimeout(()=>t.remove(),2300);
+}
+async function copyText(s){
+  try{ await navigator.clipboard.writeText(s); return true; }
+  catch(e){ const ta=$('out'); ta.focus(); ta.select();
+    try{ return document.execCommand('copy'); }catch(e2){ return false; } }
+}
+function download(name,text,mime){
+  const url=URL.createObjectURL(new Blob([text],{type:mime}));
+  const a=document.createElement('a'); a.href=url; a.download=name;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),4000);
+}
+function confirmDlg(title,body,cb){
+  $('dlgT').textContent=title; $('dlgB').textContent=body;
+  const d=$('dlg'); d.onclose=()=>{ if(d.returnValue==='ok') cb(); }; d.showModal();
+}
+
+/* ---------- picker maths ---------- */
+function slotAt(ds,min){ return {date:ds,start:min,end:min+mtg().duration}; }
+function ruleAt(ds,min){
+  const ex=exec(), dur=mtg().duration;
+  for(let m=min;m<min+dur;m+=15){ const w=execIssue(ex,ds,m); if(w) return w; }
+  return null;
+}
+function fitAt(ds,min){
+  const inst=candInstant(slotAt(ds,min));
+  let worst='';
+  parts().forEach(p=>{
+    const b=band(p,partsIn(inst,p.tz));
+    if(b==='stop') worst='stop'; else if(b==='warn'&&worst!=='stop') worst='warn';
+  });
+  return worst;
+}
+function chosenAt(ds,min){ return cands().find(c=>c.date===ds&&c.start===min); }
+function defaultPickDate(){
+  const ex=exec(), t=fromYmd(todayYmdIn(ex.tz));
+  const skip=Math.ceil((ex.notice||0)/24);
+  let firstWorking=null, firstOfferable=null;
+  for(let i=skip;i<skip+21;i++){
+    const d=addDays(t,i), ds=ymd(d), rule=ex.days[d.getUTCDay()]||{on:false};
+    if(!rule.on) continue;
+    if(!firstWorking) firstWorking=ds;
+    const lo=toMin(rule.s), hi=toMin(rule.e), dur=mtg().duration||30;
+    for(let m=lo;m+dur<=hi;m+=60){
+      let bad=false;
+      for(let k=m;k<m+dur;k+=30) if(execIssue(ex,ds,k)){ bad=true; break; }
+      if(bad) continue;
+      if(!firstOfferable) firstOfferable=ds;
+      if(fitAt(ds,m)==='') return ds;
+    }
+  }
+  return firstOfferable||firstWorking||ymd(addDays(t,skip));
+}
+function ensurePickDate(){
+  const tz=exec()?exec().tz:localTz();
+  if(!S.pickDate || S.pickDate<todayYmdIn(tz)) S.pickDate=defaultPickDate();
+  S.pickMonth=S.pickDate.slice(0,7);
+}
+
+/* ---------- step 1: meetings, executive, guests ---------- */
+function renderMeetings(){
+  const box=$('mtgs'); box.innerHTML='';
+  S.meetings.slice().sort((a,b)=>(b.created||0)-(a.created||0)).forEach(m=>{
+    const ex=S.execs.find(e=>e.id===m.execId);
+    const b=el('button','mtg'); b.setAttribute('aria-pressed',String(m.id===S.activeMeeting));
+    b.appendChild(el('span','ti',m.subject||'Untitled meeting'));
+    const who=(m.participants||[]).length;
+    b.appendChild(el('span','mm',(ex?execName(ex):'No executive')+' · '+(who?who+(who===1?' guest':' guests'):'no guests yet')));
+    const t=meetingTally(m);
+    const st=el('span','st '+(!t.total?'none':(t.ok===t.total?'ok':'hold')));
+    st.appendChild(el('i'));
+    st.appendChild(document.createTextNode(!t.total?'no times yet':(t.ok===t.total?t.total+' ready':t.ok+' of '+t.total+' ready')));
+    b.appendChild(st);
+    b.onclick=()=>{ S.activeMeeting=m.id; S.pickDate=null; ensurePickDate(); save(); renderAll(); };
+    box.appendChild(b);
+  });
+  const add=el('button','newmtg','+ New meeting');
+  add.onclick=()=>{
+    const m=blankMeeting(exec()?exec().id:S.execs[0].id);
+    S.meetings.push(m); S.activeMeeting=m.id; S.pickDate=null; ensurePickDate();
+    save(); renderAll(); $('subject').focus();
+    toast('New meeting — add who it’s with');
+  };
+  box.appendChild(add);
+}
+function renderExecSel(){
+  const box=$('exsel'); box.innerHTML='';
+  const m=mtg();
+  S.execs.forEach(e=>{
+    const b=el('button','exbtn'); b.setAttribute('aria-pressed',String(e.id===m.execId));
+    const n=el('b',null,execName(e)); b.appendChild(n);
+    b.appendChild(el('s',null,e.tz.split('/').pop().replace(/_/g,' ')+' · '+hoursSummary(e)));
+    b.onclick=()=>{ m.execId=e.id; S.pickDate=null; ensurePickDate(); save(); renderAll(); };
+    box.appendChild(b);
+  });
+  const edit=el('button','exedit','Edit their hours');
+  edit.onclick=openDrawer; box.appendChild(edit);
+}
+function renderChips(){
+  const cw=$('chips'); cw.innerHTML='';
+  const now=new Date();
+  parts().forEach(p=>{
+    const c=el('span','chip');
+    c.appendChild(el('b',null,p.name||p.city));
+    c.appendChild(el('span','loc',p.city));
+    c.appendChild(el('span','now',hhmm(partsIn(now,p.tz))+' now'));
+    c.style.cursor='pointer';
+    c.onclick=e=>{ if(e.target.classList.contains('x')) return; showGuests(true); };
+    c.title='Click to edit their city and hours';
+    const x=el('button','x','×'); x.setAttribute('aria-label','Remove '+(p.name||p.city));
+    x.onclick=e=>{ e.stopPropagation(); const m=mtg(); m.participants=m.participants.filter(z=>z.id!==p.id); save(); renderAll(); };
+    c.appendChild(x); cw.appendChild(c);
+  });
+  const a=el('button','chip chipadd','+ Add someone');
+  a.onclick=addPerson; cw.appendChild(a);
+}
+function addPerson(){
+  const m=mtg();
+  if(m.participants.length>=6){ toast('Six guests is about the sensible limit'); return; }
+  m.participants.push(newPerson('London'));
+  save(); renderAll(); showGuests(true);
+  setTimeout(()=>{ const i=document.querySelector('#people .mini:last-child input'); if(i) i.focus(); },60);
+}
+
+/* ---------- step 2: the picker ---------- */
+function renderCal(){
+  const ex=exec(); ensurePickDate();
+  const [my,mm]=S.pickMonth.split('-').map(Number);
+  $('mLabel').textContent=MON[mm-1]+' '+my;
+  const dw=$('dow'); dw.innerHTML='';
+  DAY3.forEach(d=>dw.appendChild(el('span',null,d[0]+d[1])));
+  const grid=$('dgrid'); grid.innerHTML='';
+  const first=new Date(Date.UTC(my,mm-1,1));
+  const lead=first.getUTCDay();
+  const days=new Date(Date.UTC(my,mm,0)).getUTCDate();
+  const today=todayYmdIn(ex.tz);
+  for(let i=0;i<lead;i++){ const b=el('button','pad'); b.disabled=true; b.tabIndex=-1; grid.appendChild(b); }
+  for(let d=1;d<=days;d++){
+    const ds=my+'-'+String(mm).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+    const b=el('button',null,String(d));
+    const wd=fromYmd(ds).getUTCDay();
+    const working=(ex.days[wd]||{}).on;
+    const trip=travelOn(ex,ds);
+    if(ds<today){ b.disabled=true; }
+    else{
+      if(!working) b.classList.add('offday');
+      if(ds===today) b.classList.add('today');
+      if(ds===S.pickDate) b.classList.add('on');
+      if(trip){ const f=el('span','fly','✈'); f.title='Away in '+(trip.label||trip.tz); b.appendChild(f); }
+      const n=cands().filter(c=>c.date===ds).length;
+      if(n){ const mk=el('span','mark'); for(let k=0;k<Math.min(n,3);k++) mk.appendChild(el('i')); b.appendChild(mk); }
+      b.onclick=()=>{ S.pickDate=ds; S.pickMonth=ds.slice(0,7); save(); renderMain(); };
+    }
+    b.setAttribute('aria-label',prettyDate(ds)+(working?'':' — not a working day'));
+    grid.appendChild(b);
+  }
+}
+function renderTimes(){
+  const ex=exec(), box=$('times'), lab=$('tLabel');
+  box.innerHTML='';
+  $('tMore').textContent=S.wideTimes?'Show working hours only':'Show early & late';
+  if(!S.pickDate){ lab.textContent='Pick a day'; box.appendChild(el('span','none','Choose a date on the left.')); return; }
+  const ds=S.pickDate, wd=fromYmd(ds).getUTCDay(), rule=ex.days[wd]||{on:false,s:'09:00',e:'17:00'};
+  const trip=travelOn(ex,ds), dur=mtg().duration;
+  lab.textContent=prettyDate(ds)+(trip?' · away in '+(trip.label||trip.tz):'');
+  let lo,hi;
+  if(S.wideTimes){ lo=6*60; hi=23*60; }
+  else if(rule.on){ lo=toMin(rule.s); hi=toMin(rule.e); }
+  else { lo=8*60; hi=19*60; }
+  if(hi<=lo) hi=lo+60;
+  let any=false, offerable=0;
+  for(let m=lo;m+dur<=hi+(S.wideTimes?60:0)&&m<24*60;m+=30){
+    const issue=ruleAt(ds,m);
+    const fit=issue?null:fitAt(ds,m);
+    const on=chosenAt(ds,m);
+    const b=el('button','t'+(on?' on':(issue?' off':(fit==='stop'?' stop':(fit==='warn'?' warn':' good')))),fromMin(m));
+    b.title=issue?issue:(fit==='stop'?'Unkind to at least one guest':(fit==='warn'?'Outside someone’s usual hours':'Suits everyone'));
+    b.setAttribute('aria-pressed',String(!!on));
+    b.onclick=()=>{
+      const M=mtg(), ex2=chosenAt(ds,m);
+      if(ex2){ M.candidates=M.candidates.filter(c=>c.id!==ex2.id); }
+      else{ M.candidates.push({id:uid(),date:ds,start:m,end:m+M.duration,ack:false});
+            toast(fromMin(m)+' on '+shortDate(ds)+' added'); }
+      save(); renderMain();
+    };
+    box.appendChild(b); any=true; if(!issue) offerable++;
+  }
+  if(!any) box.appendChild(el('span','none','Nothing fits a '+dur+'-minute meeting that day. Try “Show early & late”.'));
+  else if(!offerable){
+    const why=ruleAt(ds,lo)||'None of these work';
+    box.appendChild(el('span','none',why+'. Pick another day.'));
+  }
+}
+
+/* ---------- step 3 ---------- */
+function renderSlots(){
+  const box=$('slots'); box.innerHTML='';
+  const ex=exec();
+  if(!cands().length){
+    const b=el('div','blank');
+    b.innerHTML='No times yet for this meeting. Tap the ones you want to offer above.';
+    box.appendChild(b); return;
+  }
+  sorted(cands()).forEach(c=>{
+    const ns=notesFor(c), hard=ns.filter(n=>n.sev==='hard');
+    const card=el('div','slot'+(hard.length?(c.ack?' okd':' blocked'):''));
+    const inst=candInstant(c), etz=effectiveTz(ex,c.date), trip=travelOn(ex,c.date);
+    const top=el('div','top');
+    top.appendChild(el('span','when',prettyDate(c.date)));
+    top.appendChild(el('span','clock',fromMin(c.start)+'–'+fromMin(c.end)+'  ·  '+(c.end-c.start)+' min  ·  '+tzAbbr(inst,ex.tz)));
+    if(trip) top.appendChild(el('span','tag trip','In '+(trip.label||etz)+' — '+hhmm(partsIn(inst,etz))+' there'));
+    if(!hard.length) top.appendChild(el('span','tag ok','Good to offer'));
+    else if(c.ack)   top.appendChild(el('span','tag yes','Offering anyway'));
+    else             top.appendChild(el('span','tag no','Not in the email'));
+    card.appendChild(top);
+    const kill=el('button','kill','×'); kill.setAttribute('aria-label','Remove this time'); kill.title='Remove';
+    kill.onclick=()=>{ const m=mtg(); m.candidates=m.candidates.filter(z=>z.id!==c.id); save(); renderAll(); };
+    card.appendChild(kill);
+    if(ns.length){
+      const nl=el('div','notes');
+      ns.forEach(n=>{ const d=el('div','note '+n.sev); d.appendChild(el('span','g')); d.appendChild(el('span',null,n.msg)); nl.appendChild(d); });
+      card.appendChild(nl);
+    }
+    if(hard.length){
+      const r=el('div','confirm');
+      if(c.ack){
+        r.appendChild(el('span','aside','You chose to offer this one anyway.'));
+        const u=el('button','undo','Change my mind');
+        u.onclick=()=>{ c.ack=false; save(); renderAll(); }; r.appendChild(u);
+      }else{
+        const b=el('button','cbtn','Offer it anyway');
+        b.onclick=()=>{ c.ack=true; save(); renderAll(); }; r.appendChild(b);
+        r.appendChild(el('span','aside','Left out of the email and the holds until you say so.'));
+      }
+      card.appendChild(r);
+    }
+    box.appendChild(card);
+  });
+}
+function renderTable(){
+  const w=$('tbl');
+  if(!cands().length){ w.innerHTML=''; return; }
+  const ex=exec(), t=el('table');
+  const thead=el('thead'), hr=el('tr');
+  hr.appendChild(el('th',null,'Time'));
+  const the=el('th'); the.innerHTML=execName(ex).split(' ')[0]+'<small>'+ex.tz.split('/').pop().replace(/_/g,' ')+'</small>'; hr.appendChild(the);
+  parts().forEach(p=>{ const th=el('th'); th.innerHTML=(p.name||p.city)+'<small>'+p.city+'</small>'; hr.appendChild(th); });
+  thead.appendChild(hr); t.appendChild(thead);
+  const tb=el('tbody');
+  sorted(cands()).forEach(c=>{
+    const inst=candInstant(c), tr=el('tr');
+    if(!usable(c)) tr.className='dim';
+    tr.appendChild(el('td','wh',shortDate(c.date)+' · '+fromMin(c.start)));
+    tr.appendChild(el('td','tt',hhmm(partsIn(inst,effectiveTz(ex,c.date)))));
+    const baseDay=partsIn(inst,ex.tz).d;
+    parts().forEach(p=>{
+      const lp=partsIn(inst,p.tz), td=el('td'), b=band(p,lp);
+      td.className='tt'+(b==='stop'?' s':(b==='warn'?' w':''));
+      const dd=lp.d-baseDay, shift=(dd===1||dd<-20)?'+1':((dd===-1||dd>20)?'−1':'');
+      td.innerHTML=hhmm(lp)+(shift?'<sup>'+shift+'</sup>':'');
+      td.title=lp.wd+' '+hhmm(lp)+' '+tzAbbr(inst,p.tz);
+      tr.appendChild(td);
+    });
+    tb.appendChild(tr);
+  });
+  t.appendChild(tb); w.innerHTML=''; w.appendChild(t);
+}
+
+/* ---------- step 4: output ---------- */
+function optionLine(c){
+  const ex=exec(), inst=candInstant(c), bits=[];
+  parts().forEach(p=>bits.push(hhmm(partsIn(inst,p.tz))+' '+p.city));
+  const etz=effectiveTz(ex,c.date);
+  bits.push(hhmm(partsIn(inst,etz))+' '+etz.split('/').pop().replace(/_/g,' '));
+  return prettyDate(c.date)+' — '+bits.join(' / ');
+}
+function buildEmail(){
+  const m=mtg(), use=sorted(offering());
+  if(!use.length) return cands().length
+    ? 'Every time on this meeting still has something to confirm. Confirm one above, or add a different time.'
+    : 'Add the times you want to offer and the email will write itself here.';
+  const who=(m.toName||'').trim(), subj=(m.subject||'a call').trim()||'a call';
+  const ex=execName(exec()).split(' ')[0];
+  const lines=use.map(c=>'• '+optionLine(c)).join('\n');
+  const n=use.length, word=n===1?'this time':(n===2?'either of these':'any of these');
+  if(m.tone==='warm'){
+    return (who?('Hi '+who+','):'Hi,')+'\n\n'+
+      'Lovely to hear from you. I’ve found a few windows in '+ex+'’s diary for '+subj+' — '+
+      'each one is shown in your local time as well as ours, so there’s nothing to work out:\n\n'+lines+'\n\n'+
+      'Would '+word+' suit you? If none of them land well I’ll happily look again — just tell me '+
+      'roughly when works and I’ll build around it.\n\nBest wishes';
+  }
+  if(m.tone==='formal'){
+    return (who?('Dear '+who+','):'Dear all,')+'\n\n'+
+      'Further to your note, I am pleased to propose the following times for '+subj+' with '+ex+'. '+
+      'Each option is given in your local time and in ours:\n\n'+lines+'\n\n'+
+      'Kindly confirm which you would prefer and I shall issue a calendar invitation accordingly. '+
+      'Should none prove convenient, I would be glad to offer further alternatives.\n\nKind regards';
+  }
+  return (who?('Hi '+who+','):'Hi,')+'\n\n'+
+    (n===1
+      ? 'Here is a time that works on '+ex+'’s side for '+subj+', listed in your local time and ours:'
+      : 'Here are '+n+' times that work on '+ex+'’s side for '+subj+'. Each one is listed in your local time and ours:')+
+    '\n\n'+lines+'\n\n'+
+    'Let me know which works best and I’ll send the invitation. '+
+    'If none of them fit, tell me what does and I’ll find something.\n\nBest';
+}
+function buildTableText(){
+  const use=sorted(offering());
+  if(!use.length) return 'Nothing confirmed to offer yet.';
+  const ex=exec();
+  const cols=['Option'].concat(parts().map(p=>p.name||p.city)).concat([execName(ex).split(' ')[0]]);
+  const rows=use.map((c,i)=>{
+    const inst=candInstant(c), r=[(i+1)+'. '+shortDate(c.date)];
+    parts().forEach(p=>r.push(hhmm(partsIn(inst,p.tz))+' '+p.city));
+    r.push(hhmm(partsIn(inst,effectiveTz(ex,c.date))));
+    return r;
+  });
+  const w=cols.map((c,i)=>Math.max(c.length,...rows.map(r=>(r[i]||'').length)));
+  const line=a=>a.map((v,i)=>String(v||'').padEnd(w[i])).join('  ').trimEnd();
+  return [line(cols),w.map(n=>'-'.repeat(n)).join('  ')].concat(rows.map(line)).join('\n');
+}
+function icsStamp(dt){
+  return dt.getUTCFullYear()+String(dt.getUTCMonth()+1).padStart(2,'0')+String(dt.getUTCDate()).padStart(2,'0')+'T'+
+    String(dt.getUTCHours()).padStart(2,'0')+String(dt.getUTCMinutes()).padStart(2,'0')+String(dt.getUTCSeconds()).padStart(2,'0')+'Z';
+}
+function esc(s){ return String(s).replace(/\\/g,'\\\\').replace(/;/g,'\\;').replace(/,/g,'\\,').replace(/\n/g,'\\n'); }
+function buildIcs(){
+  const m=mtg(), use=sorted(offering()), now=new Date();
+  const L=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Slot Desk//EN','CALSCALE:GREGORIAN','METHOD:PUBLISH'];
+  use.forEach((c,i)=>{
+    const st=candInstant(c), en=new Date(st.getTime()+(c.end-c.start)*60000);
+    L.push('BEGIN:VEVENT','UID:'+c.id+'-'+i+'@slotdesk.local','DTSTAMP:'+icsStamp(now),
+      'DTSTART:'+icsStamp(st),'DTEND:'+icsStamp(en),
+      'SUMMARY:'+esc('HOLD — '+(m.subject||'Proposed meeting')+' (option '+(i+1)+')'),
+      'DESCRIPTION:'+esc('Tentative hold offered to an external party. Release if not taken.\n'+optionLine(c)),
+      'STATUS:TENTATIVE','TRANSP:TRANSPARENT','END:VEVENT');
+  });
+  L.push('END:VCALENDAR');
+  return L.join('\r\n');
+}
+let outMode='email';
+function renderOut(){
+  $('out').value = outMode==='table'?buildTableText():(outMode==='ics'?buildIcs():buildEmail());
+  $('btnCopy').textContent = outMode==='table'?'Copy the table':(outMode==='ics'?'Copy the hold text':'Copy the email');
+  $('btnTable').textContent = outMode==='table'?'Back to the email':'Show as a table';
+}
+
+/* ---------- drawer: executives ---------- */
+let drawerExec=null;
+function curExec(){ return S.execs.find(e=>e.id===drawerExec)||exec()||S.execs[0]; }
+function openDrawer(){
+  drawerExec=(exec()||S.execs[0]||{}).id;
+  renderDrawer();
+  $('drawer').classList.add('on'); $('scrim').classList.add('on');
+  $('drawer').setAttribute('aria-hidden','false'); setTimeout(()=>$('execName').focus(),260);
+}
+function closeDrawer(){
+  $('drawer').classList.remove('on'); $('scrim').classList.remove('on');
+  $('drawer').setAttribute('aria-hidden','true'); renderAll();
+}
+function renderDrawer(){
+  const ex=curExec(); if(!ex) return;
+  const list=$('drawerExecs'); list.innerHTML='';
+  S.execs.forEach(e=>{
+    const b=el('button','exbtn'); b.setAttribute('aria-pressed',String(e.id===ex.id));
+    b.appendChild(el('b',null,execName(e)));
+    if(e.role) b.appendChild(el('s',null,e.role));
+    b.onclick=()=>{ drawerExec=e.id; renderDrawer(); };
+    list.appendChild(b);
+  });
+  $('drawerT').textContent=execName(ex);
+  $('execName').value=ex.name||'';
+  $('execRole').value=ex.role||'';
+  tzOptions($('execTz'),ex.tz);
+  $('bufMin').value=ex.buffer??0;
+  $('noticeH').value=ex.notice??0;
+
+  const wk=$('wk'); wk.innerHTML='';
+  for(let i=0;i<7;i++){
+    const r=ex.days[i]||{on:false,s:'09:00',e:'17:00'};
+    const row=el('div','wd');
+    row.appendChild(el('span','nm',DAY3[i]));
+    const sw=el('label','sw');
+    const cb=document.createElement('input'); cb.type='checkbox'; cb.checked=!!r.on;
+    cb.setAttribute('aria-label',DAYFULL[i]+' is a working day');
+    sw.append(cb,el('span','tr'),el('span','kn'));
+    const t1=document.createElement('input'); t1.type='time'; t1.value=r.s; t1.disabled=!r.on;
+    t1.setAttribute('aria-label',DAYFULL[i]+' start');
+    const t2=document.createElement('input'); t2.type='time'; t2.value=r.e; t2.disabled=!r.on;
+    t2.setAttribute('aria-label',DAYFULL[i]+' end');
+    const up=()=>{ ex.days[i]={on:cb.checked,s:t1.value,e:t2.value}; save(); renderDrawer(); };
+    cb.onchange=up; t1.onchange=up; t2.onchange=up;
+    row.append(sw,t1,t2); wk.appendChild(row);
+  }
+  const bs=$('blocks'); bs.innerHTML='';
+  (ex.blocks||[]).forEach(b=>{
+    const d=el('div','mini');
+    const x=el('button','x','×'); x.setAttribute('aria-label','Remove');
+    x.onclick=()=>{ ex.blocks=ex.blocks.filter(z=>z.id!==b.id); save(); renderDrawer(); };
+    const lab=document.createElement('input'); lab.type='text'; lab.value=b.label||''; lab.placeholder='What is it?';
+    lab.setAttribute('aria-label','Name of the protected time');
+    lab.oninput=()=>{ b.label=lab.value; save(); };
+    const g=el('div','g3');
+    const ds=document.createElement('select'); ds.setAttribute('aria-label','Day');
+    DAY3.forEach((n,i)=>{ const o=el('option',null,n); o.value=i; if(i===b.day)o.selected=true; ds.appendChild(o); });
+    const t1=document.createElement('input'); t1.type='time'; t1.value=b.s; t1.setAttribute('aria-label','From');
+    const t2=document.createElement('input'); t2.type='time'; t2.value=b.e; t2.setAttribute('aria-label','Until');
+    ds.onchange=()=>{ b.day=+ds.value; save(); };
+    t1.onchange=()=>{ b.s=t1.value; save(); };
+    t2.onchange=()=>{ b.e=t2.value; save(); };
+    g.append(ds,t1,t2); d.append(x,lab,g); bs.appendChild(d);
+  });
+  const ts=$('trips'); ts.innerHTML='';
+  (ex.travel||[]).forEach(t=>{
+    const d=el('div','mini');
+    const x=el('button','x','×'); x.setAttribute('aria-label','Remove');
+    x.onclick=()=>{ ex.travel=ex.travel.filter(z=>z.id!==t.id); save(); renderDrawer(); };
+    const lab=document.createElement('input'); lab.type='text'; lab.value=t.label||''; lab.placeholder='Where to?';
+    lab.setAttribute('aria-label','Destination');
+    lab.oninput=()=>{ t.label=lab.value; save(); };
+    const sel=document.createElement('select'); tzOptions(sel,t.tz); sel.setAttribute('aria-label','Timezone there');
+    sel.onchange=()=>{ t.tz=sel.value; save(); };
+    const g=el('div','g2');
+    const d1=document.createElement('input'); d1.type='date'; d1.value=t.from; d1.setAttribute('aria-label','From');
+    const d2=document.createElement('input'); d2.type='date'; d2.value=t.to; d2.setAttribute('aria-label','Until');
+    d1.onchange=()=>{ t.from=d1.value; save(); };
+    d2.onchange=()=>{ t.to=d2.value; save(); };
+    g.append(d1,d2); d.append(x,lab,sel,g); ts.appendChild(d);
+  });
+}
+function showGuests(on){
+  const p=$('people'), t=$('guestToggle');
+  p.hidden=!on; t.hidden=!on || !parts().length;
+  if(on) renderGuestEditors();
+}
+function renderGuestEditors(){
+  const ps=$('people'); if(ps){
+    ps.innerHTML='';
+    parts().forEach(p=>{
+      const d=el('div','mini');
+      const x=el('button','x','×'); x.setAttribute('aria-label','Remove');
+      x.onclick=()=>{ const m=mtg(); m.participants=m.participants.filter(z=>z.id!==p.id); save(); renderAll(); showGuests(true); };
+      const nm=document.createElement('input'); nm.type='text'; nm.value=p.name||''; nm.placeholder='Their name';
+      nm.setAttribute('aria-label','Name'); nm.oninput=()=>{ p.name=nm.value; save(); renderChips(); };
+      const cs=document.createElement('select'); cs.setAttribute('aria-label','City');
+      CITIES.forEach(([c])=>{ const o=el('option',null,c); o.value=c; if(c===p.city)o.selected=true; cs.appendChild(o); });
+      cs.onchange=()=>{ p.city=cs.value; p.tz=(CITIES.find(c=>c[0]===cs.value)||[])[1]||p.tz; save(); renderMain(); showGuests(true); };
+      const g=el('div','g2');
+      const t1=document.createElement('input'); t1.type='time'; t1.value=p.cs; t1.setAttribute('aria-label','Comfortable from');
+      const t2=document.createElement('input'); t2.type='time'; t2.value=p.ce; t2.setAttribute('aria-label','Comfortable until');
+      t1.onchange=()=>{ p.cs=t1.value; save(); renderMain(); showGuests(true); };
+      t2.onchange=()=>{ p.ce=t2.value; save(); renderMain(); showGuests(true); };
+      g.append(t1,t2); d.append(x,nm,cs,g); ps.appendChild(d);
+    });
+  }
+}
+
+/* ---------- first-run setup ---------- */
+let suDays={0:false,1:true,2:true,3:true,4:true,5:true,6:false};
+function paintDay(b,on){
+  b.className='chip'+(on?'':' chipadd');
+  b.setAttribute('aria-pressed',String(!!on));
+  b.style.cssText = on ? 'background:var(--acc);color:var(--acc-ink);border-color:var(--acc);font-weight:600' : '';
+}
+function renderSetup(){
+  tzOptions($('suTz'),localTz());
+  const box=$('suDays');
+  if(box.childElementCount===7){                       // toggle in place — keeps focus
+    Array.from(box.children).forEach((b,i)=>paintDay(b,suDays[i]));
+    return;
+  }
+  box.innerHTML='';
+  for(let i=0;i<7;i++){
+    const b=el('button',null,DAY3[i]); b.type='button';
+    paintDay(b,suDays[i]);
+    b.onclick=()=>{ suDays[i]=!suDays[i]; paintDay(b,suDays[i]); };
+    box.appendChild(b);
+  }
+}
+function finishSetup(){
+  const name=$('suName').value.trim();
+  if(!name){ $('suName').focus(); toast('Give them a name first'); return; }
+  const ex=blankExec($('suTz').value);
+  ex.name=name; ex.role=$('suRole').value.trim();
+  const s=$('suStart').value||'09:00', e=$('suEnd').value||'18:00';
+  for(let i=0;i<7;i++) ex.days[i]={on:!!suDays[i],s:s,e:e};
+  const m=blankMeeting(ex.id);
+  S={v:2,demo:false,execs:[ex],meetings:[m],activeMeeting:m.id,pickDate:null,pickMonth:null,wideTimes:false};
+  ensurePickDate(); save(); renderAll();
+  toast('All set — ' + name + ' is ready');
+  setTimeout(()=>$('subject').focus(),200);
+}
+
+/* ---------- wiring ---------- */
+function buildLens(){
+  const box=$('lens'); box.innerHTML='';
+  [30,45,60,90].forEach(v=>{
+    const b=el('button',null,v+' min'); b.setAttribute('aria-pressed',String(v===mtg().duration));
+    b.onclick=()=>{ mtg().duration=v; save(); renderAll(); };
+    box.appendChild(b);
+  });
+}
+function buildTone(){
+  const box=$('tone'); box.innerHTML='';
+  [['warm','Warm'],['neutral','Neutral'],['formal','Formal']].forEach(([k,l])=>{
+    const b=el('button',null,l); b.setAttribute('aria-pressed',String(k===mtg().tone));
+    b.onclick=()=>{ mtg().tone=k; outMode='email'; save(); renderAll(); };
+    box.appendChild(b);
+  });
+}
+function addFromInput(){
+  const v=$('quick').value;
+  if(!v.trim()){ $('quick').focus(); return; }
+  const {made,errs}=parseAll(v);
+  made.forEach(c=>mtg().candidates.push(c));
+  const o=$('oops');
+  if(errs.length){ o.hidden=false; o.textContent=errs.join('  '); } else { o.hidden=true; o.textContent=''; }
+  if(made.length){ $('quick').value=''; toast(made.length===1?'Added':made.length+' times added'); }
+  save(); renderAll();
+}
+
+$('btnAdd').onclick=addFromInput;
+$('quick').addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); addFromInput(); }});
+$('subject').oninput=e=>{ mtg().subject=e.target.value; save(); renderMeetings(); renderOut(); };
+$('toName').oninput =e=>{ mtg().toName=e.target.value; save(); renderOut(); };
+
+$('mPrev').onclick=()=>{ const [y,m]=S.pickMonth.split('-').map(Number);
+  S.pickMonth=ymd(new Date(Date.UTC(y,m-2,1))).slice(0,7); renderCal(); };
+$('mNext').onclick=()=>{ const [y,m]=S.pickMonth.split('-').map(Number);
+  S.pickMonth=ymd(new Date(Date.UTC(y,m,1))).slice(0,7); renderCal(); };
+$('tMore').onclick=()=>{ S.wideTimes=!S.wideTimes; save(); renderTimes(); };
+$('tToggle').onclick=()=>{
+  const w=$('typeWrap'); w.hidden=!w.hidden;
+  $('tToggle').textContent=w.hidden?'Rather type it?':'Hide typing';
+  if(!w.hidden) $('quick').focus();
+};
+
+$('execName').onchange=e=>{ curExec().name=e.target.value||'Executive'; save(); renderDrawer(); };
+$('execRole').onchange=e=>{ curExec().role=e.target.value.trim(); save(); renderDrawer(); };
+$('execTz').onchange  =e=>{ curExec().tz=e.target.value; S.pickDate=null; save(); renderDrawer(); };
+$('bufMin').onchange  =e=>{ curExec().buffer=Math.max(0,+e.target.value||0); save(); };
+$('noticeH').onchange =e=>{ curExec().notice=Math.max(0,+e.target.value||0); save(); };
+$('btnAddBlock').onclick=()=>{ curExec().blocks.push({id:uid(),day:1,s:'09:00',e:'10:00',label:''}); save(); renderDrawer(); };
+$('btnAddTrip').onclick =()=>{ const t=todayYmdIn(curExec().tz);
+  curExec().travel.push({id:uid(),from:t,to:t,tz:'America/New_York',label:''}); save(); renderDrawer(); };
+$('btnAddExec').onclick=()=>{
+  const ex=blankExec(); ex.name='New executive';
+  S.execs.push(ex); drawerExec=ex.id; save(); renderDrawer(); $('execName').select();
+};
+$('btnDelExec').onclick=()=>{
+  if(S.execs.length<2){ toast('Keep at least one executive'); return; }
+  const ex=curExec();
+  const used=S.meetings.filter(m=>m.execId===ex.id).length;
+  confirmDlg('Remove '+execName(ex)+'?',
+    used? used+' meeting'+(used===1?'':'s')+' will move to '+execName(S.execs.find(e=>e.id!==ex.id))+'.'
+        : 'Their hours, protected times and trips will be deleted from this computer.',()=>{
+    S.execs=S.execs.filter(e=>e.id!==ex.id);
+    const fallback=S.execs[0].id;
+    S.meetings.forEach(m=>{ if(m.execId===ex.id) m.execId=fallback; });
+    drawerExec=fallback; S.pickDate=null; save(); renderDrawer(); renderAll();
+  });
+};
+
+$('btnCopy').onclick=async()=>{
+  const ok=await copyText($('out').value);
+  toast(ok?'Copied — paste it into your email':'Select the text and copy it manually');
+};
+$('btnTable').onclick=()=>{ outMode=(outMode==='table')?'email':'table'; renderOut(); };
+$('btnIcs').onclick=()=>{
+  if(!offering().length){ toast('Nothing confirmed to hold yet'); return; }
+  download('slot-desk-holds.ics',buildIcs(),'text/calendar;charset=utf-8');
+  toast('Downloaded — open the file to put the holds in your calendar');
+};
+$('btnIcsText').onclick=()=>{
+  if(!offering().length){ toast('Nothing confirmed to hold yet'); return; }
+  outMode='ics'; renderOut(); toast('Save this as a file ending in .ics');
+};
+$('guestToggle').onclick=()=>showGuests(false);
+$('btnSettings').onclick=openDrawer;
+$('btnClose').onclick=closeDrawer;
+$('scrim').onclick=closeDrawer;
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&$('drawer').classList.contains('on')) closeDrawer(); });
+$('btnExport').onclick=()=>{ download('slot-desk-backup.json',JSON.stringify(S,null,2),'application/json');
+  toast('Saved — keep this file somewhere safe'); };
+$('btnImport').onclick=()=>$('fileIn').click();
+$('fileIn').onchange=e=>{
+  const f=e.target.files&&e.target.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=()=>{
+    try{
+      let o=JSON.parse(r.result);
+      if(o && o.execs && !o.meetings) o=migrate(o);           // a v1 backup
+      if(!o||!o.execs||!o.execs.length||!o.meetings) throw new Error('bad');
+      S=o; S.demo=false; S.pickDate=null;
+      if(!S.activeMeeting||!S.meetings.some(m=>m.id===S.activeMeeting)) S.activeMeeting=S.meetings[0].id;
+      ensurePickDate(); save(); closeDrawer(); renderAll(); toast('Backup loaded');
+    }catch(err){ toast('That doesn’t look like a Slot Desk backup'); }
+  };
+  r.readAsText(f); e.target.value='';
+};
+$('btnFresh').onclick=()=>{
+  confirmDlg('Set up your own?','The example executives and meetings will be cleared and you’ll start fresh.',()=>{
+    S={v:2,demo:false,execs:[],meetings:[],activeMeeting:null,pickDate:null,pickMonth:null,wideTimes:false};
+    save(); renderAll(); setTimeout(()=>$('suName').focus(),120);
+  });
+};
+$('suGo').onclick=finishSetup;
+$('suName').addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); finishSetup(); }});
+$('btnTheme').onclick=()=>{
+  const cur=document.documentElement.getAttribute('data-theme');
+  const dark=cur?cur==='dark':matchMedia('(prefers-color-scheme:dark)').matches;
+  document.documentElement.setAttribute('data-theme',dark?'light':'dark');
+};
+window.addEventListener('beforeunload',save);
+
+/* ---------- go ---------- */
+function renderStatus(){
+  const total=cands().length, ok=offering().length;
+  const pill=$('status'), t=$('statusT');
+  if(!total){ pill.className='pill hold'; t.textContent='No times yet'; return; }
+  if(ok===total){ pill.className='pill ok'; t.textContent=total===1?'1 time ready to send':total+' times ready to send'; }
+  else { const n=total-ok; pill.className='pill hold';
+    t.textContent=ok+' of '+total+' ready — '+(n===1?'1 needs':n+' need')+' a look'; }
+}
+function renderMain(){ renderMeetings(); renderExecSel(); renderChips();
+  renderCal(); renderTimes(); renderSlots(); renderTable(); renderOut(); renderStatus(); }
+function renderAll(){
+  const needsSetup = !S.execs.length || !S.meetings.length;
+  $('setupView').hidden = !needsSetup;
+  $('appView').hidden = needsSetup;
+  $('demo').style.display = (S.demo && !needsSetup) ? '' : 'none';
+  $('status').style.display = needsSetup ? 'none' : '';
+  $('btnSettings').style.display = needsSetup ? 'none' : '';
+  if(needsSetup){ renderSetup(); return; }
+  ensurePickDate();
+  const m=mtg(), ex=exec();
+  $('subject').value=m.subject||'';
+  $('toName').value=m.toName||'';
+  $('sub2').textContent='Choose a day, then tap the times you want to offer — shown in '+
+    ex.tz.split('/').pop().replace(/_/g,' ')+' time, '+execName(ex).split(' ')[0]+'’s own clock.';
+  $('quick').placeholder=cands().length?'add another time…':'tue 4pm, tue 6pm, wed 10am';
+  buildLens(); buildTone();
+  renderMain();
+}
+renderAll();
+
+</script>
+</body>
+</html>

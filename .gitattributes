@@ -1,0 +1,8 @@
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.woff2 binary
+*.ttf binary
+*.zip binary
+# Preserve the bundled font license text exactly as supplied.
+**/LICENSE-*.txt -text whitespace=-blank-at-eol

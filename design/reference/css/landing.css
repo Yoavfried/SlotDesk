@@ -1,0 +1,171 @@
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html,body{ background:#D8E84A; }
+  body{
+    color:#15160A;
+    font-family:'IBM Plex Mono', monospace;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  ::selection{ background:#15160A; color:#D8E84A; }
+  a{ color:#15160A; }
+
+  nav{ padding:22px clamp(20px,5vw,64px); }
+  nav a{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    letter-spacing:0.06em;
+    text-decoration:none;
+    color:#4B4F1C;
+  }
+  nav a:hover{ color:#15160A; }
+
+  .wrap{
+    min-height:calc(100vh - 64px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:2vh 5vw 6vh;
+  }
+  .term-panel{
+    width:min(94vw, 780px);
+    border:2px solid #15160A;
+    background:#DEEB63;
+    position:relative;
+    font-family:'VT323', monospace;
+    color:#15160A;
+  }
+  .term-panel::before{
+    content:"";
+    position:absolute;
+    inset:6px;
+    border:1px dashed #15160A;
+    opacity:0.5;
+    pointer-events:none;
+  }
+  .term-panel-title{
+    padding:26px 26px 20px;
+    border-bottom:2px solid #15160A;
+    display:flex;
+    align-items:baseline;
+    gap:12px;
+    flex-wrap:wrap;
+  }
+  .term-panel-title h1{
+    font-size:clamp(32px,6vw,48px);
+    line-height:1.1;
+    letter-spacing:0.01em;
+  }
+  .term-panel-title h1 .bracket{ opacity:0.55; }
+  .term-panel-title .tag{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10.5px;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    color:#15160A;
+    background:#F0955A;
+    border:1px solid #15160A;
+    border-radius:999px;
+    padding:2px 9px;
+  }
+
+  .term-body{ padding:24px 26px 28px; }
+
+  .term-diffbox{
+    border:1px solid rgba(21,22,10,0.25);
+    border-radius:4px;
+    overflow:hidden;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    line-height:1.5;
+    margin-bottom:22px;
+  }
+  .term-diffline{ display:flex; gap:10px; padding:7px 12px; }
+  .term-diffline .sign{ width:12px; flex:none; font-weight:600; }
+  .term-diffline.minus{ background:#F0C7B8; }
+  .term-diffline.minus .sign{ color:#A13A1E; }
+  .term-diffline.minus .text{ color:#6B3A26; }
+  .term-diffline.plus{ background:#C9E6B0; }
+  .term-diffline.plus .sign{ color:#2F5C1E; }
+  .term-diffline.plus .text{ color:#20361A; }
+
+  .term-headline{
+    font-family:'VT323', monospace;
+    font-size:clamp(24px,3.4vw,32px);
+    line-height:1.3;
+    max-width:56ch;
+    margin-bottom:16px;
+  }
+  .term-sub{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13.5px;
+    line-height:1.7;
+    color:#4B4F1C;
+    max-width:58ch;
+    margin-bottom:24px;
+  }
+
+  .term-shot{
+    border:2px solid #15160A;
+    border-radius:4px;
+    overflow:hidden;
+    margin-bottom:26px;
+    background:#F7F6F3;
+  }
+  .term-shot-bar{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 12px;
+    border-bottom:1px solid #15160A;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    color:#5C6122;
+    background:#EDEFD8;
+  }
+  .term-shot img{ display:block; width:100%; height:auto; }
+
+  .term-cta-row{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:14px;
+  }
+  .term-project-link{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:12px 20px;
+    border:1px solid #15160A;
+    background:#15160A;
+    color:#D8E84A;
+    text-decoration:none;
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:600;
+    font-size:14px;
+    letter-spacing:0.02em;
+  }
+  .term-project-link:hover{ background:#3A3E14; }
+  .term-cta-note{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:#5C6122;
+  }
+
+  .term-cursor{
+    display:inline-block;
+    width:9px; height:20px;
+    background:#15160A;
+    margin-left:2px;
+    vertical-align:-4px;
+    animation:termBlink 1s step-end infinite;
+  }
+  @keyframes termBlink{ 50%{ opacity:0; } }
+  @media (prefers-reduced-motion: reduce){
+    .term-cursor{ animation:none; }
+  }
+  @media (max-width:520px){
+    .term-panel-title h1{ font-size:28px; }
+  }

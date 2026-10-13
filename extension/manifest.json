@@ -1,0 +1,35 @@
+{
+  "manifest_version": 3,
+  "name": "SlotDesk Pilot",
+  "version": "0.7.0",
+  "minimum_chrome_version": "116",
+  "description": "Find meeting times, review every detail, and send Google Calendar invitations.",
+  "permissions": [
+    "sidePanel",
+    "identity"
+  ],
+  "host_permissions": [
+    "https://www.googleapis.com/*"
+  ],
+  "action": {
+    "default_title": "Open SlotDesk"
+  },
+  "side_panel": {
+    "default_path": "index.html"
+  },
+  "background": {
+    "service_worker": "prototype/background.js"
+  },
+  "content_security_policy": {
+    "extension_pages": "default-src 'self'; script-src 'self'; object-src 'none'; connect-src 'self' https://www.googleapis.com; base-uri 'none'"
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArEONWW0UAPcFtXm30QKhWvmhxHG04zlNk4fozM2V47vTx9n0VaGVg9lQNu7hZR+Db18Hke/F1ZcdxqFUL45hpRMqFT9Icg8+uGieYQUgvCg2IU/ps+2VSVSJltiN7ThkwPLGB21BaRazzKQQ2J6EvFwKwZJAN+Lq5xQ3VLhyd+Dc8+VDBdujs8SRRoIsgeKzQIzBMUW0grvr4XTE017ARtlWn2t86pTMJ0V9s82VYbZ0OMTfElIZAFTXJulKc2JeF2Ridu8mGznRu1K6HQTZ+yXriGkEW1+Rl5GH/bPf23hB1RsDkqDw0UUlEZ37G8Yg55LX0JRFqXh4OCvI8LNpawIDAQAB",
+  "oauth2": {
+    "client_id": "455352053894-vp4fk3rulqvgc3n0v26ftq4k9q24hghr.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/calendar.events",
+      "https://www.googleapis.com/auth/calendar.calendarlist.readonly",
+      "https://www.googleapis.com/auth/calendar.events.freebusy"
+    ]
+  }
+}

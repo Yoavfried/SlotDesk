@@ -1,0 +1,16 @@
+/* The wordmark is typography. Lime belongs to the full header surface. */
+header.bar,body>header{
+  --bg:#D8E84A; --sunk:#DEEB63;
+  --sunk-2:color-mix(in srgb,#15160A 10%,#D8E84A);
+  --ink:#15160A; --ink-2:#4B4F1C; --ink-3:#5C6122;
+  --line:rgba(21,22,10,.25); --line-2:rgba(21,22,10,.35);
+  --acc:#15160A; --acc-ink:#D8E84A; --acc-soft:#DEEB63;
+  --good:#2f6b4f; --good-bg:#e2efe7; --good-ln:#a9cdb9;
+  --warn:#8a5a16; --warn-bg:#f6ead7; --warn-ln:#dfbe84;
+  --stop:#a03b34; --stop-bg:#f7e5e2; --stop-ln:#e0aaa3;
+  background:var(--bg); color:var(--ink); backdrop-filter:none;
+}
+.brand-wordmark{display:inline-flex;align-items:baseline;white-space:nowrap;font:400 36px/1.1 'VT323',monospace;font-synthesis:none;letter-spacing:.01em;color:var(--ink)}
+.brand-wordmark .bracket{opacity:.55}
+.brand{gap:12px}
+@media(max-width:600px){.brand-wordmark{font-size:32px}}

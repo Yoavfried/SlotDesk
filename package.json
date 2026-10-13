@@ -1,0 +1,21 @@
+{
+  "name": "slotdesk",
+  "private": true,
+  "description": "Reviewed meeting scheduling and rescheduling across calendars and timezones.",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "test": "node scripts/test.mjs",
+    "check": "node scripts/check-repo.mjs",
+    "test:calendar-kit": "node scripts/calendar-test/compare.test.mjs",
+    "fixtures:slotdesk": "node scripts/calendar-test/generate.mjs",
+    "package:slotdesk": "node scripts/package-slotdesk.mjs"
+  },
+  "version": "0.7.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Yoavfried/slotdesk.git"
+  }
+}
