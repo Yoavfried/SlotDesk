@@ -4,5 +4,7 @@
 *.woff2 binary
 *.ttf binary
 *.zip binary
+# Keep the installed extension's exact bytes stable across platforms/checkouts.
+extension/** -text whitespace=cr-at-eol
 # Preserve the bundled font license text exactly as supplied.
 **/LICENSE-*.txt -text whitespace=-blank-at-eol

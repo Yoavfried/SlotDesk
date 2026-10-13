@@ -2,6 +2,7 @@ import { readdir, readFile, mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { deflateRawSync } from 'node:zlib';
+import { createHash } from 'node:crypto';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const app=path.join(root,'extension');
 const manifest=JSON.parse(await readFile(path.join(app,'manifest.json'),'utf8'));
@@ -21,5 +22,7 @@ for(const {name,data} of entries){
 const directory=Buffer.concat(central),end=Buffer.alloc(22);end.writeUInt32LE(0x06054b50);end.writeUInt16LE(entries.length,8);end.writeUInt16LE(entries.length,10);end.writeUInt32LE(directory.length,12);end.writeUInt32LE(offset,16);
 await mkdir(path.join(root,'dist'),{recursive:true});
 const filename=`SlotDesk-${manifest.version}.zip`;
-await writeFile(path.join(root,'dist',filename),Buffer.concat([...local,directory,end]));
+const zip=Buffer.concat([...local,directory,end]);
+await writeFile(path.join(root,'dist',filename),zip);
+await writeFile(path.join(root,'dist','SHA256SUMS.txt'),`${createHash('sha256').update(zip).digest('hex')}  ${filename}\n`);
 console.log(`Built dist/${filename} — ${entries.length} extension files; source tests and repository documentation excluded.`);
