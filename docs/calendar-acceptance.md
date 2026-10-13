@@ -34,13 +34,11 @@ The comparator ignores DTSTAMP, CREATED, LAST-MODIFIED and SEQUENCE metadata. It
 
 The project owner completed import, baseline export, the known-window search and one self-only creation in regular Chrome. Offline comparison of the two Google exports passed: 1,013 originals unchanged, zero removed/changed entries, unchanged timezone definitions and exactly one new event (1,014 total). The new event has the expected time, one own-profile attendee and a Meet link. The installed build was not separately confirmed. Raw exports and their receipts/report are private local evidence outside Git. Export comparison does not verify recipient delivery, RSVP or all runtime operations.
 
-## Remaining live cases
+## Optional integrity analysis
 
-Use the [combined live checklist](combined-live-check.md) for three sessions and one final export: reuse the delivered invitation, confirm two individual time changes, and keep permission/window probes unsent. The recurring exception and selected time changes require a time-aware comparison, not the creation-only comparator by itself. Account B uses Google Calendar only; the recipe does not require its primary calendar to be shared or another SlotDesk OAuth setup. Outcomes remain pending until reported and checked.
+This kit is a reproducible fixture and offline analysis tool, not a required user checklist. Google import does not establish invitation delivery or recipient responses. The comparator verifies creation-only before/after invariants; selected time changes need time-aware identity/content comparison instead. Provider timestamps, sequence and RSVP metadata must be assessed separately. Keep actual exports private and outside Git.
 
-Verify shared/delegated calendar permissions, participant-specific declined/tentative RSVP, real invitation delivery/optional status, incomplete reads and multiple-window recovery separately. Google import does not import guests or conference data, so the fixture cannot establish those cases. Record outcomes without publishing tokens, private exports or work-calendar details. Complete workplace approval before Nina's work-account pilot.
-
-For a completely offline round, skip the live setup. Use the repository's current synthetic test suite and the local comparator checks; keep Google/work-account acceptance marked pending.
+The current [validation record](testing.md) contains actual reported results. It does not mark unperformed checks as passed.
 
 ## Reproduce the kit
 

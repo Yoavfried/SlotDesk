@@ -6,7 +6,7 @@
 | Decisions | [UX](ux-decisions.md), [scheduling](scheduling-decisions.md), [live-feedback implementation](pending-ux-review.md) |
 | Meeting management | [Rescheduling, alerts and overlaps](rescheduling.md) |
 | Development | [Architecture](architecture.md), [engine API](engine-api.md), [installation](install.md) |
-| Validation | [Testing](testing.md), [three-session live checklist](combined-live-check.md), [calendar acceptance kit](calendar-acceptance.md) |
+| Validation | [Validation record](testing.md), [optional calendar comparison kit](calendar-acceptance.md) |
 | Privacy and distribution | [Security/privacy](security.md), [publication checklist](publication.md) |
 | Design | [Implementation guide](../design/README.md), [original style guide](../design/reference/style-guide.html) |
 | Version history | [Product changelog](changelog.md), [repository changelog](../CHANGELOG.md), [migration](migration.md) |

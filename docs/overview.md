@@ -26,10 +26,10 @@ The [implemented work register](implemented.md) includes F01–F04, the original
 
 ## Validation and work-account readiness
 
-The project owner reports that basic live connection, setup, search and booking work. Version 0.7.0 passes 1146 synthetic checks and a focused browser flow. The disposable dense-calendar creation/export integrity check passed; live shared/revoked permissions, updated panel/tab acceptance and the final export and workplace approval still gate Nina’s Google Workspace pilot. See [testing](testing.md) and [security/privacy](security.md). A selected profile or timezone does not establish access to someone's calendar; unavailable data is marked unconfirmed.
+The project owner reports that basic live connection, setup, search and booking work. Version 0.7.0 passes 1146 synthetic checks and a focused browser flow. The disposable dense-calendar creation/export integrity check passed. The owner additionally reports working No alerts, suitable proposals, successful rescheduling and correct overlap details,. Work-account access depends on the organization allowing the extension and Google permissions. See [testing](testing.md) and [security/privacy](security.md). A selected profile or timezone does not establish access to someone's calendar; unavailable data is marked unconfirmed.
 
 ## Meeting management and next work
 
-[Reviewed rescheduling](rescheduling.md), declined-invitation alerts and overlap details are implemented. Occupied proposals favor fewer appointments to move and offer replacement actions for the OTHER meetings. No appointment moves automatically; deletion and calendar moves remain unsupported. Outlook support follows the safety/work-account gate. Email-reading LLMs and live flight APIs remain deferred.
+[Reviewed rescheduling](rescheduling.md), declined-invitation alerts and overlap details are implemented. Occupied proposals favor fewer appointments to move and offer replacement actions for the OTHER meetings. No appointment moves automatically; deletion and calendar moves remain unsupported. Outlook is the accepted next calendar provider. Email-reading LLMs and live flight APIs remain deferred.
 
 SlotDesk is part of **[Website name TBD]**, the planned parent website. Its branding and website implementation are on hold; private venture planning remains outside this repository.

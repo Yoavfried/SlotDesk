@@ -45,12 +45,12 @@ The preview at `http://127.0.0.1:8770/` shows the disconnected interface. Calend
 | [UX decisions](docs/ux-decisions.md) · [scheduling rules](docs/scheduling-decisions.md) | Accepted behavior, including unimplemented/deferred decisions |
 | [Rescheduling](docs/rescheduling.md) | Individual time changes, alerts and manual follow-up |
 | [Roadmap](docs/roadmap.md) | Outlook, distribution and explicitly deferred features |
-| [Testing](docs/testing.md) · [live checklist](docs/combined-live-check.md) | Synthetic evidence versus unfinished live acceptance |
-| [Security and privacy](docs/security.md) | Write boundaries, local storage and work-account gate |
+| [Validation record](docs/testing.md) | Automated coverage and reported live results |
+| [Security and privacy](docs/security.md) | Write boundaries, local storage and work-account use |
 | [Design language](design/README.md) | Original style guide, fonts and design assets |
 | [Product changelog](docs/changelog.md) · [repository changelog](CHANGELOG.md) | Product releases and repository migration |
 
-Local validation includes 1,146 synthetic application checks and 22 export-comparison checks. Basic live creation and the first dense-calendar integrity comparison passed. Real rescheduling, shared/revoked permissions, updated window synchronization and the final export comparison remain pending. These results do not clear a work account by themselves.
+Local validation includes 1,146 synthetic application checks and 22 export-comparison checks. Basic live creation and the first dense-calendar integrity comparison passed. The owner also reports working decline alerts, sensible proposals, successful rescheduling and correct overlap details. Work-account access depends on the organization allowing the extension and Google permissions.
 
 ![Overlap details with synthetic calendar data](docs/assets/overlaps-v070.png)
 

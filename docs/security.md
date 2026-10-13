@@ -1,6 +1,6 @@
 # SlotDesk security and privacy
 
-Version 0.7.0 adds an explicit, time-only existing-event PATCH boundary with account, organizer, permission and ETag guards. Creation remains a separate guarded writer. No calendar deletion or move exists; no meeting changes automatically. New focused tests and the live acceptance requirement are recorded below.
+Version 0.7.0 adds an explicit, time-only existing-event PATCH boundary with account, organizer, permission and ETag guards. Creation remains a separate guarded writer. No calendar deletion or move exists; no meeting changes automatically. Focused automated checks and reported live outcomes are recorded below.
 
 Version 0.6.1 caches fetched meeting entries for every accessible calendar in the selected range, including unselected calendars. The cache is memory-only, account/date scoped, and clears on disconnect/reset/account change. Only chosen filters and calendar labels persist. Selection/timezone changes do not contact Google; explicit Refresh/date changes do. Browse caching does not supply booking availability or weaken fresh account/write checks. No OAuth scope or event mutation path changes.
 
@@ -46,15 +46,21 @@ The review identified correctness/hardening work addressed in 0.4.0: shared-cale
 
 The sealed scan report remains a local audit artifact. This product record summarizes its source boundaries and useful conclusions without publishing machine-specific audit metadata.
 
-## Work-account gate
+## Work-account use
 
-Nina uses **Google Workspace / Google Calendar**. Before she connects that account:
+The owner reports working basic creation, No-response alerts, sensible replacement proposals, a successful actual reschedule and correct overlap details,. Automated/source evidence remains separate from those reports. Unperformed live edge cases are not described as passed.
 
-1. Complete the [busy real-calendar acceptance](testing.md) with synthetic appointments in a test calendar, comparing unrelated events before/after reviewed creations.
-2. Confirm the workplace permits the extension and its stated Google scopes/data handling. Record approved account/calendar permission level without private details.
-3. Resolve failures, then run a controlled work-account pilot with agreed recipients. Keep manual copying available if permissions/coverage are insufficient.
+Work-account access depends on the organization allowing the extension and requested Google scopes/data handling. The current product has no backend or cloud settings database. A protected browser/device remains necessary for locally stored workplace information.
 
-Current status: **source review and synthetic hardening checks complete; the dense-calendar self-only creation/export integrity check passed. Live shared/revoked permissions, updated synchronization acceptance, final export and workplace approval remain pending**. The two user-supplied exports preserve all 1,013 original event components and contain exactly one reviewed addition with the expected time/own-profile attendee/Meet link. The raw files remain outside Git; this verifies exported contents, not recipient delivery or every intermediate operation. The owner's reported basic live success is recorded separately. The reviewed rescheduling boundary now has focused source/payload/concurrency and synthetic browser checks; it still needs live single-instance/time-only integrity acceptance. Outlook needs its own provider permission/recovery validation.
+The earlier dense-calendar creation/export comparison preserved all 1,013 original event components and added exactly one reviewed event. No new export was provided after the reported reschedule, so this record does not claim independently verified post-reschedule preservation of every existing event. Raw evidence remains outside Git.
+
+## Focused calendar-write recheck — 13 October 2026
+
+The actual network entry points were reread after the live report. The reader uses GET and non-mutating free/busy POST. The creation writer allows GET and new-event insertion POST. The separate rescheduler allows GET and a selected-event PATCH with only validated start/end fields. Neither writer has a DELETE, full-resource PUT, cancellation or calendar-move operation; neither deletes/recreates an appointment while rescheduling.
+
+The selected calendar/event identity, current times, organizer-copy permission and ETag are checked before PATCH. Other existing appointments are not updated automatically. Resetting saved workspace data only clears local settings, not Google meetings. Google's underlying calendar.events grant is broader than the application; these restrictions are enforced by the current code.
+
+The existing 112 rescheduling, 70 booking and 69 safety checks were rerun and passed (251 total), with synthetic transport and no real calendar writes. They exercise rejected unsupported fields, stale/changed targets, permission loss, single-instance targeting, retained non-time fields and unrelated events, and same-operation recovery.
 
 ## New existing-event boundary in 0.7.0
 

@@ -35,7 +35,7 @@ Validation: eleven application suites cover 1146 checks. See [testing](testing.m
 
 | ID | Work | Accepted behavior | Status |
 | --- | --- | --- | --- |
-| F15 | Reviewed rescheduling | Target a single organizer-copy event/occurrence; search or choose exact times; preserve content/guests/Meet; fresh availability, account/role/version guards; time-only conditional PATCH and saved recovery. | Implemented; focused live acceptance pending |
+| F15 | Reviewed rescheduling | Target a single organizer-copy event/occurrence; search or choose exact times; preserve content/guests/Meet; fresh availability, account/role/version guards; time-only conditional PATCH and saved recovery. | Implemented; successful live reschedule reported 13 October |
 | F16 | Declined invitation alerts | Group upcoming No replies in the bell, mark optional guests, dismiss repeated observations, offer Find another time. Update on existing reads/Refresh, with no automatic movement or polling. | Implemented |
 | F17 | Overlap management | Red Overlapping label and simple expandable details for all busy displayed entries; deduplicate shared copies; rank fewer distinct appointments first and offer the OTHER appointment's rescheduling flow. Save collision follow-ups after confirmed writes. | Implemented |
 

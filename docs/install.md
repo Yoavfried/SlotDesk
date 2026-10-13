@@ -23,7 +23,7 @@ Give the tester `dist/SlotDesk-0.7.0.zip`. It includes the extension, local font
 
 Use Existing meetings to choose any accessible calendar and a timeframe, then View details for guest responses and calendar/video links. Manage profiles has searchable saved people, Add profile and familiar-face suggestions. Existing installations retain profiles and open directly at the menu.
 
-Sending from a connected workspace creates a real event and sends invitations. Use a test calendar and consenting participants for acceptance. Before Nina connects her Google Workspace work account, complete the [work-account gate](security.md#work-account-gate).
+Sending from a connected workspace creates a real event and sends invitations. Use a test calendar and consenting participants for acceptance. For a work account, the organization must allow the extension and requested Google access; see [work-account use](security.md#work-account-use).
 
 Help is available from the question-mark icon before and after connection. The account email with a green dot shows the connection; the exit icon beside it disconnects. Dark mode is at the top of Settings. Read Help → Privacy notice for storage and data-removal details.
 

@@ -51,7 +51,7 @@ Disconnect closes dialogs, clears fetched session data and calendar-derived edit
 
 Timezone/travel suggestions use deterministic clues and require confirmation. A clue is not proof of physical location or calendar access. No email-reading LLM or flight-update service is implemented.
 
-See [security/privacy](security.md) for review boundaries and the work-account gate.
+See [security/privacy](security.md) for review boundaries and work-account use.
 
 Reference APIs: [Google event creation](https://developers.google.com/workspace/calendar/api/v3/reference/events/insert), [Calendar permissions](https://developers.google.com/workspace/calendar/api/auth), and [Chrome identity](https://developer.chrome.com/docs/extensions/reference/api/identity).
 

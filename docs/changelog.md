@@ -7,7 +7,7 @@
 - Show red Overlapping labels with simple expandable details across displayed calendars, including events created outside SlotDesk. Prefer proposals that require moving fewer distinct appointments, then lower disruption. Open the OTHER appointment for replacement planning and retain follow-ups after confirmed collisions.
 - Add grouped No-response alerts, optional-guest context, dismissal and reschedule shortcuts. Refresh alerts during existing reads rather than polling or refetching on local calendar selection changes.
 - Document DF06 meeting search by name, participants, location and written content as deferred. Update privacy, architecture, accepted UX, live acceptance and release evidence. Preserve supplied fonts, lime wordmark header, OAuth identity and scopes.
-- Validation: 1146 synthetic application checks and 22 export-comparison checks; local mocked browser checks. Real rescheduling/invitation delivery still needs a controlled live check before a work-account pilot.
+- Validation: 1146 synthetic application checks and 22 export-comparison checks; local mocked browser checks. Actual rescheduling, No alerts and overlap details were subsequently reported working by the owner; the validation record distinguishes those reports from automated evidence.
 
 ## 0.6.1 — 13 October 2026
 
@@ -15,7 +15,7 @@
 - Add searchable multiple-calendar selection and an adjustable Times shown in timezone dropdown. Cards/details retain source-calendar names.
 - Cache all accessible calendars for the range in memory. Selection/timezone changes filter locally; date changes and Refresh reread all sources. Keep partial, inaccessible and busy-only reads explicit; clear cache on disconnect/reset/account change.
 - Remove the browse event-pagination cutoff while retaining timeout/retry/repeated-token guards. Keep scheduling/booking fresh reads and the create-only writer unchanged.
-- Validation: 577 automated checks, 22 export-comparison checks and a 54-calendar synthetic browser check. No calendar writes were made; current live acceptance remains outstanding.
+- Validation: 577 automated checks, 22 export-comparison checks and a 54-calendar synthetic browser check. No real calendar writes were made in that synthetic check.
 
 ## 0.6.0 — 12 October 2026
 
@@ -25,13 +25,13 @@
 - Synchronize same-account panel/tab profiles, preferences and drafts, resolve concurrent edits in place, reopen saved reviews and preserve send/recovery guards.
 - Use accepted/tentative known invitations as partial evidence; an unmapped guest's full availability remains unconfirmed.
 - Retain supplied VT323/lime design, OAuth identity/scopes and create-only writer. Decline alerts remain deferred.
-- Validation: 529 automated app checks, 22 standalone export-comparison checks and focused synthetic browser checks. Two concurrent send clicks created one event with zero update/delete requests. Live permission/synchronization acceptance and final export remain pending.
+- Validation: 529 automated app checks, 22 standalone export-comparison checks and focused synthetic browser checks. Two concurrent send clicks created one event with zero update/delete requests. Live outcomes are recorded separately from these synthetic checks.
 
 Versions apply to the Chrome pilot. Dates refer to the recorded builds. For repository-wide changes, see the [root changelog](../CHANGELOG.md).
 
 ## Further live results and scheduling review — 2026-10-12 (application remains 0.5.0)
 
-- Record reported recipient No display and expected two-window guard behavior; the permission session, unreported RSVP checks and final export comparison remain pending.
+- Record reported recipient No display and expected two-window guard behavior; the scope of actual live observations remains recorded separately.
 - Reproduce the inconvenient-time tie selecting the earliest candidate and the invalid shorter/empty fallback headings using a read-only synthetic request.
 - Document early organizing-calendar selection, closer inconvenient-time ranking, adaptive alternatives and synchronized panel/tab UX without losing duplicate-send safeguards. No application or ZIP changes.
 
@@ -48,7 +48,7 @@ Versions apply to the Chrome pilot. Dates refer to the recorded builds. For repo
 - Move familiar-face suggestions to optional setup and profile management; migrate configured profiles without restarting onboarding.
 - Keep every dialog heading/close button fixed while its body scrolls. Remove the historical status row and duplicate green receipt; confirmed creation opens a separate dialog over the home menu.
 - Clarify start-time spacing, preserve guarded new-event writes/recovery and clear new fetched-data views on disconnect. Retain the supplied logo, fonts and shared theme tokens.
-- Pass 462 application checks, 22 export-comparison checks and focused synthetic browser flows. The same three live sessions remain pending; invitation 02 has not yet been sent.
+- Pass 462 application checks, 22 export-comparison checks and focused synthetic browser flows. The synthetic results do not establish real-account invitation behavior.
 
 
 
@@ -95,7 +95,7 @@ Versions apply to the Chrome pilot. Dates refer to the recorded builds. For repo
 - Bind recovery to the connected account, confirm identity before writer calls, coordinate sends across windows and reject stale saved-state writes.
 - Clear editor/review data on disconnect and correct RSVP handling for shared calendars.
 - Add 69 safety checks (354 total), including 6,000 paginated events, 50 profiles and 2,000 existing-event integrity checks. Validate the revised browser flow with local synthetic identity/calendars only.
-- Record user-reported basic live success, the remaining Google Workspace work-account gate, and planned rescheduling followed by Outlook. Keep email/LLM and flight API features deferred.
+- Record user-reported basic live success, Google Workspace usage considerations and the planned Outlook provider. Keep email/LLM and flight API features deferred.
 
 ## 0.3.5 — 2026-10-12
 

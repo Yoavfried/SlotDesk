@@ -26,6 +26,6 @@ Reading an invitation's guest responses requires access to that event, not the g
 
 **Implemented in 0.7.0 after authorization on 13 October.** The bell groups upcoming No responses, distinguishes optional guests and offers Find another time/Dismiss. Normal calendar reads and Refresh update observations; repeated dismissed No replies stay quiet. No response automatically moves, cancels, replaces or resends anything. See [the accepted flow](rescheduling.md).
 
-## Remaining verification
+## Validation status
 
-Synthetic checks establish the behaviors above without a Google login or real invitations. They do not complete the live shared/read-only/revoked permission session, the updated panel/full-workspace acceptance check or the final calendar export comparison. See [testing](testing.md), [live checklist](combined-live-check.md) and [roadmap](roadmap.md). Rescheduling now has synthetic validation and requires new focused live acceptance. Outlook, email-reading LLMs, live flight updates and meeting-content search remain future work.
+The owner reports a visible No-response alert, sensible replacement proposals, a successful actual reschedule and correct overlap labels/details. These reports are separate from automated coverage; unperformed live cases are not recorded as passed. See [validation](testing.md) and [roadmap](roadmap.md). Outlook, email-reading LLMs, live flight updates and meeting-content search remain future work.

@@ -13,7 +13,7 @@ The source snapshot comes from the private parent repository at commit `d2426ef2
 
 The extension's packaged files are unchanged. The pinned public extension key, OAuth client ID/scopes, font files and version remain identical. Existing installed copies do not need a new Google project because of the repository move. Source installs select `extension/`; packaged installs select the extracted folder containing `manifest.json`.
 
-Only reviewed synthetic screenshot examples are carried into this snapshot. Internal build reports, venture plans, raw calendar exports, credentials and local security artifacts remain outside it. Documentation removes superseded live-test counts and retains actual pending acceptance.
+Only reviewed synthetic screenshot examples are carried into this snapshot. Internal build reports, venture plans, raw calendar exports, credentials and local security artifacts remain outside it. Documentation separates automated evidence from actual reported live results.
 
 The private parent repository links to this canonical source and records an integration version. SlotDesk code and product decisions are edited here. Website implementation remains on hold.
 

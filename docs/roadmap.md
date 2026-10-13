@@ -8,23 +8,19 @@ Version **0.7.0** includes [F01–F17](implemented.md), the [accepted UX](ux-dec
 
 ## Next milestones, in order
 
-| Order | Milestone | Status and completion evidence |
+| Order | Milestone | Status |
 | --- | --- | --- |
-| 1 | Finish the work-account gate | Source review, write guards and synthetic tests completed in 0.4.0. First dense-calendar creation/export comparison passed: all 1,013 original components unchanged and exactly one new event. Later invitation/Yes/No display and two-window behavior are user-reported. Remaining: the three-session live checklist (rescheduling/RSVPs/overlaps, shared/revoked permissions and updated window synchronization), one final export comparison and workplace access approval. |
-| 2 | Nina's Google Workspace pilot | Nina uses Google Calendar at work. Connect after milestone 1 passes; verify delegated permissions, real recurring/all-day events, timezones, partial coverage, invitation delivery and Meet results without publishing calendar details. |
-| 3 | Reschedule an existing meeting | Implemented in 0.7.0; controlled live time-change/recurring occurrence acceptance and export integrity remain required. See [rescheduling](rescheduling.md). |
-| 4 | Outlook / Microsoft 365 | Accepted next provider. Add provider-specific OAuth, reading and reviewed writes behind a shared scheduling contract. Validate shared/delegated calendars, optional guests, recurrence, timezones and Teams links. Not needed to start Nina's Google pilot. |
-| 5 | Wider distribution | Decide a supported installation/update route, complete Google approval and organization requirements, and publish accurate privacy/data-retention information before opening the audience. |
+| 1 | Continue the Google Calendar pilot | Basic creation/export integrity passed. The owner reports working No alerts, sensible proposals, successful rescheduling and correct overlaps. Work-account access depends on organization permissions. |
+| 2 | Outlook / Microsoft 365 | Accepted next provider: OAuth, reading and reviewed writes, shared/delegated calendars, optional guests, recurrence, timezones and Teams links. Not needed for the Google pilot. |
+| 3 | Wider distribution | Supported installation/update route, applicable Google and organization requirements, accurate privacy/data-retention information and a public license/visibility decision. |
 
-There are no unanswered scheduling-policy blockers in Q01–Q24. Future features have their own design questions; this does not reopen settled scheduling rules.
-
-The [parked feedback](pending-ux-review.md) is implemented; 0.6.1 adds the revised date-range/multi-calendar cache. The owner authorized DF05 decline alerts and rescheduling in 0.7.0. Remaining acceptance is consolidated into [three live sessions and one final export](combined-live-check.md); already verified invitations are reused.
+Q01–Q24 scheduling policies are answered. The [parked UX feedback](pending-ux-review.md), rescheduling and decline alerts are implemented. The [validation record](testing.md) distinguishes automated coverage from actual user-reported behavior; unperformed live cases are not marked passed.
 
 ## Accepted rescheduling boundary
 
 The existing-meeting browser is the implemented entry point. Version 0.7.0 adds the separately guarded existing-event mutation path described below. Bind each review to the account, provider, calendar, event identifier and current event version; reject a stale event rather than overwriting someone else's change. Preserve event content and recipients unless the EA explicitly edits them. Use a targeted update, with no delete-and-recreate workflow and no automatic movement of other appointments.
 
-The accepted first version changes one recurring occurrence only; read-only/guest copies support manual coordination. Google sends updates to retained guests after explicit confirmation. Show current and proposed full local dates/times, warnings and the exact update in final review. Add recurrence, permission, stale-version and unrelated-event integrity tests before enabling writes. Reference contracts: [Google events patch](https://developers.google.com/workspace/calendar/api/v3/reference/events/patch), [Microsoft event update](https://learn.microsoft.com/en-us/graph/api/event-update?view=graph-rest-1.0).
+The accepted first version changes one recurring occurrence only; read-only/guest copies support manual coordination. Google sends updates to retained guests after explicit confirmation. Show current and proposed full local dates/times, warnings and the exact update in final review. Automated coverage includes recurrence, permission, stale-version and unrelated-event integrity checks. Reference contracts: [Google events patch](https://developers.google.com/workspace/calendar/api/v3/reference/events/patch), [Microsoft event update](https://learn.microsoft.com/en-us/graph/api/event-update?view=graph-rest-1.0).
 
 ## Additional candidates after the pilot
 

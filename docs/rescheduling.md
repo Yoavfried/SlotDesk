@@ -40,4 +40,4 @@ Alerts update during normal calendar/contact/availability reads and explicit Ref
 
 **DF06: meeting search by name, participants, location or written content** is documented as a possible future feature. No meeting-search UI or content index is added now. Whole-series edits, attendee/content editing while rescheduling, Outlook, background alerts and bulk automatic conflict resolution also remain outside this release.
 
-See [testing](testing.md), [security/privacy](security.md), [UX decisions](ux-decisions.md) and [roadmap](roadmap.md). Synthetic validation does not replace a focused live rescheduling/export check before work-account use.
+See [testing](testing.md), [security/privacy](security.md), [UX decisions](ux-decisions.md) and [roadmap](roadmap.md). The owner reports successful live rescheduling, working No alerts and correct overlap details. Automated coverage and the scope of those reports are recorded in testing.

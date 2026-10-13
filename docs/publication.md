@@ -2,8 +2,8 @@
 
 The repository is private and the product is an approved Google Calendar Chrome pilot. This document records unfinished distribution work; it does not authorize a visibility change.
 
-- Complete the [three live sessions and export comparison](combined-live-check.md); resolve failures and record actual results.
-- Complete workplace approval before the controlled Google Workspace pilot.
+- Maintain accurate automated and user-reported validation evidence; do not mark unperformed checks as passed.
+- Confirm the target organization allows the extension and requested Google access for work-account use.
 - Choose a supported extension installation/update channel and organization onboarding guidance.
 - Complete applicable Google OAuth/distribution approval and target-organization requirements.
 - Review source, history, screenshots and downloadable artifacts for credentials or private data before public publication. Keep the intentionally public extension/OAuth identifiers distinct from secrets.
