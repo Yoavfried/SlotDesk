@@ -1,5 +1,7 @@
 # SlotDesk security and privacy
 
+Version 0.7.1 adds a separate allowlisted guest/detail editing path with identity, organizer, permission, ETag and shared-write protections. No deletion or calendar move operation is introduced.
+
 Version 0.7.0 adds an explicit, time-only existing-event PATCH boundary with account, organizer, permission and ETag guards. Creation remains a separate guarded writer. No calendar deletion or move exists; no meeting changes automatically. Focused automated checks and reported live outcomes are recorded below.
 
 Version 0.6.1 caches fetched meeting entries for every accessible calendar in the selected range, including unselected calendars. The cache is memory-only, account/date scoped, and clears on disconnect/reset/account change. Only chosen filters and calendar labels persist. Selection/timezone changes do not contact Google; explicit Refresh/date changes do. Browse caching does not supply booking availability or weaken fresh account/write checks. No OAuth scope or event mutation path changes.
@@ -8,15 +10,15 @@ Version 0.6.0 adds same-account window synchronization and local persistence of 
 
 Version 0.5.0 adds read-only calendar browsing and guest-response display using the existing reader. Raw event details stay in memory and are cleared on disconnect; only chosen calendar/date filters persist. Descriptions and provider text are escaped; external event/video links remain allowlisted. No additional OAuth permission or existing-event write path is introduced. The prior source audit and current synthetic checks are separate evidence; this update is not a new exhaustive security audit.
 
-Updated 13 October 2026 for **0.7.0**. This record explains supported behavior, evidence and remaining limits. It is not a guarantee that all future changes or browser environments are safe.
+Updated 13 October 2026 for **0.7.1**. This record explains supported behavior, evidence and remaining limits. It is not a guarantee that all future changes or browser environments are safe.
 
 ## Calendar integrity boundary
 
-The creation writer supports **creating a new event** and **reading back that same event**. The separate 0.7.0 rescheduler supports **a reviewed time-only update to one organizer-copy appointment/occurrence**. Neither path supports delete or calendar moves. The creation request guard accepts GET and new-event collection POST only; reviewed payloads are rebuilt from an allowlist. Cancellation, recurrence, organizer and other unsupported fields are rejected before authentication/network calls. Calendar-list and event reads use GET; busy-only availability uses a non-mutating POST to freeBusy. Creating a meeting can intentionally overlap an appointment after an EA warning; that appointment's content/time are not changed.
+The creation writer supports **creating a new event** and **reading back that same event**. The separate 0.7.0 rescheduler supports **a reviewed time-only update to one organizer-copy appointment/occurrence**. The 0.7.1 editor permits reviewed title/location/description and explicit guest-list edits only. None of these paths supports delete or calendar moves. The creation request guard accepts GET and new-event collection POST only; reviewed payloads are rebuilt from an allowlist. Cancellation, recurrence, organizer and other unsupported fields are rejected before authentication/network calls. Calendar-list and event reads use GET; busy-only availability uses a non-mutating POST to freeBusy. Creating a meeting can intentionally overlap an appointment after an EA warning; that appointment's content/time are not changed.
 
 Each prepared send has a random stable event identifier and application request marker. An uncertain response checks the same identifier before retrying. A collision with a different event is rejected. The request is saved before POST, bound to its Google account, and validated on recovery. The current primary account is confirmed before writer operations. Web Locks coordinate panel/tab sends, and workspace revisions reject stale writes/sends. Missing lock support prevents sending and leaves Copy meeting details available.
 
-Google's **calendar.events permission includes editing/deleting events**. SlotDesk restricts its two writers to reviewed new-event creation and an individual time-only reschedule; calendar deletion and moves remain unsupported. A general create-only permission for existing/delegated organizing calendars is not offered by the current scope contract. The calendar.events.owned scope also permits editing/deleting and would lose delegated calendars; calendar.app.created restricts work to calendars the app creates. The 0.7.0 rescheduling boundary has focused validation below; future mutation paths need their own review. [Google Calendar scopes](https://developers.google.com/workspace/calendar/api/auth), [event insertion](https://developers.google.com/workspace/calendar/api/v3/reference/events/insert).
+Google's **calendar.events permission includes editing/deleting events**. SlotDesk restricts its writers to reviewed new-event creation, an individual time-only reschedule and allowlisted detail/guest edits; calendar deletion and moves remain unsupported. A general create-only permission for existing/delegated organizing calendars is not offered by the current scope contract. The calendar.events.owned scope also permits editing/deleting and would lose delegated calendars; calendar.app.created restricts work to calendars the app creates. The 0.7.0 rescheduling boundary has focused validation below; future mutation paths need their own review. [Google Calendar scopes](https://developers.google.com/workspace/calendar/api/auth), [event insertion](https://developers.google.com/workspace/calendar/api/v3/reference/events/insert).
 
 ## Data handling
 
@@ -27,6 +29,7 @@ Google's **calendar.events permission includes editing/deleting events**. SlotDe
 | Profiles, contact emails, mappings, constraints, travel, preferences | Persist in extension localStorage, separated by connected account. These may contain sensitive scheduling information. |
 | Prepared unfinished outgoing invitation | Persists for duplicate-safe recovery, including title, attendee emails, times, location/description and identifiers. Removed after confirmed completion. |
 | User-authored review drafts and connection state | Review fields persist locally to continue across windows/reload. Connection notification contains account, connected flag and nonce; no token. |
+| Pending existing-meeting edit | User-authored new text and explicit guest additions/removals/role changes, target IDs/version/time and fingerprints persist for recovery. Original fetched text, full roster metadata and tokens do not. Removed on confirmed completion. |
 | Display clock/appearance | Browser-wide preferences. |
 | Backend/analytics/LLM/email access | None. Calendar API requests go to Google; there is no application server, analytics service, email connector or model service. |
 
@@ -42,13 +45,13 @@ Calendar text is escaped or inserted with textContent. Receipt links are restric
 
 A standard source review completed against **0.3.5 at commit 330114f69fad9ea55c00383b577484da7fa95d92**, scoped to apps/slotdesk. The independent baseline read all 30 text files; four WOFF2 fonts were inventoried but their binary parser internals were outside the audit. Architecture and focused validation passes supplemented the review. No reportable attacker-supported vulnerability was established. Coverage remained partial because runtime density, cleanup/shared-calendar correctness and organization/account behavior needed follow-up. This is not a claim that the 0.4.0 diff or workplace deployment received exhaustive security certification.
 
-The review identified correctness/hardening work addressed in 0.4.0: shared-calendar RSVP ownership, disconnect editor residue, fresh account checks on recovery/video readback, saved-request validation and multiple-window coordination. The source now includes method/payload/redirect guards. The [1146 automated checks and browser checks](testing.md) verify synthetic behavior, including 6,000 paginated events and 2,000 unchanged existing meetings. No real account or invitation was used by the agent for this update.
+The review identified correctness/hardening work addressed in 0.4.0: shared-calendar RSVP ownership, disconnect editor residue, fresh account checks on recovery/video readback, saved-request validation and multiple-window coordination. The source now includes method/payload/redirect guards. The [1275 automated checks and browser checks](testing.md) verify synthetic behavior, including 6,000 paginated events and 2,000 unchanged existing meetings. No real account or invitation was used by the agent for this update.
 
 The sealed scan report remains a local audit artifact. This product record summarizes its source boundaries and useful conclusions without publishing machine-specific audit metadata.
 
 ## Work-account use
 
-The owner reports working basic creation, No-response alerts, sensible replacement proposals, a successful actual reschedule and correct overlap details,. Automated/source evidence remains separate from those reports. Unperformed live edge cases are not described as passed.
+The owner reports working basic creation, No-response alerts, sensible replacement proposals, a successful actual reschedule and correct overlap details. Automated/source evidence remains separate from those reports. Unperformed live edge cases are not described as passed.
 
 Work-account access depends on the organization allowing the extension and requested Google scopes/data handling. The current product has no backend or cloud settings database. A protected browser/device remains necessary for locally stored workplace information.
 
@@ -69,3 +72,9 @@ The rescheduler validates account/calendar/event IDs, exact allowed plan fields,
 The pending record contains identifiers, version and before/after times only. Decline tracking stores guest emails/status/acknowledgement/expiry; collision follow-ups store target IDs and a protected interval. None is a content cache or token store. This metadata is local and unencrypted, account-scoped like other settings. Reset is blocked by either type of unfinished write.
 
 The new tests verify forbidden fields before network, stale identity/version, revoked roles, HTTP 412, timeout/lost-response recovery, duplicate sends, single recurring-instance targeting, all-day format and preserved non-time fields. The previous exhaustive-scope claims are not extended: this is focused implementation verification, not a new exhaustive security audit. A successful source/mock check cannot guarantee that other Google clients will not change attendee calendars between availability read and confirmation.
+
+## Guest/detail boundary in 0.7.1
+
+The editor permits GET and selected-event PATCH only, rejects unsupported plan/payload fields before token/network access and binds to unchanged event/occurrence identity and time. PATCH uses If-Match and sendUpdates=all. A fresh account/CalendarList check precedes each operation; write role is checked again after token acquisition. Partial/omitted, in-progress or unsupported guest data cannot enter a roster replacement. Retained writable attendee metadata comes from the freshly read event; only the reviewed delta is applied. Removing all guests explicitly still retains the organizing event. Guest removal may withdraw that invitation from guest calendars, which is explained in review; no deletion endpoint is invoked.
+
+The 125 editor checks cover retained responses/comments/resources/additional guests, all-guest removal, untouched protected fields and unrelated events, malformed intent, stale identity/version, role revocation, HTTP 412/401, lost-response recovery and coalesced requests. Synthetic browser coverage includes add-profile, review, save, reload recovery and peer cache updates. This is focused validation, not a new exhaustive security audit or a claim about real Google notification delivery.

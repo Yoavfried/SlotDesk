@@ -1,6 +1,6 @@
 # Implemented scheduling work
 
-Current release: **0.7.0**. F01–F17 are implemented. F01–F04 are the original four reproduced defects. New-meeting booking was added in 0.3.0; reviewed rescheduling and decline alerts are implemented in 0.7.0.
+Current release: **0.7.1**. F01–F18 are implemented. F01–F04 are the original four reproduced defects. New-meeting booking was added in 0.3.0; reviewed rescheduling and decline alerts are implemented in 0.7.0.
 
 | ID | Work | Accepted behavior | Status |
 | --- | --- | --- | --- |
@@ -21,7 +21,7 @@ Current release: **0.7.0**. F01–F17 are implemented. F01–F04 are the origina
 
 Read-only existing-meeting browsing, guest responses and the workspace navigation are recorded in UX34–UX39. Availability normalization still excludes declined/cancelled events from busy time; browsing separately preserves declined invitations.
 
-Validation: eleven application suites cover 1146 checks. See [testing](testing.md).
+Validation: twelve application suites cover 1275 checks. See [testing](testing.md).
 
 ## Release 0.6.0 refinements
 
@@ -40,3 +40,11 @@ Validation: eleven application suites cover 1146 checks. See [testing](testing.m
 | F17 | Overlap management | Red Overlapping label and simple expandable details for all busy displayed entries; deduplicate shared copies; rank fewer distinct appointments first and offer the OTHER appointment's rescheduling flow. Save collision follow-ups after confirmed writes. | Implemented |
 
 The [rescheduling record](rescheduling.md) defines scope, recovery, cache/alert boundaries and deferred meeting-content search.
+
+## Release 0.7.1 meeting editing
+
+| ID | Work | Accepted behavior | Status |
+| --- | --- | --- | --- |
+| F18 | Reviewed guest and detail editing | Add/remove guests and change Required/Optional status; edit title, location and description; review each exact change, then conditionally PATCH only the selected organizer-copy event. Preserve retained responses, time, Meet, attachments and other untouched fields. Disable roster editing when the complete roster cannot be verified. | Implemented; 125 synthetic transport checks and browser verification |
+
+See [meeting editing](meeting-editing.md) for scope and recovery. Stored object-key ordering is ignored by synchronization; real field and array changes still require review.

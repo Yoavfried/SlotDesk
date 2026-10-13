@@ -1,6 +1,6 @@
 # SlotDesk architecture
 
-Version 0.7.0 is a static Chrome side-panel application with a shared browser/Node scheduling engine. It has no application server or cloud settings database. A loopback HTTP preview shows the disconnected interface; calendar sign-in uses Chrome extension identity. Synthetic fixtures are used only in development tests.
+Version 0.7.1 is a static Chrome side-panel application with a shared browser/Node scheduling engine. It has no application server or cloud settings database. A loopback HTTP preview shows the disconnected interface; calendar sign-in uses Chrome extension identity. Synthetic fixtures are used only in development tests.
 
 | Module in `extension/` | Responsibility |
 | --- | --- |
@@ -25,7 +25,7 @@ The manifest pins a public extension key and OAuth client ID, preserving extensi
 
 The scope set is `calendar.events`, `calendar.calendarlist.readonly` and `calendar.events.freebusy`. The event-writing scope supports new invitations on writable/delegated calendars, but Google also grants update/delete authority. The application restricts its own operations; the OAuth grant is not a provider-enforced create-only permission. Calendar visibility remains permission-dependent and is represented by coverage status.
 
-The writer uses `events.insert` with `sendUpdates=all` and `conferenceDataVersion=1`. This creation writer does not use event update/delete/move endpoints. The separate 0.7.0 rescheduler below uses a reviewed time-only PATCH. Event success and Meet readiness are handled separately. The writer accepts GET readback and POST insertion only, rebuilds allowlisted creation payloads, and rejects cancellation, recurrence and other unsupported event fields. Requests reject redirects and omit cookies, referrers and cache reuse.
+The writer uses `events.insert` with `sendUpdates=all` and `conferenceDataVersion=1`. This creation writer does not use event update/delete/move endpoints. The separate rescheduler uses a reviewed time-only PATCH; the 0.7.1 editor uses an independently validated detail/guest PATCH. Event success and Meet readiness are handled separately. The writer accepts GET readback and POST insertion only, rebuilds allowlisted creation payloads, and rejects cancellation, recurrence and other unsupported event fields. Requests reject redirects and omit cookies, referrers and cache reuse.
 
 The owner configures Google Calendar API access, the appropriate OAuth audience and approved pilot users, and a Chrome extension OAuth client matching the pinned extension ID. `setup.html` and `configure-google.js` remain owner tools for a separately configured build. The tester handoff does not require Cloud setup. Public distribution requires separate Google and target-organization acceptance.
 
@@ -65,7 +65,7 @@ Known invitation commitments use matching attendee email and accepted/tentative 
 
 ## Existing-meeting range cache (0.6.1)
 
-A cache key contains the account and exact start/end dates, excluding calendar selection and display timezone. The initial load, a different date range or Refresh meetings reads every accessible calendar with at most three concurrent source reads. Ordinary selection/timezone changes perform no Calendar API call. A cold window needs its own initial load; raw fetched events are not shared through persistent storage. The cache does not expire/refetch in the background: the displayed RSVP/details remain from the latest load until dates change or Refresh is selected.
+A cache key contains the account and exact start/end dates, excluding calendar selection and display timezone. The initial load, a different date range or Refresh meetings reads every accessible calendar with at most three concurrent source reads. Ordinary selection/timezone changes perform no Calendar API call. A cold window needs its own initial load; raw fetched events are not shared through persistent storage. The cache does not expire/refetch in the background. Dates/Refresh reload the range; explicit confirmed mutations update the target entry. A confirmed peer edit triggers one target read, without a range reload.
 
 Each source publishes progressive results and keeps its own completeness/error state. A source shared since the cache was built requires explicit Refresh; an unavailable saved selection remains visible. Stale range/account results cannot replace the current cache, and disconnect/reset clears it. The own window may upsert a confirmed created event into an already cached source without fetching. New-meeting availability and writer permission/account checks use their original fresh-read paths, never this browse cache.
 
@@ -75,6 +75,14 @@ Browse event pagination has no fixed page-count cutoff; request timeouts, bounde
 
 `meeting-management.js` provides an interval sweep/lazy detail index, shared occurrence identity, organizing-copy checks, decline transitions and acknowledgement metadata. `google-rescheduler.js` validates an immutable account/event/ETag/time plan before network access. It permits GET and a selected-event PATCH carrying only start/end with If-Match and sendUpdates=all. The UI controller owns replacement searches, exact/all-day review, missing profiles, before/after confirmation and alert/follow-up presentation.
 
-Creation and rescheduling share the account send lock. A workspace reservation checks reviewed profiles/constraints under the storage lock; ordinary three-way saves retain remote pending reschedules. A successful write updates the local browse cache. Same-account peer notifications carry only target IDs and confirmed times; fresh event versions are always read before another update. Loaded provider content remains in memory. Decline metadata and follow-up IDs persist, and the time-only pending record omits fetched descriptions/titles/guests/Meet links.
+Creation, rescheduling and editing share the account send lock. A workspace reservation checks reviewed profiles/constraints under the storage lock; ordinary three-way saves retain remote pending reschedules. A successful write updates the local browse cache. Same-account peer notifications carry only target IDs and confirmed times; fresh event versions are always read before another update. Loaded provider content remains in memory. Decline metadata and follow-up IDs persist, and the time-only pending record omits fetched descriptions/titles/guests/Meet links.
 
 The controller reads fresh availability, excludes only the target event/occurrence and protects the selected new meeting interval while moving a collision. Occupied ranking starts with distinct appointment count. There is no bulk automatic mutation. See [accepted rescheduling behavior](rescheduling.md) for precise limitations and [Google conditional changes](https://developers.google.com/workspace/calendar/api/guides/version-resources).
+
+## Guest and detail editing (0.7.1)
+
+`google-editor.js` validates a separate immutable `kind: details` plan. It allows only changed summary/location/description and explicit guest deltas. A fresh full roster is projected to Google-writable guest fields before applying those deltas; retained responseStatus, comments, resources and additionalGuests survive. Because PATCH replaces arrays, a partial/unsupported roster disables guest editing. Text-only changes omit attendees entirely. The event time is part of the identity guard and never enters this PATCH payload.
+
+`prototype/meeting-editor.js` handles the form, profile picker, before/after review and fresh guest-availability warnings. Pending recovery stores user-authored new text, explicit guest delta, IDs/version/time and SHA-256 before/after roster fingerprints; it omits original fetched text, full guest metadata and tokens. A matching readback completes without another PATCH. The shared pending-write slot and account send lock prevent simultaneous creation/time/detail mutations. Storage comparison ignores object-key ordering while preserving array order and real value changes.
+
+A completion notice to another window contains only operation/calendar/event IDs. That window reads the target once and updates its own memory cache and observed responses. There is no background polling or fetched-content persistence. See [editing behavior](meeting-editing.md).

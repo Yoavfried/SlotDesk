@@ -1,5 +1,11 @@
 # Repository changelog
 
+## 2026-10-13 — SlotDesk 0.7.1
+
+- Add reviewed guest/detail editing, narrow conditional writes and duplicate-safe recovery.
+- Document UX57–UX60, editing scope/privacy and automated/browser evidence.
+- Publish the 0.7.1 pilot package while preserving the pinned extension/OAuth identity and design kit.
+
 ## 2026-10-13 — Reported live rescheduling progress
 
 - Record working No alerts, sensible replacement proposals, a successful actual reschedule and correct overlap details, as reported by the owner.

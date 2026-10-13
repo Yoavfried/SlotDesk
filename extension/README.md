@@ -1,6 +1,6 @@
 # SlotDesk Chrome extension
 
-Current release: **0.7.0**. Load this `extension/` directory as an unpacked extension, or build the approved tester ZIP from the repository root:
+Current release: **0.7.1**. Load this `extension/` directory as an unpacked extension, or build the approved tester ZIP from the repository root:
 
 ```sh
 npm run package:slotdesk

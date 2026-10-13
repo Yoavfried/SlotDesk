@@ -4,7 +4,7 @@
 | --- | --- |
 | Product | [Overview](overview.md), [implemented work](implemented.md), [roadmap](roadmap.md) |
 | Decisions | [UX](ux-decisions.md), [scheduling](scheduling-decisions.md), [live-feedback implementation](pending-ux-review.md) |
-| Meeting management | [Rescheduling, alerts and overlaps](rescheduling.md) |
+| Meeting management | [Editing details/guests](meeting-editing.md), [rescheduling, alerts and overlaps](rescheduling.md) |
 | Development | [Architecture](architecture.md), [engine API](engine-api.md), [installation](install.md) |
 | Validation | [Validation record](testing.md), [optional calendar comparison kit](calendar-acceptance.md) |
 | Privacy and distribution | [Security/privacy](security.md), [publication checklist](publication.md) |

@@ -80,3 +80,12 @@ The [live-feedback implementation record](pending-ux-review.md) explains the 0.6
 | UX57 | Meeting-content search | Possible search by title, participants, location or written appointment content. No indexing/search UI now. | Deferred DF06 |
 
 Implementation choices and safety limits are in [Rescheduling and meeting follow-up](rescheduling.md).
+
+## Guest and detail editing — 0.7.1
+
+| ID | Decision | Accepted behavior | Status |
+| --- | --- | --- | --- |
+| UX57 | Edit existing meeting | View details → Edit meeting changes title, location, description and guests. Time changes use the existing Reschedule action. Read latest details before editing; review exact before/after text before saving. | Implemented |
+| UX58 | Guest changes | Show only current selected guests, searchable saved profiles and short timezone-confirming setup for a new email. EA explicitly adds/removes people and chooses Required/Optional. Do not silently add the organizer or change recipients because of availability warnings. | Implemented |
+| UX59 | Removal and incomplete roster | Name removed guests and explain that their invitation may leave their calendars while the organizing meeting remains. Disable roster edits if Google has not shared a complete supported list; other details remain editable. | Implemented |
+| UX60 | Confirmation and recovery | Save changes & notify guests sends the reviewed changes after fresh checks. Pause for changed warnings. Keep the immutable pending edit across reload, read the same target before retry, and update other windows by target IDs. Retain time/Meet and untouched event data. | Implemented; synthetic verification |

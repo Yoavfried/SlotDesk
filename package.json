@@ -13,7 +13,7 @@
     "fixtures:slotdesk": "node scripts/calendar-test/generate.mjs",
     "package:slotdesk": "node scripts/package-slotdesk.mjs"
   },
-  "version": "0.7.0",
+  "version": "0.7.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/Yoavfried/slotdesk.git"

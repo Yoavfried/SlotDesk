@@ -3,12 +3,13 @@
   const E=root.SlotEngine,U=root.SlotWorkspace,V=root.SlotCalendarView,M=root.SlotMeetingManagement,Q=root.SlotGoogleRescheduler,S=root.SlotWorkspaceSync;
   const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])),copy=v=>JSON.parse(JSON.stringify(v));
   root.SlotMeetingUI={create(env){
-    const $=id=>document.getElementById(id);let session=null,notices=new Map(),sequence=0;
+    const $=id=>document.getElementById(id);let session=null,notices=new Map(),sequence=0;const editor=SlotMeetingEditorUI.create({...env,observe,syncPending:sync});
     const context=()=>env.context(),rangeText=(start,end,zone)=>U.compactRange(start,end,zone,context().clock,{referenceZone:context().own?.tz||zone});
     const ensure=s=>{const c=context();if(!s||s!==session||s.account!==c.account||s.generation!==c.generation||!c.updater)throw new Error('The connected account changed. Open the workspace to continue.');};
     function error(message){$('reschedule-error').textContent=message||'';}
-    function reset(){sequence++;session=null;notices.clear();$('reschedule-error').textContent='';$('alert-count').textContent='';$('alerts-list').replaceChildren();$('reschedule-body').replaceChildren();$('meeting-alerts').hidden=true;$('reschedule-pending').replaceChildren();$('reschedule-followups').replaceChildren();}
+    function reset(){editor.reset();sequence++;session=null;notices.clear();$('reschedule-error').textContent='';$('alert-count').textContent='';$('alerts-list').replaceChildren();$('reschedule-body').replaceChildren();$('meeting-alerts').hidden=true;$('reschedule-pending').replaceChildren();$('reschedule-followups').replaceChildren();}
     function sync(){
+      editor.sync();
       const c=context();for(const [key,notice]of notices){const tracking=c.state.settings.declineTracking?.[key];notice.guests=notice.guests.filter(g=>tracking?.responses?.[U.emailKey(g.email)]==='declined'&&!tracking.dismissed?.[U.emailKey(g.email)]);if(!notice.guests.length)notices.delete(key);}
       renderAlerts();renderPending();renderFollowups();if(session&&$('reschedule-send'))$('reschedule-send').disabled=!!c.busy||!session.plan||!!session.reason&&!c.state.pendingReschedule;
     }
@@ -24,7 +25,7 @@
       $('alerts-list').querySelectorAll('[data-decline-find]').forEach(button=>button.onclick=()=>{const notice=list[+button.dataset.declineFind];$('alerts-dialog').close();open(notice.cal.id,notice.event.id);});
       $('alerts-list').querySelectorAll('[data-decline-dismiss]').forEach(button=>button.onclick=()=>{const notice=list[+button.dataset.declineDismiss];c.state.settings.declineTracking=M.dismiss(c.state.settings.declineTracking,notice.key,notice.guests.map(g=>g.email));notices.delete(notice.key);env.save();sync();});
     }
-    function renderPending(){const pending=context().state.pendingReschedule;$('reschedule-pending').hidden=!pending;if(!pending){$('reschedule-pending').replaceChildren();return;}$('reschedule-pending').innerHTML='<div class="override-warning"><strong>An unfinished time change needs checking.</strong><p>Check the same appointment before making another change.</p><button type="button" id="resume-reschedule" class="small">Review unfinished change</button></div>';$('resume-reschedule').onclick=()=>open(pending.calendarId,pending.eventId,null,pending);}
+    function renderPending(){const pending=context().state.pendingReschedule;$('reschedule-pending').hidden=!pending;if(!pending){$('reschedule-pending').replaceChildren();return;}$('reschedule-pending').innerHTML='<div class="override-warning"><strong>An unfinished meeting change needs checking.</strong><p>Check the same appointment before making another change.</p><button type="button" id="resume-reschedule" class="small">Review unfinished change</button></div>';$('resume-reschedule').onclick=()=>open(pending.calendarId,pending.eventId,null,pending);}
     function followupKey(cal,id){return JSON.stringify([cal,id]);}
     function remember(slot,key){const c=context();c.state.settings.pendingCollisionFollowups={...(c.state.settings.pendingCollisionFollowups||{}),[key]:M.collisionTargets(slot)};}
     function forget(key){const c=context();if(c.state.settings.pendingCollisionFollowups)delete c.state.settings.pendingCollisionFollowups[key];}
@@ -36,7 +37,7 @@
       $('reschedule-followups').querySelectorAll('[data-followup-dismiss]').forEach(button=>button.onclick=()=>{c.state.settings.rescheduleFollowups=items.filter((_,i)=>i!==+button.dataset.followupDismiss);env.save();renderFollowups();});
     }
     async function open(calendarId,eventId,protectedTime=null,pending=null){
-      const c=context();if(!c.updater)return;if(c.state.pendingBooking){env.status('Review the unfinished invitation before rescheduling.','error');return;}if(c.state.pendingReschedule&&!pending){renderPending();env.status('Review the unfinished time change first.','error');return;}
+      if(pending?.kind==='details'){editor.open(calendarId,eventId,pending);return;}const c=context();if(!c.updater)return;if(c.state.pendingBooking){env.status('Review the unfinished invitation before rescheduling.','error');return;}if(c.state.pendingReschedule&&!pending){renderPending();env.status('Review the unfinished time change first.','error');return;}
       let validated;try{validated=pending?Q.validate(pending):null;}catch(e){env.status(e.message,'error');return;}const token=++sequence;session={account:c.account,generation:c.generation,calendarId,eventId,protectedTime,plan:validated};const s=session;
       $('reschedule-title').textContent='Reschedule meeting';$('reschedule-body').innerHTML='<p>Reading the latest meeting details…</p>';error('');if(!$('reschedule-dialog').open)$('reschedule-dialog').showModal();
       try{const event=await c.updater.read(calendarId,eventId);if(token!==sequence)return;ensure(s);const cal=context().calendars.find(cal=>cal.id===calendarId);if(!cal)throw new Error('This calendar is no longer accessible.');const reason=M.editReason(event,cal);s.event=event;s.cal=cal;s.zone=event.start?.date?(cal.timeZone||c.own?.tz||'UTC'):(event.start?.timeZone||c.own?.tz||cal.timeZone||'UTC');s.time=V.interval(event,s.zone);if(!s.time)throw new Error('Google did not share readable meeting times.');s.reason=reason;
@@ -103,6 +104,6 @@
       await env.complete(plan,event);ensure(s);$('reschedule-dialog').close();session=null;sync();env.receipt(event,s.cal,s.slot,recovered,followupCount);
     }
     $('meeting-alerts').onclick=()=>{sync();$('alerts-dialog').showModal();};$('reschedule-close').onclick=()=>{$('reschedule-dialog').close();sequence++;session=null;};$('reschedule-dialog').addEventListener('cancel',()=>{sequence++;session=null;});
-    return {open,observe,sync,reset,queue,remember,forget,display:()=>{sync();if(session?.after&&session.slot&&!context().busy)renderReview(session,session.after,session.slot);}};
+    return {open,openEditor:editor.open,observe,sync,reset,queue,remember,forget,display:()=>{sync();if(session?.after&&session.slot&&!context().busy)renderReview(session,session.after,session.slot);}};
   }};
 })(typeof self!=='undefined'?self:this);

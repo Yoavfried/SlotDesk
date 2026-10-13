@@ -1,6 +1,9 @@
 (function(root,factory){if(typeof module==='object'&&module.exports)module.exports=factory();else root.SlotWorkspaceSync=factory();})(typeof self!=='undefined'?self:this,function(){
   'use strict';
-  const clone=value=>value===undefined?undefined:JSON.parse(JSON.stringify(value)),equal=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
+  const clone=value=>value===undefined?undefined:JSON.parse(JSON.stringify(value));
+  // Storage projects profile fields in a fixed order; ordering is not a user edit.
+  const stable=(_key,value)=>value&&typeof value==='object'&&!Array.isArray(value)?Object.fromEntries(Object.keys(value).sort().map(key=>[key,value[key]])):value;
+  const equal=(a,b)=>JSON.stringify(a,stable)===JSON.stringify(b,stable);
   const object=value=>value&&typeof value==='object'&&!Array.isArray(value);
   function mergeState(base,local,remote,{choice='local',booking=false,rescheduling=false}={}){
     const conflicts=[];

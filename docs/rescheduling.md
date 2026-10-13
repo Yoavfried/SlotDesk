@@ -18,7 +18,7 @@ The update targets the selected calendar and event ID. It sends only `start` and
 
 The app requires write access to the organizing copy. Read-only/guest copies offer suggestions to copy, with an explanation; locked or calendar-managed types (focus time, out of office, birthdays and working location) cannot be changed through this path. Ordinary timed and all-day meetings are supported. Every read/write validates the connected account. The final GET compares the event identity, previous times and version; PATCH uses `If-Match` and rejects a concurrent edit with HTTP 412. [Google resource versions](https://developers.google.com/workspace/calendar/api/guides/version-resources).
 
-A shared send lock coordinates creation and rescheduling across SlotDesk windows. Before PATCH, the workspace lock verifies profile/constraint versions and reserves a validated time-only record. Ordinary saves cannot erase an unfinished change. A lost response is checked by reading the same appointment: if the reviewed new times are present, completion is confirmed without another PATCH. Otherwise the saved operation remains available for checking; the EA must not start a different change until it is resolved. A definitive version rejection requires refreshing the meeting's details. This is optimistic concurrency, not a lock on other calendar clients or an atomic transaction covering every attendee's calendar.
+A shared send lock coordinates creation, rescheduling and detail/guest edits across SlotDesk windows. Before PATCH, the workspace lock verifies profile/constraint versions and reserves a validated time-only record. Ordinary saves cannot erase an unfinished change. A lost response is checked by reading the same appointment: if the reviewed new times are present, completion is confirmed without another PATCH. Otherwise the saved operation remains available for checking; the EA must not start a different change until it is resolved. A definitive version rejection requires refreshing the meeting's details. This is optimistic concurrency, not a lock on other calendar clients or an atomic transaction covering every attendee's calendar.
 
 ## Reschedule the other appointments
 
@@ -38,6 +38,6 @@ Alerts update during normal calendar/contact/availability reads and explicit Ref
 
 ## Not implemented
 
-**DF06: meeting search by name, participants, location or written content** is documented as a possible future feature. No meeting-search UI or content index is added now. Whole-series edits, attendee/content editing while rescheduling, Outlook, background alerts and bulk automatic conflict resolution also remain outside this release.
+**DF06: meeting search by name, participants, location or written content** is documented as a possible future feature. No meeting-search UI or content index is added now. Guest/content editing is available through the separate [Edit meeting](meeting-editing.md) action in 0.7.1. Whole-series edits, Outlook, background alerts and bulk automatic conflict resolution also remain outside this release.
 
 See [testing](testing.md), [security/privacy](security.md), [UX decisions](ux-decisions.md) and [roadmap](roadmap.md). The owner reports successful live rescheduling, working No alerts and correct overlap details. Automated coverage and the scope of those reports are recorded in testing.

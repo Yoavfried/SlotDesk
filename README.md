@@ -1,8 +1,8 @@
 ![SlotDesk — make room for what matters](design/assets/slotdesk-banner.svg)
 
-**0.7.0 · Google Calendar · private Chrome pilot**
+**0.7.1 · Google Calendar · private Chrome pilot**
 
-SlotDesk helps executive assistants find meeting times across people, calendars and timezones. Review a new invitation, browse existing meetings, or choose a new time for an appointment. Every calendar write requires an explicit review and confirmation.
+SlotDesk helps executive assistants find meeting times across people, calendars and timezones. Review a new invitation, browse existing meetings, edit its details and guests, or choose a new time for an appointment. Every calendar write requires an explicit review and confirmation.
 
 Created and maintained by **[Yoavfried](https://github.com/Yoavfried)** and **[ninabanai-maker](https://github.com/ninabanai-maker)**. Part of **[Website name TBD]**. See [project credits](AUTHORS.md).
 
@@ -13,6 +13,7 @@ Created and maintained by **[Yoavfried](https://github.com/Yoavfried)** and **[n
 - Create reviewed Google Calendar invitations with an optional Google Meet link.
 - Browse multiple calendars and any date range, inspect guest responses and expand overlap details.
 - Review an individual reschedule, including one recurring occurrence, while retaining the guests, meeting content and existing video link.
+- Edit a meeting’s title, location, description and guest list through a before/after review.
 - Follow up on declined invitations and plan replacement times for other overlapping appointments.
 
 SlotDesk never moves another appointment automatically. Its application code has no calendar deletion or move operation. Calendar access and proposal confidence depend on the permissions actually granted.
@@ -43,14 +44,14 @@ The preview at `http://127.0.0.1:8770/` shows the disconnected interface. Calend
 | --- | --- |
 | [Product overview](docs/overview.md) | Available features and current limits |
 | [UX decisions](docs/ux-decisions.md) · [scheduling rules](docs/scheduling-decisions.md) | Accepted behavior, including unimplemented/deferred decisions |
-| [Rescheduling](docs/rescheduling.md) | Individual time changes, alerts and manual follow-up |
+| [Meeting editing](docs/meeting-editing.md) · [rescheduling](docs/rescheduling.md) | Guest/detail edits, individual time changes, alerts and manual follow-up |
 | [Roadmap](docs/roadmap.md) | Outlook, distribution and explicitly deferred features |
 | [Validation record](docs/testing.md) | Automated coverage and reported live results |
 | [Security and privacy](docs/security.md) | Write boundaries, local storage and work-account use |
 | [Design language](design/README.md) | Original style guide, fonts and design assets |
 | [Product changelog](docs/changelog.md) · [repository changelog](CHANGELOG.md) | Product releases and repository migration |
 
-Local validation includes 1,146 synthetic application checks and 22 export-comparison checks. Basic live creation and the first dense-calendar integrity comparison passed. The owner also reports working decline alerts, sensible proposals, successful rescheduling and correct overlap details. Work-account access depends on the organization allowing the extension and Google permissions.
+Local validation includes 1,275 synthetic application checks and 22 export-comparison checks. Meeting editing has synthetic browser and transport coverage; real Google guest-edit delivery has not been independently observed. Basic live creation and the first dense-calendar integrity comparison passed. The owner also reports working decline alerts, sensible proposals, successful rescheduling and correct overlap details. Work-account access depends on the organization allowing the extension and Google permissions.
 
 ![Overlap details with synthetic calendar data](docs/assets/overlaps-v070.png)
 

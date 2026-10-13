@@ -1,5 +1,14 @@
 # SlotDesk changelog
 
+## 0.7.1 — 13 October 2026
+
+- Add Edit meeting for title, location, description and explicit guest additions/removals/Required–Optional changes, with a before/after review and Save changes & notify guests.
+- Preserve retained guest responses/comments/resource/additional-guest fields; text-only edits omit the roster. Disable roster changes when the full supported guest list cannot be verified. Explain guest removal consequences before saving.
+- Keep time, existing Meet, attachments, reminders and unrelated appointments unchanged; no deletion/cancellation/move endpoint or new OAuth scope. Use fresh identity/version/permission checks, If-Match, a shared write lock and immutable same-event recovery.
+- Update the target in other open windows using ID-only completion metadata; fix false workspace-change detection caused by saved object-key ordering.
+- Validation: 1,275 synthetic application checks, 22 export-comparison checks and focused local browser checks for editing/profile setup/reload recovery/peer updates. Real Google guest-edit notification behavior has not been independently observed.
+
+
 ## 0.7.0 — 13 October 2026
 
 - Add reviewed rescheduling from Existing meetings and decline alerts, including exact times, all-day dates and single recurring occurrences. Preserve guest lists, appointment content and existing Meet links through a time-only conditional PATCH.

@@ -1,6 +1,6 @@
 # SlotDesk validation record
 
-Current product: **0.7.0**. Automated evidence and user-reported live behavior are recorded separately. No formal manual acceptance checklist remains.
+Current product: **0.7.1**. Automated evidence and user-reported live behavior are recorded separately. No formal manual acceptance checklist remains.
 
 ## Reported live progress — 13 October 2026
 
@@ -32,16 +32,25 @@ npm run check
 | Safety/scale | 69 | Account isolation, write guards, dense reads and unchanged unrelated meetings |
 | Proposal display | 66 | Date/year/DST formatting, coverage and consolidated warnings |
 | Calendar view | 42 | Date ranges, events, RSVP display and source handling |
-| Upgrade/synchronization | 67 | Stored-state migration and concurrent-window behavior |
+| Upgrade/synchronization | 71 | Stored-state migration and concurrent-window behavior |
 | Multi-calendar cache | 48 | All-source reads, cached filters and partial coverage |
 | Meeting management | 457 | Overlap oracle, No transitions, identities and follow-up metadata |
 | Rescheduling | 112 | Time-only conditional writes, permissions, identity/version and recovery |
-| **Application total** | **1,146** | Synthetic data and transports |
+| Meeting editing | 125 | Narrow detail/guest writes, preserved metadata, stale/permission guards and recovery |
+| **Application total** | **1,275** | Synthetic data and transports |
 | Export comparator | 22 | Offline creation/export integrity comparison |
 
 The 112 rescheduling, 70 booking and 69 safety checks were rerun after the latest live report: **251 passed**, with no real Google request or invitation. All source network entry points were reread; see the [write-boundary record](security.md#focused-calendar-write-recheck--13-october-2026).
 
 ## Synthetic browser evidence
+
+The 0.7.1 fixture used 50 saved profiles and eight original appointments. It exercised searchable guest selection, short profile setup for a new email, Required/Optional changes, explicit guest removal, field comparison, known-conflict/unconfirmed warnings and a combined details/guest save. One event changed; seven unrelated appointments, its times and protected metadata remained unchanged. Retained RSVP values survived and a newly added guest had needsAction status.
+
+A second title-only edit deliberately lost both the PATCH response and initial readback. Reload recovered the saved intent by reading the same ID, without another PATCH. The other open window updated its cached title through an ID-only completion notification. Across these flows, the fixture recorded two PATCH requests, zero insertions and zero deletion/full-replacement/move requests. No Google account or real invitation was used. These editing flows have not been labeled live-tested. At 420px the review had no horizontal overflow and retained a visible fixed heading/close control.
+
+![Meeting editing review with synthetic data](assets/edit-meeting-v071.jpg)
+
+### Earlier 0.7.0 browser evidence
 
 The 0.7.0 browser fixture used 50 profiles and eight original appointments. It exercised alerts/dismissal, missing profiles, overlap details, OTHER-appointment planning, all-day dates, a single recurring occurrence, concurrency and reload recovery.
 

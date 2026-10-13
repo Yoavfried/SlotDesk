@@ -1,6 +1,6 @@
 # Install the SlotDesk pilot
 
-Current release: **0.7.0**. Chrome 116 or later. The configured build uses an existing owner-managed Google OAuth client; approved testers do not need to create a Google Cloud project.
+Current release: **0.7.1**. Chrome 116 or later. The configured build uses an existing owner-managed Google OAuth client; approved testers do not need to create a Google Cloud project.
 
 ## Prepare the package
 
@@ -10,7 +10,7 @@ From the repository root, using Node.js 18+:
 npm run package:slotdesk
 ```
 
-Give the tester `dist/SlotDesk-0.7.0.zip`. It includes the extension, local fonts, handoff guide, general Help and the privacy notice. Source tests and repository documentation are excluded. Do not include credentials or calendar exports.
+Give the tester `dist/SlotDesk-0.7.1.zip`. It includes the extension, local fonts, handoff guide, general Help and the privacy notice. Source tests and repository documentation are excluded. Do not include credentials or calendar exports.
 
 ## Tester setup
 
