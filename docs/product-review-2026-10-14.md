@@ -2,7 +2,7 @@
 
 Current shipped release: **0.7.1**. These notes follow the owner's testing. This record proposes the next update; none of the changes below is implemented yet. Product version, release ZIP and calendar-write behavior remain unchanged.
 
-The owner supplied eight directions. Clear requests are recorded as planned; unresolved policy/interaction choices are identified rather than silently decided. The owner answered the first three questions during this review: require timezone confirmation before search; automatically include every profile mapped to the organizing calendar; and expand executive flexibility beyond comfort to explicitly permitted calendar overlaps. Three follow-up policy questions remain open in item 3.
+The owner supplied eight directions. Clear requests are recorded as planned; unresolved policy/interaction choices are identified rather than silently decided. The owner answered the first three questions during this review: require timezone confirmation before search; automatically include every profile mapped to the organizing calendar; and expand executive flexibility beyond comfort to explicitly permitted calendar overlaps. Follow-up answers confirm saved overlap defaults with per-meeting overrides and hour-only convenience ignoring. The owner clarified the ranking use case with an executive willing to tolerate ordinary clashes but unwilling to take a 23:00 call; the proposed interpretation is recorded in item 3.
 
 ## 1. Accessible travel and flights
 
@@ -24,15 +24,15 @@ Match readable place names, IANA identifiers and supported common aliases. For e
 
 **Proposed third control:** Allow proposals that overlap this person's existing meetings. It applies to ordinary calendar clashes for that participant; it does not erase busy data, alter source meetings, treat them as already rescheduled or authorize automatic movement. Keep the existing overlap details and review warnings, and offer replacement times for the OTHER appointments. Deduplicate shared copies so one shared appointment does not count as many required moves. Protected events, flights, explicit blocks and stated availability stay governed by their existing rules unless the EA deliberately edits those rules.
 
-Ranking needs an explicit policy, not merely zeroing a convenience score. Recommendation when a person's overlaps are enabled: rank comfort for the other ordinary-priority required guests first; among equally good times prefer fewer affected appointments/lower disruption; then compare the flexible person's remaining comfort and normal ties. Existing hard rules and known conflicts for participants without overlap permission remain intact. When overlaps are not enabled, retain the normal open-slot search and separate warned alternatives. Never infer these preferences from executive role, calendar ownership or guest domain.
+Ranking must keep overlap permission independent from time-of-day preference. The owner's example is an executive who can tolerate a displaced ordinary meeting but does not want a Zoom call at 23:00. Proposed interpretation: keep their existing hour enforcement/comfort rules unless the EA explicitly overrides them. An allowed 10:00 clash can therefore outrank a free 23:00 time; enabling clashes must not imply Ignore convenience or Ignore working days and hours. Continue comparing required-person comfort using existing worst-person/total fairness, omitting only hour penalties explicitly ignored by each person. Among equally suitable allowed options, prefer fewer affected appointments/lower disruption before other ties. Protected/explicit blocks and known conflicts for people without overlap permission retain their original treatment. This is a proposed comparison rule grounded in the clarified example; the owner did not approve the earlier blanket priority for other guests. Never infer preferences from executive role, calendar ownership or guest domain.
 
 Example: the EA may deliberately prefer a 10:00 guest-friendly option that clashes with one executive appointment over 07:00 that is open but inconvenient for the guest. That is a reviewed proposal; the 10:00 existing appointment remains unchanged until separately rescheduled. The two-hour flight/radius/manual inconvenience treatment is a separate question below. Hour enforcement and last-resort behavior must stay clearly explained rather than changing silently when ranking flags change.
 
-**Follow-up question 1:** should overlap permission start Off in every new meeting and be chosen per participant for that meeting, or also have a saved profile default with a per-meeting override? Recommendation: meeting-only, default Off.
+**Agreed — saved defaults and meeting overrides:** overlap permission may have a saved profile default and a per-meeting override. Existing/new profiles start Off unless the EA explicitly saves a different default. A meeting-specific override affects that draft only. Keep the effective setting visible where it changes proposals, and preserve it across reload/window synchronization.
 
-**Follow-up question 2:** when overlaps are explicitly enabled for the executive, should a comfortable time for the other required guests outrank a clash-free time that is inconvenient for those guests? Recommendation: Yes; among equally good guest times minimize affected appointments and disruption. Alternative: always rank clash-free options first.
+**Clarified — overlap permission versus late hours:** tolerating ordinary clashes is independent from accepting inconvenient hours. Keep the executive's hours and explicit limits in force. Show the overlapping appointment(s), clearly explain that existing meetings remain, and offer rescheduling follow-up. The owner's cancellation example does not introduce a cancellation endpoint or automatic cancellation into this update.
 
-**Follow-up question 3:** should Ignore convenience remove only usual time-of-day comfort from ranking, while retaining flight buffers, meeting radii and manually marked inconvenient periods, or ignore all soft inconvenience rules? Recommendation: usual hours only. Working-day/hour enforcement remains its own checkbox and protected time remains protected.
+**Agreed — usual hours only:** Ignore convenience removes usual time-of-day comfort from ranking; flight buffers, meeting radii and manually marked inconvenient periods remain. Working-day/hour enforcement is its own checkbox; protected time remains protected. A hard latest permitted time should use explicit availability/protected constraints, not rely on a soft convenience score.
 
 ## 4. Availability calendars in main profile setup
 
@@ -86,10 +86,10 @@ Do not combine unrelated concepts into one long advanced section. Do not duplica
 
 ## Delivery order and verification
 
-1. Agree the three questions; settle the controls inventory and migration behavior.
+1. Review the controls inventory, ranking interpretation and migration behavior against the recorded answers.
 2. Implement the calendar scope and calendar/profile mappings first because they affect onboarding, mapping choices and automatic attendance.
 3. Implement email-only guests and temporary versus saved profile state, including reload/shared-window drafts and final invitation review.
-4. Apply profile organization, travel shortcuts and the shared timezone picker. Add convenience ranking after its policy is confirmed.
+4. Apply profile organization, travel shortcuts and the shared timezone picker. Apply the independent hour/overlap defaults and meeting overrides, retaining the clarified ranking example.
 5. Update packaged Help/privacy and version records when behavior ships. Keep the broader website on hold.
 
 Use automated/source and synthetic browser validation for excluded-source reads/derived-data removal, partial coverage, multiple mapped people/team calendars, explicit guest removal/manual retention, switched calendars, unknown timezones, ranking/hard constraints, shared-window conflicts and unchanged calendar-write protections. No new live-account checklist is imposed by this planning record. Unperformed live cases must not be marked passed. Existing deletion/cancellation/calendar-move exclusions remain.

@@ -92,13 +92,13 @@ Implementation choices and safety limits are in [Rescheduling and meeting follow
 
 ## Next product update — 14 October 2026
 
-These requests change the intended next UX; current 0.7.1 behavior remains as documented above. Detailed proposals, edge cases and the three open questions are in the [product-review record](product-review-2026-10-14.md).
+These requests change the intended next UX; current 0.7.1 behavior remains as documented above. Detailed proposals, edge cases and follow-up decisions are in the [product-review record](product-review-2026-10-14.md).
 
 | ID | Area | Requested direction | Status |
 | --- | --- | --- | --- |
 | UX61 | Accessible travel | Travel & flights action on a person in Manage profiles; shared focused travel editor. | Planned |
 | UX62 | Searchable timezone choice | Search and suggestions inside a closed timezone dropdown; shared accessible control. | Planned; refines UX21 |
-| UX63 | Executive flexibility | Move Ignore working days/hours and proposed Ignore convenience into Advanced. Consider per-meeting overrides and explicit ordinary-meeting overlap permission; keep attendance/protected rules separate. | Planned checkbox direction; overlap/ranking/scope questions open |
+| UX63 | Executive flexibility | Move Ignore working days/hours and proposed Ignore convenience into Advanced. Consider per-meeting overrides and explicit ordinary-meeting overlap permission; keep attendance/protected rules separate. | Planned; saved overlap defaults plus meeting overrides and hour-only ignoring agreed; ranking interpretation documented |
 | UX64 | Main calendar mappings | Availability calendars in main profile setup, with an explicit no-access/unconfirmed state. | Planned; refines UX19/UX40 |
 | UX65 | Email-only guests | Add email immediately; Create profile replaces Edit profile for unsaved people. Confirm timezone before searching without requiring a saved profile. | Planned; timezone policy agreed; replaces compulsory profile creation in UX04 |
 | UX66 | Workspace calendar scope | Onboarding/Settings select sources whose events are shown/used anywhere; browsing filters operate within that scope. | Planned; will supersede read-all-accessible-source UX51 |

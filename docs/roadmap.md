@@ -8,13 +8,13 @@ Version **0.7.1** includes [F01–F18](implemented.md), the [accepted UX](ux-dec
 
 ## Next product update — planning
 
-The owner supplied [eight product notes on 14 October](product-review-2026-10-14.md): accessible travel/flights, searchable timezone dropdowns, convenience priority, prominent profile calendar mappings, email-only guests, explicit workspace calendar scope, automatic participation for all mapped profiles and settings organization. These are planned/proposed, **not implemented in 0.7.1**. Three policy/interaction questions remain open in that record. The new workspace-scope direction will replace the earlier read-all-accessible-sources behavior when implemented.
+The owner supplied [eight product notes on 14 October](product-review-2026-10-14.md): accessible travel/flights, searchable timezone dropdowns, convenience priority, prominent profile calendar mappings, email-only guests, explicit workspace calendar scope, automatic participation for all mapped profiles and settings organization. These are planned/proposed, **not implemented in 0.7.1**. The record includes the owner's follow-up decisions and a proposed ranking interpretation keeping ordinary clash permission separate from late-hour comfort. The new workspace-scope direction will replace the earlier read-all-accessible-sources behavior when implemented.
 
 ## Next milestones, in order
 
 | Order | Milestone | Status |
 | --- | --- | --- |
-| 1 | Refine profiles, calendar scope and meeting setup | Planned from the 14 October product review; policy questions and migration design precede implementation. |
+| 1 | Refine profiles, calendar scope and meeting setup | Planned from the 14 October product review; controls/ranking review and migration design precede implementation. |
 | 2 | Continue the Google Calendar pilot | Basic creation/export integrity passed. The owner reports working No alerts, sensible proposals, successful rescheduling and correct overlaps. Work-account access depends on organization permissions. |
 | 3 | Outlook / Microsoft 365 | Accepted next provider: OAuth, reading and reviewed writes, shared/delegated calendars, optional guests, recurrence, timezones and Teams links. Not needed for the Google pilot. |
 | 4 | Wider distribution | Supported installation/update route, applicable Google and organization requirements, accurate privacy/data-retention information and a public license/visibility decision. |

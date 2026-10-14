@@ -3,7 +3,7 @@
 ## 2026-10-14 — Product review planning
 
 - Record eight owner testing notes and follow-up answers: required timezone confirmation, every mapped profile joining automatically, and broader executive overlap flexibility.
-- Retain three unresolved flexibility policy questions without changing shipped behavior.
+- Record saved overlap defaults with meeting overrides, hour-only convenience ignoring and the clarified ordinary-clash versus 23:00 example, without changing shipped behavior.
 - Add planned UX61–UX68 and roadmap linkage; preserve 0.7.1 as the shipped release.
 - Distinguish workspace calendar scope, profile availability sources and mapping-based automatic organizing-calendar participants.
 
