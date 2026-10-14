@@ -1,6 +1,6 @@
 # Ask about times — structured inquiries before booking
 
-Recorded 14 October 2026. **Unconfirmed future feature; parked, non-blocking and not implemented in 0.7.1.** After reviewing Gmail AMP compatibility and sender/service requirements, the owner does not consider it a good current solution. Availability emails are outside the next product update. One integrated flow would cover one person/one time, one person/many times, many people/one time and many people/many times, before creating an appointment and separately from an existing Calendar invitation/RSVP.
+Recorded 14 October 2026. **Unconfirmed future feature; parked, non-blocking and not implemented in 0.8.0.** After reviewing Gmail AMP compatibility and sender/service requirements, the owner does not consider it a good current solution. Availability emails are outside the next product update. One integrated flow would cover one person/one time, one person/many times, many people/one time and many people/many times, before creating an appointment and separately from an existing Calendar invitation/RSVP.
 
 The owner is considering availability emails as part of optional [LLM assistance using the user's API key](llm-assistance.md). The LLM could prepare inquiries and interpret replies. BYOK-only access and the final reply protocol are unconfirmed. The original interactive concept below is preserved for future consideration; no external response page is approved, and an LLM does not remove inline-email compatibility or submission-service requirements.
 
@@ -50,7 +50,7 @@ Initial scope is inquiries for new meetings. The response model could later supp
 
 ## Inline email feasibility — not yet proven
 
-SlotDesk 0.7.1 is a local Chrome extension with Calendar access, no inquiry submission service and no Gmail permissions. **Email can store answers, but inbox storage does not make checkbox submission work inside email.** A reachable submission service can receive an inline answer while the EA is offline without showing the recipient a web page. The owner's prohibition is on redirecting recipients, not on such a service.
+SlotDesk 0.8.0 is a local Chrome extension with Calendar access, no inquiry submission service and no Gmail permissions. **Email can store answers, but inbox storage does not make checkbox submission work inside email.** A reachable submission service can receive an inline answer while the EA is offline without showing the recipient a web page. The owner's prohibition is on redirecting recipients, not on such a service.
 
 Candidate technologies require investigation, not an assumption of universal support:
 
@@ -95,4 +95,4 @@ This is no longer an immediate delivery plan. First confirm whether to pursue th
 4. Integrate separately reviewed, duplicate-safe booking without Calendar writes during inquiry creation or replies.
 5. Validate access, account/revision/concurrency and recovery boundaries; update Help/privacy and version logs when implemented. Deployment, real email sending and new OAuth grants are later concrete actions, not performed by this document.
 
-The earlier eight product improvements remain planned. The broader website remains on hold; this candidate belongs to SlotDesk. See [product review](product-review-2026-10-14.md), [roadmap](roadmap.md), [architecture](architecture.md), [UX decisions](ux-decisions.md) and [security/privacy](security.md).
+The authorized profile/calendar improvements are implemented in 0.8.0; the broader settings redesign remains proposed. The broader website remains on hold; this candidate belongs to SlotDesk. See [product review](product-review-2026-10-14.md), [roadmap](roadmap.md), [architecture](architecture.md), [UX decisions](ux-decisions.md) and [security/privacy](security.md).

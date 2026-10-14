@@ -7,7 +7,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const files = [];
 const errors = [];
 const contents = new Map();
-const skip = new Set(['.git', 'dist', 'node_modules']);
+const skip = new Set(['.git', 'dist', 'node_modules', '.playwright-cli', 'output']);
 
 async function walk(directory) {
   for (const item of await readdir(directory, { withFileTypes: true })) {

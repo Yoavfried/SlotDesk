@@ -92,17 +92,17 @@ Implementation choices and safety limits are in [Rescheduling and meeting follow
 
 ## Next product update — 14 October 2026
 
-These requests change the intended next UX; current 0.7.1 behavior remains as documented above. Detailed proposals, edge cases and follow-up decisions are in the [product-review record](product-review-2026-10-14.md).
+The authorized scope is implemented in 0.8.0. Earlier rows retain historical release behavior; UX61–UX67 and the final onboarding record supersede the affected defaults. UX68 remains a proposed broader redesign. Detailed proposals, edge cases and follow-up decisions are in the [product-review record](product-review-2026-10-14.md).
 
 | ID | Area | Requested direction | Status |
 | --- | --- | --- | --- |
-| UX61 | Accessible travel | Travel & flights action on a person in Manage profiles; shared focused travel editor. | Planned |
-| UX62 | Searchable timezone choice | Search and suggestions inside a closed timezone dropdown; shared accessible control. | Planned; refines UX21 |
-| UX63 | Executive flexibility | Move Ignore working days/hours and proposed Ignore convenience into Advanced. Consider per-meeting overrides and explicit ordinary-meeting overlap permission; keep attendance/protected rules separate. | Planned; saved overlap defaults plus meeting overrides and hour-only ignoring agreed; ranking interpretation documented |
-| UX64 | Main calendar mappings | Availability calendars in main profile setup, with an explicit no-access/unconfirmed state. | Planned; refines UX19/UX40 |
-| UX65 | Email-only guests | Add email immediately; Create profile replaces Edit profile for unsaved people. Confirm timezone before searching without requiring a saved profile. | Planned; timezone policy agreed; replaces compulsory profile creation in UX04 |
-| UX66 | Workspace calendar scope | Onboarding/Settings select sources whose events are shown/used anywhere; browsing filters operate within that scope. | Planned; will supersede read-all-accessible-source UX51 |
-| UX67 | Organizing-calendar participants | Automatically include every mapped profile, including teams; respect explicit removal/manual inclusion and update automatic additions when the calendar changes. No separate owner assignment. | Planned; owner confirmed; refines UX02/UX58 |
+| UX61 | Accessible travel | Travel & flights action on a person in Manage profiles; shared focused travel editor. | Implemented in 0.8.0 |
+| UX62 | Searchable timezone choice | Search and suggestions inside a closed timezone dropdown; shared accessible control. | Implemented in 0.8.0; refines UX21 |
+| UX63 | Executive flexibility | Ignore working days/hours and Ignore usual convenience are in Advanced, with saved defaults and per-meeting/search overrides for ordinary overlap permission; keep attendance/protected rules separate. | Implemented in 0.8.0; independent saved defaults and meeting/search overrides |
+| UX64 | Main calendar mappings | Availability calendars in main profile setup, with an explicit no-access/unconfirmed state. | Implemented in 0.8.0; refines UX19/UX40 |
+| UX65 | Email-only guests | Add email immediately; Create profile replaces Edit profile for unsaved people. Confirm timezone before searching without requiring a saved profile. | Implemented in 0.8.0; replaces compulsory profile creation in UX04 |
+| UX66 | Workspace calendar scope | Onboarding/Settings select sources whose events are shown/used anywhere; browsing filters operate within that scope. | Implemented in 0.8.0; supersedes read-all-source UX51 |
+| UX67 | Organizing-calendar participants | Automatically include every mapped profile, including teams; respect explicit removal/manual inclusion and update automatic additions when the calendar changes. No separate owner assignment. | Implemented in 0.8.0; refines UX02/UX58 |
 | UX68 | Settings organization | Main identity/timezone/mappings, focused travel, coherent working/availability sections and advanced treatment rules; global scope/default calendar settings separate. | Proposed layout; controls inventory before implementation |
 
 ## Structured time inquiries — 14 October 2026
@@ -127,3 +127,5 @@ These requests change the intended next UX; current 0.7.1 behavior remains as do
 | UX77 | Direct appointment creation | Future explicitly enabled automation can choose/create a validated suitable appointment and explain why. Effective rules, fresh checks and recovery still apply; no automatic deletion/cancellation of other meetings. | Requested future behavior, DF08; authorization policy unsettled |
 
 [LLM assistance](llm-assistance.md) separates requested behavior, possible BYOK-only inquiries and unresolved access/automation decisions.
+
+[Final 0.8.0 onboarding/profile behavior](onboarding-and-profiles.md) defines the migration, scoped reads, temporary guests, automatic-participant exceptions and ranking boundaries.

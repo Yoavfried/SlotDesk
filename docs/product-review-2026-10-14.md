@@ -1,18 +1,18 @@
 # Product review — 14 October 2026
 
-Current shipped release: **0.7.1**. These notes follow the owner's testing. This record proposes the next update; none of the changes below is implemented yet. Product version, release ZIP and calendar-write behavior remain unchanged.
+Original review baseline: **0.7.1**. The owner authorized the travel, timezone, main mappings, email guests, workspace scope, automatic participation and independent flexibility changes, implemented in **0.8.0**. The broader settings redesign in item 8 remains proposed. Sections below retain the design reasoning; see [final implemented behavior](onboarding-and-profiles.md) and [validation](testing.md).
 
 The owner supplied eight directions. Clear requests are recorded as planned; unresolved policy/interaction choices are identified rather than silently decided. The owner answered the first three questions during this review: require timezone confirmation before search; automatically include every profile mapped to the organizing calendar; and expand executive flexibility beyond comfort to explicitly permitted calendar overlaps. Follow-up answers confirm saved overlap defaults with per-meeting overrides and hour-only convenience ignoring. The owner clarified the ranking use case with an executive willing to tolerate ordinary clashes but unwilling to take a 23:00 call; the proposed interpretation is recorded in item 3.
 
 ## 1. Accessible travel and flights
 
-**Planned:** add a Travel & flights action to each person's entry in Manage profiles. Open a focused editor for that person's whole-day travel, destination timezone and optional exact flight times. Offer Add travel and Add flight directly; do not make the EA find nested Advanced sections. Keep the same information accessible from Edit profile, using one shared form/data source rather than duplicate settings.
+**Implemented in 0.8.0 — design direction:** add a Travel & flights action to each person's entry in Manage profiles. Open a focused editor for that person's whole-day travel, destination timezone and optional exact flight times. Offer Add travel and Add flight directly; do not make the EA find nested Advanced sections. Keep the same information accessible from Edit profile, using one shared form/data source rather than duplicate settings.
 
 Whole-day travel remains the default. Exact flights retain the existing protected flight interval and two-hour inconvenience windows around departure/arrival. Show dates, local times and departure/arrival zones clearly. Existing validation, account separation and local persistence remain. This action changes profile scheduling rules, never calendar appointments. LLM email extraction and live flight APIs remain deferred.
 
 ## 2. Search inside timezone dropdowns
 
-**Planned:** use one searchable, closed-choice timezone picker across profiles, search/review, browsing, availability rules, travel, flights and protected-time entry. Typing filters/suggests existing choices; it does not save arbitrary text as a timezone.
+**Implemented in 0.8.0 — design direction:** use one searchable, closed-choice timezone picker across profiles, search/review, browsing, availability rules, travel, flights and protected-time entry. Typing filters/suggests existing choices; it does not save arbitrary text as a timezone.
 
 Match readable place names, IANA identifiers and supported common aliases. For example, Jerusalem finds Asia/Jerusalem; New York or Eastern offers an explicitly labelled America/New_York choice. Keep valid saved aliases and UTC. Keyboard arrows/Enter/Escape, clear labels, selected-value display and an accessible combobox/listbox are required. Do not infer a person's zone from an email, automatically adopt a clue, or represent a DST-observing zone as a permanent GMT offset.
 
@@ -20,9 +20,9 @@ Match readable place names, IANA identifiers and supported common aliases. For e
 
 **Owner clarification:** this is broader than convenience ranking. An executive may prefer a clash in their own calendar when meeting outside guests, but not for every appointment. The owner proposes an Ignore convenience checkbox alongside Ignore working days and hours, moving both into Advanced. Per-meeting/per-profile controls are a possible direction.
 
-**Planned:** retain separate controls for working days/hours and convenience. Move both profile checkboxes into an advanced working/availability area. Proposed meeting-specific overrides belong in a participant's Options for this meeting, visibly marked when they differ from the saved profile. Meeting overrides must not silently rewrite saved profiles. Required/Optional attendance stays separate; an executive does not become an optional guest because they accept inconvenience or clashes.
+**Implemented in 0.8.0 — design direction:** retain separate controls for working days/hours and convenience. Move both profile checkboxes into an advanced working/availability area. Proposed meeting-specific overrides belong in a participant's Options for this meeting, visibly marked when they differ from the saved profile. Meeting overrides must not silently rewrite saved profiles. Required/Optional attendance stays separate; an executive does not become an optional guest because they accept inconvenience or clashes.
 
-**Proposed third control:** Allow proposals that overlap this person's existing meetings. It applies to ordinary calendar clashes for that participant; it does not erase busy data, alter source meetings, treat them as already rescheduled or authorize automatic movement. Keep the existing overlap details and review warnings, and offer replacement times for the OTHER appointments. Deduplicate shared copies so one shared appointment does not count as many required moves. Protected events, flights, explicit blocks and stated availability stay governed by their existing rules unless the EA deliberately edits those rules.
+**Implemented third control:** Allow proposals that overlap this person's existing meetings. It applies to ordinary calendar clashes for that participant; it does not erase busy data, alter source meetings, treat them as already rescheduled or authorize automatic movement. Keep the existing overlap details and review warnings, and offer replacement times for the OTHER appointments. Deduplicate shared copies so one shared appointment does not count as many required moves. Protected events, flights, explicit blocks and stated availability stay governed by their existing rules unless the EA deliberately edits those rules.
 
 Ranking must keep overlap permission independent from time-of-day preference. The owner's example is an executive who can tolerate a displaced ordinary meeting but does not want a Zoom call at 23:00. Proposed interpretation: keep their existing hour enforcement/comfort rules unless the EA explicitly overrides them. An allowed 10:00 clash can therefore outrank a free 23:00 time; enabling clashes must not imply Ignore convenience or Ignore working days and hours. Continue comparing required-person comfort using existing worst-person/total fairness, omitting only hour penalties explicitly ignored by each person. Among equally suitable allowed options, prefer fewer affected appointments/lower disruption before other ties. Protected/explicit blocks and known conflicts for people without overlap permission retain their original treatment. This is a proposed comparison rule grounded in the clarified example; the owner did not approve the earlier blanket priority for other guests. Never infer preferences from executive role, calendar ownership or guest domain.
 
@@ -36,7 +36,7 @@ Example: the EA may deliberately prefer a 10:00 guest-friendly option that clash
 
 ## 4. Availability calendars in main profile setup
 
-**Planned:** move Availability calendars out of Advanced into the main profile form, beside identity and timezone. Use selected source rows/closed searchable choices and Add another. Show exact-email matches and confirmed owner suggestions clearly; retain explicit EA confirmation for ambiguous shared calendars. All choices must respect the workspace calendar scope in item 6.
+**Implemented in 0.8.0 — design direction:** move Availability calendars out of Advanced into the main profile form, beside identity and timezone. Use selected source rows/closed searchable choices and Add another. Show exact-email matches and confirmed owner suggestions clearly; retain explicit EA confirmation for ambiguous shared calendars. All choices must respect the workspace calendar scope in item 6.
 
 Provide an explicit I do not have access to this person's calendar choice. Saving such a profile is allowed, with Calendar availability unconfirmed rather than a false promise of full knowledge. A mapping means these sources are used for that person's availability; it does not grant access or prove every relevant calendar has been linked. Coverage is complete only for selected linked sources that actually loaded the requested interval successfully. Missing/unavailable/excluded sources must remain visible as limits.
 
@@ -44,7 +44,7 @@ The same availability mappings drive automatic participation when that source is
 
 ## 5. Add email first; profile creation is optional
 
-**Planned direction:** adding a valid email puts that person into the appointment's guest list immediately. Deduplicate by normalized email. If a saved profile exists, resolve its name, timezone and Edit profile button. Otherwise show the email and a Create profile button in the same place. Creating a profile pre-fills known details and keeps the guest in the same draft; cancelling profile creation must not remove the guest.
+**Implemented in 0.8.0 — direction:** adding a valid email puts that person into the appointment's guest list immediately. Deduplicate by normalized email. If a saved profile exists, resolve its name, timezone and Edit profile button. Otherwise show the email and a Create profile button in the same place. Creating a profile pre-fills known details and keeps the guest in the same draft; cancelling profile creation must not remove the guest.
 
 Use this behavior consistently in new invitations and existing-meeting edits. An email-only guest is not a saved profile. Unknown calendar coverage/timezone remains visible; no organizer timezone or guessed working schedule may be presented as that person's verified rules. Existing-event edits still require explicit review and retain guest-removal safeguards.
 
@@ -52,7 +52,7 @@ Use this behavior consistently in new invitations and existing-meeting edits. An
 
 ## 6. Relevant calendars during onboarding
 
-**Planned:** add an explicit Calendars used by SlotDesk selection during onboarding, editable later under Settings → Calendars. Preserve own-profile-first setup. Use a searchable checkbox list of accessible calendars and explain: Events from calendars you leave out will not appear in SlotDesk or affect its scheduling suggestions. Calendar metadata can still be listed to let you choose sources and verify the connected account; excluded calendars' events/free-busy data must not be fetched.
+**Implemented in 0.8.0 — design direction:** add an explicit Calendars used by SlotDesk selection during onboarding, editable later under Settings → Calendars. Preserve own-profile-first setup. Use a searchable checkbox list of accessible calendars and explain: Events from calendars you leave out will not appear in SlotDesk or affect its scheduling suggestions. Calendar metadata can still be listed to let you choose sources and verify the connected account; excluded calendars' events/free-busy data must not be fetched.
 
 This workspace-wide selection defines eligible event sources for browsing, availability checks, contact/profile suggestions, clues, alerts and overlaps. The Existing meetings calendar picker becomes a view filter within that scope: hiding a relevant calendar from the list does not silently stop its mapped availability from being checked. Date changes/Refresh cache all relevant calendars, instead of all accessible calendars. Calendar/date filters within that cache remain local.
 
@@ -84,7 +84,7 @@ This default affects new drafts and deliberate organizing-calendar changes. Open
 
 Do not combine unrelated concepts into one long advanced section. Do not duplicate global scope, profile mappings, invitation-calendar choice and browsing filters under the same ambiguous Calendars heading. Keep current template/manual exclusivity, zero-default radius/notice, editable travel, fixed modal headings and the supplied design language. A controls inventory should precede the UI rearrangement; all current saved settings must remain reachable and preserved.
 
-## Delivery order and verification
+## Original delivery order and verification
 
 1. Review the controls inventory, ranking interpretation and migration behavior against the recorded answers.
 2. Implement the calendar scope and calendar/profile mappings first because they affect onboarding, mapping choices and automatic attendance.

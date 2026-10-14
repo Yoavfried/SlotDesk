@@ -1,5 +1,11 @@
 # Repository changelog
 
+## 2026-10-14 — SlotDesk 0.8.0
+
+- Implement the authorized onboarding/profile/calendar/guest/flexibility scope and retain the supplied design assets and extension identity.
+- Record UX61–UX67/F19–F26, migration and scoped-data semantics, validation and packaged Help/privacy. Keep broader settings work and LLM/email features deferred.
+- Validate and package the 0.8.0 private pilot; preserve reviewed calendar mutation/recovery boundaries.
+
 ## 2026-10-14 — Future LLM direction and parked availability emails
 
 - Park availability emails as an unconfirmed, non-blocking future feature after reviewing Gmail AMP setup/compatibility; record possible BYOK-only access without committing to it.

@@ -123,19 +123,20 @@
       const acceptable=localWindows(s,e,tz,wd=>{const r=days[wd];if(!r||!r.on)return [];const lim=p.limit||DEFAULTS.ok;return [{s:hhmm(Math.min(toMin(r.s),toMin(lim.s))),e:hhmm(Math.max(toMin(r.e),toMin(lim.e)))}];},cache&&cache.ok);
       if(p.ignoreWorkingHours) {
         const comfort=localWindows(s,e,tz,()=>[p.limit||DEFAULTS.ok],cache&&cache.ok);
-        inconvenient.push(...subtract([[s,e]],comfort));
+        if(!p.ignoreConvenience)inconvenient.push(...subtract([[s,e]],comfort));
         const inside=comfort.find(w=>w[0]<=s&&w[1]>=e);res.margin=Math.min(res.margin,inside?Math.min(s-inside[0],inside[1]-e)/MIN:0);
       } else if(!positive) {
         const workDay=localWindows(s,e,tz,wd=>days[wd]&&days[wd].on?[{s:'00:00',e:'24:00'}]:[],cache&&cache.day);
         if(!covered(workDay,s,e))return no(`not a working day for ${p.name}`);
         if(!covered(acceptable,s,e)) {if(!options.allowBadHours)return no(`bad hour for ${p.name} (outside acceptable hours)`);res.band='bad';res.notes.push(`${p.name}: explicitly enabled hours outside acceptable range`);}
-        inconvenient.push(...subtract([[s,e]],work));
+        if(!p.ignoreConvenience)inconvenient.push(...subtract([[s,e]],work));
         const inside=work.find(w=>w[0]<=s&&w[1]>=e);res.margin=Math.min(res.margin,inside?Math.min(s-inside[0],inside[1]-e)/MIN:0);
       }
-      if(!positive){const windows=p.ignoreWorkingHours?localWindows(s,e,tz,()=>[p.limit||DEFAULTS.ok],cache&&cache.ok):work;const distance=windows.length?Math.min(...windows.map(([a,b])=>e<=a?(a-e)/MIN:s>=b?(s-b)/MIN:0)):0;res.distance=Math.max(res.distance,distance);}
+      if(!positive&&!p.ignoreConvenience){const windows=p.ignoreWorkingHours?localWindows(s,e,tz,()=>[p.limit||DEFAULTS.ok],cache&&cache.ok):work;const distance=windows.length?Math.min(...windows.map(([a,b])=>e<=a?(a-e)/MIN:s>=b?(s-b)/MIN:0)):0;res.distance=Math.max(res.distance,distance);}
       if(localWindows(s,e,tz,wd=>(p.blocks||[]).filter(b=>b.day===wd)).some(b=>overlap(s,e,...b)))return no(`runs into protected time for ${p.name}`);
       if(!(e>s))throw new Error('Unable to resolve local date boundary');s=e;
     }
+    if(p.ignoreConvenience){res.margin=60;res.distance=0;}
     for(const c of options.constraints||[]) {
       if(c.who&&c.who!=='all'&&c.who!==p.id)continue;
       if(!overlap(start,end,ms(c.from),ms(c.to)))continue;
@@ -163,6 +164,7 @@
     if(!Array.isArray(req.people)||people.length!==req.people.length)err('Participants must be a list of profiles');
     const ids=new Set();
     for(const p of people) {
+      for(const flag of ['ignoreWorkingHours','ignoreConvenience','allowOverlap'])if(p[flag]!==undefined&&typeof p[flag]!=='boolean')err(`Invalid ${flag} setting for ${p.name}`);
       if(!p.id||ids.has(p.id))err('Each participant needs a unique ID');ids.add(p.id);
       if(!zoneValid(p.tz))err(`Enter a valid timezone for ${p.name||p.id}`);
       if(!Number.isFinite(p.notice??0)||(p.notice??0)<0||(p.notice??0)>720)err(`Invalid notice for ${p.name}`);
@@ -217,7 +219,7 @@
         const slot={start,end,startISO:new Date(start).toISOString(),endISO:new Date(end).toISOString(),day,duration,maxOutside:Math.max(0,...required.map(f=>f.outside)),sumOutside:required.reduce((n,f)=>n+f.outside,0),maxDistance:Math.max(0,...required.map(f=>f.distance)),sumDistance:required.reduce((n,f)=>n+f.distance,0),margin:Math.min(...required.map(f=>f.margin)),optionalAttendance:0,notes:[],confirmed:true,people:[]};
         people.forEach((p,i)=>{
           const f=fits[i],conflicts=conflictsFor(p,start,end),available=f.band!=='no'&&!conflicts.length,confirmed=coverageKnown(p,start,end,now);
-          slot.people.push({id:p.id,name:p.name,email:p.email,required:p.required!==false,local:f.local,localEnd:f.localEnd,date:f.date,endDate:f.endDate,tz:f.tz,endTz:f.endTz,band:f.band,available,confirmed,inconvenientMinutes:f.outside,availabilityReason:f.band==='no'?f.why:null,hasCalendarConflict:!!conflicts.length,calendarConflictCount:conflicts.length});slot.notes.push(...f.notes);
+          slot.people.push({id:p.id,name:p.name,email:p.email,required:p.required!==false,local:f.local,localEnd:f.localEnd,date:f.date,endDate:f.endDate,tz:f.tz,endTz:f.endTz,band:f.band,available,confirmed,inconvenientMinutes:f.outside,availabilityReason:f.band==='no'?f.why:null,hasCalendarConflict:!!conflicts.length,calendarConflictCount:conflicts.length,ignoreConvenience:p.ignoreConvenience===true,allowOverlap:p.allowOverlap===true});slot.notes.push(...f.notes);
           if(!confirmed){if(p.required!==false)slot.confirmed=false;slot.notes.push(`cannot see ${p.name}'s complete calendar — availability unconfirmed${p.calendarError?': '+p.calendarError:''}`);}
           if(p.required===false){if(available)slot.optionalAttendance++;else slot.notes.push(`optional guest ${p.name} cannot attend: ${f.why||'busy'}`);}
           else for(const ev of conflicts) {
@@ -228,11 +230,11 @@
           for(const mk of p.markers||[])if(f.date>=mk.from&&f.date<mk.to)slot.notes.push(`${p.name}: all-day note “${mk.title||'untitled'}”${mk.review?' — review classification':''}`);
         });
         const blocking=[...clashes.values()];if(!blocking.length)open.push(slot);
-        else if(blocking.every(c=>Number.isFinite(c.cost))){slot.overrides=slot.toMove=blocking;slot.rescheduleCount=blocking.length;slot.cost=blocking.reduce((n,c)=>n+c.cost,0);slot.peopleHit=new Set(blocking.flatMap(c=>c.participants)).size;slot.notes.push('WARNING: this SlotDesk proposal introduces conflicts. Existing appointments are unchanged. Find replacement times immediately.');taken.push(slot);}
+        else if(blocking.every(c=>Number.isFinite(c.cost))){slot.overrides=slot.toMove=blocking;slot.rescheduleCount=blocking.length;slot.cost=blocking.reduce((n,c)=>n+c.cost,0);slot.peopleHit=new Set(blocking.flatMap(c=>c.participants)).size;slot.notes.push('WARNING: this SlotDesk proposal introduces conflicts. Existing appointments are unchanged. Find replacement times immediately.');if(blocking.every(c=>c.category!=='hidden'&&c.participants.every(id=>people.find(p=>p.id===id)?.allowOverlap===true)))open.push(slot);else taken.push(slot);}
         else reject('runs into travel, time off or protected time');
       }
     }
-    const rank=(a,b)=>a.maxOutside-b.maxOutside||a.sumOutside-b.sumOutside||a.maxDistance-b.maxDistance||a.sumDistance-b.sumDistance||Math.min(b.margin,60)-Math.min(a.margin,60)||b.optionalAttendance-a.optionalAttendance||a.start-b.start;
+    const rank=(a,b)=>a.maxOutside-b.maxOutside||a.sumOutside-b.sumOutside||a.maxDistance-b.maxDistance||a.sumDistance-b.sumDistance||(a.rescheduleCount||0)-(b.rescheduleCount||0)||(a.cost||0)-(b.cost||0)||Math.min(b.margin,60)-Math.min(a.margin,60)||b.optionalAttendance-a.optionalAttendance||a.start-b.start;
     open.sort(rank);taken.sort((a,b)=>a.rescheduleCount-b.rescheduleCount||a.cost-b.cost||a.peopleHit-b.peopleHit||rank(a,b));return {open,taken,rejected,errors:[],warnings:check.warnings};
   }
   function spread(slots,want,perDay) {

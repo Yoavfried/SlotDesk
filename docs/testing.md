@@ -1,6 +1,6 @@
 # SlotDesk validation record
 
-Current product: **0.7.1**. Automated evidence and user-reported live behavior are recorded separately. No formal manual acceptance checklist remains.
+Current product: **0.8.0**. Automated evidence and user-reported live behavior are recorded separately. No formal manual acceptance checklist remains.
 
 ## Reported live progress — 13 October 2026
 
@@ -37,12 +37,20 @@ npm run check
 | Meeting management | 457 | Overlap oracle, No transitions, identities and follow-up metadata |
 | Rescheduling | 112 | Time-only conditional writes, permissions, identity/version and recovery |
 | Meeting editing | 125 | Narrow detail/guest writes, preserved metadata, stale/permission guards and recovery |
-| **Application total** | **1,275** | Synthetic data and transports |
+| Onboarding/scope/guests/flexibility | 71 | Selected-source transports, migration/recovery, draft guests and independent scheduling rules |
+| **Application total** | **1,346** | Synthetic data and transports |
 | Export comparator | 22 | Offline creation/export integrity comparison |
 
 The 112 rescheduling, 70 booking and 69 safety checks were rerun after the latest live report: **251 passed**, with no real Google request or invitation. All source network entry points were reread; see the [write-boundary record](security.md#focused-calendar-write-recheck--13-october-2026).
 
 ## Synthetic browser evidence
+
+### 0.8.0 onboarding and profiles
+
+The focused local fixture exercised own-profile-first setup, searched timezone choice, explicit calendar scope/default, optional familiar-person skip, main calendar mappings, direct focused travel access, multiple profiles on a team source, saved defaults/per-meeting overrides, manual additions/removals during calendar switches, unsaved email guests, mandatory timezone confirmation and reload continuation. No event reads occurred before scope confirmation; excluded guest/busy sources were not requested.
+
+One reviewed synthetic invitation was created in the chosen team calendar for exactly Alpha, Nina and the unsaved email guest. All eight original appointments remained unchanged; zero PATCH, DELETE, full replacement or move requests occurred. A second open workspace cleared an excluded team's events, refreshed the remaining source and preserved inactive profile mappings. Existing-meeting guest addition reached review without forcing a saved profile. Rescheduling blocked source reads until an unsaved guest’s timezone was confirmed, then produced options without saving a profile or writing a change. An isolated upgrade fixture preserved all 50 saved profiles and excluded mappings, with zero event reads before explicit scope confirmation. A final fresh setup produced no phantom draft, and a second synthetic booking cleared temporary guests and meeting rules after completion. Across both bookings, two insertions and no existing-event mutations were recorded; all eight originals remained unchanged. No real account, message or invitation is involved.
+
 
 The 0.7.1 fixture used 50 saved profiles and eight original appointments. It exercised searchable guest selection, short profile setup for a new email, Required/Optional changes, explicit guest removal, field comparison, known-conflict/unconfirmed warnings and a combined details/guest save. One event changed; seven unrelated appointments, its times and protected metadata remained unchanged. Retained RSVP values survived and a newly added guest had needsAction status.
 

@@ -10,7 +10,7 @@ Version 0.6.0 adds same-account window synchronization and local persistence of 
 
 Version 0.5.0 adds read-only calendar browsing and guest-response display using the existing reader. Raw event details stay in memory and are cleared on disconnect; only chosen calendar/date filters persist. Descriptions and provider text are escaped; external event/video links remain allowlisted. No additional OAuth permission or existing-event write path is introduced. The prior source audit and current synthetic checks are separate evidence; this update is not a new exhaustive security audit.
 
-Updated 13 October 2026 for **0.7.1**. This record explains supported behavior, evidence and remaining limits. It is not a guarantee that all future changes or browser environments are safe.
+Updated 14 October 2026 for **0.8.0**. This record explains supported behavior, evidence and remaining limits. It is not a guarantee that all future changes or browser environments are safe.
 
 ## Calendar integrity boundary
 
@@ -45,7 +45,7 @@ Calendar text is escaped or inserted with textContent. Receipt links are restric
 
 A standard source review completed against **0.3.5 at commit 330114f69fad9ea55c00383b577484da7fa95d92**, scoped to apps/slotdesk. The independent baseline read all 30 text files; four WOFF2 fonts were inventoried but their binary parser internals were outside the audit. Architecture and focused validation passes supplemented the review. No reportable attacker-supported vulnerability was established. Coverage remained partial because runtime density, cleanup/shared-calendar correctness and organization/account behavior needed follow-up. This is not a claim that the 0.4.0 diff or workplace deployment received exhaustive security certification.
 
-The review identified correctness/hardening work addressed in 0.4.0: shared-calendar RSVP ownership, disconnect editor residue, fresh account checks on recovery/video readback, saved-request validation and multiple-window coordination. The source now includes method/payload/redirect guards. The [1275 automated checks and browser checks](testing.md) verify synthetic behavior, including 6,000 paginated events and 2,000 unchanged existing meetings. No real account or invitation was used by the agent for this update.
+The review identified correctness/hardening work addressed in 0.4.0: shared-calendar RSVP ownership, disconnect editor residue, fresh account checks on recovery/video readback, saved-request validation and multiple-window coordination. The source now includes method/payload/redirect guards. The [1346 automated checks and browser checks](testing.md) verify synthetic behavior, including 6,000 paginated events and 2,000 unchanged existing meetings. No real account or invitation was used by the agent for this update.
 
 The sealed scan report remains a local audit artifact. This product record summarizes its source boundaries and useful conclusions without publishing machine-specific audit metadata.
 
@@ -84,3 +84,11 @@ The 125 editor checks cover retained responses/comments/resources/additional gue
 The [optional LLM plan](llm-assistance.md) would let users supply a model API key and send selected scheduling context to their chosen provider. This changes today's local-only data boundary and needs explicit data/permission controls before implementation. Key entry does not grant Gmail access, email-send permission or autonomous Calendar writes. Provider terms, protected key handling, data minimization and direct-versus-relayed requests remain undecided; do not put keys into current plaintext workspace settings, prompts or logs.
 
 Untrusted email/appointment text must remain task data, with no authority to change tool permissions or expose credentials. Model results go through schema and deterministic rule validation. Any future direct-creation policy must retain account/access checks, fresh scheduling validation, duplicate/uncertain-result recovery and the application's existing deletion/cancellation/move exclusions. This is a future design boundary, not an implemented feature or a completed audit.
+
+## Calendar scope and draft guests in 0.8.0
+
+The new scope guard rejects excluded event/detail/free-busy requests before network access, rechecks pagination, and discards stale reads when account/scope/generation changes. Calendar-list metadata is permitted for authentication/source choice. Removing a source clears fetched/derived session data and peer meeting lists; saved inactive mappings remain. The underlying Google consent grant is unchanged and broader than this application selection. Existing users confirm scope before event loading; exact account-bound pending-operation recovery is the sole pre-confirmation exception, preserving same-target recovery rather than abandoning an uncertain write.
+
+Temporary email guests, confirmed meeting-only timezones, attendee provenance and explicit meeting preferences persist locally for draft continuation and are cleared after confirmed creation/new draft. They contain user-authored contact/rule information and are unencrypted like other local settings. New profile defaults use the store's allowlist. No token/event content cache, backend, email access or LLM is introduced.
+
+The 71 new synthetic policy/model/engine checks cover excluded reads, free/busy, interrupted pagination, pending-target recovery, scope/default validation, multi-person maps, removal/manual exceptions, guest persistence/promotion and independent convenience/overlap rules. The mocked browser flows created two reviewed events for exactly the selected recipients and preserved all eight original appointments, with zero deletion/move/full-replacement requests. Peer exclusion cleared displayed data and reloaded permitted sources. This is focused validation, not an exhaustive security audit or actual Google delivery evidence.

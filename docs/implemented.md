@@ -48,3 +48,18 @@ The [rescheduling record](rescheduling.md) defines scope, recovery, cache/alert 
 | F18 | Reviewed guest and detail editing | Add/remove guests and change Required/Optional status; edit title, location and description; review each exact change, then conditionally PATCH only the selected organizer-copy event. Preserve retained responses, time, Meet, attachments and other untouched fields. Disable roster editing when the complete roster cannot be verified. | Implemented; 125 synthetic transport checks and browser verification |
 
 See [meeting editing](meeting-editing.md) for scope and recovery. Stored object-key ordering is ignored by synchronization; real field and array changes still require review.
+
+## Release 0.8.0 onboarding and profiles
+
+| ID | Work | Accepted behavior | Status |
+| --- | --- | --- | --- |
+| F19 | Accessible travel | Focused Travel & flights action in Manage profiles, sharing existing validated data/editor. | Implemented |
+| F20 | Main availability mappings | Calendar assignments in basic profile setup, explicit no-access choice and inactive-source warnings. | Implemented |
+| F21 | Searchable timezones | Closed supported choices with search, aliases, keyboard navigation and shared light/dark styling throughout. | Implemented |
+| F22 | Automatic mapped participants | All mapped people/team members join new drafts; calendar switches preserve manual additions and explicit removals. Existing rosters stay explicit. | Implemented |
+| F23 | Email-first guests | Add email immediately; optional Create Profile and mandatory search-time timezone confirmation. Preserve temporary draft guests across reload; clear after completion/new draft. | Implemented |
+| F24 | Usual convenience ignoring | Saved and meeting/search-specific preference; omit usual-hour ranking penalties while retaining working limits and other inconvenience rules. | Implemented |
+| F25 | Participant-specific ordinary overlaps | Saved defaults/overrides; protected/unknown-busy boundaries, disclosed overlaps and comfort-first/fewer-affected-appointments ranking. | Implemented |
+| F26 | Workspace calendar scope and onboarding | Own profile → explicit selected sources/default → optional people; scoped transport/pagination, source cleanup, existing-user confirmation and peer refresh. | Implemented |
+
+See [onboarding and profiles](onboarding-and-profiles.md). The larger UX68 settings redesign and LLM/email candidates remain future work.

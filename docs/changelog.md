@@ -1,5 +1,14 @@
 # SlotDesk changelog
 
+## 0.8.0 — 14 October 2026
+
+- Add own-profile → selected calendars/default → optional familiar-people onboarding, with explicit source confirmation for existing users and preserved pending recovery.
+- Move availability mappings into main profile setup, add focused Travel & flights actions and searchable timezone choices across all forms.
+- Automatically include every profile mapped to the organizing calendar, preserving manual attendees/removals during switches. Add email guests without compulsory saved profiles; confirm timezone before searches and preserve temporary draft continuation.
+- Add separate saved and per-meeting/search Ignore usual convenience hours and ordinary-overlap preferences. Keep protected/explicit rules and non-hour inconvenience in force; disclose clashes and prefer fewer affected appointments among equally suitable times.
+- Enforce workspace calendar scope at API transports/pagination, clear excluded session data and update peer meeting lists. Keep existing Google identity/scopes and reviewed writers; no delete/cancel/move, backend, email or LLM feature.
+- Validation: 1,346 synthetic application checks, 22 export-comparison checks and focused mocked browser checks. A synthetic booking preserved eight original appointments. Actual Google behavior of the new UX has not been independently observed.
+
 ## 0.7.1 — 13 October 2026
 
 - Add Edit meeting for title, location, description and explicit guest additions/removals/Required–Optional changes, with a before/after review and Save changes & notify guests.

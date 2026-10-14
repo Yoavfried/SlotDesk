@@ -1,6 +1,6 @@
 # Optional LLM assistance — future direction
 
-Recorded 14 October 2026. **Future direction; not implemented in 0.7.1 and not part of the next product update.** The owner wants users to be able to supply their own LLM API key. SlotDesk would provide prepared prompts and use the lowest-cost model that performs the task reliably. Providers, model choices, key handling and automation controls remain undecided.
+Recorded 14 October 2026. **Future direction; not implemented in 0.8.0 and not part of the next product update.** The owner wants users to be able to supply their own LLM API key. SlotDesk would provide prepared prompts and use the lowest-cost model that performs the task reliably. Providers, model choices, key handling and automation controls remain undecided.
 
 The owner is also considering making availability emails available only within this optional LLM integration. That restriction and the availability-email feature itself are **unconfirmed**, not an accepted release commitment. See [availability inquiries](time-inquiries.md).
 
@@ -62,4 +62,4 @@ Email reading and sending require their own authorized integrations; an LLM API 
 - How extracted constraints are accepted/edited and how ambiguous or changed replies reach the EA.
 - The exact authorization, operating limits, notifications and execution environment for direct creation.
 
-These are future design questions, not blockers for the eight planned [profile/calendar/setup improvements](product-review-2026-10-14.md). No LLM client, key field, email integration, prompt implementation, model benchmark or autonomous Calendar write is shipped by this record. See [roadmap](roadmap.md), [architecture](architecture.md), [security/privacy](security.md) and [UX decisions](ux-decisions.md).
+These are future design questions, separate from the implemented [0.8.0 profile/calendar/setup improvements](onboarding-and-profiles.md) and remaining UX proposals. No LLM client, key field, email integration, prompt implementation, model benchmark or autonomous Calendar write is implemented in 0.8.0. See [roadmap](roadmap.md), [architecture](architecture.md), [security/privacy](security.md) and [UX decisions](ux-decisions.md).

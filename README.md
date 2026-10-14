@@ -1,6 +1,6 @@
 ![SlotDesk — make room for what matters](design/assets/slotdesk-banner.svg)
 
-**0.7.1 · Google Calendar · private Chrome pilot**
+**0.8.0 · Google Calendar · private Chrome pilot**
 
 SlotDesk helps executive assistants find meeting times across people, calendars and timezones. Review a new invitation, browse existing meetings, edit its details and guests, or choose a new time for an appointment. Every calendar write requires an explicit review and confirmation.
 
@@ -8,7 +8,10 @@ Created and maintained by **[Yoavfried](https://github.com/Yoavfried)** and **[n
 
 ## What you can do
 
-- Set up email-based profiles with a confirmed timezone, working schedules, travel and availability constraints.
+- Follow three-step onboarding: your profile, selected workspace calendars/default and optional familiar people.
+- Set up email-based profiles with searchable timezones, visible calendar mappings and direct Travel & flights access.
+- Add email guests with a meeting-only timezone; saving a profile is optional. Automatically include profiles mapped to the organizing calendar.
+- Use saved and per-meeting working/convenience/ordinary-overlap preferences, with protected rules and clear warnings.
 - Compare suitable times, with optional guests, comfort ranking and clear warnings when calendar coverage is incomplete.
 - Create reviewed Google Calendar invitations with an optional Google Meet link.
 - Browse multiple calendars and any date range, inspect guest responses and expand overlap details.
@@ -43,6 +46,7 @@ The preview at `http://127.0.0.1:8770/` shows the disconnected interface. Calend
 | Read | Purpose |
 | --- | --- |
 | [Product overview](docs/overview.md) | Available features and current limits |
+| [Onboarding and profiles](docs/onboarding-and-profiles.md) | Calendar scope, unsaved guests, automatic attendance and independent flexibility |
 | [UX decisions](docs/ux-decisions.md) · [scheduling rules](docs/scheduling-decisions.md) | Accepted behavior, including unimplemented/deferred decisions |
 | [Meeting editing](docs/meeting-editing.md) · [rescheduling](docs/rescheduling.md) | Guest/detail edits, individual time changes, alerts and manual follow-up |
 | [Roadmap](docs/roadmap.md) | Outlook, distribution and explicitly deferred features |
@@ -52,7 +56,7 @@ The preview at `http://127.0.0.1:8770/` shows the disconnected interface. Calend
 | [Design language](design/README.md) | Original style guide, fonts and design assets |
 | [Product changelog](docs/changelog.md) · [repository changelog](CHANGELOG.md) | Product releases and repository migration |
 
-Local validation includes 1,275 synthetic application checks and 22 export-comparison checks. Meeting editing has synthetic browser and transport coverage; real Google guest-edit delivery has not been independently observed. Basic live creation and the first dense-calendar integrity comparison passed. The owner also reports working decline alerts, sensible proposals, successful rescheduling and correct overlap details. Work-account access depends on the organization allowing the extension and Google permissions.
+Local validation includes 1,346 synthetic application checks and 22 export-comparison checks. The 0.8.0 onboarding, scope, guest and flexibility flows have synthetic browser/transport coverage; real Google guest-edit delivery has not been independently observed. Basic live creation and the first dense-calendar integrity comparison passed. The owner also reports working decline alerts, sensible proposals, successful rescheduling and correct overlap details. Work-account access depends on the organization allowing the extension and Google permissions.
 
 ![Overlap details with synthetic calendar data](docs/assets/overlaps-v070.png)
 

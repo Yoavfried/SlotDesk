@@ -4,11 +4,11 @@ Updated 14 October 2026. Status reflects agreed scope, not a promise of public a
 
 ## Current release
 
-Version **0.7.1** includes [F01–F18](implemented.md), the [accepted UX](ux-decisions.md), Google reading, reviewed new-event creation, recovery, a home menu, existing-meeting browsing/RSVPs, overlap details, declined-response alerts, reviewed guest/detail editing and rescheduling, searchable participants and the supplied design treatment. The project owner reports that the basic live flow works. Source review and synthetic stress tests are recorded in [security/privacy](security.md) and [testing](testing.md).
+Version **0.8.0** includes [F01–F26](implemented.md), the [accepted UX](ux-decisions.md), Google reading, reviewed new-event creation, recovery, a home menu, existing-meeting browsing/RSVPs, overlap details, declined-response alerts, reviewed guest/detail editing and rescheduling, searchable participants and the supplied design treatment. The project owner reports that the basic live flow works. Source review and synthetic stress tests are recorded in [security/privacy](security.md) and [testing](testing.md).
 
-## Next product update — planning
+## Profile/calendar update — implemented in 0.8.0
 
-The owner supplied [eight product notes on 14 October](product-review-2026-10-14.md): accessible travel/flights, searchable timezone dropdowns, convenience priority, prominent profile calendar mappings, email-only guests, explicit workspace calendar scope, automatic participation for all mapped profiles and settings organization. These are planned/proposed, **not implemented in 0.7.1**. The record includes the owner's follow-up decisions and a proposed ranking interpretation keeping ordinary clash permission separate from late-hour comfort. The new workspace-scope direction will replace the earlier read-all-accessible-sources behavior when implemented.
+The authorized onboarding, travel, timezone, mapping, guest and flexibility work from the [14 October product review](product-review-2026-10-14.md) is implemented; see [final behavior](onboarding-and-profiles.md). Workspace scope now replaces read-all-accessible-event behavior. The broader settings/profile layout redesign remains proposed, as do further copy/accessibility refinements and local backup.
 
 ## Availability emails — unconfirmed future feature
 
@@ -16,13 +16,13 @@ The owner supplied [eight product notes on 14 October](product-review-2026-10-14
 
 ## Optional LLM assistance — future direction
 
-The owner wants [bring-your-own-key LLM assistance](llm-assistance.md), with prepared prompts and the cheapest model that performs each task reliably. Intended tasks include reading scheduling emails and appointment text, drafting availability inquiries, interpreting replies, explaining rule-aware choices and eventually creating optimized appointments directly in an explicitly authorized automation mode. Provider/model, cost controls, key/data handling, email permissions and direct-creation authorization remain open. No LLM feature or additional access is implemented in 0.7.1; these ideas do not block the profile/calendar/setup update.
+The owner wants [bring-your-own-key LLM assistance](llm-assistance.md), with prepared prompts and the cheapest model that performs each task reliably. Intended tasks include reading scheduling emails and appointment text, drafting availability inquiries, interpreting replies, explaining rule-aware choices and eventually creating optimized appointments directly in an explicitly authorized automation mode. Provider/model, cost controls, key/data handling, email permissions and direct-creation authorization remain open. No LLM feature or email access is implemented in 0.8.0; these ideas remain deferred.
 
 ## Next milestones, in order
 
 | Order | Milestone | Status |
 | --- | --- | --- |
-| 1 | Refine profiles, calendar scope and meeting setup | Planned from the 14 October product review; controls/ranking review and migration design precede implementation. |
+| 1 | Refine profiles, calendar scope and meeting setup | Authorized scope implemented in 0.8.0; broader organization refinements remain proposed. |
 | 2 | Continue the Google Calendar pilot | Basic creation/export integrity passed. The owner reports working No alerts, sensible proposals, successful rescheduling and correct overlaps. Work-account access depends on organization permissions. |
 | 3 | Outlook / Microsoft 365 | Accepted next provider: OAuth, reading and reviewed writes, shared/delegated calendars, optional guests, recurrence, timezones and Teams links. Not needed for the Google pilot. |
 | 4 | Wider distribution | Supported installation/update route, applicable Google and organization requirements, accurate privacy/data-retention information and a public license/visibility decision. |

@@ -1,0 +1,31 @@
+(function(root,factory){const api=factory();if(typeof module==='object'&&module.exports)module.exports=api;else root.SlotTimezonePicker=api;})(typeof self!=='undefined'?self:this,function(){
+  'use strict';
+  const aliases={'Asia/Jerusalem':'Israel Tel Aviv Jerusalem','America/New_York':'Eastern ET EST EDT New York','America/Chicago':'Central CT CST CDT Chicago','America/Denver':'Mountain MT MST MDT Denver','America/Los_Angeles':'Pacific PT PST PDT Los Angeles','Europe/London':'UK United Kingdom London','Asia/Kolkata':'India Mumbai Delhi'};
+  const words=value=>String(value).toLowerCase().replace(/[_/]/g,' ').split(/\s+/).filter(Boolean);
+  const matches=(option,query)=>words(query).every(word=>(option.label+' '+option.value+' '+(aliases[option.value]||'')).toLowerCase().replace(/[_/]/g,' ').includes(word));
+  let serial=0;
+  function enhance(select){
+    if(select._zonePicker)return refresh(select);
+    const wrapper=document.createElement('div');wrapper.className='timezone-picker';select.before(wrapper);wrapper.append(select);select.hidden=true;
+    const trigger=document.createElement('button');trigger.type='button';trigger.className='timezone-trigger';trigger.setAttribute('aria-haspopup','listbox');trigger.setAttribute('aria-expanded','false');
+    const panel=document.createElement('div');panel.className='timezone-panel';panel.hidden=true;
+    const search=document.createElement('input');search.type='search';search.autocomplete='off';search.placeholder='Search city or timezone';search.setAttribute('role','combobox');search.setAttribute('aria-label','Search timezone');search.setAttribute('aria-autocomplete','list');search.setAttribute('aria-expanded','false');
+    const list=document.createElement('div');list.className='timezone-options';list.id='timezone-options-'+(++serial);list.setAttribute('role','listbox');trigger.setAttribute('aria-controls',list.id);search.setAttribute('aria-controls',list.id);
+    panel.append(search,list);wrapper.append(trigger,panel);let active=0,options=[];
+    function close(){panel.hidden=true;trigger.setAttribute('aria-expanded','false');search.setAttribute('aria-expanded','false');search.removeAttribute('aria-activedescendant');}
+    function highlight(){[...list.children].forEach((el,i)=>el.classList.toggle('active-option',i===active));const el=list.children[active];if(el){search.setAttribute('aria-activedescendant',el.id);el.scrollIntoView({block:'nearest'});}}
+    function choose(option){if(!option||select.disabled)return;select.value=option.value;select.dispatchEvent(new Event('change',{bubbles:true}));refresh(select);close();trigger.focus();}
+    function render(){options=[...select.options].filter(o=>o.value&&!o.disabled&&matches({value:o.value,label:o.textContent},search.value));const shown=options.slice(0,80);list.replaceChildren();for(const [i,option]of shown.entries()){const item=document.createElement('button');item.type='button';item.setAttribute('role','option');item.setAttribute('aria-selected',String(option.value===select.value));item.id=list.id+'-'+i;item.textContent=option.textContent;item.tabIndex=-1;item.onclick=event=>{event.preventDefault();choose(option);};list.append(item);}active=Math.min(active,shown.length-1);if(!shown.length){const empty=document.createElement('p');empty.textContent='No matching timezone.';list.append(empty);active=-1;search.removeAttribute('aria-activedescendant');}else highlight();}
+    function open(){if(select.disabled)return;document.querySelectorAll('.timezone-panel').forEach(p=>{if(p!==panel)p.parentElement.querySelector('.timezone-trigger')._close?.();});panel.hidden=false;trigger.setAttribute('aria-expanded','true');search.setAttribute('aria-expanded','true');search.value='';active=0;render();search.focus();}
+    trigger._close=close;trigger.onclick=event=>{event.preventDefault();panel.hidden?open():close();};search.oninput=()=>{active=0;render();};
+    search.onkeydown=event=>{if(event.key==='Escape'){event.preventDefault();close();trigger.focus();}else if(['ArrowDown','ArrowUp','Home','End'].includes(event.key)){event.preventDefault();if(options.length){active=event.key==='Home'?0:event.key==='End'?Math.min(79,options.length-1):Math.max(0,Math.min(Math.min(79,options.length-1),active+(event.key==='ArrowDown'?1:-1)));highlight();}}else if(event.key==='Enter'){event.preventDefault();if(active>=0)choose(options[active]);}else if(event.key==='Tab')close();};
+    trigger.onkeydown=event=>{if(['ArrowDown','ArrowUp'].includes(event.key)){event.preventDefault();open();}};
+    wrapper.addEventListener('focusout',event=>{if(!wrapper.contains(event.relatedTarget))close();});select.addEventListener('change',()=>refresh(select));select.addEventListener('invalid',event=>{event.preventDefault();open();});
+    select._zonePicker={trigger,close,render};refresh(select);
+  }
+  function refresh(select){const widget=select._zonePicker;if(!widget)return;const label=(select.selectedOptions[0]?.value?select.selectedOptions[0].textContent:'Choose a timezone')+' ▾';if(widget.trigger.textContent!==label)widget.trigger.textContent=label;if(widget.trigger.disabled!==select.disabled)widget.trigger.disabled=select.disabled;if(select.disabled)widget.close();}
+  function scan(container=document){for(const select of new Set([...container.querySelectorAll('option[data-zone-option]')].map(option=>option.closest('select'))))enhance(select);}
+  function init(){scan();new MutationObserver(records=>{const changed=new Set();for(const record of records){if(record.type==='attributes'&&record.target.tagName==='SELECT')changed.add(record.target);else if(record.target.tagName==='SELECT')changed.add(record.target);}for(const select of changed)if(select.querySelector('[data-zone-option]'))enhance(select);scan();}).observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['disabled']});document.addEventListener('click',event=>{for(const panel of document.querySelectorAll('.timezone-panel:not([hidden])'))if(!panel.parentElement.contains(event.target))panel.parentElement.querySelector('.timezone-trigger')._close();});}
+  if(typeof document!=='undefined'){if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();}
+  return {matches,enhance,refresh,scan};
+});
