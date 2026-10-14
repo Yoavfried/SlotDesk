@@ -103,15 +103,16 @@ These requests change the intended next UX; current 0.7.1 behavior remains as do
 | UX65 | Email-only guests | Add email immediately; Create profile replaces Edit profile for unsaved people. Confirm timezone before searching without requiring a saved profile. | Planned; timezone policy agreed; replaces compulsory profile creation in UX04 |
 | UX66 | Workspace calendar scope | Onboarding/Settings select sources whose events are shown/used anywhere; browsing filters operate within that scope. | Planned; will supersede read-all-accessible-source UX51 |
 | UX67 | Organizing-calendar participants | Automatically include every mapped profile, including teams; respect explicit removal/manual inclusion and update automatic additions when the calendar changes. No separate owner assignment. | Planned; owner confirmed; refines UX02/UX58 |
-| UX68 | Settings organization | Main identity/timezone/mappings, focused travel, coherent working/availability sections and advanced treatment rules; global scope/default/owner settings separate. | Proposed layout; controls inventory before implementation |
+| UX68 | Settings organization | Main identity/timezone/mappings, focused travel, coherent working/availability sections and advanced treatment rules; global scope/default calendar settings separate. | Proposed layout; controls inventory before implementation |
 
 ## Structured time inquiries — 14 October 2026
 
 | ID | Area | Direction | Status |
 | --- | --- | --- | --- |
-| UX69 | Ask about times | One integrated inquiry flow covers one/many recipients and one/many options before creating an appointment. | Planned; owner requested |
-| UX70 | Structured replies | Proposed Yes/Maybe/No per time, optional preference with multiple choices; distinguish missing replies. Localized times bind to immutable instants/options. | Proposed UX |
+| UX69 | Ask about times | One integrated inquiry flow covers one/many recipients and one/many options before creating an appointment. | Conditional candidate; inline feasibility gate |
+| UX70 | Structured replies | One time: Yes/No. Several times: select all that work and submit once, with explicit None. Missing/failed replies remain unanswered. Localized times bind to immutable options. | Owner agreed; email/multi-select compatibility must be proven |
 | UX71 | Inquiry finalization | Replies do not create an event. EA selects a time, reviews latest availability/recipients and separately confirms Calendar creation with existing recovery safeguards. | Planned boundary |
-| UX72 | Shared response destination | Responses work while the EA is offline; choose email replies/Gmail API, a branded hosted page/service or Google Forms integration. Email delivery and permissions are separate decisions. | Architecture choice pending |
+| UX72 | Shared response destination | An inline submission service receives answers while the EA is offline. Answers may live in service storage or inbox receipts; sending and any inbox-reading permissions remain separate choices. No recipient response page. | Service/sender/storage design pending |
+| UX73 | Inline-only release gate | Yes/No or multi-select and submission must work inside the email. No external page, Google Forms, free-text substitution or separate reply per checkbox. Prove actual delivery and the intended client/account support scope; do not ship if this requirement fails. | Owner requirement; not yet validated |
 
-[Time-inquiry design](time-inquiries.md) records the flow, architecture paths, data/access boundaries and verification scope.
+[Time-inquiry design](time-inquiries.md) records the flow, inline feasibility gate, data/access boundaries and verification scope.

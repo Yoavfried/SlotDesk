@@ -3,8 +3,10 @@
 ## 2026-10-14 — Structured time inquiry planning
 
 - Define one Ask about times flow covering every combination of one/many people and one/many options, with structured replies before booking.
-- Record a separate EA confirmation, response revision/access and duplicate-safe finalization boundaries.
-- Document email-only/Gmail, hosted SlotDesk and Google Forms paths; leave infrastructure, new permissions and live email delivery unimplemented.
+- Record single-time Yes/No and several-time multi-selection with explicit submission/None, separate EA booking confirmation and response revision/access safeguards.
+- Record the inline-only requirement: no recipient response page or Google Forms. A static preview, free-text substitution or separate reply per checkbox does not satisfy it.
+- Make the feature conditional on actual email delivery and inline submission in the intended client/account scope; distinguish submission endpoints and ordinary-email fallback from inbox storage.
+- Leave sender, service/storage, new permissions and live email delivery unimplemented; retain separate reviewed Calendar booking.
 
 
 ## 2026-10-14 — Product review planning

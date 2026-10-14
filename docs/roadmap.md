@@ -10,9 +10,9 @@ Version **0.7.1** includes [F01–F18](implemented.md), the [accepted UX](ux-dec
 
 The owner supplied [eight product notes on 14 October](product-review-2026-10-14.md): accessible travel/flights, searchable timezone dropdowns, convenience priority, prominent profile calendar mappings, email-only guests, explicit workspace calendar scope, automatic participation for all mapped profiles and settings organization. These are planned/proposed, **not implemented in 0.7.1**. The record includes the owner's follow-up decisions and a proposed ranking interpretation keeping ordinary clash permission separate from late-hour comfort. The new workspace-scope direction will replace the earlier read-all-accessible-sources behavior when implemented.
 
-## Structured time inquiries — planned
+## Structured time inquiries — conditional candidate
 
-The owner wants [Ask about times](time-inquiries.md): one flow for one/many people and one/many time options. Collect structured replies, then let the EA review and create the appointment separately. This is planned rather than part of 0.7.1. The initial shared-response architecture (email replies/Gmail API, branded hosted page or Google Forms) is pending; no server, email permission, auto-booking or deployment is added by the plan.
+The owner wants [Ask about times](time-inquiries.md): one flow for one/many people and one/many time options, with Yes/No for one time and checkbox selection plus submission for several. **Recipients must answer entirely inside the email; external response pages and Google Forms are excluded.** Actual delivery and interaction in the intended email-client/account scope must be proven before implementation proceeds. If that requirement cannot be met, do not ship this feature. Replies never book a meeting automatically; the EA reviews and creates it separately. Submission-service, sender and response-storage choices remain pending. No service, email permission, real message or deployment is added by the plan; this is not part of 0.7.1.
 
 ## Next milestones, in order
 
