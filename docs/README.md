@@ -3,7 +3,7 @@
 | Area | Records |
 | --- | --- |
 | Product | [Overview](overview.md), [implemented work](implemented.md), [roadmap](roadmap.md) |
-| Decisions | [UX](ux-decisions.md), [scheduling](scheduling-decisions.md), [live-feedback implementation](pending-ux-review.md) |
+| Decisions | [UX](ux-decisions.md), [scheduling](scheduling-decisions.md), [live-feedback implementation](pending-ux-review.md), [14 October product review](product-review-2026-10-14.md) |
 | Meeting management | [Editing details/guests](meeting-editing.md), [rescheduling, alerts and overlaps](rescheduling.md) |
 | Development | [Architecture](architecture.md), [engine API](engine-api.md), [installation](install.md) |
 | Validation | [Validation record](testing.md), [optional calendar comparison kit](calendar-acceptance.md) |

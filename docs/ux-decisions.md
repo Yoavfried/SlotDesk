@@ -1,6 +1,6 @@
 # SlotDesk UX decision register
 
-Agreed through 13 October 2026. Implemented in 0.3.0 and retained in 0.6.1 unless stated otherwise. The [scheduling register](scheduling-decisions.md) supplies the underlying rules; this register describes the user experience.
+Implemented decisions are recorded through 13 October 2026. The [14 October product review](product-review-2026-10-14.md) records new planned directions and unresolved details separately. Implemented in 0.3.0 and retained in 0.6.1 unless stated otherwise. The [scheduling register](scheduling-decisions.md) supplies the underlying rules; this register describes the user experience.
 
 | ID | Area | Agreed behavior | Status |
 | --- | --- | --- | --- |
@@ -77,7 +77,7 @@ The [live-feedback implementation record](pending-ux-review.md) explains the 0.6
 | UX54 | Other appointments | Collision proposals prefer fewer distinct appointments and lower disruption. Plan replacements for the OTHER meeting while protecting the chosen interval. After confirmed collisions, keep a dismissible follow-up queue. Never move automatically. | Implemented in 0.7.0 |
 | UX55 | Missing guest profiles | Keep the existing roster including No/optional guests. Confirm unknown timezones through short profile setup; show missing timezone/availability instead of inventing working-hour fits. | Implemented in 0.7.0 |
 | UX56 | Alert observations | Group upcoming organizer-copy No replies. Dismiss the same No; clear known acceptance/cancellation/expiry; a later observed No transition may alert again. Observe normal reads/Refresh without changing the range-cache contract. | Implemented in 0.7.0 |
-| UX57 | Meeting-content search | Possible search by title, participants, location or written appointment content. No indexing/search UI now. | Deferred DF06 |
+| UX-DF06 | Meeting-content search | Possible search by title, participants, location or written appointment content. No indexing/search UI now. | Deferred DF06 |
 
 Implementation choices and safety limits are in [Rescheduling and meeting follow-up](rescheduling.md).
 
@@ -89,3 +89,18 @@ Implementation choices and safety limits are in [Rescheduling and meeting follow
 | UX58 | Guest changes | Show only current selected guests, searchable saved profiles and short timezone-confirming setup for a new email. EA explicitly adds/removes people and chooses Required/Optional. Do not silently add the organizer or change recipients because of availability warnings. | Implemented |
 | UX59 | Removal and incomplete roster | Name removed guests and explain that their invitation may leave their calendars while the organizing meeting remains. Disable roster edits if Google has not shared a complete supported list; other details remain editable. | Implemented |
 | UX60 | Confirmation and recovery | Save changes & notify guests sends the reviewed changes after fresh checks. Pause for changed warnings. Keep the immutable pending edit across reload, read the same target before retry, and update other windows by target IDs. Retain time/Meet and untouched event data. | Implemented; synthetic verification |
+
+## Next product update — 14 October 2026
+
+These requests change the intended next UX; current 0.7.1 behavior remains as documented above. Detailed proposals, edge cases and the three open questions are in the [product-review record](product-review-2026-10-14.md).
+
+| ID | Area | Requested direction | Status |
+| --- | --- | --- | --- |
+| UX61 | Accessible travel | Travel & flights action on a person in Manage profiles; shared focused travel editor. | Planned |
+| UX62 | Searchable timezone choice | Search and suggestions inside a closed timezone dropdown; shared accessible control. | Planned; refines UX21 |
+| UX63 | Executive flexibility | Move Ignore working days/hours and proposed Ignore convenience into Advanced. Consider per-meeting overrides and explicit ordinary-meeting overlap permission; keep attendance/protected rules separate. | Planned checkbox direction; overlap/ranking/scope questions open |
+| UX64 | Main calendar mappings | Availability calendars in main profile setup, with an explicit no-access/unconfirmed state. | Planned; refines UX19/UX40 |
+| UX65 | Email-only guests | Add email immediately; Create profile replaces Edit profile for unsaved people. Confirm timezone before searching without requiring a saved profile. | Planned; timezone policy agreed; replaces compulsory profile creation in UX04 |
+| UX66 | Workspace calendar scope | Onboarding/Settings select sources whose events are shown/used anywhere; browsing filters operate within that scope. | Planned; will supersede read-all-accessible-source UX51 |
+| UX67 | Organizing-calendar participants | Automatically include every mapped profile, including teams; respect explicit removal/manual inclusion and update automatic additions when the calendar changes. No separate owner assignment. | Planned; owner confirmed; refines UX02/UX58 |
+| UX68 | Settings organization | Main identity/timezone/mappings, focused travel, coherent working/availability sections and advanced treatment rules; global scope/default/owner settings separate. | Proposed layout; controls inventory before implementation |
