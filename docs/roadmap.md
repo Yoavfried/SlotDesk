@@ -10,9 +10,13 @@ Version **0.7.1** includes [F01–F18](implemented.md), the [accepted UX](ux-dec
 
 The owner supplied [eight product notes on 14 October](product-review-2026-10-14.md): accessible travel/flights, searchable timezone dropdowns, convenience priority, prominent profile calendar mappings, email-only guests, explicit workspace calendar scope, automatic participation for all mapped profiles and settings organization. These are planned/proposed, **not implemented in 0.7.1**. The record includes the owner's follow-up decisions and a proposed ranking interpretation keeping ordinary clash permission separate from late-hour comfort. The new workspace-scope direction will replace the earlier read-all-accessible-sources behavior when implemented.
 
-## Structured time inquiries — conditional candidate
+## Availability emails — unconfirmed future feature
 
-The owner wants [Ask about times](time-inquiries.md): one flow for one/many people and one/many time options, with Yes/No for one time and checkbox selection plus submission for several. **Recipients must answer entirely inside the email; external response pages and Google Forms are excluded.** Actual delivery and interaction in the intended email-client/account scope must be proven before implementation proceeds. If that requirement cannot be met, do not ship this feature. Replies never book a meeting automatically; the EA reviews and creates it separately. Submission-service, sender and response-storage choices remain pending. No service, email permission, real message or deployment is added by the plan; this is not part of 0.7.1.
+[Ask about times](time-inquiries.md) is parked after reviewing Gmail AMP's compatibility and sender/service requirements. It is not part of the next update. The owner is considering it only for users supplying an LLM API key, with model-assisted inquiry writing and reply interpretation. Both the BYOK-only restriction and final reply protocol are unconfirmed. No external response page is approved; a model does not solve inline controls in unsupported email clients. An inquiry response does not itself authorize booking.
+
+## Optional LLM assistance — future direction
+
+The owner wants [bring-your-own-key LLM assistance](llm-assistance.md), with prepared prompts and the cheapest model that performs each task reliably. Intended tasks include reading scheduling emails and appointment text, drafting availability inquiries, interpreting replies, explaining rule-aware choices and eventually creating optimized appointments directly in an explicitly authorized automation mode. Provider/model, cost controls, key/data handling, email permissions and direct-creation authorization remain open. No LLM feature or additional access is implemented in 0.7.1; these ideas do not block the profile/calendar/setup update.
 
 ## Next milestones, in order
 
@@ -50,9 +54,11 @@ The user explicitly requested these as work **not to develop now**.
 
 | ID | Feature | Intended direction | Status |
 | --- | --- | --- | --- |
-| DF01 | Small LLM reading calendar-related emails | Suggest positive/negative availability, timezones, flights and other scheduling details from emails, with review before use. | Deferred; no email access or LLM integration |
-| DF02 | Read written information inside appointments | Use descriptions and other appointment text for richer clues beyond current deterministic matching. | Deferred; extraction/review design needed |
+| DF01 | Optional BYOK LLM assistance | User supplies an API key; prepared prompts extract scheduling/availability/timezone/travel information and explain validated choices, using the cheapest reliable model for each task. See [LLM plan](llm-assistance.md). | Deferred future direction; provider, keys, costs and email access undecided |
+| DF02 | Read written information inside appointments | Optional LLM assistance extracts clues from descriptions and other appointment text beyond current deterministic matching. | Deferred; data/extraction/review design needed |
 | DF03 | Live flight updates | Possibly connect specific flights to an API for live updates. Provider, pricing and update policy are undecided. | Deferred; exploratory |
 | DF06 | Search meetings by written content | Possible search by meeting name, participants, location or any written appointment information. No search/indexing UI now. | Deferred; explicitly requested 13 October |
+| DF07 | Availability inquiry emails | Ask one/many people about one/many times; potentially BYOK-only, with LLM drafting and reply interpretation. Original inline form design remains recorded. | Unconfirmed future feature; parked, not a current milestone |
+| DF08 | LLM-driven direct appointment creation | Create an optimized appointment with factual reasoning, subject to the full validated rule set and an explicitly enabled automation policy. | Future request; authorization/operating limits unsettled |
 
 DF04 rescheduling and DF05 decline alerts were authorized and implemented in 0.7.0; they are no longer deferred. The [accepted flow](rescheduling.md) records individual time changes, notification/refresh limits and nonautomatic collision handling. Manual travel and confirmable non-LLM clues are implemented.

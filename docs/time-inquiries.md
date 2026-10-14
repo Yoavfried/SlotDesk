@@ -1,8 +1,10 @@
 # Ask about times — structured inquiries before booking
 
-Recorded 14 October 2026. **Conditional feature proposal; not implemented in 0.7.1.** One integrated flow would cover one person/one time, one person/many times, many people/one time and many people/many times. This is an availability inquiry before creating an appointment, separate from an existing Calendar invitation/RSVP.
+Recorded 14 October 2026. **Unconfirmed future feature; parked, non-blocking and not implemented in 0.7.1.** After reviewing Gmail AMP compatibility and sender/service requirements, the owner does not consider it a good current solution. Availability emails are outside the next product update. One integrated flow would cover one person/one time, one person/many times, many people/one time and many people/many times, before creating an appointment and separately from an existing Calendar invitation/RSVP.
 
-## Required recipient experience
+The owner is considering availability emails as part of optional [LLM assistance using the user's API key](llm-assistance.md). The LLM could prepare inquiries and interpret replies. BYOK-only access and the final reply protocol are unconfirmed. The original interactive concept below is preserved for future consideration; no external response page is approved, and an LLM does not remove inline-email compatibility or submission-service requirements.
+
+## Original interactive concept — recipient requirements
 
 **All selection and submission must work inside the email.** The owner explicitly rejects redirecting recipients to a response page, including Google Forms. A page link, free-text reply, separate email per checkbox or nonfunctional HTML preview does not satisfy the feature. If the required in-email interaction cannot work for the intended recipients, do not ship it.
 
@@ -13,7 +15,7 @@ Recorded 14 October 2026. **Conditional feature proposal; not implemented in 0.7
 | Several | One | Each person answers Yes / No independently | Who can attend; who has not replied |
 | Several | Several | The same checkbox list and submission for every recipient | People-by-time response matrix and suitable options |
 
-The EA reviews the recipients, options and email before explicitly sending. Only a separate **Review & create meeting** action creates an appointment. Replies do not create, cancel, move or hold calendar entries. No email-reading LLM or free-text parsing is part of this proposal.
+The EA reviews the recipients, options and email before explicitly sending. Only a separate **Review & create meeting** action creates an appointment. Replies do not create, cancel, move or hold calendar entries. This original structured-response concept does not need an email-reading LLM; a possible LLM-assisted variant is now documented separately. Future direct appointment creation under an explicit automation policy is a separate LLM proposal, not automatic booking caused by a reply.
 
 ## Proposed EA flow
 
@@ -83,7 +85,9 @@ These are proposed engineering requirements, not a deployed service or completed
 - Define retention, closure and removal before deployment. Local workspace clearing and remotely stored inquiry cleanup are separate. Let the EA close/revoke an inquiry; no Calendar deletion follows.
 - Even if answer receipts live in the EA's inbox, define the service metadata needed for validation, revisions, closure and duplicate submission handling. Do not claim that email storage removes the need for an inline submission endpoint.
 
-## Delivery gate and subsequent plan
+## If this feature is revisited
+
+This is no longer an immediate delivery plan. First confirm whether to pursue the original interactive approach or an LLM-assisted inquiry/reply design and define its recipient experience. The possible BYOK-only restriction is still under consideration. For the original interactive concept:
 
 1. First prove actual interactive email delivery and submission for single-time Yes/No and several-time checkboxes with explicit None in the intended desktop/mobile account/client scope. Verify sender registration/authentication and in-email success/error/closed states. An HTML preview or a web response page is not evidence of this flow. If the intended scope fails the inline requirement, stop at a documented unimplemented candidate.
 2. If that gate passes, finalize sending, service, storage, recipient access and retention design. Build the inquiry/option/recipient/answer model with synthetic coverage for all four combinations, unanswered states, failures, repeated submissions, timezone/DST, revisions and closed inquiries.

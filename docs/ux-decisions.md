@@ -109,10 +109,21 @@ These requests change the intended next UX; current 0.7.1 behavior remains as do
 
 | ID | Area | Direction | Status |
 | --- | --- | --- | --- |
-| UX69 | Ask about times | One integrated inquiry flow covers one/many recipients and one/many options before creating an appointment. | Conditional candidate; inline feasibility gate |
-| UX70 | Structured replies | One time: Yes/No. Several times: select all that work and submit once, with explicit None. Missing/failed replies remain unanswered. Localized times bind to immutable options. | Owner agreed; email/multi-select compatibility must be proven |
-| UX71 | Inquiry finalization | Replies do not create an event. EA selects a time, reviews latest availability/recipients and separately confirms Calendar creation with existing recovery safeguards. | Planned boundary |
-| UX72 | Shared response destination | An inline submission service receives answers while the EA is offline. Answers may live in service storage or inbox receipts; sending and any inbox-reading permissions remain separate choices. No recipient response page. | Service/sender/storage design pending |
-| UX73 | Inline-only release gate | Yes/No or multi-select and submission must work inside the email. No external page, Google Forms, free-text substitution or separate reply per checkbox. Prove actual delivery and the intended client/account support scope; do not ship if this requirement fails. | Owner requirement; not yet validated |
+| UX69 | Ask about times | One inquiry flow covers one/many recipients and one/many options. Parked after Gmail AMP review; possibly part of optional BYOK LLM assistance. | Unconfirmed future feature, DF07 |
+| UX70 | Structured replies | Original inline concept: one time Yes/No; several times select all plus submission/None. Missing replies remain unanswered. A possible LLM-interpreted email-reply alternative is not yet agreed. | Original requirements retained; future protocol unconfirmed |
+| UX71 | Inquiry finalization | A reply never authorizes creation by itself. Original concept uses separate EA review; any future direct LLM creation needs an explicitly enabled policy and the same validated write/recovery boundaries. | Future inquiry boundary; automation policy unsettled |
+| UX72 | Shared response destination | The original inline design needs a submission service; email receipts/service storage are undecided. A possible LLM reply reader needs separate email access. No recipient response page. | Parked; service/sender/storage pending |
+| UX73 | Inline-only release gate | The original interactive design requires working in-email Yes/No or multi-select submission. No external page/Google Forms or silent substitution. LLM drafting/parsing does not bypass compatibility; any different reply protocol needs agreement. | Original requirement; parked, not validated |
 
-[Time-inquiry design](time-inquiries.md) records the flow, inline feasibility gate, data/access boundaries and verification scope.
+[Time-inquiry design](time-inquiries.md) preserves the parked concept and unresolved LLM relationship.
+
+## Optional LLM assistance — future direction
+
+| ID | Area | Direction | Status |
+| --- | --- | --- | --- |
+| UX74 | User-supplied API key | Optional model-provider key entry; current core scheduling stays usable without it. Key entry alone does not grant email access or automatic write permission. | Future direction; provider/storage undecided |
+| UX75 | Prepared prompts and cost | Versioned task prompts; choose the cheapest model that performs reliably for each task. Cost/upgrade/budget controls and evaluation precede selection. | Future direction; no model chosen |
+| UX76 | LLM scheduling assistance | Extract relevant email/appointment facts, draft inquiries, interpret replies and explain choices from actual rule-engine results. Missing/ambiguous information remains visible. | Future scope; DF01/DF02 and unconfirmed DF07 |
+| UX77 | Direct appointment creation | Future explicitly enabled automation can choose/create a validated suitable appointment and explain why. Effective rules, fresh checks and recovery still apply; no automatic deletion/cancellation of other meetings. | Requested future behavior, DF08; authorization policy unsettled |
+
+[LLM assistance](llm-assistance.md) separates requested behavior, possible BYOK-only inquiries and unresolved access/automation decisions.

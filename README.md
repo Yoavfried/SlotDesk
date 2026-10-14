@@ -46,6 +46,7 @@ The preview at `http://127.0.0.1:8770/` shows the disconnected interface. Calend
 | [UX decisions](docs/ux-decisions.md) · [scheduling rules](docs/scheduling-decisions.md) | Accepted behavior, including unimplemented/deferred decisions |
 | [Meeting editing](docs/meeting-editing.md) · [rescheduling](docs/rescheduling.md) | Guest/detail edits, individual time changes, alerts and manual follow-up |
 | [Roadmap](docs/roadmap.md) | Outlook, distribution and explicitly deferred features |
+| [Future LLM assistance](docs/llm-assistance.md) | User-supplied API keys, prepared prompts, email assistance and unconfirmed automation |
 | [Validation record](docs/testing.md) | Automated coverage and reported live results |
 | [Security and privacy](docs/security.md) | Write boundaries, local storage and work-account use |
 | [Design language](design/README.md) | Original style guide, fonts and design assets |

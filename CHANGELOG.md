@@ -1,5 +1,12 @@
 # Repository changelog
 
+## 2026-10-14 — Future LLM direction and parked availability emails
+
+- Park availability emails as an unconfirmed, non-blocking future feature after reviewing Gmail AMP setup/compatibility; record possible BYOK-only access without committing to it.
+- Document optional user API keys, prepared prompts and task-based selection of the cheapest reliable model, with provider/key/cost choices still open.
+- Record intended email/appointment reading, inquiry drafting/reply interpretation, factual rule-based explanations and future direct appointment creation under an explicit automation policy.
+- Preserve deterministic scheduling/write safeguards and distinguish future key/data/email/automation decisions from shipped 0.7.1. No code, permissions, package or product-version change.
+
 ## 2026-10-14 — Structured time inquiry planning
 
 - Define one Ask about times flow covering every combination of one/many people and one/many options, with structured replies before booking.

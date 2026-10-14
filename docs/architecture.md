@@ -86,3 +86,9 @@ The controller reads fresh availability, excludes only the target event/occurren
 `prototype/meeting-editor.js` handles the form, profile picker, before/after review and fresh guest-availability warnings. Pending recovery stores user-authored new text, explicit guest delta, IDs/version/time and SHA-256 before/after roster fingerprints; it omits original fetched text, full guest metadata and tokens. A matching readback completes without another PATCH. The shared pending-write slot and account send lock prevent simultaneous creation/time/detail mutations. Storage comparison ignores object-key ordering while preserving array order and real value changes.
 
 A completion notice to another window contains only operation/calendar/event IDs. That window reads the target once and updates its own memory cache and observed responses. There is no background polling or fetched-content persistence. See [editing behavior](meeting-editing.md).
+
+## Future LLM integration — documentation only
+
+The owner requests optional user-supplied LLM API keys, prepared task prompts and the cheapest reliable model per task. Email/appointment extraction, drafting/reading availability inquiries, factual scheduling explanations and future direct creation are recorded in [LLM assistance](llm-assistance.md). Availability emails are parked and possibly BYOK-only; that choice is unconfirmed.
+
+A future model adapter would return structured facts/action proposals to deterministic validation. It would not receive Calendar/Gmail tokens or bypass the engine/writer. Direct creation needs an explicitly designed automation authorization mode, fresh rule/access checks and duplicate-safe recovery. Provider/model selection, protected key storage, direct versus relayed calls, email permissions and any submission service remain undecided. Version 0.7.1 has none of these modules, services or permissions.
