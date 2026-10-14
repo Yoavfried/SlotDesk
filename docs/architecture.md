@@ -1,6 +1,6 @@
 # SlotDesk architecture
 
-Version 0.8.0 is a static Chrome side-panel application with a shared browser/Node scheduling engine. It has no application server or cloud settings database. A loopback HTTP preview shows the disconnected interface; calendar sign-in uses Chrome extension identity. Synthetic fixtures are used only in development tests.
+Version 0.8.1 is a static Chrome side-panel application with a shared browser/Node scheduling engine. It has no application server or cloud settings database. A loopback HTTP preview shows the disconnected interface; calendar sign-in uses Chrome extension identity. Synthetic fixtures are used only in development tests.
 
 | Module in `extension/` | Responsibility |
 | --- | --- |
@@ -91,7 +91,7 @@ A completion notice to another window contains only operation/calendar/event IDs
 
 The owner requests optional user-supplied LLM API keys, prepared task prompts and the cheapest reliable model per task. Email/appointment extraction, drafting/reading availability inquiries, factual scheduling explanations and future direct creation are recorded in [LLM assistance](llm-assistance.md). Availability emails are parked and possibly BYOK-only; that choice is unconfirmed.
 
-A future model adapter would return structured facts/action proposals to deterministic validation. It would not receive Calendar/Gmail tokens or bypass the engine/writer. Direct creation needs an explicitly designed automation authorization mode, fresh rule/access checks and duplicate-safe recovery. Provider/model selection, protected key storage, direct versus relayed calls, email permissions and any submission service remain undecided. Version 0.8.0 has none of these LLM modules, services or permissions.
+A future model adapter would return structured facts/action proposals to deterministic validation. It would not receive Calendar/Gmail tokens or bypass the engine/writer. Direct creation needs an explicitly designed automation authorization mode, fresh rule/access checks and duplicate-safe recovery. Provider/model selection, protected key storage, direct versus relayed calls, email permissions and any submission service remain undecided. Version 0.8.1 has none of these LLM modules, services or permissions.
 
 ## Selected calendars and participant state (0.8.0)
 
@@ -100,3 +100,6 @@ A future model adapter would return structured facts/action proposals to determi
 `workspace-model.js` resolves saved profiles plus temporary draft guests, independent per-meeting rules and automatic/manual/removed participant provenance. The store allowlists new saved convenience/overlap defaults; draft data remains account-local and clears after confirmed creation/new draft. `timezone-picker.js` provides one searchable closed-choice control over native option values across static and dynamically rendered forms. The deterministic engine separates usual-hour penalties from other inconvenient periods and permits only disclosed ordinary finite-cost clashes for explicitly enabled people. Hidden busy time is not automatically treated as ordinary.
 
 The [implemented UX](onboarding-and-profiles.md) retains existing API writers, immutable recovery and OAuth identity/scopes; there is no new backend or email/LLM access.
+
+
+Version 0.8.1 adds presentation-only date ordering in the browser-wide `slotdesk-display` preference. Date inputs/storage and engine instants are unchanged. Calendar selection retains the existing scoped API policy and pending-operation checks; Settings return/discard only controls the local dialog draft. Own-profile removal is blocked in the editor UI/handler. Calendar metadata is rendered as escaped text. No new provider, permission or event mutation is introduced.

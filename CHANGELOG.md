@@ -1,5 +1,10 @@
 # Repository changelog
 
+## 2026-10-14 — SlotDesk 0.8.1
+
+- Refine Settings/calendar submenus, compact source rows/info, protected own-profile layout and browser-wide date order.
+- Record accepted UX and focused synthetic validation; package the private 0.8.1 pilot.
+
 ## 2026-10-14 — SlotDesk 0.8.0
 
 - Implement the authorized onboarding/profile/calendar/guest/flexibility scope and retain the supplied design assets and extension identity.

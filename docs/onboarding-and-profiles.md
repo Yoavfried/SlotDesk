@@ -45,3 +45,12 @@ Compare effective required-person inconvenience and distance first. Among equall
 The [validation record](testing.md) separates synthetic transport/browser checks from actual account reports. Creation and existing-event writers retain reviewed payloads, account/access/version checks, shared locks and same-target uncertain-result recovery. This release adds no deletion, cancellation, calendar-move, email or LLM endpoint and no new Google scope. See [security/privacy](security.md), [UX decisions](ux-decisions.md) and [changelog](changelog.md).
 
 ![Selected workspace calendars at narrow width, with synthetic names](assets/onboarding-calendars-v080.png)
+
+
+## 0.8.1 calendar selection and profile layout
+
+Calendar names occupy one row with their checkbox and a separate info button. The name truncates when needed; the info dialog shows the full name, calendar email/ID, invitation capability, access, timezone and other available metadata. Selected count sits below the list.
+
+Settings and calendar selection share a fixed popup size and fixed bottom actions. Save calendars commits the selection immediately; Discard changes, X and Escape leave it unchanged. Both return to Settings, preserving unfinished time/date display choices. A saved scope updates the Settings summary/default. The required first selection cannot be dismissed and must include at least one source plus a selected writable default. Confirmed scope is reused on subsequent starts.
+
+The own profile appears first among matching Manage profiles results and cannot be removed individually. Long emails truncate without moving/wrapping the action labels; the full value remains in the editor. Settings omits duplicate profile/suggestion actions and Appearance options. Dark mode remains the single appearance switch. Date display selects Day first (20 Oct) or Month first (Oct 20), independently of clock format. Native date inputs follow browser/OS locale; preference formatting changes generated labels and copies, not stored values, timezone calculations or writes.

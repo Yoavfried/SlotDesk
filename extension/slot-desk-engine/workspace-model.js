@@ -32,10 +32,10 @@
   function formatClock(value,format='24'){if(!/^\d{2}:\d{2}$/.test(value||''))return value||'';const [h,m]=value.split(':').map(Number);return format==='12'?`${h%12||12}:${String(m).padStart(2,'0')} ${h<12?'AM':'PM'}`:value;}
   function parseClock(value){const match=String(value||'').trim().match(/^(\d{1,2}):(\d{2})\s*(am|pm)?$/i);if(!match)return '';let h=+match[1],m=+match[2];if(m>59)return '';if(match[3]){if(h<1||h>12)return '';h=h%12+(/pm/i.test(match[3])?12:0);}else if(h>23)return '';return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;}
   function localTime(instant,zone,format='24'){return new Intl.DateTimeFormat('en-GB',{timeZone:zone,hour:'2-digit',minute:'2-digit',hour12:format==='12'}).format(new Date(instant));}
-  function compactDate(instant,zone,{now=Date.now(),referenceZone=Intl.DateTimeFormat().resolvedOptions().timeZone}={}){
+  function compactDate(instant,zone,{now=Date.now(),referenceZone=Intl.DateTimeFormat().resolvedOptions().timeZone,dateFormat='dmy'}={}){
     const year=+E.partsIn(Number(new Date(instant)),zone).ymd.slice(0,4),current=+E.partsIn(Number(new Date(now)),referenceZone).ymd.slice(0,4);
     const parts=Object.fromEntries(new Intl.DateTimeFormat('en-GB',{timeZone:zone,weekday:'short',month:'short',day:'numeric',...(year>current?{year:'numeric'}:{})}).formatToParts(new Date(instant)).map(p=>[p.type,p.value]));
-    return parts.weekday+', '+parts.day+' '+parts.month+(parts.year?' '+parts.year:'');
+    return parts.weekday+', '+(dateFormat==='mdy'?parts.month+' '+parts.day+(parts.year?', '+parts.year:''):parts.day+' '+parts.month+(parts.year?' '+parts.year:''));
   }
   function compactRange(start,end,zone,format='24',options={}){
     const endZone=options.endZone||zone,sameDate=E.partsIn(Number(new Date(start)),zone).ymd===E.partsIn(Number(new Date(end)),endZone).ymd;
@@ -57,10 +57,10 @@
     if(p.band!=='ok')return {label:p.band==='bad'?'Outside acceptable hours':'Inconvenient time',tone:'warn',detail:'No calendar conflicts · '+timing};
     return {label:'Fits well',tone:'good',detail:'No calendar conflicts · Comfortable time'};
   }
-  function proposalWarnings(slot,{clock='24',referenceZone,contactFor}={}){
+  function proposalWarnings(slot,{clock='24',dateFormat='dmy',referenceZone,contactFor}={}){
     const warnings=[],seen=new Set(),duplicateNotes=new Set(),overridden=new Set((slot.overrides||[]).flatMap(c=>c.participants||[]));
     const add=(title,detail,identity)=>{const key=identity??title+'\n'+detail;if(!seen.has(key)){seen.add(key);warnings.push({title,detail});}};
-    const local=p=>compactRange(slot.start,slot.end,p.tz,clock,{referenceZone,endZone:p.endTz})+' · '+zoneLabel(slot.start,slot.end,p.tz,p.endTz);
+    const local=p=>compactRange(slot.start,slot.end,p.tz,clock,{referenceZone,dateFormat,endZone:p.endTz})+' · '+zoneLabel(slot.start,slot.end,p.tz,p.endTz);
     for(const p of slot.people){
       if(['stretch','bad'].includes(p.band)){
         add(p.name+': '+(p.band==='bad'?'Outside acceptable hours':'Inconvenient time'),local(p)+'. '+(p.inconvenientMinutes?p.inconvenientMinutes+' minutes fall outside their comfortable times.':'This time falls outside their comfortable times.')+(p.band==='bad'?' Outside acceptable hours was explicitly enabled.':''));
@@ -86,7 +86,7 @@
     for(const note of slot.notes||[])if(!duplicateNotes.has(note))add('Availability note',String(note));
     return warnings;
   }
-  function fullTime(instant,zone,format='24'){return new Intl.DateTimeFormat('en-GB',{timeZone:zone,weekday:'short',year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:format==='12',timeZoneName:'shortOffset'}).format(new Date(instant));}
+  function fullTime(instant,zone,format='24',{dateFormat='dmy'}={}){return new Intl.DateTimeFormat(dateFormat==='mdy'?'en-US':'en-GB',{timeZone:zone,weekday:'short',year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:format==='12',timeZoneName:'shortOffset'}).format(new Date(instant));}
   function resolveLocal(date,time,zone,previous){const clock=parseClock(time);if(!clock)return NaN;if(Number.isFinite(previous)){const part=E.partsIn(previous,zone);if(part.ymd===date&&part.hh===+clock.slice(0,2)&&part.mm===+clock.slice(3))return previous;}return E.zonedToInstant(date,+clock.slice(0,2)*60 + +clock.slice(3),zone);}
   function flightFields(flight,defaultZone,date){const out={label:flight.label||''};for(const key of ['departure','arrival']){const zone=flight[key+'Zone']||defaultZone,instant=Date.parse(flight[key]);out[key+'Zone']=zone;const part=Number.isFinite(instant)?E.partsIn(instant,zone):null;out[key+'Date']=part?.ymd||date;out[key+'Time']=part?String(part.hh).padStart(2,'0')+':'+String(part.mm).padStart(2,'0'):key==='departure'?'09:00':'11:00';}return out;}
   function flightFromFields(fields,previous={},defaultZone){const f={label:fields.label||''};for(const key of ['departure','arrival']){const zone=fields[key+'Zone'],date=fields[key+'Date'],time=parseClock(fields[key+'Time']);f[key+'Zone']=zone;try{const old=Number.isFinite(Date.parse(previous[key]))?flightFields(previous,defaultZone,date):null;if(old&&old[key+'Zone']===zone&&old[key+'Date']===date&&old[key+'Time']===time){f[key]=previous[key];continue;}const instant=time?E.zonedToInstant(date,+time.slice(0,2)*60 + +time.slice(3),zone):NaN;f[key]=Number.isFinite(instant)?new Date(instant).toISOString():'';}catch(_){f[key]='';}}return f;}

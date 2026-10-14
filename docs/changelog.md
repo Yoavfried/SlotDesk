@@ -1,5 +1,13 @@
 # SlotDesk changelog
 
+## 0.8.1 — 14 October 2026
+
+- Simplify calendar selection into single-line checkbox/name/info rows, with truncation, complete metadata in a separate dialog and the selection count below the list. Apply the agreed explanation/default-calendar copy.
+- Give Settings and calendar selection identical popup dimensions and fixed action bars. Save calendars, Discard changes, X and Escape return to Settings with unsaved display choices preserved; first calendar setup cannot be dismissed or completed without valid sources/default.
+- Keep the own profile first in Manage profiles and prevent its removal. Keep long emails contained and action labels on one line.
+- Remove duplicated appearance/profile shortcuts from Settings; retain the dark-mode toggle and add Day first/Month first date display independent of 24-hour/AM-PM. Apply date order to proposals, warnings, meeting lists/details, rescheduling, edit summaries, receipts and copied full dates without changing stored dates or year visibility.
+- Validation: 1,356 synthetic application checks, 22 export-comparison checks and focused local browser checks at sidebar/full-workspace sizes. No real sign-in or invitations; Google scopes, identity and event writer paths remain unchanged.
+
 ## 0.8.0 — 14 October 2026
 
 - Add own-profile → selected calendars/default → optional familiar-people onboarding, with explicit source confirmation for existing users and preserved pending recovery.

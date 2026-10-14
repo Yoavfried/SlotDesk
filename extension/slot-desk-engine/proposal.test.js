@@ -2,6 +2,14 @@ const assert=require('node:assert/strict'),E=require('./slotdesk-engine.js'),U=r
 let checks=0;const eq=(a,b)=>{assert.deepEqual(a,b);checks++;},ok=v=>{assert.ok(v);checks++;};
 const now=Date.parse('2026-10-12T08:00:00Z'),options={now,referenceZone:'Asia/Jerusalem'},start=Date.parse('2026-10-20T10:00:00Z'),end=start+45*60000;
 eq(U.compactRange(start,end,'Asia/Jerusalem','24',options),'Tue, 20 Oct, 13:00 - 13:45');
+eq(U.compactRange(start,end,'Asia/Jerusalem','24',{...options,dateFormat:'mdy'}),'Tue, Oct 20, 13:00 - 13:45');
+eq(U.compactDate('2027-01-05T10:00:00Z','Asia/Jerusalem',{...options,dateFormat:'mdy'}),'Tue, Jan 5, 2027');
+eq(U.compactDate('2027-01-05T10:00:00Z','Asia/Jerusalem',{...options,dateFormat:'mdy',now:Date.parse('2027-01-02T10:00:00Z')}),'Tue, Jan 5');
+eq(U.compactRange('2026-10-20T20:30:00Z','2026-10-20T21:30:00Z','Asia/Jerusalem','24',{...options,dateFormat:'mdy'}),'Tue, Oct 20, 23:30 - Wed, Oct 21, 00:30');
+eq(U.compactRange('2026-12-31T21:30:00Z','2026-12-31T22:30:00Z','Asia/Jerusalem','24',{...options,dateFormat:'mdy'}),'Thu, Dec 31, 23:30 - Fri, Jan 1, 2027, 00:30');
+ok(U.fullTime(start,'Asia/Jerusalem','24',{dateFormat:'mdy'}).includes('Oct 20, 2026'));
+ok(U.fullTime(start,'Asia/Jerusalem','24',{dateFormat:'dmy'}).includes('20 Oct 2026'));
+ok(/01:00 PM - 01:45 PM$/.test(U.compactRange(start,end,'Asia/Jerusalem','12',{...options,dateFormat:'mdy'})));
 eq(U.zoneLabel(start,end,'Asia/Jerusalem'),'Asia/Jerusalem (GMT+3)');
 eq(U.zoneLabel(start,end,'UTC'),'UTC (GMT+0)');
 eq(U.zoneLabel(start,end,'Asia/Kolkata'),'Asia/Kolkata (GMT+5:30)');
@@ -32,6 +40,8 @@ const radius={...known('Radius'),radius:{minutes:20,mode:'inconvenient'},busy:[{
 slot=evaluate([radius]);eq(slot.people[0].inconvenientMinutes,10);eq(U.participantFit(slot.people[0]).label,'Inconvenient time');ok(U.participantFit(slot.people[0]).detail.includes('10 inconvenient minutes'));
 eq(U.participantFit({...slot.people[0],band:'bad'}).label,'Outside acceptable hours');
 let warnings=U.proposalWarnings(slot,{referenceZone:'UTC',clock:'12'});
+ok(U.proposalWarnings(slot,{referenceZone:'UTC',clock:'12',dateFormat:'mdy'})[0].detail.includes('Tue, Oct 20'));
+ok(U.proposalWarnings(slot,{referenceZone:'UTC',clock:'12',dateFormat:'dmy'})[0].detail.includes('Tue, 20 Oct'));
 eq(warnings.length,1);ok(warnings[0].title.includes('Inconvenient time'));ok(warnings[0].detail.includes('10 minutes'));ok(warnings[0].detail.includes('10:00 AM - 10:45 AM'));
 eq(U.proposalWarnings(evaluate([required])).length,0);
 slot=evaluate([required,{...busy,calendar:'none',coverages:[],calendarError:'Sharing permission denied'}]);

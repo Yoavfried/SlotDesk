@@ -1,6 +1,6 @@
 # Install the SlotDesk pilot
 
-Current release: **0.8.0**. Chrome 116 or later. The configured build uses an existing owner-managed Google OAuth client; approved testers do not need to create a Google Cloud project.
+Current release: **0.8.1**. Chrome 116 or later. The configured build uses an existing owner-managed Google OAuth client; approved testers do not need to create a Google Cloud project.
 
 ## Prepare the package
 
@@ -10,7 +10,7 @@ From the repository root, using Node.js 18+:
 npm run package:slotdesk
 ```
 
-Give the tester `dist/SlotDesk-0.8.0.zip`. It includes the extension, local fonts, handoff guide, general Help and the privacy notice. Source tests and repository documentation are excluded. Do not include credentials or calendar exports.
+Give the tester `dist/SlotDesk-0.8.1.zip`. It includes the extension, local fonts, handoff guide, general Help and the privacy notice. Source tests and repository documentation are excluded. Do not include credentials or calendar exports.
 
 ## Tester setup
 
@@ -29,6 +29,6 @@ Help is available from the question-mark icon before and after connection. The a
 
 ## Updating
 
-Replace the contents of the existing installed folder with the new package and click Reload on its Chrome extension card. Keep the installed path and pinned identity. Saved account-specific profiles remain in the browser. The first 0.8.0 connection asks you to confirm calendar scope. Do not uninstall the extension as an update step, because uninstalling can remove its local workspace. Loading a second separate copy is not the normal update route.
+Replace the contents of the existing installed folder with the new package and click Reload on its Chrome extension card. Keep the installed path and pinned identity. Saved account-specific profiles remain in the browser. Upgrades from before 0.8.0 ask you to confirm calendar scope; an already confirmed selection is retained in 0.8.1 and does not reopen at each start. Do not uninstall the extension as an update step, because uninstalling can remove its local workspace. Loading a second separate copy is not the normal update route.
 
 From source, load `extension/`, not the repository root. The pinned extension ID is `blpliafbiiidhcffegochddjhagkhhip`. Owner OAuth configuration and access limitations are described in [architecture](architecture.md).

@@ -10,7 +10,7 @@ Version 0.6.0 adds same-account window synchronization and local persistence of 
 
 Version 0.5.0 adds read-only calendar browsing and guest-response display using the existing reader. Raw event details stay in memory and are cleared on disconnect; only chosen calendar/date filters persist. Descriptions and provider text are escaped; external event/video links remain allowlisted. No additional OAuth permission or existing-event write path is introduced. The prior source audit and current synthetic checks are separate evidence; this update is not a new exhaustive security audit.
 
-Updated 14 October 2026 for **0.8.0**. This record explains supported behavior, evidence and remaining limits. It is not a guarantee that all future changes or browser environments are safe.
+Updated 14 October 2026 for **0.8.1**. This record explains supported behavior, evidence and remaining limits. It is not a guarantee that all future changes or browser environments are safe.
 
 ## Calendar integrity boundary
 

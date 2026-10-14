@@ -4,7 +4,7 @@
   const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])),copy=v=>JSON.parse(JSON.stringify(v));
   root.SlotMeetingUI={create(env){
     const $=id=>document.getElementById(id);let session=null,notices=new Map(),sequence=0;const editor=SlotMeetingEditorUI.create({...env,observe,syncPending:sync});
-    const context=()=>env.context(),rangeText=(start,end,zone)=>U.compactRange(start,end,zone,context().clock,{referenceZone:context().own?.tz||zone});
+    const context=()=>env.context(),rangeText=(start,end,zone)=>U.compactRange(start,end,zone,context().clock,{referenceZone:context().own?.tz||zone,dateFormat:context().dateFormat});
     const ensure=s=>{const c=context();if(!s||s!==session||s.account!==c.account||s.generation!==c.generation||!c.updater)throw new Error('The connected account changed. Open the workspace to continue.');};
     function error(message){$('reschedule-error').textContent=message||'';}
     function reset(){editor.reset();sequence++;session=null;notices.clear();$('reschedule-error').textContent='';$('alert-count').textContent='';$('alerts-list').replaceChildren();$('reschedule-body').replaceChildren();$('meeting-alerts').hidden=true;$('reschedule-pending').replaceChildren();$('reschedule-followups').replaceChildren();}
@@ -51,7 +51,7 @@
       // The organizing calendar is checked as a resource even when the organizer is not a guest.
       if(![...unique.values()].some(p=>p.required!==false&&p.calendarIds?.includes(s.calendarId)))unique.set('organizing-calendar',{...U.newProfile('','Organizing calendar',s.zone),id:'reschedule-calendar:'+s.calendarId,tzConfirmed:true,ignoreWorkingHours:true,calendarIds:[s.calendarId],required:true});return [...unique.values()];
     }
-    function allDayText(time,zone){const date=value=>U.compactDate(E.startOfDay(value,zone)+12*3600000,zone,{referenceZone:context().own?.tz||zone});return date(time.from)+(time.from===time.to?'':' - '+date(time.to))+' · All day';}
+    function allDayText(time,zone){const date=value=>U.compactDate(E.startOfDay(value,zone)+12*3600000,zone,{referenceZone:context().own?.tz||zone,dateFormat:context().dateFormat});return date(time.from)+(time.from===time.to?'':' - '+date(time.to))+' · All day';}
     function renderSearch(s){
       s.after=null;s.slot=null;s.plan=null;
       const today=E.partsIn(Date.now(),s.zone).ymd,duration=Math.ceil((s.time.end-s.time.start)/60000);
@@ -84,7 +84,7 @@
       const result=E.evaluate(req,{exactStart:time.start,allowBadHours:!!s.allowBadHours});if(result.errors.length)throw new Error(result.errors.join('\n'));const slot=result.open[0]||result.taken[0];if(!slot)throw new Error('This time conflicts with protected time or stated availability. Choose another time.');return M.overlapChanges(s.time,slot,req.people);
     }
     function warnings(s,slot){
-      if(!slot)return [];const c=context();const lines=s.time.allDay?(slot.notes||[]).map(detail=>({title:'Availability needs confirmation',detail})):U.proposalWarnings(slot,{clock:c.clock,referenceZone:c.own?.tz||s.zone});
+      if(!slot)return [];const c=context();const lines=s.time.allDay?(slot.notes||[]).map(detail=>({title:'Availability needs confirmation',detail})):U.proposalWarnings(slot,{clock:c.clock,dateFormat:c.dateFormat,referenceZone:c.own?.tz||s.zone});
       for(const p of people(s))if(!p.tzConfirmed)lines.push({title:p.name+': timezone not confirmed',detail:'Their working and convenient hours cannot be checked until their timezone is confirmed for the search.'});if(s.event.attendeesOmitted)lines.push({title:'Guest list incomplete',detail:'Some attendees and their availability have not been shared by Google.'});
       for(const clash of slot.overrides||[])if(clash.preExisting)for(const warning of lines)if(warning.detail.includes(clash.label+'. This meeting would create a new overlap.'))warning.detail=warning.detail.replace('This meeting would create a new overlap.',clash.causedBySlotDesk?'The proposed time increases an existing overlap.':'The proposed time still overlaps this appointment.');
       if(s.time.allDay&&slot.overrides?.length)lines.push({title:slot.overrides.length+' other appointments would need rescheduling',detail:slot.overrides.map(clash=>clash.event.title||'Busy appointment').join(', ')});return lines;

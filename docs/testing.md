@@ -1,6 +1,6 @@
 # SlotDesk validation record
 
-Current product: **0.8.0**. Automated evidence and user-reported live behavior are recorded separately. No formal manual acceptance checklist remains.
+Current product: **0.8.1**. Automated evidence and user-reported live behavior are recorded separately. No formal manual acceptance checklist remains.
 
 ## Reported live progress — 13 October 2026
 
@@ -30,7 +30,7 @@ npm run check
 | Calendar pilot | 78 | Profiles, timezone handling and reader normalization |
 | Booking | 70 | Reviewed new invitations and duplicate-safe recovery |
 | Safety/scale | 69 | Account isolation, write guards, dense reads and unchanged unrelated meetings |
-| Proposal display | 66 | Date/year/DST formatting, coverage and consolidated warnings |
+| Proposal display | 76 | Date/year/DST formatting, coverage and consolidated warnings |
 | Calendar view | 42 | Date ranges, events, RSVP display and source handling |
 | Upgrade/synchronization | 71 | Stored-state migration and concurrent-window behavior |
 | Multi-calendar cache | 48 | All-source reads, cached filters and partial coverage |
@@ -38,12 +38,17 @@ npm run check
 | Rescheduling | 112 | Time-only conditional writes, permissions, identity/version and recovery |
 | Meeting editing | 125 | Narrow detail/guest writes, preserved metadata, stale/permission guards and recovery |
 | Onboarding/scope/guests/flexibility | 71 | Selected-source transports, migration/recovery, draft guests and independent scheduling rules |
-| **Application total** | **1,346** | Synthetic data and transports |
+| **Application total** | **1,356** | Synthetic data and transports |
 | Export comparator | 22 | Offline creation/export integrity comparison |
 
 The 112 rescheduling, 70 booking and 69 safety checks were rerun after the latest live report: **251 passed**, with no real Google request or invitation. All source network entry points were reread; see the [write-boundary record](security.md#focused-calendar-write-recheck--13-october-2026).
 
 ## Synthetic browser evidence
+
+### 0.8.1 settings and calendar polish
+
+Local synthetic browser checks verified sidebar calendar rows/count, metadata dialog, fixed footer under scrolling, identical Settings/calendar bounds, save and discard returning to Settings, retained unsaved date choice, removed duplicate actions and own-profile-first/removal protection. First setup hides close/discard, blocks Escape and refuses empty selection; valid scope continues to optional people. Date-order checks include both orders, AM/PM, midnight, future-year rollover and warning/copy labels. Long identity and calendar names are checked for truncation without horizontal overflow. No real Google account, invitation or event mutation is used.
+
 
 ### 0.8.0 onboarding and profiles
 

@@ -58,3 +58,28 @@ dialog{padding:0;overflow:hidden;max-height:calc(100dvh - 28px)}dialog[open]{dis
 .onboarding-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center}.scope-explanation{padding:14px;border-left:3px solid var(--acc);background:var(--sunk);border-radius:0 var(--r) var(--r) 0}.scope-calendar-list{max-height:40vh;overflow:auto;border:1px solid var(--line);border-radius:var(--r);margin:12px 0 20px}.scope-calendar-list .calendar-picker-option{padding:12px 14px;border-bottom:1px solid var(--line)}.scope-calendar-list .calendar-picker-option:last-child{border-bottom:0}.profile-flexibility{padding:8px 0 16px}.participant-rules{font-size:13px;margin-top:12px;border-top:1px solid var(--line);padding-top:10px}.participant-rules .check{display:flex;margin:12px 0}.person-bottom{flex-wrap:wrap}.profile-actions{display:flex;gap:8px;flex-wrap:wrap}.settings-calendars{padding:14px 0}.timezone-picker{position:relative;min-width:0;width:100%;font-weight:400}.timezone-trigger{display:block;width:100%;text-align:left;font-weight:400;white-space:normal;overflow-wrap:anywhere;background:var(--card);color:var(--ink);border:1px solid var(--line-2);border-radius:var(--r);padding:11px 12px}.timezone-panel{position:relative;z-index:20;background:var(--card);border:1px solid var(--line-2);border-radius:var(--r);padding:8px;box-shadow:var(--e2);margin-top:5px}.timezone-panel input{width:100%;margin:0 0 8px}.timezone-options{max-height:220px;overflow:auto}.timezone-options button{display:block;width:100%;border:0;text-align:left;font-size:13px;font-weight:400;padding:9px;border-radius:6px;overflow-wrap:anywhere}.timezone-options .active-option,.timezone-options button:hover{background:var(--sunk)}.timezone-options [aria-selected=true]{font-weight:600}.timezone-options p{padding:10px;font-size:13px}.timezone-trigger:focus-visible{outline:2px solid var(--acc);outline-offset:2px}#editor.travel-focus .profile-basic,#editor.travel-focus #profile-context,#editor.travel-focus #profile-advanced>summary,#editor.travel-focus #profile-advanced>section,#editor.travel-focus #profile-advanced>details:not(#profile-travel),#editor.travel-focus #delete-person{display:none}#editor.travel-focus #profile-travel{border:0}#editor.travel-focus #profile-travel>summary{display:none}.guest-timezone{display:block;margin:10px 0;font-size:13px}.participant-origin{font-size:11px;color:var(--ink-2)}
 
 .scope-calendar-list .calendar-picker-option{display:flex;flex-direction:row;gap:12px;align-items:flex-start}.scope-calendar-list input[type=checkbox]{width:18px;height:18px;flex:none;margin:2px 0;accent-color:var(--acc)}.scope-calendar-list .calendar-picker-option>span{display:block;font-size:14px;color:var(--ink)}.scope-calendar-list small{display:block;margin-top:3px;font-size:12px;overflow-wrap:anywhere;color:var(--ink-3)}
+
+/* Settings and calendar selection use one stable shell, with fixed actions. */
+dialog.settings-shell{width:min(640px,calc(100vw - 28px));height:min(760px,calc(100dvh - 28px));max-height:calc(100dvh - 28px)}
+.settings-shell .dialog-body{flex:1;min-height:0;scrollbar-gutter:stable}
+dialog .fixed-dialog-footer{flex:none;margin:0;padding:16px 22px;border-top:1px solid var(--line);background:var(--card);justify-content:flex-end}
+.fixed-dialog-footer>button:first-child{margin-right:auto}
+.scope-calendar-list{max-height:300px;margin:12px 0 0;overflow-x:hidden}
+.scope-calendar-row{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--line);min-width:0}
+.scope-calendar-row:last-child{border-bottom:0}
+.scope-calendar-list .scope-calendar-row .calendar-picker-option{border:0;padding:0;margin:0;flex:1;min-width:0;align-items:center}
+.scope-calendar-list .scope-calendar-row .calendar-picker-option>span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;flex:1}
+.calendar-info-button{width:28px;height:28px;min-width:28px;padding:0;border-radius:50%;font-size:13px;line-height:1;flex:none;color:var(--ink-2);border-color:var(--line-2)}
+#scope-count{margin:8px 0 18px;font-size:12px;text-align:left}
+.calendar-info dt{font-size:12px;color:var(--ink-3);margin-top:16px}.calendar-info dt:first-child{margin-top:0}
+.calendar-info dd{margin:5px 0 0;overflow-wrap:anywhere;white-space:pre-wrap;font-size:14px}
+#calendar-choices .calendar-choice{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;padding:16px 0}
+#calendar-choices .profile-identity{min-width:0}
+#calendar-choices .profile-identity strong{display:block;font-size:14px;overflow-wrap:anywhere}
+#calendar-choices .profile-email{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#calendar-choices .profile-timezone{display:block;margin-top:3px}
+#calendar-choices .own-profile-mark{display:inline;font-weight:400;font-size:12px}
+#calendar-choices .profile-actions{display:flex;flex-wrap:nowrap;gap:8px}
+#calendar-choices .profile-actions button{white-space:nowrap}
+@media(max-width:560px){#calendar-choices .profile-actions{display:grid;justify-items:stretch;width:142px}#calendar-choices .profile-actions button{padding:9px 12px;font-size:12px}dialog .fixed-dialog-footer{padding:14px 18px;gap:8px}.fixed-dialog-footer button{padding:10px 13px;font-size:12px}}
+@media(max-width:340px){#calendar-choices .calendar-choice{grid-template-columns:minmax(0,1fr)}#calendar-choices .profile-actions{display:flex;width:auto}.fixed-dialog-footer{flex-wrap:wrap}}

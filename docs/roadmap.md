@@ -4,7 +4,7 @@ Updated 14 October 2026. Status reflects agreed scope, not a promise of public a
 
 ## Current release
 
-Version **0.8.0** includes [F01–F26](implemented.md), the [accepted UX](ux-decisions.md), Google reading, reviewed new-event creation, recovery, a home menu, existing-meeting browsing/RSVPs, overlap details, declined-response alerts, reviewed guest/detail editing and rescheduling, searchable participants and the supplied design treatment. The project owner reports that the basic live flow works. Source review and synthetic stress tests are recorded in [security/privacy](security.md) and [testing](testing.md).
+Version **0.8.1** includes [F01–F26](implemented.md), the [accepted UX](ux-decisions.md), Google reading, reviewed new-event creation, recovery, a home menu, existing-meeting browsing/RSVPs, overlap details, declined-response alerts, reviewed guest/detail editing and rescheduling, searchable participants and the supplied design treatment. The project owner reports that the basic live flow works. Source review and synthetic stress tests are recorded in [security/privacy](security.md) and [testing](testing.md).
 
 ## Profile/calendar update — implemented in 0.8.0
 
@@ -16,7 +16,7 @@ The authorized onboarding, travel, timezone, mapping, guest and flexibility work
 
 ## Optional LLM assistance — future direction
 
-The owner wants [bring-your-own-key LLM assistance](llm-assistance.md), with prepared prompts and the cheapest model that performs each task reliably. Intended tasks include reading scheduling emails and appointment text, drafting availability inquiries, interpreting replies, explaining rule-aware choices and eventually creating optimized appointments directly in an explicitly authorized automation mode. Provider/model, cost controls, key/data handling, email permissions and direct-creation authorization remain open. No LLM feature or email access is implemented in 0.8.0; these ideas remain deferred.
+The owner wants [bring-your-own-key LLM assistance](llm-assistance.md), with prepared prompts and the cheapest model that performs each task reliably. Intended tasks include reading scheduling emails and appointment text, drafting availability inquiries, interpreting replies, explaining rule-aware choices and eventually creating optimized appointments directly in an explicitly authorized automation mode. Provider/model, cost controls, key/data handling, email permissions and direct-creation authorization remain open. No LLM feature or email access is implemented in 0.8.1; these ideas remain deferred.
 
 ## Next milestones, in order
 
