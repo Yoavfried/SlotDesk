@@ -10,6 +10,10 @@ Version **0.7.1** includes [F01–F18](implemented.md), the [accepted UX](ux-dec
 
 The owner supplied [eight product notes on 14 October](product-review-2026-10-14.md): accessible travel/flights, searchable timezone dropdowns, convenience priority, prominent profile calendar mappings, email-only guests, explicit workspace calendar scope, automatic participation for all mapped profiles and settings organization. These are planned/proposed, **not implemented in 0.7.1**. The record includes the owner's follow-up decisions and a proposed ranking interpretation keeping ordinary clash permission separate from late-hour comfort. The new workspace-scope direction will replace the earlier read-all-accessible-sources behavior when implemented.
 
+## Structured time inquiries — planned
+
+The owner wants [Ask about times](time-inquiries.md): one flow for one/many people and one/many time options. Collect structured replies, then let the EA review and create the appointment separately. This is planned rather than part of 0.7.1. The initial shared-response architecture (email replies/Gmail API, branded hosted page or Google Forms) is pending; no server, email permission, auto-booking or deployment is added by the plan.
+
 ## Next milestones, in order
 
 | Order | Milestone | Status |

@@ -1,5 +1,12 @@
 # Repository changelog
 
+## 2026-10-14 — Structured time inquiry planning
+
+- Define one Ask about times flow covering every combination of one/many people and one/many options, with structured replies before booking.
+- Record a separate EA confirmation, response revision/access and duplicate-safe finalization boundaries.
+- Document email-only/Gmail, hosted SlotDesk and Google Forms paths; leave infrastructure, new permissions and live email delivery unimplemented.
+
+
 ## 2026-10-14 — Product review planning
 
 - Record eight owner testing notes and follow-up answers: required timezone confirmation, every mapped profile joining automatically, and broader executive overlap flexibility.

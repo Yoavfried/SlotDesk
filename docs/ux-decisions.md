@@ -104,3 +104,14 @@ These requests change the intended next UX; current 0.7.1 behavior remains as do
 | UX66 | Workspace calendar scope | Onboarding/Settings select sources whose events are shown/used anywhere; browsing filters operate within that scope. | Planned; will supersede read-all-accessible-source UX51 |
 | UX67 | Organizing-calendar participants | Automatically include every mapped profile, including teams; respect explicit removal/manual inclusion and update automatic additions when the calendar changes. No separate owner assignment. | Planned; owner confirmed; refines UX02/UX58 |
 | UX68 | Settings organization | Main identity/timezone/mappings, focused travel, coherent working/availability sections and advanced treatment rules; global scope/default/owner settings separate. | Proposed layout; controls inventory before implementation |
+
+## Structured time inquiries — 14 October 2026
+
+| ID | Area | Direction | Status |
+| --- | --- | --- | --- |
+| UX69 | Ask about times | One integrated inquiry flow covers one/many recipients and one/many options before creating an appointment. | Planned; owner requested |
+| UX70 | Structured replies | Proposed Yes/Maybe/No per time, optional preference with multiple choices; distinguish missing replies. Localized times bind to immutable instants/options. | Proposed UX |
+| UX71 | Inquiry finalization | Replies do not create an event. EA selects a time, reviews latest availability/recipients and separately confirms Calendar creation with existing recovery safeguards. | Planned boundary |
+| UX72 | Shared response destination | Responses work while the EA is offline; choose email replies/Gmail API, a branded hosted page/service or Google Forms integration. Email delivery and permissions are separate decisions. | Architecture choice pending |
+
+[Time-inquiry design](time-inquiries.md) records the flow, architecture paths, data/access boundaries and verification scope.
