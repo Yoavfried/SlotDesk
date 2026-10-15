@@ -1,5 +1,10 @@
 # Repository changelog
 
+## 2026-10-15 — Leads-table clarification
+
+- Correct the earlier newsletter-specific framing: the owner requests email, name, assigned timezone and actual onboarding time in a private leads table for product analysis and possible future first-party project news.
+- Keep the proposed notice/contact choice and outstanding data-use/storage decisions explicit. No separate newsletter product, external signup requirement, collection or application change.
+
 ## 2026-10-15 — Accepted recovery direction and newsletter proposal
 
 - Record the accepted A1–G10 failure/recovery inventory, read-only setup, stale in-memory views and manual-resolution direction as planned, not implemented.

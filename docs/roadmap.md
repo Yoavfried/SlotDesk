@@ -4,7 +4,7 @@ Updated 15 October 2026. Status reflects agreed scope, not a promise of public a
 
 ## Current release
 
-The next accepted planning focus is [connection, permission and recovery UX](recovery-experience.md). Recommendations, including read-only onboarding, transient-failure stale views and explicit manual resolution, were accepted 15 October; implementation remains unfinished. [Optional newsletter signup](newsletter-signup.md) is a separate proposal for possible future first-party marketing, with policy/data-source/consent/backend decisions outstanding.
+The next accepted planning focus is [connection, permission and recovery UX](recovery-experience.md). Recommendations, including read-only onboarding, transient-failure stale views and explicit manual resolution, were accepted 15 October; implementation remains unfinished. The requested [onboarding leads table](leads-table.md) has four fields for product analysis and possible later first-party project updates; it does not introduce a newsletter product. Data-source, collection basis, consent and private-backend details remain to be settled.
 
 Version **0.8.1** includes [F01–F26](implemented.md), the [accepted UX](ux-decisions.md), Google reading, reviewed new-event creation, recovery, a home menu, existing-meeting browsing/RSVPs, overlap details, declined-response alerts, reviewed guest/detail editing and rescheduling, searchable participants and the supplied design treatment. The project owner reports that the basic live flow works. Source review and synthetic stress tests are recorded in [security/privacy](security.md) and [testing](testing.md).
 
