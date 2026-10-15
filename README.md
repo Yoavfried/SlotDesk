@@ -59,7 +59,7 @@ The preview at `http://127.0.0.1:8770/` shows the disconnected interface. Calend
 | [Design language](design/README.md) | Original style guide, fonts and design assets |
 | [Product changelog](docs/changelog.md) · [repository changelog](CHANGELOG.md) | Product releases and repository migration |
 
-Local validation includes 1,564 synthetic application checks and 22 export-comparison checks. The 0.8.1 onboarding, scope, guest and flexibility flows have synthetic browser/transport coverage; real Google guest-edit delivery has not been independently observed. Basic live creation and the first dense-calendar integrity comparison passed. The owner also reports working decline alerts, sensible proposals, successful rescheduling and correct overlap details. Work-account access depends on the organization allowing the extension and Google permissions.
+Local validation includes 1,564 synthetic application checks and 22 export-comparison checks. The onboarding, scope, guest and flexibility flows have synthetic browser/transport coverage; real Google guest-edit delivery has not been independently observed. Basic live creation and the first dense-calendar integrity comparison passed. The owner also reports working decline alerts, sensible proposals, successful rescheduling and correct overlap details. Work-account access depends on the organization allowing the extension and Google permissions.
 
 ![Overlap details with synthetic calendar data](docs/assets/overlaps-v070.png)
 
