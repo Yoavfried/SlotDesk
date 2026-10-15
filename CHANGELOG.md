@@ -1,5 +1,10 @@
 # Repository changelog
 
+## 2026-10-15 — Accepted recovery direction and newsletter proposal
+
+- Record the accepted A1–G10 failure/recovery inventory, read-only setup, stale in-memory views and manual-resolution direction as planned, not implemented.
+- Record the requested contact/time/onboarding table and clarified future first-party newsletter purpose. Separate optional marketing signup, permitted data sourcing and backend/privacy work from current local-only behavior. No collection, mailing or application release change.
+
 ## 2026-10-14 — SlotDesk 0.8.1
 
 - Refine Settings/calendar submenus, compact source rows/info, protected own-profile layout and browser-wide date order.
