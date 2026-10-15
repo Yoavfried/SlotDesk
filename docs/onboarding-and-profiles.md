@@ -18,7 +18,7 @@ Settings → Calendars chooses eligible sources for every event/free-busy read: 
 
 The Existing meetings picker filters the memory cache inside this workspace scope. Hiding a calendar from that list does not disable its mapped availability. Date changes and Refresh load the selected workspace calendars; selection/timezone changes remain local. Scope changes clear loaded/derived data and stale reviews, and refresh an active meeting list in another window.
 
-Profile mappings describe sources used for a person; they neither grant sharing permissions nor prove every personal commitment is known. Full coverage means the linked sources actually loaded the requested interval successfully. An excluded/inaccessible source stays in the saved profile with an inactive warning; its data is not read. Choosing no access leaves availability unconfirmed. Excluding the default calendar requires an explicit replacement. The calendar of an unresolved write cannot be excluded until recovery finishes. No change to scope or mappings deletes Google appointments or changes Google's underlying OAuth grant.
+Profile mappings describe sources used for a person; they neither grant sharing permissions nor prove every personal commitment is known. Full coverage means the linked sources actually loaded the requested interval successfully. An excluded/inaccessible source stays in the saved profile with an inactive warning; its data is not read. Choosing no access leaves availability unconfirmed. If writable calendars remain selected, excluding the default requires an explicit writable replacement. An all-read-only selection instead keeps browsing/availability and completes setup with no invitation calendar. The calendar of an unresolved write cannot be excluded until recovery finishes. No change to scope or mappings deletes Google appointments or changes Google's underlying OAuth grant.
 
 ## Participants and unsaved email guests
 
@@ -54,3 +54,10 @@ Calendar names occupy one row with their checkbox and a separate info button. Th
 Settings and calendar selection share a fixed popup size and fixed bottom actions. Save calendars commits the selection immediately; Discard changes, X and Escape leave it unchanged. Both return to Settings, preserving unfinished time/date display choices. A saved scope updates the Settings summary/default. The required first selection cannot be dismissed and must include at least one source plus a selected writable default. Confirmed scope is reused on subsequent starts.
 
 The own profile appears first among matching Manage profiles results and cannot be removed individually. Long emails truncate without moving/wrapping the action labels; the full value remains in the editor. Settings omits duplicate profile/suggestion actions and Appearance options. Dark mode remains the single appearance switch. Date display selects Day first (20 Oct) or Month first (Oct 20), independently of clock format. Native date inputs follow browser/OS locale; preference formatting changes generated labels and copies, not stored values, timezone calculations or writes.
+
+
+## Recovery and registration in 0.9.0
+
+The final setup step shows the five-field registration notice and optional unchecked updates choice. Skipping familiar profiles still completes registration. Existing completed users see the notice once before explicitly continuing; no automatic backfill runs. Failed submissions retain the original record locally without blocking calendar use. Central hosting activation is pending; see [leads status](leads-table.md).
+
+Read-only selections can finish onboarding. Proposal comparison/copying remain available, while creation asks for a writable selection in Settings. Recoverable connection failures keep saved drafts and offer reconnect without automatic sending. See the [recovery cases](recovery-experience.md).

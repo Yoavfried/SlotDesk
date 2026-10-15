@@ -1,6 +1,6 @@
 # Implemented scheduling work
 
-Current release: **0.7.1**. F01–F18 are implemented. F01–F04 are the original four reproduced defects. New-meeting booking was added in 0.3.0; reviewed rescheduling and decline alerts are implemented in 0.7.0.
+Current code: **0.9.0 preview**. F01–F27 are implemented; F28 awaits hosting activation. F01–F04 are the original four reproduced defects. New-meeting booking was added in 0.3.0; reviewed rescheduling and decline alerts are implemented in 0.7.0.
 
 | ID | Work | Accepted behavior | Status |
 | --- | --- | --- | --- |
@@ -63,3 +63,11 @@ See [meeting editing](meeting-editing.md) for scope and recovery. Stored object-
 | F26 | Workspace calendar scope and onboarding | Own profile → explicit selected sources/default → optional people; scoped transport/pagination, source cleanup, existing-user confirmation and peer refresh. | Implemented |
 
 See [onboarding and profiles](onboarding-and-profiles.md). The larger UX68 settings redesign and LLM/email candidates remain future work.
+
+
+## Recovery and registration — 0.9.0 preview
+
+| ID | Work | Behavior | Status |
+| --- | --- | --- | --- |
+| F27 | Recovery experience | Typed failures, read-only setup, stop loading, stale in-memory views, reconnect without sending, separate Check/Retry, acknowledged manual history and unreadable-storage recovery. | Implemented; synthetic checks/browser verification. See [recovery record](recovery-experience.md). |
+| F28 | Onboarding leads | Exactly five fields, optional unchecked updates permission, durable local queue and a private insert-only intake/table. | App/backend source and database prepared; Vercel environment permission blocks endpoint activation. See [leads record](leads-table.md). |

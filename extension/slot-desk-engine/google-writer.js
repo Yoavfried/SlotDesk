@@ -1,5 +1,5 @@
 /* Creates only explicitly reviewed new events. It never updates or moves existing events. */
-(function(root,factory){if(typeof module==='object'&&module.exports)module.exports=factory();else root.SlotGoogleWriter=factory();})(typeof self!=='undefined'?self:this,function(){
+(function(root,factory){if(typeof module==='object'&&module.exports)module.exports=factory(require('./recovery.js'));else root.SlotGoogleWriter=factory(root.SlotRecovery);})(typeof self!=='undefined'?self:this,function(R){
   'use strict';
   const email=value=>String(value||'').trim().toLowerCase();
   function prepare(draft,uuid=()=>globalThis.crypto.randomUUID()){
@@ -40,10 +40,10 @@
       let refreshed=false;
       for(;;){const token=await getToken(),controller=new AbortController(),timer=setTimeout(()=>controller.abort(),timeoutMs);let response,data;
         try{response=await fetchImpl('https://www.googleapis.com/calendar/v3/'+path,{method,redirect:'error',credentials:'omit',cache:'no-store',referrerPolicy:'no-referrer',headers:{Authorization:'Bearer '+token,...(body?{'Content-Type':'application/json'}:{})},...(body?{body:JSON.stringify(body)}:{}),signal:controller.signal});try{data=await response.json();}catch(_){data=null;}}
-        catch(_){const error=new Error('The send result could not be confirmed. Keep this draft and retry to check the same meeting; do not create a second copy.');error.uncertain=true;throw error;}finally{clearTimeout(timer);}
+        catch(cause){throw R.network(cause,{write:method==='POST',offline:typeof navigator!=='undefined'&&navigator.onLine===false});}finally{clearTimeout(timer);}
         if(response.ok){if(!data?.id){const error=new Error('Google returned an incomplete send result. Retry to check this meeting.');error.uncertain=true;throw error;}return data;}
         if(response.status===401&&!refreshed){refreshed=true;await invalidateToken(token);continue;}
-        const error=new Error(response.status===403?'Google could not create this meeting. Check event-writing permission, the selected calendar’s sharing, and Google Meet support.':response.status===404?'This calendar or meeting is unavailable. Check the selected calendar.':response.status===409?'This meeting identifier already exists.':response.status===429?'Google’s request limit was reached. Keep the draft and retry shortly.':response.status===401?'Reconnect Google and allow calendar event access before sending.':'Google could not confirm the meeting. Retry to check the same meeting.');error.code=response.status;error.uncertain=response.status>=500;error.writeRejected=method==='POST'&&response.status<500&&response.status!==409;throw error;
+        const error=R.provider(response.status,(data?.error?.errors||[]).map(item=>item.reason),{write:method==='POST',retryAfter:response.headers?.get?.('retry-after')});if(response.status===403&&error.kind==='access')error.message='Google could not create this meeting. Check event-writing permission and the selected calendar’s sharing.';error.writeRejected=method==='POST'&&response.status<500&&response.status!==409;throw error;
       }
     }
     const path=booking=>`calendars/${encodeURIComponent(booking.calendarId)}/events/${encodeURIComponent(booking.eventId)}`;

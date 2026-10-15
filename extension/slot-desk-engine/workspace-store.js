@@ -16,7 +16,7 @@
       storage.setItem(key(account),JSON.stringify({version:2,revision:next,profiles,constraints:state.constraints,settings:state.settings,...(state.pendingBooking?{pendingBooking:state.pendingBooking}:{}),...(state.pendingReschedule?{pendingReschedule:state.pendingReschedule}:{})}));state.revision=next;
     }
     function reset(account){storage.removeItem(key(account));}
-    return {load,save,reset};
+    return {load,save,reset,raw:account=>storage.getItem(key(account))};
   }
   return {createStore};
 });

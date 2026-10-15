@@ -1,6 +1,6 @@
 # SlotDesk validation record
 
-Current product: **0.8.1**. Automated evidence and user-reported live behavior are recorded separately. No formal manual acceptance checklist remains.
+Current code: **0.9.0 preview**; latest published pilot: **0.8.1**. Automated evidence and user-reported live behavior are recorded separately. No formal manual acceptance checklist remains.
 
 ## Reported live progress — 13 October 2026
 
@@ -19,6 +19,7 @@ From the repository root:
 
 ```sh
 npm test
+npm run test:backend
 npm run test:calendar-kit
 npm run check
 ```
@@ -38,7 +39,8 @@ npm run check
 | Rescheduling | 112 | Time-only conditional writes, permissions, identity/version and recovery |
 | Meeting editing | 125 | Narrow detail/guest writes, preserved metadata, stale/permission guards and recovery |
 | Onboarding/scope/guests/flexibility | 71 | Selected-source transports, migration/recovery, draft guests and independent scheduling rules |
-| **Application total** | **1,356** | Synthetic data and transports |
+| Recovery/registration | 64 | Typed outcomes, quota, cancellation, stale/access loss, read-only setup, exact leads, manual history and collision evidence |
+| **Application total** | **1,420** | Synthetic data and transports |
 | Export comparator | 22 | Offline creation/export integrity comparison |
 
 The 112 rescheduling, 70 booking and 69 safety checks were rerun after the latest live report: **251 passed**, with no real Google request or invitation. All source network entry points were reread; see the [write-boundary record](security.md#focused-calendar-write-recheck--13-october-2026).
@@ -90,3 +92,10 @@ No post-reschedule export has been supplied. The initial creation comparison is 
 The standalone migration passed syntax/link/asset/manifest checks and all application/comparator suites. A fresh checkout reproduced the existing 0.7.0 ZIP exactly, preserving the extension/OAuth identity and fonts. [Migration record](migration.md).
 
 The focused source review and synthetic outcomes are not a guarantee against every future bug or browser/account condition. They establish the current explicit write boundaries and tested cases; work-account access remains subject to organization permissions.
+
+
+## 0.9.0 preview verification — 15 October
+
+All 1,420 application checks, six server-intake test cases and 22 export-comparison checks passed. Focused mocked browser checks at 390 px verified read-only onboarding, both optional update choices, registration payload/status, stale meeting retention, access-loss purging, same-account reconnection, read-only Check result, acknowledged manual resolution/history and corrupt-storage preservation. Transport statistics showed zero calendar POST/PATCH/delete/move calls in these recovery/setup checks and eight original events unchanged. Expected injected HTTP failures and the fixture favicon were distinguished from application exceptions; the missing read-only explanation element found during the check was fixed before completion.
+
+The private database schema has exactly five columns, and SQL privilege inspection confirms the intake role can INSERT but cannot SELECT, UPDATE or DELETE. Server handler tests use synthetic inputs and do not insert test contacts into the live leads table. Live endpoint/database round-trip verification is pending Vercel environment-variable access; central submission is not claimed active.

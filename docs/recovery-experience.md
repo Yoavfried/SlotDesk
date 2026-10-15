@@ -1,6 +1,6 @@
 # Connection, permissions and recovery experience
 
-Accepted direction: **15 October 2026**. The owner accepted the proposed failure/recovery recommendations and the three follow-up recommendations below. This is planned UX, **not an implementation claim for 0.8.1**. Existing guarded writes, token renewal, limited read retries, incomplete coverage and pending recovery are the baseline. No new live-test checklist is assigned.
+Accepted direction: **15 October 2026**. The owner accepted the proposed failure/recovery recommendations and the three follow-up recommendations below. The recovery implementation is in the **0.9.0 preview**; the inventory below remains the accepted behavior contract. Existing guarded writes, token renewal, limited read retries, incomplete coverage and pending recovery are the baseline. No new live-test checklist is assigned.
 
 ## Accepted principles
 
@@ -13,9 +13,9 @@ Accepted direction: **15 October 2026**. The owner accepted the proposed failure
 
 ## Three accepted policy recommendations
 
-1. Allow onboarding to complete with only read-only selected calendars, for the capabilities actually supported by granted permissions. Browsing/availability can work; creation requires a selected writable calendar. This changes the current writable-default setup requirement and needs implementation/migration design.
+1. Allow onboarding to complete with only read-only selected calendars, for the capabilities actually supported by granted permissions. Browsing/availability can work; creation requires a selected writable calendar. Implemented: a nonempty read-only selection completes setup with no default invitation calendar.
 2. Retain the last successfully loaded meetings in the current window after a transient refresh failure, marked outdated with last-successful-check time. Do not persist fetched calendars for offline storage. Exclusion, disconnect and confirmed loss of access clear the affected data.
-3. Provide explicit manual resolution if an uncertain write cannot be checked after permanent access loss. Preserve the operation record and distinguish EA-reported result from Google-confirmed result. Manual resolution must never silently retry or mark an unverified action successful. Exact unlock/history/duplicate-prevention interactions require specification before implementation.
+3. Provide explicit manual resolution if an uncertain write cannot be checked after permanent access loss. Preserve the operation record and distinguish EA-reported result from Google-confirmed result. Manual resolution must never silently retry or mark an unverified action successful. Implemented: explicit acknowledgement, separate reported-found/unverified status, exact operation history and no resend action from history.
 
 ## Situation inventory and intended UX
 
@@ -89,8 +89,19 @@ Identifiers preserve the reviewed conversation so future implementation can refe
 | G9 | Browser data cleared/uninstall | Truthful local-data loss limits; Google events remain separate. |
 | G10 | Other device/browser profile | Explain local setup; do not promise cross-device sync/recovery. |
 
-## Implementation planning still needed
+## Implementation and evidence — 0.9.0 preview
 
-Define shared typed error/outcome states, contextual notices/actions, read cancellation, backoff coordination, account reauthentication, read-only onboarding, stale-cache replacement and manual-resolution state transitions. Preserve pending-operation safeguards across every change. These acceptance directions do not imply that an unresolved result can be proven absent from a 404 or from loss of access.
+| Cases | Implementation/evidence |
+| --- | --- |
+| A1–A9, B1–B10 | Shared typed errors; quiet sign-in cancellation; explicit permission/configuration/known organization causes; coalesced token access and same-account reconnect. Calendar-list errors remain errors rather than an empty list. Stable IDs, selected-source controls, preserved mappings and read-only onboarding. Lost/downgraded sources purge fetched details and derived views; outgoing pending records remain account-bound. |
+| C1–C12 | Reader cancellation through requests and retry waits; bounded concurrency/pagination progress; offline indicator; bounded retries and shared Retry-After pause; daily quota is not treated as a short rate limit. Stale browse entries remain in memory with last-check information only after eligible transient failures; failed/partial sources cannot establish complete availability. Online events may refresh reads, never writes. |
+| D1–D7 | Existing fresh availability/rule checks and before/after reviews remain mandatory. Updated appointment reviews retain proposed time/text, and copied outgoing details remain available when access is lost. Unsupported rosters still block guest changes. Same-account reconnect keeps the draft; account switches do not merge workspaces. |
+| E1–E10 | Durable operation reservation before writes; unchanged narrow POST/PATCH/If-Match guards. Check result is read-only. A missing creation permits a separate reviewed retry only after calendar access verification. Changed target versions cannot use the stale retry. Explicit manual resolution retains the exact record and distinguishes EA reports from provider confirmation. Local completion-save failure retains same-target recovery. |
+| F1–F7 | Existing event/Meet separation and guest-response display remain. Failed refreshes do not erase known No responses or imply no alerts; last-check/fresh-load states are explicit. Collision follow-ups clear only on fresh evidence, including configured blocked radii; uneditable appointments remain coordination work. |
+| G1–G10 | Existing revision/conflict UI and send locks remain. Unsaved input stays available on save failure; unreadable original storage is preserved with retry/download and acknowledged reset. A newer workspace version blocks older guarded builds from saving. Local-device and browser-data-loss boundaries are documented in Help/Privacy. |
+
+New tests cover typed error outcomes, quota/backoff/cancellation, read-only setup, stale retention/access-loss purging, exact registration and manual history. Existing booking/editor/rescheduling suites continue to cover identity, conditional writes, recurrence, unrelated-event integrity and cross-window reservation. Mocked browser checks cover first-run read-only setup, old-user registration, transient failure, access loss/reconnect, manual resolution and corrupt storage preservation. No new live Google or recipient-delivery claim is made.
+
+Limits: the version guard applies to builds that contain it; close/reload older extension windows during an update. A manually reported result is not proof of provider success or failure. If an operation is unverified, creating a different operation can still duplicate a change already made in Google. The UI requires acknowledgement and preserves the original record instead of silently deciding the result. The independent [leads intake](leads-table.md) remains pending hosting activation.
 
 Provider references: [Calendar errors](https://developers.google.com/workspace/calendar/api/guides/errors), [Chrome identity](https://developer.chrome.com/docs/extensions/reference/api/identity), [conditional updates](https://developers.google.com/workspace/calendar/api/guides/version-resources).

@@ -1,6 +1,8 @@
 ![SlotDesk — make room for what matters](design/assets/slotdesk-banner.svg)
 
-**0.8.1 · Google Calendar · private Chrome pilot**
+**0.9.0 preview · Google Calendar · private Chrome pilot**
+
+The recovery update and onboarding registration code are ready for local review. Central registration submission is queued until its hosting permission is configured; [activation status](backend/README.md). The latest published pilot remains 0.8.1.
 
 SlotDesk helps executive assistants find meeting times across people, calendars and timezones. Review a new invitation, browse existing meetings, edit its details and guests, or choose a new time for an appointment. Every calendar write requires an explicit review and confirmation.
 
@@ -34,6 +36,7 @@ Node.js 18 or later; no application dependency installation is required.
 ```sh
 npm run dev
 npm test
+npm run test:backend
 npm run test:calendar-kit
 npm run check
 npm run package:slotdesk
@@ -56,7 +59,7 @@ The preview at `http://127.0.0.1:8770/` shows the disconnected interface. Calend
 | [Design language](design/README.md) | Original style guide, fonts and design assets |
 | [Product changelog](docs/changelog.md) · [repository changelog](CHANGELOG.md) | Product releases and repository migration |
 
-Local validation includes 1,356 synthetic application checks and 22 export-comparison checks. The 0.8.1 onboarding, scope, guest and flexibility flows have synthetic browser/transport coverage; real Google guest-edit delivery has not been independently observed. Basic live creation and the first dense-calendar integrity comparison passed. The owner also reports working decline alerts, sensible proposals, successful rescheduling and correct overlap details. Work-account access depends on the organization allowing the extension and Google permissions.
+Local validation includes 1,420 synthetic application checks and 22 export-comparison checks. The 0.8.1 onboarding, scope, guest and flexibility flows have synthetic browser/transport coverage; real Google guest-edit delivery has not been independently observed. Basic live creation and the first dense-calendar integrity comparison passed. The owner also reports working decline alerts, sensible proposals, successful rescheduling and correct overlap details. Work-account access depends on the organization allowing the extension and Google permissions.
 
 ![Overlap details with synthetic calendar data](docs/assets/overlaps-v070.png)
 

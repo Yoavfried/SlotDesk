@@ -136,9 +136,14 @@ The authorized scope is implemented in 0.8.0. Earlier rows retain historical rel
 | ID | Area | Decision | Status |
 | --- | --- | --- | --- |
 | UX78 | Calendar selection rows | Checkbox, single-line truncated name and an info button. Full name/email or ID, known permissions, timezone and other available descriptive metadata open separately. Count below the list, aligned left. | Implemented |
-| UX79 | Calendar selection navigation | Same size as Settings. Fixed footer: Save calendars / Discard changes; X and Escape discard. Return to Settings and retain unsaved display choices. First required calendar selection has no X/discard/Escape and requires selected sources plus a writable default. | Implemented |
+| UX79 | Calendar selection navigation | Same size as Settings. Fixed footer: Save calendars / Discard changes; X and Escape discard. Return to Settings and retain unsaved display choices. First required calendar selection has no X/discard/Escape and requires selected sources. From 0.9.0, a writable default is required when writable sources are selected; all-read-only setup supports browsing/availability. | Implemented |
 | UX80 | Manage profiles identity | Own profile first among matching results, marked (you), without removal. Stable action column and ellipsis for long email with full value available in profile/title. Other profiles retain removal. | Implemented |
 | UX81 | Settings simplification | Dark-mode toggle is the sole appearance control. Remove Edit my profile and Suggest more profiles shortcuts, which belong in Manage profiles. Keep time display independent. | Implemented |
 | UX82 | Date display | Browser-wide Day first (20 Oct) / Month first (Oct 20), default Day first. Propagate to visible generated dates and copied full dates, preserving timezone and future-year logic. Native date-entry controls use the browser/OS locale; stored dates remain ISO. | Implemented |
 
 The broader UX68 controls inventory/reorganization remains proposed; 0.8.1 implements only the concrete refinements above.
+
+
+## Recovery and registration — 0.9.0 preview
+
+The [65 accepted recovery cases](recovery-experience.md) define the implemented connection/read/write/storage behavior. Manual resolution has explicit acknowledgement and separate reported-found/unverified labels in history. The final onboarding step uses the exact [registration notice and optional updates wording](leads-table.md), records five fields regardless of opt-in and queues submission failures. The backend endpoint is not active until hosting permission is configured.

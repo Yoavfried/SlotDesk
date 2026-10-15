@@ -4,9 +4,9 @@ Updated 15 October 2026. Status reflects agreed scope, not a promise of public a
 
 ## Current release
 
-The next accepted planning focus is [connection, permission and recovery UX](recovery-experience.md). Recommendations, including read-only onboarding, transient-failure stale views and explicit manual resolution, were accepted 15 October; implementation remains unfinished. The agreed [onboarding leads table](leads-table.md) stores directly supplied email/name/timezone, the SlotDesk-generated completion timestamp and an optional updates-opt-in boolean. Each completed onboarding creates a lead regardless of that checkbox. Private storage/endpoint implementation remains unfinished.
+Version **0.9.0 preview** implements the accepted [connection/recovery experience](recovery-experience.md), including read-only setup, stale in-memory lists, separate Check/Retry, manual operation history and unreadable-storage recovery. The five-field [onboarding leads implementation](leads-table.md) and separate private database/table are prepared. **Hosting activation is deferred; the connected Vercel account currently lacks environment-variable permission.** Registrations remain queued locally; the latest published pilot remains 0.8.1.
 
-Version **0.8.1** includes [F01–F26](implemented.md), the [accepted UX](ux-decisions.md), Google reading, reviewed new-event creation, recovery, a home menu, existing-meeting browsing/RSVPs, overlap details, declined-response alerts, reviewed guest/detail editing and rescheduling, searchable participants and the supplied design treatment. The project owner reports that the basic live flow works. Source review and synthetic stress tests are recorded in [security/privacy](security.md) and [testing](testing.md).
+The existing [implemented work](implemented.md), [accepted UX](ux-decisions.md), reviewed calendar writes, management, profiles and design language remain. No new real Google or email-delivery verification is claimed by this preview.
 
 ## Profile/calendar update — implemented in 0.8.0
 
@@ -44,7 +44,7 @@ Version 0.7.1 adds [reviewed guest/detail editing](meeting-editing.md) as a sepa
 These are proposals to prioritize from pilot feedback, not implemented promises:
 
 - Profile search/management refinements based on actual large-profile usage; accessible keyboard interaction and a full copy review across error/recovery states.
-- Clearer recovery from revoked sharing, expired permission, offline operation and request limits. The current reader has bounded retries and the writer preserves uncertain sends; validate these in real accounts.
+- Recovery implementation now has synthetic coverage in 0.9.0; real-account behavior remains subject to Google and workplace access.
 - Safe profile export/import or backup, if testers need it. Constraints and contact details need a privacy design before introducing sync or a backend.
 - A supported extension update channel, organization onboarding guidance and a user-visible data-retention explanation before public distribution.
 
