@@ -10,7 +10,7 @@ The existing [implemented work](implemented.md), [accepted UX](ux-decisions.md),
 
 ## Profile/calendar update — implemented in 0.8.0
 
-The authorized onboarding, travel, timezone, mapping, guest and flexibility work from the [14 October product review](product-review-2026-10-14.md) is implemented; see [final behavior](onboarding-and-profiles.md). Workspace scope now replaces read-all-accessible-event behavior. The broader settings/profile layout redesign remains proposed, as do further copy/accessibility refinements and local backup.
+The authorized onboarding, travel, timezone, mapping, guest and flexibility work from the [14 October product review](product-review-2026-10-14.md) is implemented; see [final behavior](onboarding-and-profiles.md). Workspace scope now replaces read-all-accessible-event behavior. The next selected direction is the [usability review](usability-review.md): profile/Settings/travel organization, keyboard/accessibility, a first wording pass and local backup with selectable profile export/import. Screen structure and import policies are documented recommendations awaiting implementation.
 
 ## Availability emails — unconfirmed future feature
 
@@ -45,7 +45,7 @@ These are proposals to prioritize from pilot feedback, not implemented promises:
 
 - Profile search/management refinements based on actual large-profile usage; accessible keyboard interaction and a full copy review across error/recovery states.
 - Recovery implementation now has synthetic coverage in 0.9.0; real-account behavior remains subject to Google and workplace access.
-- Safe profile export/import or backup, if testers need it. Constraints and contact details need a privacy design before introducing sync or a backend.
+- Local profile/settings backup and selectable profile export/import are selected for the next usability work. The [proposed flow](usability-review.md) covers previews, email conflicts, current-account calendar assignments and local-only application.
 - A supported extension update channel, organization onboarding guidance and a user-visible data-retention explanation before public distribution.
 
 Standalone free-tool integration remains an accepted future direction; obtain its source before planning migration onto the shared engine.

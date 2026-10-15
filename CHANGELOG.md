@@ -1,5 +1,10 @@
 # Repository changelog
 
+## 2026-10-15 — Next usability scope
+
+- Record the requested keyboard/accessibility, initial wording and profile/Settings/travel UX review, with a controls inventory, proposed organization and user situations.
+- Record the owner's choice to support individual-profile selection alongside complete local profile/settings backup. Document proposed import previews, conflicts, calendar reassignment and recovery boundaries; application implementation remains planned.
+
 ## 2026-10-15 — SlotDesk 0.9.0 preview
 
 - Implement the accepted recovery flow and five-column onboarding registration, add the private intake source/migration and record verification.
