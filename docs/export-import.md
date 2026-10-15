@@ -84,4 +84,40 @@ The owner answered all three questions on 15 October 2026:
 - Replace matching-email profiles after one overwrite warning.
 - Include calendar assignments and flag unavailable calendars.
 
-Calendar identity reconciliation for a full cross-account restore and the exact file representation still need specifying. Implementation remains planned; these remaining details must not reopen the three confirmed choices.
+These choices are settled. The following audit identifies the remaining user-facing choices and the implementation details that can be handled without another product decision. Implementation remains planned.
+
+## Completion audit — remaining product choices
+
+Three focused questions were presented to the owner after the confirmed import policies:
+
+| Choice | Recommended behavior | Status |
+| --- | --- | --- |
+| Own profile after cross-account full restore | Match an imported person's email to the connected Google account. If no match exists, ask the user to set up their own profile. Retain all other imported people, including the backup author; do not preserve old local profiles outside the replacement. | Awaiting answer |
+| Unsent meeting drafts in a full backup | Back up configuration only. A full restore clears the current unsent draft and does not import the source's draft. Already-sent uncertain calendar operations are never portable and must be resolved before applying import/restore. | Awaiting answer on unsent-draft scope |
+| Recovery after choosing an unwanted backup | Offer optional Download current backup before replacement; do not keep a hidden previous setup. Alternative presented: one previous setup retained locally for Undo restore. | Awaiting answer |
+
+Do not reopen the required email/timezone, missing-name fallback, duplicate replacement or included calendar-assignment decisions. Once these three choices are answered, the backup/import product contract is ready for implementation; later code discoveries should be handled against the contract, escalating only a material new user-visible tradeoff.
+
+## Implementation decisions and edge-case defaults
+
+These details do not require the owner to choose parsing algorithms or internal storage design:
+
+- Use local, versioned JSON files with distinct complete-backup/profile-file type markers. Represent the exported people as named columns and rows; nested rule/schedule/travel values remain complete JSON values. This implements the requested named-column compatibility without flattening away complex settings. Include creating app version and export time as metadata; do not reject otherwise readable data solely on that version.
+- Keep a stable public column name for timezone even though the current internal property is `tz`. Email normalization and missing-name fallback apply consistently before duplicate matching. Never depend on property/column order or copy imported internal revisions into the receiving workspace.
+- Selected-person export includes person-specific protected/inconvenient constraints even where the current application stores them outside the profile object. Rebind their person references on import. Workspace-wide Everyone constraints belong to the full backup, rather than silently becoming rules for unrelated people during a selected-person import.
+- Preserve every supported saved schedule/rule field, including the inactive manual/template schedule and existing dated travel/history of rules. Do not silently discard past-dated configuration or replace it with a summary. Future unsupported columns are ignored under the confirmed compatibility rule.
+- Missing optional fields use importing-version defaults. A present but malformed supported value is a validation error, rather than a reason to silently discard a protected-time or availability rule. Identify the person/field and leave current data unchanged.
+- For selected-person import, validate the selected rows before applying any changes. An invalid selected row prevents that application of the import. Unselected rows are not imported. Missing required headers, ambiguous duplicate headers or conflicting duplicate-email rows must receive a clear error rather than arbitrary last-row wins.
+- Collect compatibility/default/access messages into one readable summary, rather than a popup per field/person. Matching-email replacements use the already agreed single overwrite warning for the import batch. No field-by-field preview is required.
+- Validate current calendar metadata/access where possible without reading or changing appointments. Preserve unmatched calendar references as inactive/unconfirmed; never substitute another calendar by its name. A temporarily failed access check means Not checked yet, not Calendar deleted or No access.
+- If live access checks are temporarily unavailable, allow valid local configuration to be restored with pending calendar verification. Subsequent calendar use still requires normal fresh permission/scope checks; an unverified default cannot authorize sending. Restoring local data never grants Google permissions or makes network writes.
+- Apply replacement/import to the explicit receiving account under the shared workspace lock. Recheck account, revision and outstanding calendar operations before saving. Account switching or concurrent changes must not redirect a pending import into another account.
+- Stage and validate the candidate before replacing saved data. A failed save must preserve the prior setup. Handle interrupted persistence of workspace and browser display preferences consistently; do not leave a half-restored setup. Other windows must invalidate old cached proposals/drafts as appropriate rather than merging deleted records back into a full replacement.
+- Complete backups include theme, clock and date preferences. These are currently browser-wide, so restoring them affects display in other SlotDesk windows too; it does not replace those other accounts' saved profiles.
+- Keep the receiving Google sign-in and actual account registration state with that account. Do not replay another person's queued lead record or update permission from a configuration file. In-flight writes cannot be transferred to another account. The draft-scope question above does not change this boundary.
+- A corrupt existing local workspace can be recovered from a valid backup through the existing saved-data recovery entry point. Preserve the original until replacement is explicitly confirmed and successfully saved; retain the existing warning/check for potentially unfinished calendar actions when their state cannot be read.
+- Full restore should be reachable during initial setup after identifying the receiving account, so a user need not manually recreate all profiles first. Selected-person import belongs in Manage profiles and can be linked from Settings. Routine future screen organization is defined in the broader usability review.
+
+## Local verification before shipping
+
+Use synthetic files and calendars for full replacement, selected-profile round trips, all profile fields and person-specific constraints, reordered/unknown/missing columns, malformed values, both duplicate types, current-user identity reconciliation, unavailable/read-only/excluded sources, offline verification, cross-account use, unsent-draft policy, pending-write refusal, concurrent windows and interrupted/failed saves. Compare mocked calendar transports before/after to establish zero calendar mutations from import/restore. Verify keyboard-only selection, Select all, confirmation, warnings and error recovery. Do not add another real-calendar checklist for the owner.
