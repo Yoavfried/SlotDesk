@@ -10,7 +10,7 @@ The existing [implemented work](implemented.md), [accepted UX](ux-decisions.md),
 
 ## Profile/calendar update — implemented in 0.8.0
 
-The authorized onboarding, travel, timezone, mapping, guest and flexibility work from the [14 October product review](product-review-2026-10-14.md) is implemented; see [final behavior](onboarding-and-profiles.md). Workspace scope now replaces read-all-accessible-event behavior. The next selected direction is the [usability review](usability-review.md): profile/Settings/travel organization, keyboard/accessibility, a first wording pass and local backup with selectable profile export/import. Screen structure and import policies are documented recommendations awaiting implementation.
+The authorized onboarding, travel, timezone, mapping, guest and flexibility work from the [14 October product review](product-review-2026-10-14.md) is implemented; see [final behavior](onboarding-and-profiles.md). Workspace scope now replaces read-all-accessible-event behavior. The next selected direction is the [usability review](usability-review.md): profile/Settings/travel organization, keyboard/accessibility, a first wording pass and local backup with selectable profile export/import. The backup/import contract is settled. [Concrete usability flows](usability-flows.md) now describe the remaining screens; profile/travel save boundaries are explicitly undecided before implementation.
 
 ## Availability emails — unconfirmed future feature
 

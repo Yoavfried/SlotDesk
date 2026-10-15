@@ -1,5 +1,15 @@
 # Repository changelog
 
+## 2026-10-15 — Concrete usability planning
+
+- Define task flows and current-source observations for profile management, advanced rules, travel/flight entry, Settings, wording and keyboard/accessibility.
+- Keep profile and travel save boundaries explicitly open pending review of concrete examples. Preserve the settled backup/import requirements; application implementation remains planned.
+
+## 2026-10-15 — Restore policy settled
+
+- Record the own-profile exception: selected-person import cannot change it; active full restore updates it only for a matching email, otherwise preserving it. Onboarding restores still require own-profile setup.
+- Confirm profiles/settings-only backups, clearing unsent drafts on full restore and an optional current-backup download before replacement. Keep implementation planned and move to the remaining usability flows.
+
 ## 2026-10-15 — Import policies confirmed
 
 - Require email and timezone; use email when the name is missing. Replace matching-email profiles after one overwrite warning.

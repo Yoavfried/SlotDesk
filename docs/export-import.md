@@ -6,17 +6,23 @@ Owner clarification: 15 October 2026. This supersedes the combined backup/import
 
 Back up the complete local SlotDesk configuration: all saved person profiles with every setting, availability/travel/flight rules, application preferences, selected workspace calendars, default invitation calendar and calendar assignments. This file is portable between SlotDesk accounts; it is not restricted to the account that created it.
 
-Restore is replacement, not merge. After a successful restore, existing local profiles/settings absent from the file are gone, and imported supported configuration replaces the previous configuration. Do not retain the old person's records or preferences simply because they are absent from the backup. This affects the receiving account's local SlotDesk setup, not other stored account workspaces.
+Restore is replacement, not merge, with the owner's explicit own-profile exception below. Other existing local profiles/settings absent from the file are gone, and imported supported configuration replaces the previous configuration. This affects the receiving account's local SlotDesk setup, not other stored account workspaces.
 
 Require a plain replacement warning, for example:
 
-> Restore this backup? This will replace all SlotDesk settings, calendar selections and saved profiles in this account. Your current local setup will be removed and replaced with the backup. Your calendar events will not be changed.
+> Restore this backup? This will replace your SlotDesk settings, calendar selections and saved profiles, and clear your unfinished meeting draft. Your own profile will be updated only if the backup contains its matching email; otherwise it stays unchanged. Your calendar events will not be changed.
 
 Use an explicit action such as Replace my SlotDesk setup. Validate the file before replacing data. A failed validation or failed local save must leave the previous setup intact; it must not leave a half-cleared workspace.
 
-Example: the recipient has 20 saved people and the backup contains 7. Full restore replaces the 20 with the backup's 7, including those people's settings. It does not combine the lists. If the backup's default calendar is unavailable to the recipient, explain that and require a usable replacement before creating invitations.
+Example: the recipient has 20 other saved people and the backup contains 7 other people. Full restore replaces those 20 with the backup's 7, including those people's settings. It does not combine those lists. The recipient's own profile follows the protected rule below. If the backup's default calendar is unavailable to the recipient, explain that and require a usable replacement before creating invitations.
 
-The Google account actually signed in remains the recipient's account. A file cannot sign the user in as its author, give calendar permissions or make a missing calendar exist. Any mismatch between the backup's own-profile marker and the receiving user must be surfaced and resolved deliberately, rather than silently retaining the previous own profile or labelling the backup author as the receiving user.
+The Google account actually signed in remains the recipient's account. A file cannot sign the user in as its author, give calendar permissions or make a missing calendar exist. Full restore is available both during onboarding and for active users.
+
+### Own profile: confirmed special rule
+
+My profile is established through onboarding, not by person import/export. For an active user, a full restore updates that existing own profile only from a backup person record whose normalized email matches its email. Preserve its own-profile identity. If there is no matching email, leave the existing own profile and its person-specific settings/rules unchanged while restoring the remaining setup. A foreign backup's own-profile marker does not identify the recipient. The backup author's person record can remain an ordinary saved person.
+
+When restoring during onboarding, still require the receiving user to configure their own profile. A matching imported person can supply known details to that form, but importing the backup does not silently complete own-profile setup. Do not make an already-onboarded active user repeat own-profile setup merely because the backup came from someone else.
 
 ## 2. Selected person-profile export and import
 
@@ -24,7 +30,7 @@ Provide checkboxes and Select all for exporting saved person profiles and select
 
 Every exported person includes ALL of that person's saved settings, not only identity fields. This includes timezone, template/manual working schedules, usual convenience settings, ignore flags, overlap defaults, minimum notice, meeting buffers, positive availability, protected/inconvenient rules, travel, exact flights, holiday/leave exceptions, event classification and individual-event treatment. Calendar assignments are included. Flag assignments unavailable to the receiving account; retain the references without implying access or complete availability.
 
-Workspace-wide preferences belong to the complete-setup backup. Importing a selected person does not reset the rest of the recipient's SlotDesk setup. Unselected existing people remain unchanged. Match existing people by normalized email. After one overwrite warning, replace each matching profile with the imported profile settings; leave unrelated profiles unchanged. Missing optional imported fields use importer defaults rather than retaining the previous profile values.
+Workspace-wide preferences belong to the complete-setup backup. Importing a selected person does not reset the rest of the recipient's SlotDesk setup. Unselected existing people remain unchanged. Match existing people by normalized email. For ordinary saved people, after one overwrite warning replace each matching profile with the imported profile settings; leave unrelated profiles unchanged. Own profile is an exception: if a selected import contains the user's own-profile email, show an alert and apply nothing from that attempted import. The user can exclude that record and import the other people. Import cannot create/reassign My profile. Missing optional imported fields use importer defaults rather than retaining the previous profile values.
 
 ## Compatibility by named fields/columns
 
@@ -57,15 +63,16 @@ Complete backups include calendar configuration under the owner's replacement re
 | Saved default calendar is now read-only | Explain that it cannot receive invitations; allow supported browsing/availability while a writable default is chosen. |
 | Some selected workspace calendars are inaccessible | List the affected calendars and explain that their events cannot be loaded or used. Do not report full availability from them. |
 | A person's assigned calendar is unavailable | Keep the included unresolved reference visible; flag it, mark availability unconfirmed and offer reassignment. Do not guess another source from its name. |
-| The backup identifies another person as the owner | Explain the identity mismatch and ask the recipient to identify/setup their own profile while retaining the imported people as appropriate. The exact identity-reconciliation flow needs definition. |
+| Full backup came from another user | For an active recipient, update their own profile only from a matching-email record; otherwise leave it unchanged. Restore the remaining setup. During onboarding, require own-profile configuration. |
+| Selected-person import includes the recipient's own email | Alert and apply nothing from that attempted import; allow exclusion of that record before retrying. |
 | File has unknown optional columns | Ignore them and import supported columns. This is not an import failure. |
 | File lacks optional columns | State which settings use defaults; apply importing-version defaults. |
 | File lacks required columns or has invalid required data | Stop without changing saved data; identify the problem. |
-| Selected-profile email already exists | Show one overwrite warning, then replace the matching profile with its imported settings. Leave unrelated profiles untouched. |
+| Ordinary selected-profile email already exists | Show one overwrite warning, then replace the matching profile with its imported settings. Leave unrelated profiles untouched. |
 | A calendar write is unfinished | Preserve/check the original operation before any destructive local replacement; do not copy an operation to another account or erase its only recovery record. |
 | Another SlotDesk window changes local data during import | Revalidate the final operation against current saved state; do not merge a full replacement into old data or allow an old window to resurrect removed settings. |
 
-A complete setup backup concerns portable configuration. Google credentials and in-flight calendar-operation/account-registration records are operational state, not portable preferences; define their handling explicitly before implementation so another account's operation or updates choice cannot be replayed.
+A complete setup backup contains profiles and configuration only. It excludes unfinished meeting drafts, Google credentials, fetched calendar content, in-flight calendar operations, recovery history and account-registration records. Full restore clears the receiving workspace's unsent draft and completed recovery history. Preserve the receiving account's actual Google sign-in and registration state; never replay the source account's pending operation or updates choice. Resolve an already-sent uncertain operation before applying an import/restore.
 
 ## No mandatory general preview
 
@@ -86,17 +93,17 @@ The owner answered all three questions on 15 October 2026:
 
 These choices are settled. The following audit identifies the remaining user-facing choices and the implementation details that can be handled without another product decision. Implementation remains planned.
 
-## Completion audit — remaining product choices
+## Completion audit — confirmed restore policies
 
-Three focused questions were presented to the owner after the confirmed import policies:
+The owner answered the final three restore questions on 15 October 2026:
 
-| Choice | Recommended behavior | Status |
+| Choice | Confirmed behavior | Status |
 | --- | --- | --- |
-| Own profile after cross-account full restore | Match an imported person's email to the connected Google account. If no match exists, ask the user to set up their own profile. Retain all other imported people, including the backup author; do not preserve old local profiles outside the replacement. | Awaiting answer |
-| Unsent meeting drafts in a full backup | Back up configuration only. A full restore clears the current unsent draft and does not import the source's draft. Already-sent uncertain calendar operations are never portable and must be resolved before applying import/restore. | Awaiting answer on unsent-draft scope |
-| Recovery after choosing an unwanted backup | Offer optional Download current backup before replacement; do not keep a hidden previous setup. Alternative presented: one previous setup retained locally for Undo restore. | Awaiting answer |
+| Own profile protection | Selected-person import cannot change My profile. Full restore updates an active own profile only on matching email; otherwise it stays unchanged. Onboarding restores still require own-profile configuration. Active-user restore remains available. | Confirmed; replaces the earlier recommendation |
+| Unsent meeting drafts in a full backup | Back up profiles/settings only. A full restore clears the current unsent draft and does not import the source's draft. Already-sent uncertain operations must be resolved before applying import/restore. | Confirmed |
+| Recovery after choosing an unwanted backup | Offer optional Download current backup before replacement; do not keep a hidden previous setup or add Undo restore. | Confirmed |
 
-Do not reopen the required email/timezone, missing-name fallback, duplicate replacement or included calendar-assignment decisions. Once these three choices are answered, the backup/import product contract is ready for implementation; later code discoveries should be handled against the contract, escalating only a material new user-visible tradeoff.
+The backup/import product contract is ready for implementation. Do not reopen the confirmed choices. Later code discoveries should be handled against this contract, escalating only a material new user-visible tradeoff.
 
 ## Implementation decisions and edge-case defaults
 
@@ -114,7 +121,7 @@ These details do not require the owner to choose parsing algorithms or internal 
 - Apply replacement/import to the explicit receiving account under the shared workspace lock. Recheck account, revision and outstanding calendar operations before saving. Account switching or concurrent changes must not redirect a pending import into another account.
 - Stage and validate the candidate before replacing saved data. A failed save must preserve the prior setup. Handle interrupted persistence of workspace and browser display preferences consistently; do not leave a half-restored setup. Other windows must invalidate old cached proposals/drafts as appropriate rather than merging deleted records back into a full replacement.
 - Complete backups include theme, clock and date preferences. These are currently browser-wide, so restoring them affects display in other SlotDesk windows too; it does not replace those other accounts' saved profiles.
-- Keep the receiving Google sign-in and actual account registration state with that account. Do not replay another person's queued lead record or update permission from a configuration file. In-flight writes cannot be transferred to another account. The draft-scope question above does not change this boundary.
+- Keep the receiving Google sign-in and actual account registration state with that account. Do not replay another person's queued lead record or update permission from a configuration file. In-flight writes cannot be transferred to another account. Unsent drafts are excluded and the receiving draft is cleared on full restore, as confirmed above.
 - A corrupt existing local workspace can be recovered from a valid backup through the existing saved-data recovery entry point. Preserve the original until replacement is explicitly confirmed and successfully saved; retain the existing warning/check for potentially unfinished calendar actions when their state cannot be read.
 - Full restore should be reachable during initial setup after identifying the receiving account, so a user need not manually recreate all profiles first. Selected-person import belongs in Manage profiles and can be linked from Settings. Routine future screen organization is defined in the broader usability review.
 
