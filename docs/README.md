@@ -6,7 +6,8 @@
 | Decisions | [UX](ux-decisions.md), [scheduling](scheduling-decisions.md), [live-feedback implementation](pending-ux-review.md), [14 October product review](product-review-2026-10-14.md) |
 | Meeting management | [Editing details/guests](meeting-editing.md), [rescheduling, alerts and overlaps](rescheduling.md) |
 | Planned recovery | [Accepted connection, permission and recovery experience](recovery-experience.md) |
-| Future concepts | [Optional BYOK LLM assistance](llm-assistance.md), [unconfirmed availability emails](time-inquiries.md), [onboarding leads table proposal](leads-table.md) |
+| Planned leads record | [Agreed five-column onboarding leads table](leads-table.md) |
+| Future concepts | [Optional BYOK LLM assistance](llm-assistance.md), [unconfirmed availability emails](time-inquiries.md) |
 | Development | [Architecture](architecture.md), [engine API](engine-api.md), [installation](install.md) |
 | Validation | [Validation record](testing.md), [optional calendar comparison kit](calendar-acceptance.md) |
 | Privacy and distribution | [Security/privacy](security.md), [publication checklist](publication.md) |

@@ -1,5 +1,10 @@
 # Repository changelog
 
+## 2026-10-15 — Five-column leads scope agreed
+
+- Record directly user-supplied email/name/timezone, app-generated onboarding time and an optional updates-opt-in boolean. Each completed onboarding creates a lead, including when the checkbox is unchecked.
+- Record the accepted short notice and optional unchecked updates wording. Correct the assistant's unsupported interpretation of the source fields; leave private storage/endpoint implementation pending.
+
 ## 2026-10-15 — Leads-table clarification
 
 - Correct the earlier newsletter-specific framing: the owner requests email, name, assigned timezone and actual onboarding time in a private leads table for product analysis and possible future first-party project news.
