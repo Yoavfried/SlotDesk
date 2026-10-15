@@ -1,5 +1,10 @@
 # Repository changelog
 
+## 2026-10-15 — Import policies confirmed
+
+- Require email and timezone; use email when the name is missing. Replace matching-email profiles after one overwrite warning.
+- Include calendar assignments, flag unavailable calendars and retain selected-profile import as a local operation. Implementation remains planned.
+
 ## 2026-10-15 — Export/import clarification
 
 - Separate complete portable setup backup/restore from selected-person export/import. Full restore replaces local configuration; selected-person files carry all profile settings and support Select all.

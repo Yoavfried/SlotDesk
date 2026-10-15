@@ -76,7 +76,7 @@ Use the [W3C modal-dialog pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dial
 
 The owner clarified two distinct operations: portable complete-setup backup with full local replacement on restore, and portable selected-person files containing every supported setting for each selected person. Select all is required. Named columns drive cross-version compatibility: ignore unknown columns, warn/default missing optional columns, and fail for missing base columns. Full field-by-field previews are not required.
 
-The [detailed export/import contract](export-import.md) supersedes the original combined proposal, records calendar-access edge cases, and distinguishes confirmed requirements from the open base-column, duplicate-email and calendar-assignment choices. Full restore must not silently merge with existing local profiles/settings. Neither operation changes Google calendar data or sharing.
+The [detailed export/import contract](export-import.md) supersedes the original combined proposal, records calendar-access edge cases, and records the confirmed import choices: required email/timezone, email as a missing name, replacement of matching-email profiles after one warning, and included calendar assignments with unavailable sources flagged. Full restore must not silently merge with existing local profiles/settings. Neither operation changes Google calendar data or sharing.
 
 ## Delivery and evidence
 

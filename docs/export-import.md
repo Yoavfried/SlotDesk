@@ -22,9 +22,9 @@ The Google account actually signed in remains the recipient's account. A file ca
 
 Provide checkboxes and Select all for exporting saved person profiles and selecting which profiles to import. The file is readable by any SlotDesk account, including a different assistant's account.
 
-Every exported person includes ALL of that person's saved settings, not only identity fields. This includes timezone, template/manual working schedules, usual convenience settings, ignore flags, overlap defaults, minimum notice, meeting buffers, positive availability, protected/inconvenient rules, travel, exact flights, holiday/leave exceptions, event classification and individual-event treatment. Calendar assignments are the one inclusion question the owner explicitly left open; see below.
+Every exported person includes ALL of that person's saved settings, not only identity fields. This includes timezone, template/manual working schedules, usual convenience settings, ignore flags, overlap defaults, minimum notice, meeting buffers, positive availability, protected/inconvenient rules, travel, exact flights, holiday/leave exceptions, event classification and individual-event treatment. Calendar assignments are included. Flag assignments unavailable to the receiving account; retain the references without implying access or complete availability.
 
-Workspace-wide preferences belong to the complete-setup backup. Importing a selected person does not reset the rest of the recipient's SlotDesk setup. Unselected existing people remain unchanged. The duplicate-email policy is awaiting the owner's answer; replacement, skip or an explicit per-duplicate choice must not be silently assumed.
+Workspace-wide preferences belong to the complete-setup backup. Importing a selected person does not reset the rest of the recipient's SlotDesk setup. Unselected existing people remain unchanged. Match existing people by normalized email. After one overwrite warning, replace each matching profile with the imported profile settings; leave unrelated profiles unchanged. Missing optional imported fields use importer defaults rather than retaining the previous profile values.
 
 ## Compatibility by named fields/columns
 
@@ -35,7 +35,7 @@ The importer scans the provided headers/fields and recognizes the names supporte
 - Missing optional setting columns: alert the user and use that importing version's defaults for those fields. Do not carry over the old local values instead of the specified defaults.
 - Missing base columns: fail the import with a clear message and leave current local data unchanged.
 
-The recommended base columns are email, name and timezone; the owner has been asked to confirm them. Supported required values must also be valid. Column names and meanings need a stable export contract; renamed fields require an explicit alias/migration. Nested arrays/rules must round-trip completely rather than being shortened into a summary or lost during export.
+The required base columns are email and timezone. Name is optional: if its column or value is missing/blank, use the normalized email as the display name. Missing optional setting columns produce the agreed warning/default behavior; missing or invalid email/timezone stops the import without applying changes. Column names and meanings need a stable export contract; renamed fields require an explicit alias/migration. Nested arrays/rules must round-trip completely rather than being shortened into a summary or lost during export.
 
 Example: a file contains an overlap preference that an older importer does not recognize. The older importer ignores that column and reads its known columns. If a newer importer reads an older file without a meeting-buffer column, it warns and applies its default for that field. Missing a required identity column stops the import.
 
@@ -47,7 +47,7 @@ Google sharing controls who can read or write a calendar. SlotDesk assignments t
 
 For example, assigning Nina's profile to her work and travel calendars is a SlotDesk configuration. Another assistant may already have Google access to those same calendars, in which case portable assignments can save setup. If access is absent, an imported assignment cannot provide it. [Google sharing and access roles](https://developers.google.com/workspace/calendar/api/concepts/sharing).
 
-Complete backups include calendar configuration under the owner's replacement requirement. For selected-person files, the recommendation is to include assignment references with the rest of the person's settings, then validate current access. Inclusion remains an explicit open choice.
+Complete backups include calendar configuration under the owner's replacement requirement. Selected-person files also include assignment references with all other person settings. Validate current access and flag unavailable calendars. An accessible calendar excluded from the recipient's workspace selection remains inactive until the recipient chooses it in Settings; importing a person does not silently expand the global selection.
 
 ## Actual restore/import problems and recommended handling
 
@@ -56,12 +56,12 @@ Complete backups include calendar configuration under the owner's replacement re
 | Saved default calendar is missing or unavailable | Explain which calendar cannot be used; leave creation unavailable until the user chooses a suitable default. Do not silently choose another calendar. |
 | Saved default calendar is now read-only | Explain that it cannot receive invitations; allow supported browsing/availability while a writable default is chosen. |
 | Some selected workspace calendars are inaccessible | List the affected calendars and explain that their events cannot be loaded or used. Do not report full availability from them. |
-| A person's assigned calendar is unavailable | Keep the unresolved reference visible if assignments are included; mark availability unconfirmed and offer reassignment. Do not guess another source from its name. |
+| A person's assigned calendar is unavailable | Keep the included unresolved reference visible; flag it, mark availability unconfirmed and offer reassignment. Do not guess another source from its name. |
 | The backup identifies another person as the owner | Explain the identity mismatch and ask the recipient to identify/setup their own profile while retaining the imported people as appropriate. The exact identity-reconciliation flow needs definition. |
 | File has unknown optional columns | Ignore them and import supported columns. This is not an import failure. |
 | File lacks optional columns | State which settings use defaults; apply importing-version defaults. |
 | File lacks required columns or has invalid required data | Stop without changing saved data; identify the problem. |
-| Selected-profile email already exists | Apply the explicit duplicate policy once chosen; leave unrelated profiles untouched. |
+| Selected-profile email already exists | Show one overwrite warning, then replace the matching profile with its imported settings. Leave unrelated profiles untouched. |
 | A calendar write is unfinished | Preserve/check the original operation before any destructive local replacement; do not copy an operation to another account or erase its only recovery record. |
 | Another SlotDesk window changes local data during import | Revalidate the final operation against current saved state; do not merge a full replacement into old data or allow an old window to resurrect removed settings. |
 
@@ -76,6 +76,12 @@ The owner questioned the proposed preview requirement. Do not require a full fie
 
 A selection list and a destructive replacement confirmation are not an extra general preview stage. Do not add repeated approval screens where the file is valid and no additional action is needed.
 
-## Open decisions
+## Confirmed import policies
 
-The owner has been asked three focused questions: required base columns, duplicate-email handling for selected profiles, and whether selected-profile files include calendar assignments. Calendar identity reconciliation and the exact file representation still need specifying. Do not represent recommendations on those points as already approved.
+The owner answered all three questions on 15 October 2026:
+
+- Require email and timezone; use email when name is missing.
+- Replace matching-email profiles after one overwrite warning.
+- Include calendar assignments and flag unavailable calendars.
+
+Calendar identity reconciliation for a full cross-account restore and the exact file representation still need specifying. Implementation remains planned; these remaining details must not reopen the three confirmed choices.
