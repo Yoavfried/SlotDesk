@@ -33,4 +33,4 @@ Replace the contents of the existing installed folder with the new package and c
 
 From source, load `extension/`, not the repository root. The pinned extension ID is `blpliafbiiidhcffegochddjhagkhhip`. Owner OAuth configuration and access limitations are described in [architecture](architecture.md).
 
-The 0.9.0 preview adds the registration notice and optional updates choice. Its central endpoint is awaiting hosting permission; registration stays queued locally. The latest published release remains 0.8.1 until activation and release verification are complete.
+The 0.9.0 preview adds the registration notice and optional updates choice. Its central endpoint is configured. Settings shows whether registration is saved or waiting; a failed submission stays queued locally. The latest published release remains 0.8.1 while the updated preview is verified. On update, Chrome may ask you to accept access to the exact registration-service host.

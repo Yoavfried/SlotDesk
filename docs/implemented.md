@@ -1,6 +1,6 @@
 # Implemented scheduling work
 
-Current code: **0.9.0 preview**. F01–F27 are implemented; F28 awaits hosting activation. F01–F04 are the original four reproduced defects. New-meeting booking was added in 0.3.0; reviewed rescheduling and decline alerts are implemented in 0.7.0.
+Current code: **0.9.0 preview**. F01–F28 are implemented; the registration service is deployed and configured in this preview. F01–F04 are the original four reproduced defects. New-meeting booking was added in 0.3.0; reviewed rescheduling and decline alerts are implemented in 0.7.0.
 
 | ID | Work | Accepted behavior | Status |
 | --- | --- | --- | --- |
@@ -70,4 +70,4 @@ See [onboarding and profiles](onboarding-and-profiles.md). The larger UX68 setti
 | ID | Work | Behavior | Status |
 | --- | --- | --- | --- |
 | F27 | Recovery experience | Typed failures, read-only setup, stop loading, stale in-memory views, reconnect without sending, separate Check/Retry, acknowledged manual history and unreadable-storage recovery. | Implemented; synthetic checks/browser verification. See [recovery record](recovery-experience.md). |
-| F28 | Onboarding leads | Exactly five fields, optional unchecked updates permission, durable local queue and a private insert-only intake/table. | App/backend source and database prepared; Vercel environment permission blocks endpoint activation. See [leads record](leads-table.md). |
+| F28 | Onboarding leads | Exactly five fields, optional unchecked updates permission, durable local queue and a private insert-only intake/table. | Implemented and hosted; isolated-database and public-endpoint checks passed. First real registration from the updated extension remains to be observed. See [deployment record](registration-deployment.md). |

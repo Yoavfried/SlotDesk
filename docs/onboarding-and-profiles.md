@@ -58,6 +58,6 @@ The own profile appears first among matching Manage profiles results and cannot 
 
 ## Recovery and registration in 0.9.0
 
-The final setup step shows the five-field registration notice and optional unchecked updates choice. Skipping familiar profiles still completes registration. Existing completed users see the notice once before explicitly continuing; no automatic backfill runs. Failed submissions retain the original record locally without blocking calendar use. Central hosting activation is pending; see [leads status](leads-table.md).
+The final setup step shows the five-field registration notice and optional unchecked updates choice. Skipping familiar profiles still completes registration. Existing completed users see the notice once before explicitly continuing; no automatic backfill runs. Failed submissions retain the original record locally without blocking calendar use. The private registration endpoint is configured in this preview; see [leads status](leads-table.md).
 
 Read-only selections can finish onboarding. Proposal comparison/copying remain available, while creation asks for a writable selection in Settings. Recoverable connection failures keep saved drafts and offer reconnect without automatic sending. See the [recovery cases](recovery-experience.md).

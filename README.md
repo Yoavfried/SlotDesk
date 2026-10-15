@@ -2,7 +2,7 @@
 
 **0.9.0 preview · Google Calendar · private Chrome pilot**
 
-The recovery update and onboarding registration code are ready for local review. Central registration submission is queued until its hosting permission is configured; [activation status](backend/README.md). The latest published pilot remains 0.8.1.
+The recovery update and onboarding registration are ready for private preview. The registration service is deployed and this build sends the agreed five fields to the private leads table; failed submissions remain queued. See [activation and verification](docs/registration-deployment.md). The latest published pilot remains 0.8.1.
 
 SlotDesk helps executive assistants find meeting times across people, calendars and timezones. Review a new invitation, browse existing meetings, edit its details and guests, or choose a new time for an appointment. Every calendar write requires an explicit review and confirmation.
 

@@ -9,7 +9,8 @@
     "identity"
   ],
   "host_permissions": [
-    "https://www.googleapis.com/*"
+    "https://www.googleapis.com/*",
+    "https://slotdesk-leads.vercel.app/*"
   ],
   "action": {
     "default_title": "Open SlotDesk"
@@ -21,7 +22,7 @@
     "service_worker": "prototype/background.js"
   },
   "content_security_policy": {
-    "extension_pages": "default-src 'self'; script-src 'self'; object-src 'none'; connect-src 'self' https://www.googleapis.com; base-uri 'none'"
+    "extension_pages": "default-src 'self'; script-src 'self'; object-src 'none'; connect-src 'self' https://www.googleapis.com https://slotdesk-leads.vercel.app; base-uri 'none'"
   },
   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArEONWW0UAPcFtXm30QKhWvmhxHG04zlNk4fozM2V47vTx9n0VaGVg9lQNu7hZR+Db18Hke/F1ZcdxqFUL45hpRMqFT9Icg8+uGieYQUgvCg2IU/ps+2VSVSJltiN7ThkwPLGB21BaRazzKQQ2J6EvFwKwZJAN+Lq5xQ3VLhyd+Dc8+VDBdujs8SRRoIsgeKzQIzBMUW0grvr4XTE017ARtlWn2t86pTMJ0V9s82VYbZ0OMTfElIZAFTXJulKc2JeF2Ridu8mGznRu1K6HQTZ+yXriGkEW1+Rl5GH/bPf23hB1RsDkqDw0UUlEZ37G8Yg55LX0JRFqXh4OCvI8LNpawIDAQAB",
   "oauth2": {

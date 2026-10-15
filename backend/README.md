@@ -4,7 +4,7 @@ This optional server component stores the five-column [leads record](../docs/lea
 
 ## Activation status
 
-Prepared on 15 October 2026. The separate **SlotDesk** Neon project and `public.leads` table exist. The application role has INSERT permission and no SELECT, UPDATE or DELETE permission. A Vercel project named `slotdesk-leads` exists, but deployment is **not active**: the connected Vercel account returned HTTP 403 for creating project environment variables, and no signed-in CLI fallback was available. The extension endpoint remains empty until hosting can be configured. Hosting activation is intentionally deferred. The code and local queue are complete; no live collection is claimed.
+Activated on 15 October 2026 at **https://slotdesk-leads.vercel.app/api/leads**. The owner configured `DATABASE_URL` and `SLOTDESK_ORIGIN` in Vercel; the connected plugin then deployed the reviewed backend to Frankfurt. The separate **SlotDesk** Neon project contains `public.leads`. The application role has INSERT permission and no SELECT, UPDATE or DELETE permission. The extension endpoint and exact-origin host/CSP permission are configured. [Deployment and verification record](../docs/registration-deployment.md).
 
 ## Deploy
 

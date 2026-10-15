@@ -7,7 +7,7 @@
 - Separate read-only Check result from explicit reviewed retries. Add acknowledged manual resolution with an immutable operation record in recovery history, while preserving account/identity/version and cross-window write guards.
 - Preserve unreadable saved workspaces for retry/download before explicit reset; reject saves from incompatible older builds. Retain proposed details when refreshing changed appointments and verify collision follow-ups before resolving them.
 - Add the agreed five-field onboarding registration, an unchecked optional updates choice, a private Neon leads table and an insert-only intake implementation. No newsletter or email-sending feature.
-- **Activation pending:** the Vercel connection denied environment-variable creation. Hosting is not active and the extension keeps registrations queued locally until its endpoint is configured. This preview is not a live leads-collection release.
+- Activate the private registration service on Vercel after manual server-environment setup. Configure the exact HTTPS endpoint and extension permissions; retain queued retries when unavailable. Verify request rejection on the public endpoint and insertion/duplicate preservation on an isolated Neon branch. No synthetic contacts were added to the live table.
 - Validation: 1,420 synthetic application checks, six intake tests, 22 export-comparison checks and mocked browser checks for registration, read-only setup, stale/access-loss/reconnect behavior, manual recovery and unreadable storage. Eight original synthetic meetings remained unchanged; no real Google sign-in or invitations.
 
 

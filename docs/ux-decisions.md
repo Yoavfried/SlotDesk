@@ -146,4 +146,4 @@ The broader UX68 controls inventory/reorganization remains proposed; 0.8.1 imple
 
 ## Recovery and registration — 0.9.0 preview
 
-The [65 accepted recovery cases](recovery-experience.md) define the implemented connection/read/write/storage behavior. Manual resolution has explicit acknowledgement and separate reported-found/unverified labels in history. The final onboarding step uses the exact [registration notice and optional updates wording](leads-table.md), records five fields regardless of opt-in and queues submission failures. The backend endpoint is not active until hosting permission is configured.
+The [65 accepted recovery cases](recovery-experience.md) define the implemented connection/read/write/storage behavior. Manual resolution has explicit acknowledgement and separate reported-found/unverified labels in history. The final onboarding step uses the exact [registration notice and optional updates wording](leads-table.md), records five fields regardless of opt-in and queues submission failures. The backend endpoint is deployed and configured in this preview; unavailable submission retains the exact record for retry.

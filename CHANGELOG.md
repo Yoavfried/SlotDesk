@@ -3,7 +3,7 @@
 ## 2026-10-15 — SlotDesk 0.9.0 preview
 
 - Implement the accepted recovery flow and five-column onboarding registration, add the private intake source/migration and record verification.
-- Create the separate SlotDesk database/table. Keep central submission pending because Vercel environment-variable access is denied; retain 0.8.1 as the latest published pilot.
+- Create the separate SlotDesk database/table and deploy its insert-only intake after the owner configures server secrets. Configure the exact live extension endpoint, verify isolated-database insertion and duplicate preservation, and rebuild the preview. Retain 0.8.1 as the latest published pilot.
 
 
 ## 2026-10-15 — Five-column leads scope agreed

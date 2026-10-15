@@ -4,7 +4,7 @@ Updated 15 October 2026. Status reflects agreed scope, not a promise of public a
 
 ## Current release
 
-Version **0.9.0 preview** implements the accepted [connection/recovery experience](recovery-experience.md), including read-only setup, stale in-memory lists, separate Check/Retry, manual operation history and unreadable-storage recovery. The five-field [onboarding leads implementation](leads-table.md) and separate private database/table are prepared. **Hosting activation is deferred; the connected Vercel account currently lacks environment-variable permission.** Registrations remain queued locally; the latest published pilot remains 0.8.1.
+Version **0.9.0 preview** implements the accepted [connection/recovery experience](recovery-experience.md), including read-only setup, stale in-memory lists, separate Check/Retry, manual operation history and unreadable-storage recovery. The five-field [onboarding leads implementation](leads-table.md) has a deployed private intake and database. This preview is configured to send registrations, keeping failed submissions queued locally. [Deployment checks](registration-deployment.md) passed; first real registration from the updated extension remains to be observed. The latest published pilot remains 0.8.1.
 
 The existing [implemented work](implemented.md), [accepted UX](ux-decisions.md), reviewed calendar writes, management, profiles and design language remain. No new real Google or email-delivery verification is claimed by this preview.
 

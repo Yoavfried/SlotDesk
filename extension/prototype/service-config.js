@@ -1,1 +1,1 @@
-globalThis.SlotServices=Object.freeze({leadsEndpoint:''});
+globalThis.SlotServices=Object.freeze({"leadsEndpoint":"https://slotdesk-leads.vercel.app/api/leads"});

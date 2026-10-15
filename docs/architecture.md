@@ -1,6 +1,6 @@
 # SlotDesk architecture
 
-Version 0.9.0 preview is a static Chrome side-panel application with a shared browser/Node scheduling engine and a separate insert-only registration service. The service/table are prepared; endpoint activation is pending hosting permissions. Saved workspace settings and calendar processing remain in the browser. A loopback HTTP preview shows the disconnected interface; calendar sign-in uses Chrome extension identity. Synthetic fixtures are used only in development tests.
+Version 0.9.0 preview is a static Chrome side-panel application with a shared browser/Node scheduling engine and a separate insert-only registration service. The service is hosted on Vercel with a private Neon table; this preview is configured to submit registrations. Saved workspace settings and calendar processing remain in the browser. A loopback HTTP preview shows the disconnected interface; calendar sign-in uses Chrome extension identity. Synthetic fixtures are used only in development tests.
 
 | Module in `extension/` | Responsibility |
 | --- | --- |
@@ -109,4 +109,4 @@ Version 0.8.1 adds presentation-only date ordering in the browser-wide `slotdesk
 
 `recovery.js` classifies read/write/auth outcomes and defines manual-resolution history. `recovery-ui.js` separates read-only checking from deliberate retries. The browse cache retains eligible stale copies only in memory, purges confirmed lost/downgraded details and cannot establish fresh scheduling coverage. Aborted reads and pending writes are separate operations.
 
-`leads.js` prepares the exact five-field record, captures completion time once and queues failures in account-bound settings. `backend/api/leads.mjs` validates and inserts through an independent Neon role. No Calendar token, event source or other person's profile is passed to it. `service-config.js` is currently unconfigured. The [operator guide](../backend/README.md) describes activation and exact-origin host/CSP configuration; the endpoint receives no administrator secret from the extension.
+`leads.js` prepares the exact five-field record, captures completion time once and queues failures in account-bound settings. `backend/api/leads.mjs` validates and inserts through an independent Neon role. No Calendar token, event source or other person's profile is passed to it. `service-config.js` points to `https://slotdesk-leads.vercel.app/api/leads`; the manifest permits only that registration origin alongside Google. The [operator guide](../backend/README.md) describes activation and exact-origin host/CSP configuration; the endpoint receives no administrator secret from the extension.
