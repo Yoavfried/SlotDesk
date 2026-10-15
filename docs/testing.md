@@ -1,6 +1,6 @@
 # SlotDesk validation record
 
-Current code: **0.9.0 preview**; latest published pilot: **0.8.1**. Automated evidence and user-reported live behavior are recorded separately. No formal manual acceptance checklist remains.
+Current code: **0.9.1**. Automated evidence and user-reported live behavior are recorded separately. No formal manual acceptance checklist remains.
 
 ## Reported live progress — 13 October 2026
 
@@ -39,13 +39,21 @@ npm run check
 | Rescheduling | 112 | Time-only conditional writes, permissions, identity/version and recovery |
 | Meeting editing | 125 | Narrow detail/guest writes, preserved metadata, stale/permission guards and recovery |
 | Onboarding/scope/guests/flexibility | 71 | Selected-source transports, migration/recovery, draft guests and independent scheduling rules |
-| Recovery/registration | 64 | Typed outcomes, quota, cancellation, stale/access loss, read-only setup, exact leads, manual history and collision evidence |
-| **Application total** | **1,420** | Synthetic data and transports |
+| Recovery/registration | 68 | Typed outcomes, quota, cancellation, stale/access loss, read-only setup, exact leads, manual history and collision evidence |
+| Interface state | 140 | Profile pagination, sliding candidate cache, offline scheduling/backoff and provider retry pauses |
+| **Application total** | **1,564** | Synthetic data and transports |
 | Export comparator | 22 | Offline creation/export integrity comparison |
 
 The 112 rescheduling, 70 booking and 69 safety checks were rerun after the latest live report: **251 passed**, with no real Google request or invitation. All source network entry points were reread; see the [write-boundary record](security.md#focused-calendar-write-recheck--13-october-2026).
 
 ## Synthetic browser evidence
+
+### 0.9.1 connection confirmation and responsive polish
+
+Local mocked browser checks covered 320/390/680/1200-pixel layouts, constant wordmark/header dimensions, no horizontal overflow, equal two-/three-column suggestion grids, stacked profile actions, five-row pagination, search across all 50 profiles, cached re-entry, Settings auto-save, identical Settings/calendar dimensions, Save/Discard semantics and closed-on-entry participant selection with Escape. Offline/online events blocked and restored New meeting.
+
+Lost replies after a saved create, detail edit and reschedule produced pending bell alerts, then automatic success without another POST/PATCH. A creation that was not applied became a verified failure with Try again after repeated reads. A second failed retry restarted the loop with the same event ID; the final explicit retry produced exactly one appointment. Reopen/online checks resumed without new writes, a verified-unsaved discard read the target before clearing its local request, and a permanent access failure offered contextual review without a send retry. Detail-edit recovery preserved untouched times, description, location, guests, video, attachments and reminders. Rescheduling recovery preserved untouched meeting fields. The transport rejected unsupported methods; no real account was used.
+
 
 ### 0.8.1 settings and calendar polish
 

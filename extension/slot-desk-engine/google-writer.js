@@ -41,13 +41,13 @@
       for(;;){const token=await getToken(),controller=new AbortController(),timer=setTimeout(()=>controller.abort(),timeoutMs);let response,data;
         try{response=await fetchImpl('https://www.googleapis.com/calendar/v3/'+path,{method,redirect:'error',credentials:'omit',cache:'no-store',referrerPolicy:'no-referrer',headers:{Authorization:'Bearer '+token,...(body?{'Content-Type':'application/json'}:{})},...(body?{body:JSON.stringify(body)}:{}),signal:controller.signal});try{data=await response.json();}catch(_){data=null;}}
         catch(cause){throw R.network(cause,{write:method==='POST',offline:typeof navigator!=='undefined'&&navigator.onLine===false});}finally{clearTimeout(timer);}
-        if(response.ok){if(!data?.id){const error=new Error('Google returned an incomplete send result. Retry to check this meeting.');error.uncertain=true;throw error;}return data;}
+        if(response.ok){if(!data?.id){const error=new Error('Google returned an incomplete send result. Retry to check this meeting.');error.kind='temporary';error.uncertain=true;throw error;}return data;}
         if(response.status===401&&!refreshed){refreshed=true;await invalidateToken(token);continue;}
         const error=R.provider(response.status,(data?.error?.errors||[]).map(item=>item.reason),{write:method==='POST',retryAfter:response.headers?.get?.('retry-after')});if(response.status===403&&error.kind==='access')error.message='Google could not create this meeting. Check event-writing permission and the selected calendar’s sharing.';error.writeRejected=method==='POST'&&response.status<500&&response.status!==409;throw error;
       }
     }
     const path=booking=>`calendars/${encodeURIComponent(booking.calendarId)}/events/${encodeURIComponent(booking.eventId)}`;
-    function verify(event,booking){if(event.id!==booking.eventId||event.extendedProperties?.private?.slotdeskRequest!==booking.eventId)throw new Error('A different event already uses this identifier. Check Google Calendar before creating another meeting.');return event;}
+    function verify(event,booking){if(event.id!==booking.eventId||event.extendedProperties?.private?.slotdeskRequest!==booking.eventId)throw R.issue('identity','A different event already uses this identifier. Check Google Calendar before creating another meeting.');return event;}
     async function check(booking){booking=validateBooking(booking);try{return verify(await request(path(booking)),booking);}catch(e){if(e.code===404)return null;throw e;}}
     async function create(booking){
       booking=validateBooking(booking);

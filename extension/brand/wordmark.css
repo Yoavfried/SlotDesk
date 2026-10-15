@@ -10,7 +10,6 @@ header.bar,body>header{
   --stop:#a03b34; --stop-bg:#f7e5e2; --stop-ln:#e0aaa3;
   background:var(--bg); color:var(--ink); backdrop-filter:none;
 }
-.brand-wordmark{display:inline-flex;align-items:baseline;white-space:nowrap;font:400 36px/1.1 'VT323',monospace;font-synthesis:none;letter-spacing:.01em;color:var(--ink)}
+.brand-wordmark{display:inline-flex;align-items:baseline;white-space:nowrap;font:400 32px/1.1 'VT323',monospace;font-synthesis:none;letter-spacing:.01em;color:var(--ink)}
 .brand-wordmark .bracket{opacity:.55}
 .brand{gap:12px}
-@media(max-width:600px){.brand-wordmark{font-size:32px}}

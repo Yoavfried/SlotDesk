@@ -6,7 +6,7 @@ Implemented decisions are recorded through 13 October 2026. The [14 October prod
 | --- | --- | --- | --- |
 | UX01 | Profile identity | Profiles represent people by email, not calendars. Names, timezones and calendar mappings remain editable. | Implemented |
 | UX02 | Own profile first | Set up the user's own email, name and confirmed timezone before normal use. Keep the setup short; advanced settings remain collapsed. The own profile joins a meeting only when explicitly selected. | Implemented |
-| UX03 | Suggested profiles | After own-profile setup, suggest up to five people from recent/frequent calendar appearances. Deduplicate by email and omit the user's own and existing profiles. Suggestions need confirmation, especially timezone. Show them in the optional third setup stage and in Manage profiles, not in New meeting. | Implemented |
+| UX03 | Suggested profiles | After own-profile setup, suggest up to six people from recent/frequent calendar appearances. Deduplicate by email and omit the user's own and existing profiles. Suggestions need confirmation, especially timezone. Show them in the optional third setup stage and in Manage profiles, not in New meeting. | Implemented |
 | UX04 | New participants | A new participant email opens the same short profile flow. Create the profile, confirm timezone, then use it in the meeting. | Implemented |
 | UX05 | Working-hours section | Working days and hours have their own advanced section. Choose one mode: Pick from template or Define manually. Preserve the other mode's settings when switching. | Implemented |
 | UX06 | Templates | Separate day and hour dropdowns. Day options are Monday–Friday and Sunday–Thursday. Hours include 09:00–18:00, 08:00–17:00, 09:00–17:00 and 10:00–19:00. Asia/Jerusalem selects Sunday–Thursday; other zones select Monday–Friday. Changing timezone preserves hours and manually defined days. | Implemented |
@@ -147,3 +147,7 @@ The broader UX68 controls inventory/reorganization remains proposed; 0.8.1 imple
 ## Recovery and registration — 0.9.0 preview
 
 The [65 accepted recovery cases](recovery-experience.md) define the implemented connection/read/write/storage behavior. Manual resolution has explicit acknowledgement and separate reported-found/unverified labels in history. The final onboarding step uses the exact [registration notice and optional updates wording](leads-table.md), records five fields regardless of opt-in and queues submission failures. The backend endpoint is deployed and configured in this preview; unavailable submission retains the exact record for retry.
+
+## 0.9.1 amendments
+
+The [0.9.1 changelog](changelog.md) records the approved stable header/logo, main Settings auto-save, calendar-only Save/Discard, default setting placement, five-profile pagination, six equal familiar-face cards/sliding cache, deliberate participant-picker opening and bell-based confirmation recovery. These supersede earlier contradictory layout/refresh/save recommendations. Profile/travel save policy and local backups remain separate unfinished work.

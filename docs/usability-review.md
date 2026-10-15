@@ -1,6 +1,6 @@
 # Next usability update — scope and proposed experience
 
-Started 15 October 2026 after the 0.9.0 registration activation. This is a review and implementation proposal, not a shipped-feature record.
+Started 15 October 2026 after the 0.9.0 registration activation. The focused 0.9.1 Settings, profile-list, suggestion, picker and connection-confirmation changes are implemented; see [changelog](changelog.md). The broader redesign and backup/import remain proposals.
 
 The owner selected keyboard/accessibility improvements, the beginning of a wording review, and a UX review of Manage profiles, Settings, advanced profile editing and travel/flight entry as the next direction. The owner explicitly chose support for selecting individual profiles during local export/import, in addition to a complete profile/settings backup. The backup/import contract is now settled, including own-profile protection. Layout and save boundaries remain proposals. The [concrete task walkthroughs](usability-flows.md) distinguish current behavior from proposed improvements and record the two unanswered save-policy decisions.
 
@@ -24,9 +24,9 @@ The owner selected keyboard/accessibility improvements, the beginning of a wordi
 | Flexibility and meeting rules | Separate usual-hour ranking, ordinary-overlap permission, meeting buffers and minimum notice. Show saved defaults as defaults; meeting-specific changes remain on that meeting. |
 | Special dates and event treatment | Holiday/leave date exceptions, title classification and individual-event rules. Explain precedence and the affected person/date or event. |
 | Travel & flights | A focused list of trips/flights with Add, Edit and Remove. Start a new entry by choosing Travel dates or Exact flight. Keep whole-day travel simple and place exact flight details in their own form. |
-| Settings | Group Display, Calendars, Local data & backups, and Recovery. Keep profile editing/suggestions in Manage profiles. Place destructive local clearing apart from routine backup/import actions. |
+| Settings | Group Display, Calendars and future Local data & backups. Keep exceptional recovery attached to the affected operation. Keep profile editing/suggestions in Manage profiles. Place destructive local clearing apart from routine backup/import actions. |
 
-Use consistent fixed headings/action bars and explicit Save/Discard behavior. Returning from a nested editor should return to its parent with the relevant item visible and keyboard focus restored. Changes must not disappear merely because another information popup was opened. Keep the supplied fonts, wordmark, lime header and light/dark tokens.
+Keep headings fixed while bodies scroll. Main Settings now saves immediately without a bottom action bar; calendar selection keeps fixed Save/Discard. Profile/travel save boundaries remain undecided. Returning from a nested editor should return to its parent with the relevant item visible and keyboard focus restored. Changes must not disappear merely because another information popup was opened. Keep the supplied fonts, wordmark, lime header and light/dark tokens.
 
 ## Situations to resolve in the UX pass
 

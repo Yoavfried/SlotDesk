@@ -16,7 +16,7 @@
     const before=interval(change.before.start,change.before.end),after=interval(change.after.start,change.after.end);if(!!before.start.date!==!!after.start.date||matches(before,after))throw new Error('The saved time change is invalid.');
     return {...clone(change),before,after,identity:{...identity,originalStartTime:identity.originalStartTime?time(identity.originalStartTime):null}};
   }
-  function verify(event,change){if(event.id!==change.eventId||event.status==='cancelled'||(event.iCalUID||'')!==change.identity.iCalUID||(event.recurringEventId||'')!==change.identity.recurringEventId||!same(event.originalStartTime?time(event.originalStartTime):null,change.identity.originalStartTime))throw new Error('This appointment was cancelled or its identity changed. Refresh its details before continuing.');return event;}
+  function verify(event,change){if(event.id!==change.eventId||event.status==='cancelled'||(event.iCalUID||'')!==change.identity.iCalUID||(event.recurringEventId||'')!==change.identity.recurringEventId||!same(event.originalStartTime?time(event.originalStartTime):null,change.identity.originalStartTime)){throw R.issue('identity','This appointment was cancelled or its identity changed. Refresh its details before continuing.');}return event;}
   function createUpdater({getToken,getCalendar,fetchImpl=globalThis.fetch,invalidateToken=async()=>{},timeoutMs=20000}){
     const inFlight=new Map();
     async function request(calendarId,eventId,method='GET',change){
@@ -24,8 +24,8 @@
       for(;;){const token=await getToken();if(!token)throw new Error('Connect Google Calendar to continue.');if(method==='PATCH'){const cal=getCalendar(calendarId);if(!cal||!['owner','writer','writerWithoutPrivateAccess'].includes(cal.accessRole))throw new Error('You no longer have permission to reschedule this meeting.');}
         const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),timeoutMs);let response,data;
         try{response=await fetchImpl('https://www.googleapis.com/calendar/v3/calendars/'+encodeURIComponent(calendarId)+'/events/'+encodeURIComponent(eventId)+(method==='PATCH'?'?sendUpdates=all':''),{method,headers:{Authorization:'Bearer '+token,...(method==='PATCH'?{'Content-Type':'application/json','If-Match':change.expectedEtag}:{})},...(method==='PATCH'?{body:JSON.stringify(change.after)}:{}),redirect:'error',credentials:'omit',cache:'no-store',referrerPolicy:'no-referrer',signal:controller.signal});try{data=await response.json();}catch(_){data=null;}}
-        catch(_){const error=new Error(method==='PATCH'?'The change could not be confirmed. Check this same appointment before trying again.':'The meeting could not be read. Check your connection and try again.');error.uncertain=method==='PATCH';throw error;}finally{clearTimeout(timer);}
-        if(response.ok){if(!data?.id){const error=new Error('Google returned incomplete meeting details. Check the same appointment.');error.uncertain=method==='PATCH';throw error;}return data;}
+        catch(cause){throw R.network(cause,{write:method==='PATCH',offline:typeof navigator!=='undefined'&&navigator.onLine===false});}finally{clearTimeout(timer);}
+        if(response.ok){if(!data?.id){const error=new Error('Google returned incomplete meeting details. Check the same appointment.');error.kind='temporary';error.uncertain=method==='PATCH';throw error;}return data;}
         if(response.status===401&&!refreshed){refreshed=true;await invalidateToken(token);continue;}
         const error=R.provider(response.status,(data?.error?.errors||[]).map(item=>item.reason),{write:method==='PATCH',retryAfter:response.headers?.get?.('retry-after')});error.changed=response.status===412;error.rejected=method==='PATCH'&&response.status<500;throw error;
       }

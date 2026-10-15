@@ -1,6 +1,18 @@
 # Connection, permissions and recovery experience
 
-Accepted direction: **15 October 2026**. The owner accepted the proposed failure/recovery recommendations and the three follow-up recommendations below. The recovery implementation is in the **0.9.0 preview**; the inventory below remains the accepted behavior contract. Existing guarded writes, token renewal, limited read retries, incomplete coverage and pending recovery are the baseline. No new live-test checklist is assigned.
+Accepted direction: **15 October 2026**. The owner accepted the proposed failure/recovery recommendations and the three follow-up recommendations below. The baseline recovery implementation entered the **0.9.0 preview**; the **0.9.1** refinement below supersedes its ordinary manual checking flow. The inventory remains the accepted behavior contract. Existing guarded writes, token renewal, limited read retries, incomplete coverage and pending recovery are the baseline. No new live-test checklist is assigned.
+
+## 0.9.1 confirmation flow
+
+The owner clarified the desired experience on 15 October: block calendar-changing actions while offline; place an unconfirmed write in the existing bell; check automatically at modest intervals; report success or verified failure; offer an explicit retry; repeat that process if confirmation is lost again. Developer issue reporting is future work.
+
+Known offline state disables New meeting and existing edit/reschedule sends and blocks their entry points. Local profile/settings work and saved drafts remain available. A network failure alone does not prove a write failed: Google may have applied it before the reply was lost.
+
+An unconfirmed write keeps its exact durable request and adds a bell alert. Checks begin after five seconds, then back off through 15, 30, 60 and 120 seconds to a five-minute ceiling. A longer Retry-After takes precedence. Checks stop offline or when interactive Google reconnection is needed, resume on online/reconnection or opening SlotDesk again, and do not run when the application is closed. Same-account send locks and shared next-check times prevent simultaneous windows from flooding the same target. Every automatic check is read-only, including account/access validation.
+
+Verified application of the intended change completes the pending record and updates the alert to success without another write or a surprise success popup. Two successful missing/unchanged readbacks are required before a failure alert offers Try again. Discard change rechecks the target before dropping an unsaved local attempt; it never deletes a calendar event. Retry opens the saved review and reuses its original identity, current access/version checks and fresh availability rules. Another uncertain reply resets the alert/check loop. A newer appointment version, missing access or an unreadable result is not treated as proof of failure; stale changes cannot be resent.
+
+Settings no longer exposes the permanent recovery-history shortcut. Existing manually reported operation records remain stored. The exceptional review/manual-resolution path remains attached to an operation that cannot safely be verified, rather than being normal Settings navigation.
 
 ## Accepted principles
 
@@ -63,13 +75,13 @@ Identifiers preserve the reviewed conversation so future implementation can refe
 | D7 | Partial availability at review | Preserve visibly unconfirmed proposals, naming affected people/missing coverage. |
 | E1 | Validation/recovery save fails before network write | Explicitly not sent; editable draft and remedy. |
 | E2 | Definitive provider rejection | Explain rejection/remedy; preserve draft; distinguish uncertainty. |
-| E3 | Timeout/lost response during write | Unknown result; Check result, not a second creation. |
+| E3 | Timeout/lost response during write | Pending bell alert and bounded automatic readback; no automatic second write. |
 | E4 | Exact intended result found | Confirm completion without duplicate write/notifications. |
 | E5 | Creation absent and access verified | Fresh validation and explicit same-invitation retry. |
 | E6 | Target subsequently changed | Show current state; no assumption previous change failed; new review. |
 | E7 | Recovery blocked by revoked access | Preserve unresolved record; explicit manual-resolution path. |
 | E8 | Popup closed during write | Operation remains accessible; closing is not provider cancellation. |
-| E9 | Browser closed/disconnected during write | Recover with same account/operation on return; no assumed cancellation. |
+| E9 | Browser closed/disconnected during write | Resume read-only verification with the same account/operation on return; no assumed cancellation. |
 | E10 | Provider success but local completion-save failure | Explain calendar success and unfinished local recovery; retain same identity. |
 | F1 | Created; Meet link pending | Separate event success/link pending; Check link. |
 | F2 | Created; Meet fails | Event remains; open Google Calendar to add link; no duplicate meeting. |

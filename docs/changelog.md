@@ -1,5 +1,17 @@
 # SlotDesk changelog
 
+## 0.9.1 — 15 October 2026
+
+- Block new meeting, existing-meeting editing and rescheduling while the browser reports no connection. Keep saved profiles and drafts.
+- Put unconfirmed calendar writes in the bell. Check only the saved operation/account/target automatically, starting after five seconds and backing off through 15, 30, 60 and 120 seconds to five minutes. Honor longer provider Retry-After pauses; pause offline and resume after reconnect/reopen. Existing send locks coordinate windows.
+- Confirm success without another write. Require two successful absent/unchanged readbacks before offering Try again. A changed version or inaccessible target stays unresolved for review; explicit retries reuse the original identity and repeat normal fresh checks. Developer issue reporting remains deferred.
+- Remove the permanent recovery-history shortcut from Settings; retain existing manual reports and the exceptional unresolved-operation review.
+- Save main Settings preferences immediately. Remove its footer/save button, place Clear Data at the bottom of the scrollable body and slightly increase the shared Settings/calendar popup height. Calendar selection keeps Save/Discard and returns to Settings. The default invitation calendar is selected only in main Settings; excluding it never silently picks another.
+- Fix the wordmark size/header height across widths. Stack Edit above Travel & flights, paginate saved profiles five at a time and place live search directly above the list.
+- Show six equally sized familiar-person suggestions in two or three columns. Remove manual refresh; reuse an account/scope-isolated local candidate cache with a 30-minute expiry extended by each entry to Manage profiles. Cache minimal names/emails/rank metadata, never full events, and clear it on disconnect, scope/access change or Clear Data.
+- Remove the Manage profiles shortcut from New meeting. Keep its saved-profile picker closed on entry and close it on selection, Escape or leaving the picker.
+- Validation: 1,564 synthetic application checks, six intake tests and 22 export-comparison checks, plus local browser checks at 320/390/680/1200 pixels. Mocked lost confirmations covered creation, editing, rescheduling and repeated explicit retries without duplicate writes. No real Google sign-in or invitations were used.
+
 ## 0.9.0 — 15 October 2026 · preview
 
 - Add shared connection/access/rate/quota/error states, coalesced token renewal, bounded read backoff and cancellation, same-account reconnection without automatic sending, and read-only calendar onboarding.

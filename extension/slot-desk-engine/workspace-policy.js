@@ -36,11 +36,10 @@
     const chosen=[...new Set(selected)],available=new Map(list.map(cal=>[cal.id,cal]));
     if(!chosen.length||chosen.some(id=>!available.has(id)))throw new Error('Choose at least one available calendar.');
     const writable=id=>['owner','writer','writerWithoutPrivateAccess'].includes(available.get(id)?.accessRole);
-    if(chosen.some(writable)&&(!chosen.includes(defaultId)||!writable(defaultId)))throw new Error('Choose a selected calendar where you can create meetings.');
-    if(!chosen.some(writable))defaultId='';
+    if(!chosen.includes(defaultId)||!writable(defaultId))defaultId='';
     const pending=state.pendingBooking?.request?.calendarId||state.pendingReschedule?.calendarId;
     if(pending&&!chosen.includes(pending))throw new Error('Keep the calendar of the unfinished change selected until that change is resolved.');
-    return {workspaceCalendarIds:chosen,calendarScopeConfirmed:true,scopeRevision:(state.settings.scopeRevision||0)+1,defaultCalendar:defaultId,defaultCalendarSelected:true};
+    return {workspaceCalendarIds:chosen,calendarScopeConfirmed:true,scopeRevision:(state.settings.scopeRevision||0)+1,defaultCalendar:defaultId,defaultCalendarSelected:!!defaultId};
   }
   return {ids,included,calendars,signature,suggestions,assertAccess,scopedFetch,scopeChange};
 });

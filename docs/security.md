@@ -10,7 +10,7 @@ Version 0.6.0 adds same-account window synchronization and local persistence of 
 
 Version 0.5.0 adds read-only calendar browsing and guest-response display using the existing reader. Raw event details stay in memory and are cleared on disconnect; only chosen calendar/date filters persist. Descriptions and provider text are escaped; external event/video links remain allowlisted. No additional OAuth permission or existing-event write path is introduced. The prior source audit and current synthetic checks are separate evidence; this update is not a new exhaustive security audit.
 
-Updated 14 October 2026 for **0.8.1**. This record explains supported behavior, evidence and remaining limits. It is not a guarantee that all future changes or browser environments are safe.
+Updated 15 October 2026 for **0.9.1**. This record explains supported behavior, evidence and remaining limits. It is not a guarantee that all future changes or browser environments are safe.
 
 ## Calendar integrity boundary
 
@@ -30,8 +30,10 @@ Google's **calendar.events permission includes editing/deleting events**. SlotDe
 | Prepared unfinished outgoing invitation | Persists for duplicate-safe recovery, including title, attendee emails, times, location/description and identifiers. Removed after confirmed completion. |
 | User-authored review drafts and connection state | Review fields persist locally to continue across windows/reload. Connection notification contains account, connected flag and nonce; no token. |
 | Pending existing-meeting edit | User-authored new text and explicit guest additions/removals/role changes, target IDs/version/time and fingerprints persist for recovery. Original fetched text, full roster metadata and tokens do not. Removed on confirmed completion. |
+| Suggestion candidates | Minimal derived name/email/rank cache, account/scope isolated with sliding 30-minute expiry; raw events remain in memory. Cleared on disconnect, scope/access change and Clear Data. |
+| Calendar-change alerts | Up to 20 local result records with meeting title, identifiers, verification status and timing. Polls only read the exact target and account metadata; no calendar write occurs without explicit confirmation. |
 | Display clock/appearance | Browser-wide preferences. |
-| Backend/analytics/LLM/email access | None. Calendar API requests go to Google; there is no application server, analytics service, email connector or model service. |
+| Registration backend | The five user-confirmed onboarding fields go to an insert-only Vercel/Neon intake; no calendar payload or credential is included. No email reader or model service is implemented. |
 
 Local settings and pending invitations are **not encrypted by SlotDesk**. Account namespaces prevent accidental mixing in the app; they do not isolate data from someone controlling the same browser profile, operating-system account or device. Use an appropriately protected browser/device for workplace data.
 

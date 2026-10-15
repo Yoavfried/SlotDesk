@@ -48,7 +48,7 @@ dialog{padding:0;overflow:hidden;max-height:calc(100dvh - 28px)}dialog[open]{dis
 .meeting-date-range{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;margin:0 0 18px}.meeting-date-range>label,.meeting-date-range input{min-width:0;width:100%}.meeting-calendar-picker{border:1px solid var(--line-2);border-radius:var(--r);background:var(--card);margin-bottom:18px}.meeting-calendar-picker>summary{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;cursor:pointer;font-size:13px;font-weight:600}.meeting-calendar-picker>summary::after{content:'⌄';font-size:17px;color:var(--ink-3)}#meetings-calendar-count{margin-left:auto;color:var(--ink-3);font-size:12px;font-weight:400}.calendar-picker-body{padding:0 16px 14px}.calendar-picker-actions{display:flex;gap:16px;margin:8px 0}.meeting-calendar-list{max-height:260px;overflow:auto;padding-right:4px}.calendar-picker-option{display:flex;align-items:center;gap:11px;padding:9px 0;font-size:13px}.calendar-picker-option>input{width:16px;height:16px;flex:none;margin:0;accent-color:var(--accent)}.calendar-picker-option>span{min-width:0;overflow-wrap:anywhere}.calendar-picker-option small{display:block;color:var(--ink-3);font-size:11px;margin-top:3px}.calendar-picker-option small:empty{display:none}.meeting-filters .meeting-timezone{margin-bottom:18px}.meeting-entry-time small{display:block;margin-top:5px} @media(max-width:560px){.meeting-date-range{gap:8px}.meeting-date-range input{padding:10px 8px;font-size:13px}}
 /* Meeting management uses the original palette and compact disclosure pattern. */
 .overlap-tag{color:var(--stop);border-color:var(--stop);background:var(--card)}.meeting-overlaps{border-top:1px solid var(--line);margin-top:16px;padding-top:10px}.meeting-overlaps summary{font-size:12px;color:var(--stop)}.meeting-overlaps p{font-size:12px;overflow-wrap:anywhere}.alerts-button{position:relative}.alerts-button #alert-count:empty{display:none}.alerts-button #alert-count{position:absolute;right:0;top:0;min-width:15px;border-radius:999px;background:var(--stop);color:var(--card);font-size:10px;line-height:16px;text-align:center}.reschedule-comparison{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:22px 0}.reschedule-comparison section{background:var(--sunk);border:1px solid var(--line-2);border-radius:var(--r);padding:16px;min-width:0}.reschedule-comparison h3{font-size:12px;color:var(--ink-3);margin:0 0 10px}.reschedule-comparison p{font-size:13px;line-height:1.6;overflow-wrap:anywhere}.reschedule-guests{margin:16px 0}.reschedule-guests summary{font-size:12px}.followup-list{margin:26px 0}.followup-list h2{font-size:20px}.followup-list .calendar-choice{flex-wrap:wrap;gap:8px}.followup-list .calendar-choice>span{flex:1;min-width:130px}.followup-list .calendar-choice button{flex:none}#reschedule-body>h3{overflow-wrap:anywhere}#reschedule-body form{margin-top:20px}#reschedule-body form details{margin:16px 0}#reschedule-options{margin-top:24px}#reschedule-options .meeting-entry h3{font-size:16px}#reschedule-error:empty{display:none}
-@media(max-width:420px){.reschedule-comparison{grid-template-columns:1fr;gap:8px}.header-top .brand-wordmark{font-size:29px}.header-top .icon-button{width:32px;height:32px;padding:6px}.header-top .header-actions{gap:1px}}
+@media(max-width:420px){.reschedule-comparison{grid-template-columns:1fr;gap:8px}.header-top .icon-button{width:32px;height:32px;padding:6px}.header-top .header-actions{gap:1px}}
 
 /* Existing-meeting editing follows the same dialog and paper surface. */
 .edit-guest-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);align-items:center}.edit-guest-row .identity-lines{min-width:0;overflow-wrap:anywhere}.edit-guest-controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.edit-guest-controls .check{margin:0}.edit-guest-controls .text-button{padding:4px 0}#edit-meeting-body .reschedule-comparison h4{margin:0 0 8px}#edit-meeting-body .event-description{overflow-wrap:anywhere;white-space:pre-wrap}
@@ -87,3 +87,28 @@ dialog .fixed-dialog-footer{flex:none;margin:0;padding:16px 22px;border-top:1px 
 .connection-attention .account-badge{background:var(--surface-2);color:var(--warn,#b76b21)}.connection-attention .account-badge:before{background:currentColor}#offline-state{font-size:12px;color:var(--ink)}.read-stop{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:1000;background:var(--paper);box-shadow:0 2px 15px #0003}#recovery-dialog pre,#recovery-history-dialog pre{max-width:100%;overflow-wrap:anywhere;white-space:pre-wrap}#recovery-manual{border-top:1px solid var(--line);margin-top:20px;padding-top:20px}#onboarding-registration{max-width:640px;border-top:1px solid var(--line);margin-top:24px;padding-top:16px}#onboarding-registration p{font-size:14px}#onboarding-registration .check,#registration-dialog .check{align-items:flex-start;font-size:14px}
 
 .stale-notice{border-left:3px solid var(--warn,#bc8125);padding:14px 16px;background:var(--surface-2);margin:20px 0;font-size:13px}.stale-notice>p{margin:8px 0}.stale-notice details p{overflow-wrap:anywhere}.stale-notice summary{font-size:12px}
+
+/* 0.9.1: stable dimensions in the sidebar and the full workspace. */
+header.bar .brand-wordmark{font-size:32px;line-height:36px;flex:none}
+header.bar .header-top{min-height:36px}
+dialog.settings-shell{height:min(820px,calc(100dvh - 28px))}
+#settings-dialog .clear-data{display:block;margin:28px 0 8px;color:var(--stop)}
+#calendar-choices .profile-actions{display:grid;grid-template-columns:1fr;gap:8px;width:142px;flex:none}
+#calendar-choices .profile-actions button{width:100%;white-space:nowrap}
+.profile-toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:22px 0}
+.profile-toolbar p{margin:0;font-size:13px}
+.profile-search-label{display:block;margin-bottom:0}
+.profile-pages{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:18px 0 30px;font-size:12px}
+.profile-pages[hidden]{display:none}
+.suggested-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.suggested-grid .contact-suggestion{display:flex;flex-direction:column;justify-content:center;gap:8px;min-width:0;width:100%;height:100px;box-sizing:border-box;text-align:left;padding:14px}
+.suggested-grid .contact-suggestion strong,.suggested-grid .contact-suggestion small{display:block;width:100%;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.suggested-grid .contact-suggestion small{font-size:11px}
+.offline-notice{padding:12px 14px;border-left:3px solid var(--warn);background:var(--sunk);font-size:13px}
+button:disabled{cursor:not-allowed}
+.change-alert h3,.change-alert p{overflow-wrap:anywhere}
+@media(min-width:660px){.suggested-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:340px){#calendar-choices .calendar-choice{grid-template-columns:minmax(0,1fr) 120px;gap:8px}#calendar-choices .profile-actions{display:grid;width:120px}#calendar-choices .profile-actions button{padding:8px;font-size:11px}}
+
+#calendar-choices{max-height:none;overflow:visible}
+header.bar{padding-block:10px}

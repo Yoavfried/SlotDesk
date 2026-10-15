@@ -1,8 +1,8 @@
 ![SlotDesk — make room for what matters](design/assets/slotdesk-banner.svg)
 
-**0.9.0 preview · Google Calendar · private Chrome pilot**
+**0.9.1 · Google Calendar · private Chrome pilot**
 
-The recovery update and onboarding registration are ready for private preview. The registration service is deployed and this build sends the agreed five fields to the private leads table; failed submissions remain queued. See [activation and verification](docs/registration-deployment.md). The latest published pilot remains 0.8.1.
+Version 0.9.1 adds connection-confirmation alerts and responsive interface polish. Unconfirmed calendar changes are checked automatically; retries still require review. The registration service sends the agreed five fields to the private leads table and queues failed submissions. See [version history](docs/changelog.md) and [registration verification](docs/registration-deployment.md).
 
 SlotDesk helps executive assistants find meeting times across people, calendars and timezones. Review a new invitation, browse existing meetings, edit its details and guests, or choose a new time for an appointment. Every calendar write requires an explicit review and confirmation.
 
@@ -10,7 +10,7 @@ Created and maintained by **[Yoavfried](https://github.com/Yoavfried)** and **[n
 
 ## What you can do
 
-- Follow three-step onboarding: your profile, selected workspace calendars/default and optional familiar people.
+- Follow three-step onboarding: your profile, selected workspace calendars and optional familiar people.
 - Set up email-based profiles with searchable timezones, visible calendar mappings and direct Travel & flights access.
 - Add email guests with a meeting-only timezone; saving a profile is optional. Automatically include profiles mapped to the organizing calendar.
 - Use saved and per-meeting working/convenience/ordinary-overlap preferences, with protected rules and clear warnings.
@@ -59,7 +59,7 @@ The preview at `http://127.0.0.1:8770/` shows the disconnected interface. Calend
 | [Design language](design/README.md) | Original style guide, fonts and design assets |
 | [Product changelog](docs/changelog.md) · [repository changelog](CHANGELOG.md) | Product releases and repository migration |
 
-Local validation includes 1,420 synthetic application checks and 22 export-comparison checks. The 0.8.1 onboarding, scope, guest and flexibility flows have synthetic browser/transport coverage; real Google guest-edit delivery has not been independently observed. Basic live creation and the first dense-calendar integrity comparison passed. The owner also reports working decline alerts, sensible proposals, successful rescheduling and correct overlap details. Work-account access depends on the organization allowing the extension and Google permissions.
+Local validation includes 1,564 synthetic application checks and 22 export-comparison checks. The 0.8.1 onboarding, scope, guest and flexibility flows have synthetic browser/transport coverage; real Google guest-edit delivery has not been independently observed. Basic live creation and the first dense-calendar integrity comparison passed. The owner also reports working decline alerts, sensible proposals, successful rescheduling and correct overlap details. Work-account access depends on the organization allowing the extension and Google permissions.
 
 ![Overlap details with synthetic calendar data](docs/assets/overlaps-v070.png)
 

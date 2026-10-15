@@ -4,9 +4,9 @@ Updated 15 October 2026. Status reflects agreed scope, not a promise of public a
 
 ## Current release
 
-Version **0.9.0 preview** implements the accepted [connection/recovery experience](recovery-experience.md), including read-only setup, stale in-memory lists, separate Check/Retry, manual operation history and unreadable-storage recovery. The five-field [onboarding leads implementation](leads-table.md) has a deployed private intake and database. This preview is configured to send registrations, keeping failed submissions queued locally. [Deployment checks](registration-deployment.md) passed; first real registration from the updated extension remains to be observed. The latest published pilot remains 0.8.1.
+Version **0.9.1** implements the accepted [connection/recovery experience](recovery-experience.md), including read-only setup, stale in-memory lists, automatic read-only confirmation alerts, explicit reviewed retries and unreadable-storage recovery. It also implements the approved Settings, profile-list and responsive layout polish. The five-field [onboarding leads implementation](leads-table.md) has a deployed private intake and database. This pilot is configured to send registrations, keeping failed submissions queued locally. [Deployment checks](registration-deployment.md) passed; first real registration from the updated extension remains to be observed. See the [0.9.1 changelog](changelog.md).
 
-The existing [implemented work](implemented.md), [accepted UX](ux-decisions.md), reviewed calendar writes, management, profiles and design language remain. No new real Google or email-delivery verification is claimed by this preview.
+The existing [implemented work](implemented.md), [accepted UX](ux-decisions.md), reviewed calendar writes, management, profiles and design language remain. No new real Google or email-delivery verification is claimed by this update.
 
 ## Profile/calendar update — implemented in 0.8.0
 
@@ -61,6 +61,7 @@ The user explicitly requested these as work **not to develop now**.
 | DF03 | Live flight updates | Possibly connect specific flights to an API for live updates. Provider, pricing and update policy are undecided. | Deferred; exploratory |
 | DF06 | Search meetings by written content | Possible search by meeting name, participants, location or any written appointment information. No search/indexing UI now. | Deferred; explicitly requested 13 October |
 | DF07 | Availability inquiry emails | Ask one/many people about one/many times; potentially BYOK-only, with LLM drafting and reply interpretation. Original inline form design remains recorded. | Unconfirmed future feature; parked, not a current milestone |
+| DF09 | Developer issue reporting | Consider reporting repeatedly unconfirmed calendar writes to the developers, with a separately agreed data/consent design. No reporting is sent now. | Deferred |
 | DF08 | LLM-driven direct appointment creation | Create an optimized appointment with factual reasoning, subject to the full validated rule set and an explicitly enabled automation policy. | Future request; authorization/operating limits unsettled |
 
 DF04 rescheduling and DF05 decline alerts were authorized and implemented in 0.7.0; they are no longer deferred. The [accepted flow](rescheduling.md) records individual time changes, notification/refresh limits and nonautomatic collision handling. Manual travel and confirmable non-LLM clues are implemented.

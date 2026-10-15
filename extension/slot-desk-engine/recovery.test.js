@@ -20,7 +20,8 @@ async function main(){
   loaded=await cache.load({...args,refresh:true,reader:{readSource:async()=>({items:[],coverage:{complete:false},error:'Access denied',failure:R.metadata(R.provider(403))})}});eq(B.view(loaded,['a'],'UTC').rows.length,0,'confirmed access loss clears older event details');
   await cache.load({...args,refresh:true,reader:{readSource:async()=>success}});cache.reconcile([{id:'a',accessRole:'freeBusyReader'}]);eq(cache.snapshot(args.account,args.from,args.to).sources.size,0,'permission downgrade purges full details');
   await cache.load({...args,refresh:true,reader:{readSource:async()=>success}});cache.reconcile([]);eq(cache.snapshot(args.account,args.from,args.to).sources.size,0,'disappeared source is purged');
-  const readOnly=P.scopeChange({settings:{}},['a'],'a',[{id:'a',accessRole:'reader'}]);eq(readOnly.defaultCalendar,'');eq(readOnly.defaultCalendarSelected,true);eq(readOnly.calendarScopeConfirmed,true);
+  const readOnly=P.scopeChange({settings:{}},['a'],'a',[{id:'a',accessRole:'reader'}]);eq(readOnly.defaultCalendar,'');eq(readOnly.defaultCalendarSelected,false);eq(readOnly.calendarScopeConfirmed,true);
+  for(const provider of [require('./google-rescheduler'),require('./google-editor')])for(const timeout of [false,true]){const reader=provider.createUpdater({getToken:async()=>'mock',fetchImpl:async()=>{throw Object.assign(new TypeError('Connection lost'),timeout?{name:'AbortError'}:{});}});await assert.rejects(()=>reader.read('calendar','event'),error=>error.kind===(timeout?'timeout':'network')&&!error.uncertain);checks++;}
   let tokens=0,release;const auth=A.createAuth({getAuthToken:async()=>{tokens++;await new Promise(resolve=>release=resolve);return {token:'mock',grantedScopes:A.SCOPES};}}),one=auth.getToken(),two=auth.getToken();release();await Promise.all([one,two]);eq(tokens,1,'concurrent token renewal is coalesced');
   console.log(checks+' recovery and registration checks passed; synthetic data only.');
 }

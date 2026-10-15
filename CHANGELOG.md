@@ -1,5 +1,11 @@
 # Repository changelog
 
+## 2026-10-15 — SlotDesk 0.9.1
+
+- Implement the approved Settings, calendar chooser, header, profile pagination, familiar-face cache and participant-picker polish.
+- Replace ordinary manual confirmation work with bounded read-only verification and bell alerts for uncertain writes; keep reviewed identity-safe retries and exceptional access-loss resolution.
+- Document current data retention, recovery behavior, version changes and synthetic validation. Keep backup/import and the undecided profile/travel save model planned.
+
 ## 2026-10-15 — Concrete usability planning
 
 - Define task flows and current-source observations for profile management, advanced rules, travel/flight entry, Settings, wording and keyboard/accessibility.

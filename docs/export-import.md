@@ -128,3 +128,5 @@ These details do not require the owner to choose parsing algorithms or internal 
 ## Local verification before shipping
 
 Use synthetic files and calendars for full replacement, selected-profile round trips, all profile fields and person-specific constraints, reordered/unknown/missing columns, malformed values, both duplicate types, current-user identity reconciliation, unavailable/read-only/excluded sources, offline verification, cross-account use, unsent-draft policy, pending-write refusal, concurrent windows and interrupted/failed saves. Compare mocked calendar transports before/after to establish zero calendar mutations from import/restore. Verify keyboard-only selection, Select all, confirmation, warnings and error recovery. Do not add another real-calendar checklist for the owner.
+
+The 0.9.1 derived suggestion cache and calendar-change result alerts are runtime records, not transferable profile/settings configuration. They are excluded from both file types. An unresolved calendar request must still be settled before import/restore.

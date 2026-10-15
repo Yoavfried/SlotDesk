@@ -1,6 +1,6 @@
 # Implemented scheduling work
 
-Current code: **0.9.0 preview**. F01–F28 are implemented; the registration service is deployed and configured in this preview. F01–F04 are the original four reproduced defects. New-meeting booking was added in 0.3.0; reviewed rescheduling and decline alerts are implemented in 0.7.0.
+Current code: **0.9.1**. F01–F28 are implemented; the registration service is deployed and configured in this pilot. F01–F04 are the original four reproduced defects. New-meeting booking was added in 0.3.0; reviewed rescheduling and decline alerts are implemented in 0.7.0.
 
 | ID | Work | Accepted behavior | Status |
 | --- | --- | --- | --- |
@@ -71,3 +71,7 @@ See [onboarding and profiles](onboarding-and-profiles.md). The larger UX68 setti
 | --- | --- | --- | --- |
 | F27 | Recovery experience | Typed failures, read-only setup, stop loading, stale in-memory views, reconnect without sending, separate Check/Retry, acknowledged manual history and unreadable-storage recovery. | Implemented; synthetic checks/browser verification. See [recovery record](recovery-experience.md). |
 | F28 | Onboarding leads | Exactly five fields, optional unchecked updates permission, durable local queue and a private insert-only intake/table. | Implemented and hosted; isolated-database and public-endpoint checks passed. First real registration from the updated extension remains to be observed. See [deployment record](registration-deployment.md). |
+
+## 0.9.1 usability and confirmation update
+
+Implemented: immediate Settings preferences, separate default calendar choice, stable header/logo size, five-profile pagination with live search, six equal suggestion cards with sliding cache, intentional participant-picker opening, offline calendar-change blocking and automatic read-only verification through bell alerts. See [release details](changelog.md#091--15-october-2026) and [recovery rules](recovery-experience.md). Backup/restore, selected-profile import/export and the broader profile/travel save redesign remain planned.
