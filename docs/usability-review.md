@@ -72,17 +72,11 @@ For dialogs, review initial focus, focus containment, return focus and parent/ch
 
 Use the [W3C modal-dialog pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/) and [combobox pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/) as implementation references. Do not claim full accessibility conformance from a static review or automated scan alone.
 
-## Local export/import — selected scope and recommended rules
+## Local backup/restore and selected-profile import/export
 
-Support two export paths: a complete profile/settings backup and selected profiles. Offer optional settings separately so sharing a person does not necessarily change another user's display or calendar preferences. Use a versioned local JSON file with a human-readable summary of what it contains.
+The owner clarified two distinct operations: portable complete-setup backup with full local replacement on restore, and portable selected-person files containing every supported setting for each selected person. Select all is required. Named columns drive cross-version compatibility: ignore unknown columns, warn/default missing optional columns, and fail for missing base columns. Full field-by-field previews are not required.
 
-Include saved profile rules, calendar assignments, availability and travel/flight data with the relevant profiles. Exclude Google credentials, fetched calendar content, meeting drafts, pending calendar operations, recovery history and onboarding/leads submission state. Exporting or importing settings must not create another onboarding record.
-
-Recommended import flow: choose file → validate → choose profiles/settings → preview additions and changes → confirm once → save locally. Match existing profiles by normalized email. Default to retaining existing values where conflicts exist; show differences and let the user deliberately choose updates. Malformed or unsupported files must leave current data untouched. Keep current data until the confirmed save succeeds and coordinate with other SlotDesk windows.
-
-Keep the receiving account's own-profile identity and protection. A profile from another person's backup may be imported as a regular person; do not silently replace the receiving user's identity. Recheck calendar assignments against the current account and selected workspace sources. Unmatched sources need an explicit remapping or visibly unconfirmed availability; imported IDs must not grant access or silently expand workspace selection.
-
-Block applying an import while an unresolved calendar write needs recovery. Export remains available. Importing changes saved local scheduling data; it does not write Google appointments or send invitations. Describe the file as containing personal contact and availability information beside the download action.
+The [detailed export/import contract](export-import.md) supersedes the original combined proposal, records calendar-access edge cases, and distinguishes confirmed requirements from the open base-column, duplicate-email and calendar-assignment choices. Full restore must not silently merge with existing local profiles/settings. Neither operation changes Google calendar data or sharing.
 
 ## Delivery and evidence
 

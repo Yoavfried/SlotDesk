@@ -1,5 +1,10 @@
 # Repository changelog
 
+## 2026-10-15 — Export/import clarification
+
+- Separate complete portable setup backup/restore from selected-person export/import. Full restore replaces local configuration; selected-person files carry all profile settings and support Select all.
+- Record named-column version compatibility, missing-field defaults versus required-column failures, calendar access warnings and removal of a mandatory general preview. Keep base fields, duplicate behavior and selected-profile calendar assignments explicit pending choices.
+
 ## 2026-10-15 — Next usability scope
 
 - Record the requested keyboard/accessibility, initial wording and profile/Settings/travel UX review, with a controls inventory, proposed organization and user situations.
