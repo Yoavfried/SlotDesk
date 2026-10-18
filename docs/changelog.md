@@ -1,5 +1,16 @@
 # SlotDesk changelog
 
+## 0.9.2 — 18 October 2026
+
+- Save valid profile changes live, with visible saved/failure state and last-valid-value protection. Keep own-profile onboarding explicit. Merge unrelated edits from simultaneous windows without overwriting them.
+- Organize working time, preferred hours and meeting rules separately; clarify local event treatment and add a working Load meetings action. Show linked/unavailable/excluded calendar status in saved profiles.
+- Replace inline flight/travel rows with saved-entry lists and focused Save/Discard forms. Flights have no X/back/Escape exit and no resumable draft. Optional Return flight reverses chosen locations/timezones, leaves dates/times blank and saves both entries together. Preserve locations, explicit zones and protection rules; handle nonexistent/repeated clock times.
+- Add complete portable JSON backups and selected-profile export/import with Select all. Match named columns, ignore unknown columns, warn/default missing optional fields and reject malformed required data. Include all saved person settings, calendar references and person-specific time rules.
+- Protect My profile from selected-profile imports. Full restore updates it only on matching email, preserves it otherwise, and requires own-profile setup during onboarding. Replace other setup, clear an unsent meeting, preserve recipient sign-in/registration and block apply while a calendar write is unconfirmed.
+- Validate files before local replacement, check calendar metadata where possible, retain unresolved assignments, and offer Download current backup. Roll back failed/interrupted local saves and invalidate stale windows after full replacement. File operations have no Calendar write capability.
+- Improve dialog names, focus return, timezone picker Escape/text editing and compact profile actions. Add Help/privacy guidance for portable files and save boundaries.
+- Validation: 1,684 synthetic application checks, six intake tests and 22 calendar-comparison checks. Local browser coverage includes live/invalid/failed saves, concurrent windows, outbound/return Save and Discard, export/import, full replacement, stale-editor closure, onboarding and narrow/wide keyboard/layout checks. Synthetic calendars remain unchanged; no real sign-in or invitations used.
+
 ## 0.9.1 — 15 October 2026
 
 - Block new meeting, existing-meeting editing and rescheduling while the browser reports no connection. Keep saved profiles and drafts.

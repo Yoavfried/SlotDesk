@@ -1,6 +1,6 @@
 # SlotDesk validation record
 
-Current code: **0.9.1**. Automated evidence and user-reported live behavior are recorded separately. No formal manual acceptance checklist remains.
+Current code: **0.9.2**. Automated evidence and user-reported live behavior are recorded separately. No formal manual acceptance checklist remains.
 
 ## Reported live progress — 13 October 2026
 
@@ -26,6 +26,7 @@ npm run check
 
 | Suite | Checks | Scope |
 | --- | --- | --- |
+| Configuration/files/flights | 120 | Portable settings/constraints, own-profile rules, named-column compatibility, DST and failed/interrupted replacement |
 | Engine | 47 | Core scheduling semantics |
 | Regression | 90 | Constraints, optional guests, travel, comfort and fallback rules |
 | Calendar pilot | 78 | Profiles, timezone handling and reader normalization |
@@ -41,7 +42,7 @@ npm run check
 | Onboarding/scope/guests/flexibility | 71 | Selected-source transports, migration/recovery, draft guests and independent scheduling rules |
 | Recovery/registration | 68 | Typed outcomes, quota, cancellation, stale/access loss, read-only setup, exact leads, manual history and collision evidence |
 | Interface state | 140 | Profile pagination, sliding candidate cache, offline scheduling/backoff and provider retry pauses |
-| **Application total** | **1,564** | Synthetic data and transports |
+| **Application total** | **1,684** | Synthetic data and transports |
 | Export comparator | 22 | Offline creation/export integrity comparison |
 
 The 112 rescheduling, 70 booking and 69 safety checks were rerun after the latest live report: **251 passed**, with no real Google request or invitation. All source network entry points were reread; see the [write-boundary record](security.md#focused-calendar-write-recheck--13-october-2026).
@@ -107,3 +108,7 @@ The focused source review and synthetic outcomes are not a guarantee against eve
 All 1,420 application checks, six server-intake test cases and 22 export-comparison checks passed. Focused mocked browser checks at 390 px verified read-only onboarding, both optional update choices, registration payload/status, stale meeting retention, access-loss purging, same-account reconnection, read-only Check result, acknowledged manual resolution/history and corrupt-storage preservation. Transport statistics showed zero calendar POST/PATCH/delete/move calls in these recovery/setup checks and eight original events unchanged. Expected injected HTTP failures and the fixture favicon were distinguished from application exceptions; the missing read-only explanation element found during the check was fixed before completion.
 
 The private database schema has exactly five columns, and SQL privilege inspection confirms the intake role can INSERT but cannot SELECT, UPDATE or DELETE. Server handler tests use synthetic inputs. The service is deployed and the preview is configured. Public HTTPS checks returned 204 for the allowed preflight, 400 for invalid input, 403 for another origin and 405 for reads. The actual API entrypoint and Neon driver accepted initial and duplicate submissions through a local HTTP bridge on an isolated Neon branch; owner readback confirmed the first five-field record was unchanged. The production table received no test contacts. The first real submission from the updated extension remains to be observed. See [deployment evidence](registration-deployment.md).
+
+## 0.9.2 local browser evidence — 18 October
+
+Synthetic Google transport only: valid profile text/checkbox changes saved live; invalid email and simulated full storage preserved the saved value and entered text. Two windows retained unrelated field edits. Flight forms ignored Escape and exposed no X, saved an outbound/return pair, and Discard preserved the saved list. Profile files exported/imported, replacement warnings appeared, and full restore cleared the unsent meeting while preserving own-profile identity and recipient registration. The other window closed its stale editor. Configuration flows made zero event POST/PATCH/DELETE requests. Narrow/wide layout and keyboard/onboarding checks use this same fixture. No new real-calendar checklist is required.

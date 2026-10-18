@@ -11,7 +11,7 @@
       if(!key){others.push(p);continue;}if(byEmail.has(key)){const first=byEmail.get(key);first.calendarIds=[...new Set([...(first.calendarIds||[]),...(p.calendarIds||[])])];first.leaveCalendarIds=[...new Set([...(first.leaveCalendarIds||[]),...(p.leaveCalendarIds||[])])];}else byEmail.set(key,p);
     }
     state.profiles=[...byEmail.values(),...others];const own=state.profiles.find(p=>p.email===emailKey(account));
-    if(own&&!state.settings.ownProfileId){state.settings.ownProfileId=own.id;own.enabled=false;}
+    if(own&&!state.settings.ownProfileId&&!state.settings.ownProfileSetupRequired){state.settings.ownProfileId=own.id;own.enabled=false;}
     state.settings.guestProfiles=(state.settings.guestProfiles||[]).filter(p=>validEmail(p.email)&&!state.profiles.some(saved=>emailKey(saved.email)===emailKey(p.email)));const known=new Set([...state.profiles,...state.settings.guestProfiles].map(p=>p.id));state.settings.participantIds=[...new Set((Array.isArray(state.settings.participantIds)?state.settings.participantIds:[]).filter(id=>known.has(id)))];return state;
   }
   function participant(state,id){return state.profiles.find(p=>p.id===id)||(state.settings.guestProfiles||[]).find(p=>p.id===id);}

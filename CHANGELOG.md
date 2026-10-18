@@ -1,5 +1,11 @@
 # Repository changelog
 
+## 2026-10-18 — SlotDesk 0.9.2
+
+- Implement the accepted live profile, independent flight/travel Save/Discard and portable configuration-file contracts.
+- Add profile/calendar-status, wording, keyboard and responsive refinements; document saved-data boundaries and local validation.
+- Package the private Chrome pilot with unchanged Google permissions and reviewed calendar writers. Broader website work stays on hold.
+
 ## 2026-10-18 — Profile and flight save policies settled
 
 - Record live profile editing without general Save/Discard, with validation and honest failed-save handling.

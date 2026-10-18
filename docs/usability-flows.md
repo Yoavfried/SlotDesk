@@ -1,6 +1,6 @@
 # Profile, Settings and travel usability flows
 
-Planning updated: **18 October 2026**, against source **0.9.1**. The owner has settled live profile editing and per-flight Save/Discard, including an optional return flight in the same form. These changes and the [settled backup/import contract](export-import.md) remain to be implemented. Existing 0.9.1 layout, Settings and recovery behavior is retained.
+Implemented: **0.9.2 · 18 October 2026**. Live profile saving, independent flight/travel Save/Discard, portable backups/imports, initial wording and keyboard refinements follow this record. Existing 0.9.1 Settings, layout and recovery behavior is retained.
 
 ## Purpose and existing behavior
 
@@ -12,8 +12,8 @@ The current source establishes these concrete review points:
 | --- | --- | --- |
 | Advanced contains several levels of expandable controls, including a combined convenience/radius/notice section. | Different rules are difficult to find and their effects are hard to distinguish. | Group by user purpose and split mixed concepts; existing expandable sections can remain. |
 | Travel is a focused mode of the whole profile form; its handler can expose invalid hidden basic fields. | Saving a flight can require dealing with unrelated profile fields. | Give the travel task a focused form and a clearly defined save boundary. |
-| Generic close buttons close the profile dialog directly. | Whole-profile drafts and flight-entry drafts have different save needs. | Save valid profile settings live; protect only unfinished flight/travel forms and failed/invalid local edits. |
-| Travel and flights are editable rows; Add creates a draft row before the final save. | It is not clear whether an individual entry is saved. | Show concise saved-entry summaries and a focused Add/Edit form with honest draft/saved status. |
+| Generic close buttons close the profile dialog directly. | Live profile changes and temporary flight-form values have different save boundaries. | Save valid profile settings live; keep unfinished flight/travel forms open until Save/Discard and failed/invalid local edits. |
+| Travel and flights are editable rows; Add previously created an unsaved inline row before the final save. | It is not clear whether an individual entry is saved. | Show concise saved-entry summaries and a focused Add/Edit form with explicit Save/Discard and a saved-entry list. |
 | Profile rows show identity/timezone and Edit/Travel actions. | Calendar source configuration is not visible from the list. | Add a concise source status without claiming complete availability merely from an assignment. |
 | Main Settings already saves immediately in 0.9.1; calendar selection has its own Save/Discard. | This distinction is settled. | Retain it and add the planned local backup/restore controls without restoring Save preferences or ordinary recovery-history navigation. |
 
@@ -46,7 +46,7 @@ Reorganize the existing advanced controls by purpose. The following grouping is 
 | Special dates | Date-range leave/holiday exceptions for this person. State that unrelated appointments/protected periods still apply. |
 | Event treatment | Title matching, airport-route protection and individual-event treatment. Keep these local scheduling rules clearly separate from editing a Google appointment. |
 
-Travel & flights remains directly reachable from Manage profiles. The same person’s profile contains its flight list and Add flight action. Opening an individual flight form does not create a whole-profile draft or change how other profile settings save.
+Travel & flights remains directly reachable from Manage profiles. The same person’s profile contains its flight list and Add flight action. Opening an individual flight form does not create a resumable profile or flight draft or change how other profile settings save.
 
 Profile scenarios:
 
@@ -77,7 +77,7 @@ Implementation defaults supporting that decision:
 
 ## Travel & flights manager
 
-The person’s profile has a list of saved, individually editable/removable flights, with **Add flight above the list**. Manage profiles’ existing Travel & flights action opens this person’s travel area directly; retain their name/email and never ask which person again. Add flight opens a focused form. Its exact actions are **Save** and **Discard**, returning to the same profile/list. Keep whole-day travel dates distinct from flights. An unfinished entry is a form, not an apparently saved empty list row.
+The person’s profile has a list of saved, individually editable/removable flights, with **Add flight above the list**. Manage profiles’ existing Travel & flights action opens this person’s travel area directly; retain their name/email and never ask which person again. Add flight opens a focused form. Its exact actions are **Save** and **Discard**, returning to the same profile/list. Keep whole-day travel dates distinct from flights. An unfinished entry exists only in the open form; it is never stored as a resumable draft.
 
 Travel date form: optional label, first date, last date and destination timezone. Both dates are included. Show dates and timezone in the saved summary. Explain that these dates change the local timezone used for this person's scheduling. Preserve the existing whole-day travel model; this update does not infer a timezone schedule automatically from exact flight times.
 
@@ -97,14 +97,14 @@ Travel/flight scenarios:
 
 Owner decision, 18 October: flights are separate saved items. Each flight can be edited or removed from the profile; Add flight is above that list and opens a Save/Discard form that returns to the profile.
 
-Single flight: Save validates and saves that flight, then shows it in the profile list. Discard abandons that form without changing an existing flight. Editing uses the same form and actions. Closing a dirty flight form must preserve the existing saved flight until the user deliberately discards the new edits; Escape closes an active child picker first.
+Single flight: Save validates and saves that flight, then shows it in the profile list. Discard abandons that form without changing an existing flight. Editing uses the same form and actions. The flight form has no X or back action: Save and Discard are its only exit actions. Escape closes an active child picker first and otherwise leaves the form open. No flight form is stored, backed up or restored for later completion.
 
 The **Return flight** toggle adds a second flight section in the same Add flight form:
 
 - Prefill return departure from outbound arrival location/timezone, and return arrival from outbound departure location/timezone. For example, Jerusalem → London becomes London → Jerusalem. Location text does not infer a timezone; copy the explicitly chosen zones.
 - Ask the user for return dates and times. Do not guess their length of stay, return clock times, or flight duration. Keep prefilled locations/zones editable and do not overwrite a return field the user has changed.
 - Save validates both flights and saves both in one local operation, then returns to the profile with two independently editable/removable entries. If either is invalid or persistence fails, neither is added. Discard adds neither flight.
-- Switching the toggle off excludes the return flight from Save; preserve its draft within that open form in case it is switched back on. No previously saved flight is deleted by toggling.
+- Switching the toggle off excludes the return flight from Save; preserve its temporary field values only within that open form in case it is switched back on. No previously saved flight is deleted by toggling.
 - Compare real instants across timezones, including overnight/date-line and daylight-saving cases. Each arrival follows its departure; the return departure must not precede outbound arrival.
 - Editing or removing one saved flight does not silently edit/remove the other. Existing saved flights and unrelated live-saved profile changes are unaffected by Discard.
 - Saving a return pair does not automatically create an inferred whole-day travel range. The existing whole-day timezone plan remains separately entered and confirmed.
@@ -159,4 +159,4 @@ Confirmed: live profile editing without general Save/Discard; individual flights
 
 The two previously unanswered save-policy questions are resolved. The whole-day travel form follows the documented per-entry implementation default. No additional blocking product question is identified for this scope; handle ordinary validation, persistence and accessibility details against these decisions.
 
-Implementation remains pending. Implement profile/travel UX, wording, keyboard/accessibility and local export/import under this plan, retaining the actual 0.9.1 behaviors. Verify locally with synthetic files/profiles/calendars, including failed live saves, invalid intermediate input, concurrent windows, round-trip pair atomicity and backup/import round trips for every new flight field. Update Help, privacy, version logs and the package when shipped. No new real-Google test checklist is assigned.
+Implemented and locally verified in 0.9.2. Synthetic coverage includes failed live saves, invalid intermediate input, concurrent windows, pair atomicity and portable configuration. Help/privacy and release records are updated. No new real-Google test checklist is assigned. Only meeting drafts can be saved and resumed; flight/travel form values exist only while the Save/Discard window is open.

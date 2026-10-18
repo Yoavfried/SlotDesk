@@ -38,4 +38,4 @@ SlotDesk is part of **[Website name TBD]**, the planned parent website. Its bran
 Version 0.8.1 adds [three-step onboarding and calendar scope](onboarding-and-profiles.md), main profile mappings, direct travel access, searchable timezone selection, email-first guests and independent saved/meeting-specific flexibility. No LLM or email feature is implemented.
 
 
-Version 0.9.1 adds automatic read-only confirmation through bell alerts, offline write blocking, immediate Settings preferences, responsive profile pagination, six familiar-face suggestions with a sliding cache and a stable header. See [version history](changelog.md).
+Version 0.9.2 adds automatic read-only confirmation through bell alerts, offline write blocking, immediate Settings preferences, responsive profile pagination, six familiar-face suggestions with a sliding cache and a stable header. See [version history](changelog.md).

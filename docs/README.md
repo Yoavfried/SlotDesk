@@ -8,7 +8,7 @@
 | Recovery | [Accepted connection, permission and recovery experience](recovery-experience.md) |
 | Registration and leads | [Agreed five-column onboarding leads table](leads-table.md), [hosting and verification](registration-deployment.md) |
 | Future concepts | [Optional BYOK LLM assistance](llm-assistance.md), [unconfirmed availability emails](time-inquiries.md) |
-| Development | [Architecture](architecture.md), [engine API](engine-api.md), [installation](install.md), [local export/import plan](export-import.md) |
+| Development | [Architecture](architecture.md), [engine API](engine-api.md), [installation](install.md), [local export/import](export-import.md) |
 | Validation | [Validation record](testing.md), [optional calendar comparison kit](calendar-acceptance.md) |
 | Privacy and distribution | [Security/privacy](security.md), [publication checklist](publication.md) |
 | Design | [Implementation guide](../design/README.md), [original style guide](../design/reference/style-guide.html) |

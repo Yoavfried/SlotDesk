@@ -1,8 +1,8 @@
 ![SlotDesk — make room for what matters](design/assets/slotdesk-banner.svg)
 
-**0.9.1 · Google Calendar · private Chrome pilot**
+**0.9.2 · Google Calendar · private Chrome pilot**
 
-Version 0.9.1 adds connection-confirmation alerts and responsive interface polish. Unconfirmed calendar changes are checked automatically; retries still require review. The registration service sends the agreed five fields to the private leads table and queues failed submissions. See [version history](docs/changelog.md) and [registration verification](docs/registration-deployment.md).
+Version 0.9.2 adds live profile saving, focused flight/travel forms with return-flight entry, portable setup backups and selectable profile export/import. It also improves keyboard behavior, labels and profile layout. See [version history](docs/changelog.md), [backup/import rules](docs/export-import.md) and [registration verification](docs/registration-deployment.md).
 
 SlotDesk helps executive assistants find meeting times across people, calendars and timezones. Review a new invitation, browse existing meetings, edit its details and guests, or choose a new time for an appointment. Every calendar write requires an explicit review and confirmation.
 
@@ -59,7 +59,7 @@ The preview at `http://127.0.0.1:8770/` shows the disconnected interface. Calend
 | [Design language](design/README.md) | Original style guide, fonts and design assets |
 | [Product changelog](docs/changelog.md) · [repository changelog](CHANGELOG.md) | Product releases and repository migration |
 
-Local validation includes 1,564 synthetic application checks and 22 export-comparison checks. The onboarding, scope, guest and flexibility flows have synthetic browser/transport coverage; real Google guest-edit delivery has not been independently observed. Basic live creation and the first dense-calendar integrity comparison passed. The owner also reports working decline alerts, sensible proposals, successful rescheduling and correct overlap details. Work-account access depends on the organization allowing the extension and Google permissions.
+Local validation includes 1,684 synthetic application checks and 22 export-comparison checks. The onboarding, scope, guest and flexibility flows have synthetic browser/transport coverage; real Google guest-edit delivery has not been independently observed. Basic live creation and the first dense-calendar integrity comparison passed. The owner also reports working decline alerts, sensible proposals, successful rescheduling and correct overlap details. Work-account access depends on the organization allowing the extension and Google permissions.
 
 ![Overlap details with synthetic calendar data](docs/assets/overlaps-v070.png)
 

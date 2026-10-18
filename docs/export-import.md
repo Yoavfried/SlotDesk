@@ -1,6 +1,6 @@
 # Local backup/restore and profile export/import
 
-Owner clarification: 15 October 2026. This supersedes the combined backup/import proposal in the initial usability review. Implementation remains planned. Keep this discussion focused on the two file operations below.
+Owner clarification: 15 October 2026. This supersedes the combined backup/import proposal in the initial usability review. Implemented in 0.9.2, with local synthetic and browser verification. The two file operations below remain distinct.
 
 ## 1. Complete SlotDesk setup backup and restore
 
@@ -91,7 +91,7 @@ The owner answered all three questions on 15 October 2026:
 - Replace matching-email profiles after one overwrite warning.
 - Include calendar assignments and flag unavailable calendars.
 
-These choices are settled. The following audit identifies the remaining user-facing choices and the implementation details that can be handled without another product decision. Implementation remains planned.
+These choices are settled. The following audit identifies the remaining user-facing choices and the implementation details that can be handled without another product decision. Implementation shipped in 0.9.2.
 
 ## Completion audit — confirmed restore policies
 
@@ -131,6 +131,14 @@ Use synthetic files and calendars for full replacement, selected-profile round t
 
 The 0.9.1 derived suggestion cache and calendar-change result alerts are runtime records, not transferable profile/settings configuration. They are excluded from both file types. An unresolved calendar request must still be settled before import/restore.
 
-## Planned flight-form fields — 18 October 2026
+## Saved flight-form fields — 18 October 2026
 
-The accepted flight UX adds optional origin/destination location text and an optional return flight in the same entry form. Export/import must preserve all supported saved flight fields, including these locations and the explicitly chosen departure/arrival timezones. A saved outbound/return pair consists of two independent flight entries; exporting a person includes both without depending on a hidden paired-editor draft. Unsaved flight/travel forms and return-toggle state are excluded. This does not change the settled required email/timezone columns or full-restore rules.
+The accepted flight UX adds optional origin/destination location text and an optional return flight in the same entry form. Export/import must preserve all supported saved flight fields, including these locations and the explicitly chosen departure/arrival timezones. A saved outbound/return pair consists of two independent flight entries; exporting a person includes both without depending on a hidden paired-editor state. Flights/travel have no saved or resumable draft. Temporary values and return-toggle state exist only in their open Save/Discard form and are excluded. This does not change the settled required email/timezone columns or full-restore rules.
+
+## Shipped file contract — 0.9.2
+
+Files use `format` (`slotdesk-backup` or `slotdesk-profiles`), `schemaVersion`, `appVersion`, `exportedAt`, `columns` and `rows`. The public `timezone` column maps to the internal `tz` value. Each row retains nested JSON schedules/rules/flights and a `constraints` column for that person. Complete backups add allowlisted workspace `settings`, browser `display` preferences and Everyone `constraints`. Unknown headers are ignored; missing optional headers default with one warning. Files are UTF-8 JSON, limited to 10 MB/10,000 rows; duplicate headers/emails, invalid selected records and unsafe object keys fail without applying changes.
+
+Settings → Download backup / Restore backup handles complete setup. Manage profiles → Export profiles / Import profiles handles selectable people; import also has a Settings shortcut. Restore is available in own-profile onboarding and saved-data recovery. The latter retains its acknowledgement about unreadable pending calendar actions. Missing calendar verification is visible in warnings; Check calendar access in Settings verifies metadata before an imported unverified default can be used. No calendar-sharing or event-writing API is available to either file module.
+
+Replacement uses browser locks, revision checks and a temporary rollback journal for workspace/display writes. That journal exists only to finish or roll back an interrupted save, is removed on completion/recovery, and is not a hidden user backup. A replacement epoch makes stale windows adopt the replacement instead of merging deleted records back. Pending calendar operations are checked again inside the storage lock.

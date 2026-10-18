@@ -6,6 +6,8 @@
   const equal=(a,b)=>JSON.stringify(a,stable)===JSON.stringify(b,stable);
   const object=value=>value&&typeof value==='object'&&!Array.isArray(value);
   function mergeState(base,local,remote,{choice='local',booking=false,rescheduling=false}={}){
+    // A full restore replaces local configuration. Old forms must never revive it.
+    if(base.settings?.configurationEpoch!==remote.settings?.configurationEpoch)return {state:clone(remote),conflicts:[]};
     const conflicts=[];
     function merge(b,l,r,path){
       if(equal(l,b))return clone(r);if(equal(r,b)||equal(l,r))return clone(l);
@@ -32,7 +34,9 @@
   async function commit(store,account,base,local,locks,options={}){
     if(!locks?.request||!account)throw new Error('This browser cannot coordinate saved changes between windows. Copy your meeting details before continuing.');
     return locks.request('slotdesk-workspace:'+account,{mode:'exclusive'},()=>{
-      const remote=store.load(account,clone(base)),result=mergeState(base,local,remote,options);
+      const remote=store.load(account,clone(base));
+      if(remote.settings?.configurationEpoch!==base.settings?.configurationEpoch){const error=new Error('The setup was replaced in another window. Reload its current settings before editing.');error.code='CONFIGURATION_REPLACED';throw error;}
+      const result=mergeState(base,local,remote,options);
       options.validateRemote?.(remote);
       if(result.conflicts.length&&!options.resolve)return {...result,remote};
       store.save(account,result.state);return {...result,remote};

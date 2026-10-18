@@ -4,13 +4,13 @@ Updated 18 October 2026. Status reflects agreed scope, not a promise of public a
 
 ## Current release
 
-Version **0.9.1** implements the accepted [connection/recovery experience](recovery-experience.md), including read-only setup, stale in-memory lists, automatic read-only confirmation alerts, explicit reviewed retries and unreadable-storage recovery. It also implements the approved Settings, profile-list and responsive layout polish. The five-field [onboarding leads implementation](leads-table.md) has a deployed private intake and database. This pilot is configured to send registrations, keeping failed submissions queued locally. [Deployment checks](registration-deployment.md) passed; first real registration from the updated extension remains to be observed. See the [0.9.1 changelog](changelog.md).
+Version **0.9.2** retains the accepted [connection/recovery experience](recovery-experience.md), including read-only setup, stale in-memory lists, automatic read-only confirmation alerts, explicit reviewed retries and unreadable-storage recovery. It also implements the approved Settings, profile-list and responsive layout polish. The five-field [onboarding leads implementation](leads-table.md) has a deployed private intake and database. This pilot is configured to send registrations, keeping failed submissions queued locally. [Deployment checks](registration-deployment.md) passed; first real registration from the updated extension remains to be observed. See the [0.9.2 changelog](changelog.md).
 
 The existing [implemented work](implemented.md), [accepted UX](ux-decisions.md), reviewed calendar writes, management, profiles and design language remain. No new real Google or email-delivery verification is claimed by this update.
 
 ## Profile/calendar update — implemented in 0.8.0
 
-The authorized onboarding, travel, timezone, mapping, guest and flexibility work from the [14 October product review](product-review-2026-10-14.md) is implemented; see [final behavior](onboarding-and-profiles.md). Workspace scope now replaces read-all-accessible-event behavior. The next selected direction is the [usability review](usability-review.md): profile/Settings/travel organization, keyboard/accessibility, a first wording pass and local backup with selectable profile export/import. The backup/import contract is settled. On 18 October the owner settled [profile/flight saving](usability-flows.md): valid profile settings save live; each flight has Save/Discard, with optional two-flight return entry. The former save-policy blockers are resolved. This usability and backup/import work remains planned.
+The authorized onboarding, travel, timezone, mapping, guest and flexibility work from the [14 October product review](product-review-2026-10-14.md) is implemented; see [final behavior](onboarding-and-profiles.md). Workspace scope now replaces read-all-accessible-event behavior. The next selected direction is the [usability review](usability-review.md): profile/Settings/travel organization, keyboard/accessibility, a first wording pass and local backup with selectable profile export/import. The backup/import contract is settled. On 18 October the owner settled [profile/flight saving](usability-flows.md): valid profile settings save live; each flight has Save/Discard, with optional two-flight return entry. The former save-policy blockers are resolved. The accepted live-saving, flight/travel forms, backup/import, initial wording and keyboard improvements are implemented in 0.9.2. A full copy/accessibility review remains iterative.
 
 ## Availability emails — unconfirmed future feature
 
@@ -24,7 +24,7 @@ The owner wants [bring-your-own-key LLM assistance](llm-assistance.md), with pre
 
 | Order | Milestone | Status |
 | --- | --- | --- |
-| 1 | Refine profiles, calendar scope and meeting setup | Authorized scope implemented in 0.8.0; broader organization refinements remain proposed. |
+| 1 | Refine profiles, calendar scope and meeting setup | Authorized scope implemented in 0.8.0; the accepted profile/travel/files refinement shipped in 0.9.2. |
 | 2 | Continue the Google Calendar pilot | Basic creation/export integrity passed. The owner reports working No alerts, sensible proposals, successful rescheduling and correct overlaps. Work-account access depends on organization permissions. |
 | 3 | Outlook / Microsoft 365 | Accepted next provider: OAuth, reading and reviewed writes, shared/delegated calendars, optional guests, recurrence, timezones and Teams links. Not needed for the Google pilot. |
 | 4 | Wider distribution | Supported installation/update route, applicable Google and organization requirements, accurate privacy/data-retention information and a public license/visibility decision. |
@@ -45,7 +45,7 @@ These are proposals to prioritize from pilot feedback, not implemented promises:
 
 - Profile search/management refinements based on actual large-profile usage; accessible keyboard interaction and a full copy review across error/recovery states.
 - Recovery implementation now has synthetic coverage in 0.9.0; real-account behavior remains subject to Google and workplace access.
-- Local profile/settings backup and selectable profile export/import are selected for the next usability work. The [settled contract](export-import.md) covers file selection, real warnings, email conflicts, current-account calendar assignments and local-only application, without a mandatory field-by-field preview.
+- Local profile/settings backup and selectable profile export/import are implemented in 0.9.2. The [settled contract](export-import.md) covers file selection, real warnings, email conflicts, current-account calendar assignments and local-only application, without a mandatory field-by-field preview.
 - A supported extension update channel, organization onboarding guidance and a user-visible data-retention explanation before public distribution.
 
 Standalone free-tool integration remains an accepted future direction; obtain its source before planning migration onto the shared engine.

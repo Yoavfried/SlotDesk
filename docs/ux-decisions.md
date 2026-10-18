@@ -150,4 +150,11 @@ The [65 accepted recovery cases](recovery-experience.md) define the implemented 
 
 ## 0.9.1 amendments
 
-The [0.9.1 changelog](changelog.md) records the approved stable header/logo, main Settings auto-save, calendar-only Save/Discard, default setting placement, five-profile pagination, six equal familiar-face cards/sliding cache, deliberate participant-picker opening and bell-based confirmation recovery. These supersede earlier contradictory layout/refresh/save recommendations. Profile/travel save policy and local backups remain separate unfinished work.
+The [0.9.1 changelog](changelog.md) records the approved stable header/logo, main Settings auto-save, calendar-only Save/Discard, default setting placement, five-profile pagination, six equal familiar-face cards/sliding cache, deliberate participant-picker opening and bell-based confirmation recovery. These supersede earlier contradictory layout/refresh/save recommendations. Profile/travel saving and portable backups were completed in 0.9.2.
+
+## 0.9.2 amendments
+
+- Profiles save valid changes live; failed/invalid edits keep their saved value and remain visible. Own-profile setup retains Continue.
+- Flight/travel forms exit through Save or Discard only. Flights have no X/back/Escape exit or resumable draft. Return flight can save two independent entries together.
+- Portable file operations follow the [confirmed identity/replacement/compatibility contract](export-import.md). Only meeting drafts are resumable, and full restore clears them.
+- Dialog titles/focus, timezone keyboard behavior, purpose-based advanced sections, calendar-link status and initial wording are implemented with the supplied design language.

@@ -1,6 +1,6 @@
 # SlotDesk Chrome extension
 
-Source: **0.9.1**, with the registration endpoint configured and automatic read-only confirmation alerts. Load this `extension/` directory as an unpacked extension, or build the approved tester ZIP from the repository root:
+Source: **0.9.2**, with the registration endpoint configured and automatic read-only confirmation alerts. Load this `extension/` directory as an unpacked extension, or build the approved tester ZIP from the repository root:
 
 ```sh
 npm run package:slotdesk
