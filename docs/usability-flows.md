@@ -1,6 +1,6 @@
 # Profile, Settings and travel usability flows
 
-Planning baseline: 15 October 2026, 0.9.0 preview. This is the proposed next usability update, not implemented behavior. The [backup/import contract](export-import.md) is settled. Two save-policy choices below remain explicitly unanswered.
+Planning updated: **18 October 2026**, against source **0.9.1**. The owner has settled live profile editing and per-flight Save/Discard, including an optional return flight in the same form. These changes and the [settled backup/import contract](export-import.md) remain to be implemented. Existing 0.9.1 layout, Settings and recovery behavior is retained.
 
 ## Purpose and existing behavior
 
@@ -12,24 +12,24 @@ The current source establishes these concrete review points:
 | --- | --- | --- |
 | Advanced contains several levels of expandable controls, including a combined convenience/radius/notice section. | Different rules are difficult to find and their effects are hard to distinguish. | Group by user purpose and split mixed concepts; existing expandable sections can remain. |
 | Travel is a focused mode of the whole profile form; its handler can expose invalid hidden basic fields. | Saving a flight can require dealing with unrelated profile fields. | Give the travel task a focused form and a clearly defined save boundary. |
-| Generic close buttons close the profile dialog directly. | Entered profile/travel changes can be discarded without an unsaved-change choice. | Use a consistent dirty-form close policy that preserves input until the user chooses. |
+| Generic close buttons close the profile dialog directly. | Whole-profile drafts and flight-entry drafts have different save needs. | Save valid profile settings live; protect only unfinished flight/travel forms and failed/invalid local edits. |
 | Travel and flights are editable rows; Add creates a draft row before the final save. | It is not clear whether an individual entry is saved. | Show concise saved-entry summaries and a focused Add/Edit form with honest draft/saved status. |
 | Profile rows show identity/timezone and Edit/Travel actions. | Calendar source configuration is not visible from the list. | Add a concise source status without claiming complete availability merely from an assignment. |
-| Settings combines direct actions with preferences saved by a form. | It is not always obvious which changes have already been saved. | Make save behavior and the boundary of each task explicit; preserve the accepted calendar submenu behavior. |
+| Main Settings already saves immediately in 0.9.1; calendar selection has its own Save/Discard. | This distinction is settled. | Retain it and add the planned local backup/restore controls without restoring Save preferences or ordinary recovery-history navigation. |
 
 These are source observations and design targets, not a claim that every proposed fix is implemented or that every browser behavior has been reproduced.
 
 ## Manage profiles
 
-Keep the page's existing search, own-profile-first ordering and Edit/Travel & flights actions. Use a compact list rather than a grid of large cards. At narrow widths, keep the identity and actions in deliberate rows; a long email must not determine button width or wrap an action label. Truncate long values visually while keeping their complete values available accessibly.
+Keep the page's existing search, own-profile-first ordering and Edit/Travel & flights actions. Use a compact list rather than a grid of large cards. Keep the 0.9.1 five-profile pagination and live search. Edit remains above Travel & flights at every width; a long email must not determine button width or wrap an action label. Truncate long values visually while keeping their complete values available accessibly.
 
 Proposed top actions: Add profile, Import profiles, Export profiles. Import/export selection is a dedicated task; ordinary profile browsing does not become a permanent wall of checkboxes. Preserve search and scroll position when returning from an edit and return focus to that person's action.
 
 Show one meaningful calendar-source summary per person: No calendars linked, 2 availability calendars, 1 calendar unavailable, or a specific exclusion status. Assigned sources alone do not establish that all availability was checked. Full coverage still depends on successful reads for the actual meeting interval.
 
-Keep familiar-profile suggestions in a distinct section below saved people. Show at most the accepted five suggestions with an explicit refresh action and their loading/empty/unavailable state. Suggestions never create people automatically. Existing onboarding still offers them after own profile and calendar setup.
+Keep familiar-profile suggestions in a distinct section below saved people. Retain the six equal suggestions, two-/three-column layout, sliding 30-minute account/scope cache and automatic entry-triggered refresh from 0.9.1. Keep loading/empty/unavailable states; do not restore a refresh button. Suggestions never create people automatically. Existing onboarding still offers them after own profile and calendar setup.
 
-Own profile remains marked (you), first among matching results, and cannot be individually removed. A normal profile's removal action belongs in its editor, separate from Save. Its confirmation describes local profile/rule removal and any effect on an unfinished participant selection; it does not suggest that calendar events will be deleted. An unresolved calendar operation keeps its existing protection against deleting dependent local data.
+Own profile remains marked (you), first among matching results, and cannot be individually removed. A normal profile's removal action belongs in its editor, separate from routine live-edit controls. Its confirmation describes local profile/rule removal and any effect on an unfinished participant selection; it does not suggest that calendar events will be deleted. An unresolved calendar operation keeps its existing protection against deleting dependent local data.
 
 ## Profile editor and advanced controls
 
@@ -46,7 +46,7 @@ Reorganize the existing advanced controls by purpose. The following grouping is 
 | Special dates | Date-range leave/holiday exceptions for this person. State that unrelated appointments/protected periods still apply. |
 | Event treatment | Title matching, airport-route protection and individual-event treatment. Keep these local scheduling rules clearly separate from editing a Google appointment. |
 
-Travel & flights remains directly reachable from Manage profiles. A link from profile editing can open the same task; it must honor the chosen unsaved-edit boundary rather than silently discarding or saving unrelated changes.
+Travel & flights remains directly reachable from Manage profiles. The same person’s profile contains its flight list and Add flight action. Opening an individual flight form does not create a whole-profile draft or change how other profile settings save.
 
 Profile scenarios:
 
@@ -56,25 +56,32 @@ Profile scenarios:
 - An invalid field opens its containing section, keeps all other edits, associates the error with that field and brings it into view.
 - Keyword lists and individual-event treatment explain what the change will affect. Empty lists must have a defined meaning verified against the engine; copy must not imply that clearing a list resets it unless that is the actual implemented behavior.
 - Individual-event treatment identifies the loaded date range. Missing or busy-only details are explained rather than producing fabricated event names/controls. Reading for this editor stays within the person's selected, accessible sources and never changes appointments.
-- A failed save retains the editor and entered values with a local actionable error. A successful save returns to the list and updates the person's row without a generic last-action banner.
+- A failed live save keeps the entered values visible and shows an actionable local error; never claim Saved after storage failure. Successful changes keep the profile open and update its saved data without a generic last-action banner.
 
-## Concrete profile save walkthrough
+## Confirmed live profile editing
 
-Example: open a saved person, change their timezone, then change their working hours.
+Owner decision, 18 October: edit profile settings directly and save changes on the spot. Existing profiles have no general Save profile or Discard buttons and no whole-profile Save/Discard prompt during normal navigation.
 
-**Shared-draft proposal:** neither change is committed yet. Moving between sections preserves both edits. One fixed Save profile commits both and returns to Manage profiles. X/Escape with changes offers Keep editing or Discard changes. Returning between profile sections is not cancellation. This is the current recommendation and remains unapproved.
+Example: changing the timezone saves that valid choice immediately; changing working hours saves the valid schedule as well. Returning between advanced sections or closing the profile keeps those changes. No later flight save is needed to commit them. All of these are local SlotDesk settings, not Google appointment edits.
 
-**Independent-section alternative:** saving the working-hours section commits that section even if the timezone edit is unsaved. The interface must then expose the differing saved/unsaved states and protect the timezone edit when leaving. This can support quick isolated edits but makes mixed editing harder to explain.
+Implementation defaults supporting that decision:
 
-The owner has not chosen either model. Do not treat lack of an answer as consent to the recommendation. The recommendation should be assessed using this task rather than an abstract layout question.
+- Checkboxes and dropdowns save valid changes immediately. Text inputs save after a brief typing pause or leaving the field, without a separate button. Do not write on every keystroke.
+- Related values form one valid change: an unfinished email, invalid clock value or half-entered date/time range must not replace the last valid saved setting. Show a field-specific error, keep the input visible and make clear that it is not saved. Fixing it triggers automatic saving.
+- Use a small accessible Saving/Saved/Could not save status near the editor rather than repeated popups. Preserve input on failed persistence, allow retry, and do not silently lose a failed edit on close/navigation.
+- New-person setup still needs valid required identity fields before a saved person exists. An incomplete form is not added to the saved-profile list. Onboarding keeps its explicit Continue/setup steps and registration choices; these are not a general profile-save action.
+- Preserve inactive template/manual schedules, explicit timezones and the accepted scheduling semantics. A change must not reset unrelated settings.
+- Merge live changes under the existing account/workspace protection. Do not overwrite another window’s newer fields with a stale whole-profile snapshot. Any actual same-field conflict keeps the existing explicit resolution behavior.
+- Import/restore and destructive profile removal remain deliberate actions with their existing warnings. Live editing does not mean automatically applying an imported file.
+
 
 ## Travel & flights manager
 
-Open directly from a person's Travel & flights button. The person's name/email is visible, so the form does not ask the EA to choose the person again. Display saved travel dates and flights as concise summaries, with Edit and Remove on each entry. Keep Add travel dates and Add flight distinct and easy to reach. A new entry is visibly an editor, not an apparently saved empty row.
+The person’s profile has a list of saved, individually editable/removable flights, with **Add flight above the list**. Manage profiles’ existing Travel & flights action opens this person’s travel area directly; retain their name/email and never ask which person again. Add flight opens a focused form. Its exact actions are **Save** and **Discard**, returning to the same profile/list. Keep whole-day travel dates distinct from flights. An unfinished entry is a form, not an apparently saved empty list row.
 
 Travel date form: optional label, first date, last date and destination timezone. Both dates are included. Show dates and timezone in the saved summary. Explain that these dates change the local timezone used for this person's scheduling. Preserve the existing whole-day travel model; this update does not infer a timezone schedule automatically from exact flight times.
 
-Flight form: optional label; departure date/time/timezone; arrival date/time/timezone. Keep departure and arrival in visually distinct groups and use the system's clock/date display conventions. Explain once that the flight is protected and the existing two-hour windows around departure/arrival are inconvenient. Exact flight entry does not require an airline API or a flight number.
+Flight form: optional label and origin/destination location text; departure date/time/timezone; arrival date/time/timezone. Locations can be cities/airports supplied by the user. They are optional display/prefill data, not an airline lookup or a substitute for an explicit timezone. Keep departure and arrival in visually distinct groups and use the system's clock/date display conventions. Explain once that the flight is protected and the existing two-hour windows around departure/arrival are inconvenient. Exact flight entry does not require an airline API or a flight number.
 
 Travel/flight scenarios:
 
@@ -86,27 +93,33 @@ Travel/flight scenarios:
 - Destination/date suggestions from existing deterministic clues remain suggestions for EA confirmation. Do not auto-adopt them and do not introduce LLM or airline services in this update.
 - Failure to load calendar clues must not block manual travel/flight entry or make the EA fix unrelated hidden profile fields.
 
-## Concrete travel save walkthrough
+## Confirmed individual flight and return-flight flow
 
-Example: open a person's Travel & flights, add an outbound flight, then start entering a return flight and cancel it.
+Owner decision, 18 October: flights are separate saved items. Each flight can be edited or removed from the profile; Add flight is above that list and opens a Save/Discard form that returns to the profile.
 
-**Per-entry proposal:** Save flight commits the outbound flight and returns to the updated list. Cancel on the return-flight form discards only that new entry. Closing the manager keeps the saved outbound flight. This is the current recommendation and remains unapproved.
+Single flight: Save validates and saves that flight, then shows it in the profile list. Discard abandons that form without changing an existing flight. Editing uses the same form and actions. Closing a dirty flight form must preserve the existing saved flight until the user deliberately discards the new edits; Escape closes an active child picker first.
 
-**Whole-list alternative:** both entries belong to one travel-edit draft until Save travel & flights. Closing/cancelling the whole task would discard the outbound flight too unless it was saved first. The list must visibly state that it has unsaved changes.
+The **Return flight** toggle adds a second flight section in the same Add flight form:
 
-Opening a separately saved travel manager from an unsaved profile editor needs an explicit save/discard/stay boundary; it must not save a changed name/timezone merely because Save flight was selected. If both tasks share a draft instead, label the final commit honestly. Settle this together with the profile save model before implementation.
+- Prefill return departure from outbound arrival location/timezone, and return arrival from outbound departure location/timezone. For example, Jerusalem → London becomes London → Jerusalem. Location text does not infer a timezone; copy the explicitly chosen zones.
+- Ask the user for return dates and times. Do not guess their length of stay, return clock times, or flight duration. Keep prefilled locations/zones editable and do not overwrite a return field the user has changed.
+- Save validates both flights and saves both in one local operation, then returns to the profile with two independently editable/removable entries. If either is invalid or persistence fails, neither is added. Discard adds neither flight.
+- Switching the toggle off excludes the return flight from Save; preserve its draft within that open form in case it is switched back on. No previously saved flight is deleted by toggling.
+- Compare real instants across timezones, including overnight/date-line and daylight-saving cases. Each arrival follows its departure; the return departure must not precede outbound arrival.
+- Editing or removing one saved flight does not silently edit/remove the other. Existing saved flights and unrelated live-saved profile changes are unaffected by Discard.
+- Saving a return pair does not automatically create an inferred whole-day travel range. The existing whole-day timezone plan remains separately entered and confirmed.
+
+For whole-day travel entries, use the same focused per-entry Save/Discard pattern as an implementation default, while retaining their inclusive dates and destination timezone. This consistency choice is inferred from the flight decision; it is not a separately quoted owner instruction. No whole-list Save travel & flights remains.
+
+No airline API, flight number lookup, email reading or LLM inference is introduced. Existing flight protection and two-hour inconvenience windows remain unchanged.
+
 
 ## Settings
 
-Keep Dark mode and Open full workspace at the top. Do not reintroduce profile editing or familiar-profile suggestions here. Organize the remaining controls into Display, Calendars, Local data & backups, and Recovery. Keep the registration's saved/waiting status and its conditional retry in an account/data area rather than as a global status banner.
+Retain the implemented 0.9.1 experience: Dark mode and Open full workspace at the top; clock/date/default-calendar changes save immediately; Choose Calendars opens the same-size submenu with fixed Save/Discard and returns to Settings. Default invitation calendar is chosen only in main Settings. Clear Data remains red at the bottom of scrollable content; main Settings has no save button or fixed footer. Keep the registration status and conditional retry local to Settings.
 
-- Display: clock and date ordering. Keep actual stored dates/instants unchanged when display changes. Preserve valid unsaved clock-input values when another window changes the display preference.
-- Calendars: selected-source summary, Choose calendars and default invitation calendar. Keep the accepted same-size submenu, fixed Save calendars/Discard changes footer, X/Escape behavior and return to Settings. Retain staged display preferences while visiting the submenu. Distinguish saving that submenu from saving still-pending preferences on its parent.
-- Local data & backups: Download full backup and Restore full backup, with the settled contract. Selected-person import/export belongs in Manage profiles, rather than duplicating the controls everywhere. A restore can also start during onboarding after identifying the receiving account.
-- Recovery: operation history and relevant recovery actions. These remain distinct from importing a configuration file and never resend directly from history.
-- Clear local SlotDesk data remains apart from routine actions, with its existing explicit confirmation and unfinished-operation guard.
+Add the planned Local data & backups actions here: Download full backup and Restore full backup, following the settled replacement/own-profile contract. Selected-person import/export belongs in Manage profiles. Restore can also start during onboarding after identifying the receiving account. Do not restore ordinary recovery-history navigation; exceptional recovery stays attached to the affected calendar operation.
 
-Make current save semantics visible before changing them: dark mode currently applies immediately, clock/date/default preferences use Save preferences, and calendar selection has its own save. A consistent Settings save model needs to be assessed with the two profile/travel decisions; do not silently invent another independently saving behavior in each group.
 
 ## Wording pass
 
@@ -131,7 +144,7 @@ Use the same names in profile defaults, per-meeting overrides, warnings and Help
 
 - Complete Add/Edit profile, advanced-rule editing, travel/flight entry, Settings/calendar selection, import selection and restore confirmation using the keyboard.
 - Give every popup an accessible title and a sensible initial focus. Keep focus inside an active modal and return it to the invoking control or a logical updated row on completion.
-- Escape first closes the active picker/child. A dirty editor follows the chosen save/discard policy; mandatory onboarding still cannot be bypassed. Do not trap the user indefinitely inside a picker.
+- Escape first closes the active picker/child. Valid live-saved profile edits need no discard prompt; an unfinished flight/travel form uses its explicit Save/Discard boundary. Failed/invalid edits stay visible rather than being silently lost. Mandatory onboarding still cannot be bypassed.
 - Timezone controls have names such as Departure timezone and Arrival timezone, distinct from the selected values. Preserve ordinary search-input editing keys. Arrows navigate results and Enter selects an option without accidentally submitting the parent task.
 - Keep visible focus in both themes. Convey selected/expanded/disabled/error states programmatically and explain disabled controls beside the relevant setting. Icon actions have specific accessible names and practical hit areas.
 - Associate errors with their fields, open the relevant section and retain other input. Announce useful local completion/progress without rereading the whole profile list or producing duplicate alerts.
@@ -142,8 +155,8 @@ References: [W3C modal dialog pattern](https://www.w3.org/WAI/ARIA/apg/patterns/
 
 ## Decisions and delivery
 
-Confirmed: the backup/import contract, existing profile/calendar/scheduling semantics and the requirement to plan before implementation.
+Confirmed: live profile editing without general Save/Discard; individual flights with Save/Discard and an optional return flight in the same form; the complete backup/selected-profile import-export contract; existing calendar/scheduling policies; and the 0.9.1 Settings, suggestion-cache and layout refinements.
 
-Open: the save boundary for basic/advanced profile editing, and whether travel is saved per entry or per whole-list session. The owner explicitly has no answer yet. A separate advanced-menu layout question was premature; establish a concrete task benefit before proposing navigation changes. Settings save consistency should be included when resolving those two boundaries, not added later as a surprise.
+The two previously unanswered save-policy questions are resolved. The whole-day travel form follows the documented per-entry implementation default. No additional blocking product question is identified for this scope; handle ordinary validation, persistence and accessibility details against these decisions.
 
-Next planning step: review the two concrete save walkthroughs, settle one coherent behavior for each task, then finalize the screen/action/copy inventory. Implementation and package/version changes follow that review. Use local synthetic data and focused keyboard/browser verification; no new real-Google checklist is assigned.
+Implementation remains pending. Implement profile/travel UX, wording, keyboard/accessibility and local export/import under this plan, retaining the actual 0.9.1 behaviors. Verify locally with synthetic files/profiles/calendars, including failed live saves, invalid intermediate input, concurrent windows, round-trip pair atomicity and backup/import round trips for every new flight field. Update Help, privacy, version logs and the package when shipped. No new real-Google test checklist is assigned.

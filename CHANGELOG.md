@@ -1,5 +1,11 @@
 # Repository changelog
 
+## 2026-10-18 — Profile and flight save policies settled
+
+- Record live profile editing without general Save/Discard, with validation and honest failed-save handling.
+- Record individual editable/removable flights, Add flight above the list, exact Save/Discard actions returning to the profile, and optional outbound/return entry with reversed location/timezone prefills. Keep flight dates/times user-entered and save a pair atomically.
+- Reconcile the usability plan with shipped 0.9.1 Settings, pagination, suggestions and recovery behavior. The former two save-policy blockers are resolved; implementation, accessibility/wording and the settled backup/import work remain planned.
+
 ## 2026-10-15 — SlotDesk 0.9.1
 
 - Implement the approved Settings, calendar chooser, header, profile pagination, familiar-face cache and participant-picker polish.

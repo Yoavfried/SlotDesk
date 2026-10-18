@@ -2,7 +2,7 @@
 
 Started 15 October 2026 after the 0.9.0 registration activation. The focused 0.9.1 Settings, profile-list, suggestion, picker and connection-confirmation changes are implemented; see [changelog](changelog.md). The broader redesign and backup/import remain proposals.
 
-The owner selected keyboard/accessibility improvements, the beginning of a wording review, and a UX review of Manage profiles, Settings, advanced profile editing and travel/flight entry as the next direction. The owner explicitly chose support for selecting individual profiles during local export/import, in addition to a complete profile/settings backup. The backup/import contract is now settled, including own-profile protection. Layout and save boundaries remain proposals. The [concrete task walkthroughs](usability-flows.md) distinguish current behavior from proposed improvements and record the two unanswered save-policy decisions.
+The owner selected keyboard/accessibility improvements, the beginning of a wording review, and a UX review of Manage profiles, Settings, advanced profile editing and travel/flight entry as the next direction. The owner explicitly chose support for selecting individual profiles during local export/import, in addition to a complete profile/settings backup. The backup/import contract is now settled, including own-profile protection. On 18 October the owner chose live profile editing and individual flight forms with Save/Discard, including an optional return flight. The [concrete task walkthroughs](usability-flows.md) record those accepted flows and implementation defaults; implementation remains planned.
 
 ## Current observations
 
@@ -23,10 +23,10 @@ The owner selected keyboard/accessibility improvements, the beginning of a wordi
 | Availability | Positive availability windows and protected/inconvenient periods. Explain whose timezone each rule uses and whether it applies once or repeatedly. |
 | Flexibility and meeting rules | Separate usual-hour ranking, ordinary-overlap permission, meeting buffers and minimum notice. Show saved defaults as defaults; meeting-specific changes remain on that meeting. |
 | Special dates and event treatment | Holiday/leave date exceptions, title classification and individual-event rules. Explain precedence and the affected person/date or event. |
-| Travel & flights | A focused list of trips/flights with Add, Edit and Remove. Start a new entry by choosing Travel dates or Exact flight. Keep whole-day travel simple and place exact flight details in their own form. |
+| Travel & flights | Saved, individually editable/removable flights in the person’s profile. Add flight sits above the list and opens Save/Discard; an optional return section reverses locations/timezones while leaving dates/times for the user. Keep whole-day travel separate and use the same per-entry form pattern. |
 | Settings | Group Display, Calendars and future Local data & backups. Keep exceptional recovery attached to the affected operation. Keep profile editing/suggestions in Manage profiles. Place destructive local clearing apart from routine backup/import actions. |
 
-Keep headings fixed while bodies scroll. Main Settings now saves immediately without a bottom action bar; calendar selection keeps fixed Save/Discard. Profile/travel save boundaries remain undecided. Returning from a nested editor should return to its parent with the relevant item visible and keyboard focus restored. Changes must not disappear merely because another information popup was opened. Keep the supplied fonts, wordmark, lime header and light/dark tokens.
+Keep headings fixed while bodies scroll. Main Settings now saves immediately without a bottom action bar; calendar selection keeps fixed Save/Discard. Valid profile changes will save live. Individual flight/travel forms have Save/Discard and return to the person’s profile; return-flight entry can save two flights together. Returning from a nested editor should return to its parent with the relevant item visible and keyboard focus restored. Changes must not disappear merely because another information popup was opened. Keep the supplied fonts, wordmark, lime header and light/dark tokens.
 
 ## Situations to resolve in the UX pass
 
@@ -42,7 +42,7 @@ Keep headings fixed while bodies scroll. Main Settings now saves immediately wit
 | Add an exact flight | Show departure date/time/timezone and arrival date/time/timezone separately. Explain the protected flight interval and existing two-hour inconvenience windows. |
 | Flight crosses midnight or the date line | Validate actual instants and show both local dates/zones. Do not assume arrival must have a later wall-clock reading. |
 | Ambiguous or nonexistent local time | Explain the exact field/problem and require a valid, unambiguous choice rather than silently changing it. |
-| User leaves an edited form | Consistent explicit save/discard behavior preserves the entered values until the user chooses. A nested picker closes before its parent form. |
+| User leaves an edited form | Valid profile changes are already saved; failed/invalid changes stay visible with an error. An unfinished flight/travel form uses its Save/Discard boundary. A nested picker closes before its parent form. |
 | Invalid field below a collapsed section | Open the relevant section, retain other input, identify the field and move focus to the problem. |
 
 These are UX acceptance targets; an observed implementation defect should be reproduced before being reported as a confirmed bug.
@@ -80,6 +80,6 @@ The [detailed export/import contract](export-import.md) supersedes the original 
 
 ## Delivery and evidence
 
-Review the [task-based screen flows](usability-flows.md) first. The owner has not yet chosen the profile or travel save model; do not infer approval. Then implement wording and keyboard behavior alongside the final layout, and local export/import under the settled contract. Verify with synthetic profiles, travel, mixed calendar access, duplicate-email conflicts, invalid files, save failure and cross-window changes. Use focused local browser checks without Google sign-in or invitations; do not assign another real-calendar test checklist for these changes.
+The [task-based screen flows](usability-flows.md) now record the accepted 18 October save policies. The two former blockers are resolved: save valid profile edits live; save/discard individual flights, optionally two at once through Return flight. Implement the remaining wording and keyboard behavior with these flows and local export/import under the settled contract. Verify with synthetic profiles, travel, mixed calendar access, duplicate-email conflicts, invalid files, save failure and cross-window changes. Use focused local browser checks without Google sign-in or invitations; do not assign another real-calendar test checklist for these changes.
 
 Keep all new work labelled planned until implemented and verified. Update Help, privacy, version logs and the package when it ships. The broader website, Outlook, LLM/email work and extension-store distribution remain separate workstreams.
