@@ -1,6 +1,6 @@
 # SlotDesk validation record
 
-Current code: **0.9.2**. Automated evidence and user-reported live behavior are recorded separately. No formal manual acceptance checklist remains.
+Current code: **0.9.3**. Automated evidence and user-reported live behavior are recorded separately. No formal manual acceptance checklist remains.
 
 ## Reported live progress — 13 October 2026
 
@@ -112,3 +112,7 @@ The private database schema has exactly five columns, and SQL privilege inspecti
 ## 0.9.2 local browser evidence — 18 October
 
 Synthetic Google transport only: valid profile text/checkbox changes saved live; invalid email and simulated full storage preserved the saved value and entered text. Two windows retained unrelated field edits. Flight forms ignored Escape and exposed no X, saved an outbound/return pair, and Discard preserved the saved list. Profile files exported/imported, replacement warnings appeared, and full restore cleared the unsent meeting while preserving own-profile identity and recipient registration. The other window closed its stale editor. Configuration flows made zero event POST/PATCH/DELETE requests. Narrow/wide layout and keyboard/onboarding checks use this same fixture. No new real-calendar checklist is required.
+
+## 0.9.3 accessibility evidence
+
+The [accessibility record](accessibility.md) and [structured report](accessibility-results.json) document 20 zero-violation automated screen scans and 36 browser journey assertions. All 1,684 application checks are retained. This technical result does not certify complete accessibility or close the owner’s overall UX review.

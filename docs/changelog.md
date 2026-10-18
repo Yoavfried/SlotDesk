@@ -1,5 +1,14 @@
 # SlotDesk changelog
 
+## 0.9.3 — 18 October 2026
+
+- Record the owner-led overall UX, buttons, screen-width/layout and wording review as open. Only the owner decides readiness; technical checks do not imply UX approval.
+- Improve secondary-text contrast in both themes and selected participant cards, input boundaries, visible keyboard focus, pointer spacing, native color schemes and forced-colors support. Retain the supplied wordmark, fonts and lime header.
+- Add a skip link, contextual profile/guest/flight/meeting actions and distinct outbound/return timezone names. Make profile suggestions keyboard-operable listboxes with announced active choices.
+- Focus dialog context on entry, recover after replaced controls and return focus across nested dialogs using open order. Preserve flight Save/Discard, block Escape from discarding, expose required errors and open hidden advanced sections for validation.
+- Prevent Enter in a booking text field from implicitly sending invitations; the deliberate send button remains keyboard-operable.
+- Verify 20 screen states with axe-core 4.14.0 (no automated violations), plus 36 keyboard/focus/reflow checks, including forced colors and 2x CSS zoom. Automated incomplete checks and real screen-reader validation remain explicitly open. All 1,684 application checks pass; synthetic appointments stay unchanged.
+
 ## 0.9.2 — 18 October 2026
 
 - Save valid profile changes live, with visible saved/failure state and last-valid-value protection. Keep own-profile onboarding explicit. Merge unrelated edits from simultaneous windows without overwriting them.

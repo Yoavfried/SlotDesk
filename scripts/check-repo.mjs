@@ -7,7 +7,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const files = [];
 const errors = [];
 const contents = new Map();
-const skip = new Set(['.git', 'dist', 'node_modules', '.playwright-cli', 'output']);
+const skip = new Set(['.git', 'dist', 'node_modules', '.a11y-tools', '.playwright-cli', 'output']);
 
 async function walk(directory) {
   for (const item of await readdir(directory, { withFileTypes: true })) {
@@ -49,7 +49,7 @@ let syntaxCount = 0;
 let documentCount = 0;
 for (const file of files) {
   const name = relative(file);
-  if (/\.(?:js|mjs)$/.test(file)) {
+  if (/\.(?:js|cjs|mjs)$/.test(file)) {
     const result = spawnSync(process.execPath, ['--check', file], { encoding: 'utf8' });
     syntaxCount++;
     if (result.status !== 0) errors.push(`${name}: JavaScript syntax failed\n${result.stderr || result.error?.message || ''}`);

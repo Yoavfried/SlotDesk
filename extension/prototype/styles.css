@@ -1,6 +1,6 @@
 :root{
   --bg:#f7f6f3; --sunk:#eeece7; --sunk-2:#e5e2db; --card:#fffefc;
-  --ink:#1b1a17; --ink-2:#57544d; --ink-3:#8b877e;
+  --ink:#1b1a17; --ink-2:#57544d; --ink-3:#625e56;
   --line:#e4e1da; --line-2:#d2cec5;
   --acc:#1b1a17; --acc-ink:#fbfaf8; --acc-soft:#e8e5de;
   --good:#2f6b4f; --good-bg:#e2efe7; --good-ln:#a9cdb9;
@@ -19,7 +19,7 @@
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
     --bg:#131211; --sunk:#1d1c19; --sunk-2:#272521; --card:#191816;
-    --ink:#f0eee9; --ink-2:#a8a49b; --ink-3:#7a766e;
+    --ink:#f0eee9; --ink-2:#a8a49b; --ink-3:#a39e95;
     --line:#2a2824; --line-2:#3d3a34;
     --acc:#f0eee9; --acc-ink:#131211; --acc-soft:#2a2824;
     --good:#7cc39d; --good-bg:#17281f; --good-ln:#39543f;
@@ -32,7 +32,7 @@
 }
 :root[data-theme="dark"]{
   --bg:#131211; --sunk:#1d1c19; --sunk-2:#272521; --card:#191816;
-  --ink:#f0eee9; --ink-2:#a8a49b; --ink-3:#7a766e;
+  --ink:#f0eee9; --ink-2:#a8a49b; --ink-3:#a39e95;
   --line:#2a2824; --line-2:#3d3a34;
   --acc:#f0eee9; --acc-ink:#131211; --acc-soft:#2a2824;
   --good:#7cc39d; --good-bg:#17281f; --good-ln:#39543f;

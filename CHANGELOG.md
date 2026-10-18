@@ -1,5 +1,11 @@
 # Repository changelog
 
+## 2026-10-18 — SlotDesk 0.9.3 accessibility
+
+- Expand the open UX review and reserve readiness approval to the owner.
+- Implement and verify focused accessibility fixes; preserve scheduling rules, Google permissions and reviewed calendar-write boundaries.
+- Add a repeatable synthetic browser fixture/journey and record technical coverage without claiming full accessibility conformance.
+
 ## 2026-10-18 — SlotDesk 0.9.2
 
 - Implement the accepted live profile, independent flight/travel Save/Discard and portable configuration-file contracts.

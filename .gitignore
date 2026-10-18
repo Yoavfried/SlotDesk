@@ -9,3 +9,5 @@ Thumbs.db
 
 .playwright-cli/
 output/playwright/
+
+.a11y-tools/

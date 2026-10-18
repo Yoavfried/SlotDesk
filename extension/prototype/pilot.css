@@ -119,3 +119,20 @@ header.bar{padding-block:10px}
 .profile-toolbar{display:block}.profile-toolbar #saved-profile-count{margin:0 0 12px}.profile-file-actions{display:flex;gap:8px;flex-wrap:wrap}.profile-file-actions button{white-space:nowrap;flex:1 0 auto}
 
 .profile-source-status{display:block;font-size:11px;color:var(--ink-3);line-height:1.5}
+
+/* Accessibility: readable secondary text, clear focus and reachable targets. */
+:root[data-theme="light"]{color-scheme:light}:root[data-theme="dark"]{color-scheme:dark}
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.timezone-trigger:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.skip-link{position:fixed;left:12px;top:8px;z-index:2000;background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:8px;transform:translateY(-200%)}
+.skip-link:focus{transform:none}.workspace:focus{outline:none}
+html{scroll-padding-top:130px}dialog .dialog-body{scroll-padding-block:12px}
+button,input,select,textarea,summary,[tabindex]{scroll-margin-block:130px 20px}
+dialog button,dialog input,dialog select,dialog textarea,dialog summary,dialog [tabindex]{scroll-margin-block:12px}
+input:not([type=checkbox]):not([type=hidden]),select,textarea{border-color:var(--ink-3);color:var(--ink)}
+input::placeholder,textarea::placeholder{color:var(--ink-3);opacity:1}
+button,summary{min-height:28px;min-width:28px}label.check{min-height:28px;padding-block:3px}
+.familiar-heading{font-size:var(--type-card)}.field-validation{font-size:var(--type-label);margin:5px 0 0}
+@media(forced-colors:active){:focus-visible{outline:3px solid Highlight!important}input,select,textarea,button,.timezone-trigger{border:1px solid ButtonText}.badge{border:1px solid currentColor}.theme-track{border:1px solid ButtonText}}
+
+.person-card.active .participant-origin,.person-card.active .participant-rules summary,.person-card.active .participant-rules .check,.person-card.active .participant-rules .muted{color:var(--acc-ink)}

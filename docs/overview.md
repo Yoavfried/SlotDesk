@@ -39,3 +39,4 @@ Version 0.8.1 adds [three-step onboarding and calendar scope](onboarding-and-pro
 
 
 Version 0.9.2 adds automatic read-only confirmation through bell alerts, offline write blocking, immediate Settings preferences, responsive profile pagination, six familiar-face suggestions with a sliding cache and a stable header. See [version history](changelog.md).
+\nVersion 0.9.3 adds a documented accessibility pass and repeatable local checks. The overall UX, actions/buttons, responsive layout and wording review remains open for owner approval; technical checks do not decide readiness. See [accessibility](accessibility.md).\n
