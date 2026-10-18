@@ -12,7 +12,18 @@ The existing [implemented work](implemented.md), [accepted UX](ux-decisions.md),
 
 The authorized onboarding, travel, timezone, mapping, guest and flexibility work from the [14 October product review](product-review-2026-10-14.md) is implemented; see [final behavior](onboarding-and-profiles.md). Workspace scope now replaces read-all-accessible-event behavior. The next selected direction is the [usability review](usability-review.md): profile/Settings/travel organization, keyboard/accessibility, a first wording pass and local backup with selectable profile export/import. The backup/import contract is settled. On 18 October the owner settled [profile/flight saving](usability-flows.md): valid profile settings save live; each flight has Save/Discard, with optional two-flight return entry. The former save-policy blockers are resolved. The accepted live-saving, flight/travel forms, backup/import, initial wording and keyboard improvements are implemented in 0.9.2. The wider user-experience review remains open and requires the owner’s approval. Accessibility engineering is a separate active workstream.
 
-## Current review work\n\n| Workstream | Status | Completion authority |\n| --- | --- | --- |\n| Overall UX, buttons, layout at different widths and wording | Open; owner review required. Do not mark Ready or Mostly ready based on source or tests. | Owner decides when the experience is ready. |\n| Accessibility engineering | First technical pass implemented in 0.9.3: keyboard/focus, labels, contrast, errors and reflow. Screen-reader/manual review remains open; see the accessibility record. | Engineering checks document coverage; they do not certify complete accessibility or approve the overall UX. |\n\n## Availability emails — unconfirmed future feature
+## Next work item
+
+**Profile advanced settings cleanup and improvement** is the next task requested by the owner. Review the existing controls, organization, wording and behavior before implementing changes. This follow-up records the priority; it does not implement that cleanup or close the owner-led UX review.
+
+## Current review work
+
+| Workstream | Status | Completion authority |
+| --- | --- | --- |
+| Overall UX, buttons, layout at different widths and wording | Open; owner review required. Do not mark Ready or Mostly ready based on source or tests. | Owner decides when the experience is ready. |
+| Accessibility engineering | First technical pass implemented in 0.9.3: keyboard/focus, labels, contrast, errors and reflow. Screen-reader/manual review remains open; see the accessibility record. | Engineering checks document coverage; they do not certify complete accessibility or approve the overall UX. |
+
+## Availability emails — unconfirmed future feature
 
 [Ask about times](time-inquiries.md) is parked after reviewing Gmail AMP's compatibility and sender/service requirements. It is not part of the next update. The owner is considering it only for users supplying an LLM API key, with model-assisted inquiry writing and reply interpretation. Both the BYOK-only restriction and final reply protocol are unconfirmed. No external response page is approved; a model does not solve inline controls in unsupported email clients. An inquiry response does not itself authorize booking.
 

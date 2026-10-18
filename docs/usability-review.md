@@ -4,7 +4,17 @@ Started 15 October 2026 after the 0.9.0 registration activation. The focused 0.9
 
 The owner selected keyboard/accessibility improvements, the beginning of a wording review, and a UX review of Manage profiles, Settings, advanced profile editing and travel/flight entry as the next direction. The owner explicitly chose support for selecting individual profiles during local export/import, in addition to a complete profile/settings backup. The backup/import contract is now settled, including own-profile protection. On 18 October the owner chose live profile editing and individual flight forms with Save/Discard, including an optional return flight. The [concrete task walkthroughs](usability-flows.md) record those accepted flows and implementation defaults; implementation shipped in 0.9.2.
 
-## Readiness and scope — owner clarification, 18 October 2026\n\nThe open review covers the whole user experience, screen flows, buttons/actions, layout and flexibility across screen widths, and wording. It is not merely a copy pass. The owner alone decides when this experience is ready. Completed code, automated tests, accessibility checks or an agent’s recommendation must not be presented as owner acceptance or a Mostly ready status.\n\nAccessibility engineering can progress now as a distinct workstream. Its findings, fixes and verification belong in the [accessibility record](accessibility.md). A technical fix does not close the broader UX review.\n\n## Current observations
+## Readiness and scope — owner clarification, 18 October 2026
+
+The open review covers the whole user experience, screen flows, buttons/actions, layout and flexibility across screen widths, and wording. It is not merely a copy pass. The owner alone decides when this experience is ready. Completed code, automated tests, accessibility checks or an agent’s recommendation must not be presented as owner acceptance or a Mostly ready status.
+
+Accessibility engineering can progress now as a distinct workstream. Its findings, fixes and verification belong in the [accessibility record](accessibility.md). A technical fix does not close the broader UX review.
+
+## Next owner-requested task
+
+Profile advanced settings cleanup and improvement comes next. Review the existing controls, organization, wording and behavior together; the wider experience remains open for owner review.
+
+## Current observations
 
 - Basic profile editing already contains email, name, timezone and availability calendars. Keep that short setup.
 - Advanced profile options currently contains scheduling preferences, timezone clues, working schedules, convenience/radius/notice, positive availability, travel/flights, leave/holiday exceptions, classification rules and individual-event treatment. The nesting makes unrelated controls hard to find.

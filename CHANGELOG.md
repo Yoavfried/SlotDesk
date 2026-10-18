@@ -2,6 +2,8 @@
 
 ## 2026-10-18 — SlotDesk 0.9.3 accessibility
 
+- Same-version UI follow-up: align the participant Add button, dismiss suggestions outside the picker/on page scroll, keep them below the header, and use Edit Profile as the editor heading. Record advanced profile settings cleanup/improvement as the next task.
+
 - Expand the open UX review and reserve readiness approval to the owner.
 - Implement and verify focused accessibility fixes; preserve scheduling rules, Google permissions and reviewed calendar-write boundaries.
 - Add a repeatable synthetic browser fixture/journey and record technical coverage without claiming full accessibility conformance.

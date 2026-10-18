@@ -2,6 +2,8 @@
 
 ## 0.9.3 — 18 October 2026
 
+Same-version follow-up: align the participant Add button with its search field; close suggestions on outside interaction and page scrolling, reopen on search interaction, and keep the popup below the header. Use the generic **Edit Profile** heading. Record advanced profile settings cleanup/improvement as the next task. No version or Calendar behavior change.
+
 - Record the owner-led overall UX, buttons, screen-width/layout and wording review as open. Only the owner decides readiness; technical checks do not imply UX approval.
 - Improve secondary-text contrast in both themes and selected participant cards, input boundaries, visible keyboard focus, pointer spacing, native color schemes and forced-colors support. Retain the supplied wordmark, fonts and lime header.
 - Add a skip link, contextual profile/guest/flight/meeting actions and distinct outbound/return timezone names. Make profile suggestions keyboard-operable listboxes with announced active choices.
