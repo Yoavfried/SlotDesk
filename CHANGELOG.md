@@ -2,6 +2,7 @@
 
 ## 2026-10-18 — SlotDesk 0.9.3 accessibility
 
+- Further same-version card polish: place email with the name, replace availability captions with a timezone-row calendar icon and hover/focus explanation, move automatic inclusion guidance to linked-calendar profile settings, and shorten the per-meeting overlap copy.
 - Same-version UI follow-up: align the participant Add button, dismiss suggestions outside the picker/on page scroll, keep them below the header, and use Edit Profile as the editor heading. Record advanced profile settings cleanup/improvement as the next task.
 
 - Expand the open UX review and reserve readiness approval to the owner.

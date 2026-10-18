@@ -2,7 +2,7 @@
 
 ## 0.9.3 — 18 October 2026
 
-Same-version follow-up: align the participant Add button with its search field; close suggestions on outside interaction and page scrolling, reopen on search interaction, and keep the popup below the header. Use the generic **Edit Profile** heading. Record advanced profile settings cleanup/improvement as the next task. No version or Calendar behavior change.
+Same-version follow-up: align the participant Add button with its search field; close suggestions on outside interaction and page scrolling, reopen on search interaction, and keep the popup below the header. Use the generic **Edit Profile** heading. Record advanced profile settings cleanup/improvement as the next task. No version or Calendar behavior change. A further card follow-up moves email directly below the name, replaces the availability text with an accessible calendar connection icon beside the timezone/local time, and removes the automatic-participant caption. Linked-calendar profile settings now explain automatic inclusion. Shorten the meeting-only overlap label and explanatory text as requested.
 
 - Record the owner-led overall UX, buttons, screen-width/layout and wording review as open. Only the owner decides readiness; technical checks do not imply UX approval.
 - Improve secondary-text contrast in both themes and selected participant cards, input boundaries, visible keyboard focus, pointer spacing, native color schemes and forced-colors support. Retain the supplied wordmark, fonts and lime header.

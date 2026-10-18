@@ -4,6 +4,8 @@ Current code: **0.9.3**. Automated evidence and user-reported live behavior are 
 
 ## Same-version interface follow-up — 18 October 2026
 
+The participant-card follow-up also passed 28 focused browser assertions: compact name/email/timezone placement, connected and crossed-out calendar icons, the exact hover/focus wording, Escape dismissal, linked-calendar automatic-participant guidance, meeting-only copy, and six widths from 320 to 1280 pixels. Automated accessibility scans showed no violations in either theme after transitions completed. Synthetic appointments remained unchanged.
+
 Verified participant suggestions opening before typing, filtering, outside-click dismissal, reopening after dismissal, page-scroll dismissal, internal-list scrolling and keyboard selection. Checked Add/search alignment and horizontal overflow at 320, 390, 514, 600, 680 and 1280 pixels, plus dark-theme behavior in a short viewport and the generic Edit Profile heading. Suggestions fit the available space above or below the field and remain below the header. Re-ran the existing 20 accessibility screen states and 36 keyboard/focus/reflow assertions with no automated violations. Application checks and repository checks pass; synthetic appointments remain unchanged. Version stays 0.9.3; the overall UX remains open for owner review.
 
 ## Reported live progress — 13 October 2026
