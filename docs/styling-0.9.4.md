@@ -93,9 +93,19 @@ Replace the separate intro/view-heading spacing recipes with one page-header pat
 
 These are gaps between visible elements, not additive default paragraph margins. A back action remains a separate row where needed. Remove hard-coded line breaks from page titles so the same words wrap naturally at the available width. Preserve a stable wordmark/header size; do not enlarge it to fill a wider window.
 
+## Stable header when scrollbars appear
+
+The owner reports that the main menu fits without a scrollbar while longer pages need one, shifting the gear, bell and Help icons horizontally during navigation. The desired behavior is stable header and content alignment regardless of whether the active page needs vertical scrolling.
+
+Recommended approach: reserve the normal scrollbar gutter consistently at the root page using `scrollbar-gutter: stable`. This keeps the existing page scroll and sticky header arrangement. With classic scrollbars, short pages keep empty gutter space rather than an unnecessary scrollbar thumb; overlay scrollbars do not consume layout width. See the [browser documentation](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/scrollbar-gutter). Do not add a hard-coded scrollbar-width padding or double-compensate for overlay scrollbars.
+
+The owner's alternative, scrolling only the content below a full-width header, remains recorded. It is not the recommended first approach because it changes the page's scrolling container and would require additional focus/scroll behavior review. The current source reserves a gutter inside Settings but not at the root page; this plan does not yet change either implementation.
+
+Verify unchanged horizontal positions for the logo, bell, Help, gear and main content when navigating between the menu and each main page, when content expands/collapses, and when dialogs open/close. Cover sidebar/full-window widths, text zoom and native scrollbar preferences. This is a 0.9.4 layout requirement; its implementation approach remains a recommendation for owner review.
+
 ## Scope and review boundary
 
-The styling pass covers the main menu, shared page headers, common controls, navigation arrows, capitalization and ordinary typography in both themes. It should include representative onboarding, New meeting, Existing meetings, Manage profiles and dialogs to expose inconsistencies. It does not redesign profile advanced settings yet or change scheduling/calendar behavior.
+The styling pass covers the main menu, shared page headers, stable alignment when scrollbars appear, common controls, navigation arrows, capitalization and ordinary typography in both themes. It should include representative onboarding, New meeting, Existing meetings, Manage profiles and dialogs to expose inconsistencies. It does not redesign profile advanced settings yet or change scheduling/calendar behavior.
 
 After the owner settles the proposed choices, implementation should consolidate shared type/spacing/icon roles rather than add another set of isolated CSS overrides. The maintained guide should illustrate ordinary copy versus text actions, all type roles, menu icons/arrows, capitalization exceptions, focus/hover/error states and compact/wide layouts. Technical checks should cover text zoom, wrapping, focus, contrast and clipping, but do not establish owner approval of the styling.
 
