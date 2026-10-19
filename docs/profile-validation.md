@@ -1,6 +1,6 @@
 # Profile editing and validation — 0.9.3.5
 
-Updated 19 October 2026. This maps the current controls and validators; the individual advanced-setting UX remains for 0.9.4.
+Updated 19 October 2026. This maps the current controls and validators; the individual advanced-setting UX remains for 0.9.5.
 
 ## Basic profile fields
 

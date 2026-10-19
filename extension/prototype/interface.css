@@ -27,3 +27,5 @@ button:has(>.action-arrow),.button-link:has(>.action-arrow){display:inline-flex;
 /* Keep refresh with the meeting count, below any loading notices. */
 .blocked-search{margin:24px 0;padding:20px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow-wrap:anywhere}.blocked-search h3{margin:0 0 8px}.blocked-search li{margin:16px 0}.blocked-search li p{margin:4px 0}.blocked-search .text-button{margin:4px 12px 0 0}
 .results-heading.meeting-list-heading{align-items:center;flex-direction:row;flex-wrap:wrap;gap:12px;margin:24px 0 12px}.meeting-notices{overflow-wrap:anywhere}.meeting-notices:empty{display:none}.meeting-notices p{margin:12px 0}button.meeting-refresh-link{display:inline;margin:0;padding:0;border:0;border-radius:0;min-width:0;min-height:0;background:none;color:inherit;font-size:inherit;font-weight:600;line-height:inherit;text-decoration:underline;vertical-align:baseline}button.meeting-refresh-link:hover{background:none;color:inherit}
+
+.results-note{color:var(--ink-2);margin:8px 0 24px;line-height:1.6}.advanced-grid select{min-width:0;max-width:100%}

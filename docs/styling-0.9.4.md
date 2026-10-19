@@ -1,4 +1,6 @@
-# Styling plan for 0.9.4
+# Styling plan — historical 0.9.4 direction
+
+Current schedule, confirmed 19 October: the styling/basic profile work shipped in 0.9.3.5; scheduling rules ship in 0.9.4; individual advanced-profile cleanup is reserved for **0.9.5**. The original planning record below is retained for history.
 
 Started 19 October 2026. **Authorized intermediate implementation: 0.9.3.5.** On 19 October the owner requested implementation of the styling and basic profile/calendar changes as 0.9.3.5, leaving individual advanced settings for 0.9.4. Settle the styling plan first, then return to profile advanced settings cleanup and improvement. The owner decides when the wider user experience is ready.
 

@@ -32,20 +32,20 @@ let slot=evaluate([required]);eq(U.calendarDataSummary(slot).label,'Calendar dat
 slot=evaluate([required,unknown]);eq(slot.confirmed,true);eq(U.calendarDataSummary(slot).incomplete,true);eq(U.participantFit(slot.people[1]).label,'Availability unconfirmed');ok(U.calendarDataSummary(slot).explanation.includes('Unknown (optional)'));
 slot=evaluate([{...unknown,required:true}]);eq(slot.confirmed,false);eq(U.participantFit(slot.people[0]).tone,'warn');
 const busy={...known('Busy'),required:false,busy:[{id:'busy',start:'2026-10-20T10:00:00Z',end:'2026-10-20T11:00:00Z',title:'Existing event'}]};
-slot=evaluate([required,busy]);eq(U.calendarDataSummary(slot).incomplete,false);eq(U.participantFit(slot.people[1]).label,'Calendar conflict');eq(slot.people[1].calendarConflictCount,1);eq(U.participantFit(slot.people[1]).tone,'stop');
-slot=evaluate([required,{...busy,calendar:'none',coverages:[]}]);eq(U.participantFit(slot.people[1]).label,'Calendar conflict');ok(U.participantFit(slot.people[1]).detail.includes('Calendar data incomplete'));
+slot=evaluate([required,busy]);eq(U.calendarDataSummary(slot).incomplete,false);eq(U.participantFit(slot.people[1]).label,'1 meeting overlap');eq(slot.people[1].calendarConflictCount,1);eq(U.participantFit(slot.people[1]).tone,'stop');
+slot=evaluate([required,{...busy,calendar:'none',coverages:[]}]);eq(U.participantFit(slot.people[1]).label,'1 meeting overlap');ok(U.participantFit(slot.people[1]).detail.includes('Calendar data incomplete'));
 const outside={...known('Outside'),required:false,availability:[{days:[2],s:'18:00',e:'19:00',tz:'UTC'}]};
-slot=evaluate([required,outside]);eq(slot.people[1].band,'no');eq(U.participantFit(slot.people[1]).label,'Does not fit profile');ok(U.participantFit(slot.people[1]).detail.includes('outside stated availability'));eq(slot.people[1].hasCalendarConflict,false);
+slot=evaluate([required,outside]);eq(slot.people[1].band,'no');eq(U.participantFit(slot.people[1]).label,'Outside stated availability');ok(U.participantFit(slot.people[1]).detail.includes('outside stated availability'));eq(slot.people[1].hasCalendarConflict,false);
 const radius={...known('Radius'),radius:{minutes:20,mode:'inconvenient'},busy:[{id:'preceding',start:'2026-10-20T09:00:00Z',end:'2026-10-20T09:50:00Z',title:'Preceding meeting'}]};
-slot=evaluate([radius]);eq(slot.people[0].inconvenientMinutes,10);eq(U.participantFit(slot.people[0]).label,'Inconvenient time');ok(U.participantFit(slot.people[0]).detail.includes('10 inconvenient minutes'));
+slot=evaluate([radius]);eq(slot.people[0].inconvenientMinutes,10);eq(U.participantFit(slot.people[0]).label,'Meeting buffer');ok(U.participantFit(slot.people[0]).detail.includes('10 inconvenient minutes'));
 eq(U.participantFit({...slot.people[0],band:'bad'}).label,'Outside acceptable hours');
 let warnings=U.proposalWarnings(slot,{referenceZone:'UTC',clock:'12'});
 ok(U.proposalWarnings(slot,{referenceZone:'UTC',clock:'12',dateFormat:'mdy'})[0].detail.includes('Tue, Oct 20'));
 ok(U.proposalWarnings(slot,{referenceZone:'UTC',clock:'12',dateFormat:'dmy'})[0].detail.includes('Tue, 20 Oct'));
-eq(warnings.length,1);ok(warnings[0].title.includes('Inconvenient time'));ok(warnings[0].detail.includes('10 minutes'));ok(warnings[0].detail.includes('10:00 AM - 10:45 AM'));
+eq(warnings.length,1);ok(warnings[0].title.includes('Meeting buffer'));ok(warnings[0].detail.includes('10 minutes'));ok(warnings[0].detail.includes('10:00 AM - 10:45 AM'));
 eq(U.proposalWarnings(evaluate([required])).length,0);
 slot=evaluate([required,{...busy,calendar:'none',coverages:[],calendarError:'Sharing permission denied'}]);
-warnings=U.proposalWarnings(slot);eq(warnings.length,2);ok(warnings.some(w=>w.title.includes('Calendar conflict')));ok(warnings.some(w=>w.title.includes('Availability unconfirmed')&&w.detail.includes('Sharing permission denied')));
+warnings=U.proposalWarnings(slot);eq(warnings.length,2);ok(warnings.some(w=>/[Mm]eeting overlap/.test(w.title)));ok(warnings.some(w=>w.title.includes('Availability unconfirmed')&&w.detail.includes('Sharing permission denied')));
 eq(U.proposalWarnings(evaluate([required,outside])).length,1);
 const groupId='a'.repeat(90)+'@group.calendar.google.com',event={id:'clash',identity:'shared',title:'Existing appointment',organizer:groupId,start:'2026-10-20T10:00:00Z',end:'2026-10-20T11:00:00Z'};
 const taken=E.evaluate({people:[{...required,busy:[event]}, {...known('Second'),busy:[{...event,id:'second-copy'}]}],duration:45,range:{from:'2026-10-20',to:'2026-10-20'},anchorTz:'UTC',now,extendDays:0},{exactStart:start}).taken[0];
@@ -54,6 +54,6 @@ warnings=U.proposalWarnings(taken,{contactFor:()=> 'Coordinate with the owner of
 const secondEvent={...event,id:'another',identity:'another',title:'Another appointment'};
 const two=E.evaluate({people:[{...required,busy:[event,secondEvent]}],duration:45,range:{from:'2026-10-20',to:'2026-10-20'},anchorTz:'UTC',now,extendDays:0},{exactStart:start}).taken[0];eq(U.proposalWarnings(two).length,2);
 eq(U.proposalWarnings({...two,overrides:two.overrides.map(c=>({...c,label:two.overrides[0].label}))}).length,2); // Distinct appointments can have identical titles and contact instructions.
-const optionalRadius={...radius,required:false,busy:[...radius.busy,event]};warnings=U.proposalWarnings(evaluate([required,optionalRadius]));eq(warnings.length,2);ok(warnings.some(w=>w.title.includes('Inconvenient time')));ok(warnings.some(w=>w.title.includes('Calendar conflict')));ok(!warnings.some(w=>w.title==='Availability note'));
+const optionalRadius={...radius,required:false,busy:[...radius.busy,event]};warnings=U.proposalWarnings(evaluate([required,optionalRadius]));eq(warnings.length,2);ok(warnings.some(w=>w.title.includes('Meeting buffer')));ok(warnings.some(w=>/[Mm]eeting overlap/.test(w.title)));ok(!warnings.some(w=>w.title==='Availability note'));
 const notes={...taken,notes:[...taken.notes,'Required: all-day note “Review this calendar note”','Required: all-day note “Review this calendar note”']};warnings=U.proposalWarnings(notes);eq(warnings.length,2);ok(warnings.some(w=>w.detail.includes('Review this calendar note')));
 console.log(checks+' proposal display and confidence checks passed; year rollover, midnight/DST, participant fit and consolidated warnings.');

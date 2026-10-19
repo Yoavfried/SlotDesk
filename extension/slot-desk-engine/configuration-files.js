@@ -1,7 +1,7 @@
 (function(root,factory){if(typeof module==='object'&&module.exports)module.exports=factory(require('./workspace-model'),require('./profile-configuration'));else root.SlotConfigurationFiles=factory(root.SlotWorkspace,root.SlotProfileConfiguration);})(typeof self!=='undefined'?self:this,function(U,C){
   'use strict';
-  const clone=C.clone,version='0.9.3.5',columns=C.fields.map(k=>k==='tz'?'timezone':k).concat('constraints');
-  const settingKeys=['from','to','anchor','duration','step','want','perDay','minDuration','extendDays','dateChoice','defaultCalendar','defaultCalendarSelected','calendarScopeConfirmed','workspaceCalendarIds','meetingsCalendars','meetingsCalendarLabels','meetingsFrom','meetingsTo','meetingsTimezone','dismissSuggestions'];
+  const clone=C.clone,version='0.9.4',columns=C.fields.map(k=>k==='tz'?'timezone':k).concat('constraints');
+  const settingKeys=['from','to','anchor','duration','step','spacingMode','want','perDay','perDayMode','minDuration','extendDays','dateChoice','defaultCalendar','defaultCalendarSelected','calendarScopeConfirmed','workspaceCalendarIds','meetingsCalendars','meetingsCalendarLabels','meetingsFrom','meetingsTo','meetingsTimezone','dismissSuggestions'];
   const defaults=p=>({...U.newProfile(p.email,p.name,p.tz),calendarLabels:{},eventRules:{},ruleTerms:{},airportRule:true});
   function safe(value){if(value&&typeof value==='object')for(const key of Object.keys(value)){if(['__proto__','constructor','prototype'].includes(key))throw new Error('The file contains an unsupported field.');safe(value[key]);}return value;}
   function constraint(c){if(!c||typeof c!=='object'||!['blocked','inconvenient'].includes(c.kind)||!C.instant(c.from)||!C.instant(c.to)||Date.parse(c.from)>=Date.parse(c.to)||typeof c.label!=='string')throw new Error('Check the protected or inconvenient time rules in this file.');return {kind:c.kind,from:c.from,to:c.to,label:c.label};}
@@ -35,11 +35,12 @@
       if(['from','to','meetingsFrom','meetingsTo'].includes(key)&&!C.date(v))throw new Error('Invalid date setting: '+key+'.');
       if(['anchor','meetingsTimezone'].includes(key)&&!C.zone(v))throw new Error('Invalid timezone setting: '+key+'.');
       const bounds={duration:[1,1440],step:[5,1440],want:[1,20],perDay:[1,20],minDuration:[1,1440],extendDays:[0,30]};if(bounds[key]&&(!Number.isInteger(v)||v<bounds[key][0]||v>bounds[key][1]))throw new Error('Invalid number setting: '+key+'.');
+      if(['spacingMode','perDayMode'].includes(key)&&!['automatic','custom'].includes(v))throw new Error('Invalid search mode: '+key+'.');
       if(['defaultCalendar','dateChoice'].includes(key)&&typeof v!=='string')throw new Error('Invalid setting: '+key+'.');
       if(['defaultCalendarSelected','calendarScopeConfirmed','dismissSuggestions'].includes(key)&&typeof v!=='boolean')throw new Error('Invalid setting: '+key+'.');
       if(['workspaceCalendarIds','meetingsCalendars'].includes(key)&&(!Array.isArray(v)||v.some(x=>typeof x!=='string'||!x)||new Set(v).size!==v.length))throw new Error('Invalid calendar selection.');
       if(key==='meetingsCalendarLabels'&&(!v||typeof v!=='object'||Array.isArray(v)||Object.values(v).some(x=>typeof x!=='string')))throw new Error('Invalid calendar labels.');out[key]=clone(v);
-    }if(out.from&&out.to&&out.from>out.to||out.meetingsFrom&&out.meetingsTo&&out.meetingsFrom>out.meetingsTo)throw new Error('The start date must be before the end date.');return out;
+    }if(out.spacingMode==='custom'&&out.step%5!==0)throw new Error('Custom spacing must use multiples of 5 minutes.');if(out.from&&out.to&&out.from>out.to||out.meetingsFrom&&out.meetingsTo&&out.meetingsFrom>out.meetingsTo)throw new Error('The start date must be before the end date.');return out;
   }
   function displaySettings(v){if(v!==undefined&&(!v||typeof v!=='object'||Array.isArray(v)))throw new Error('Invalid display preferences in this backup.');const out={theme:'system',clock:'24',dateFormat:'dmy',...v};if(!['system','light','dark'].includes(out.theme)||!['12','24'].includes(out.clock)||!['dmy','mdy'].includes(out.dateFormat))throw new Error('Invalid display preferences in this backup.');return {theme:out.theme,clock:out.clock,dateFormat:out.dateFormat};}
   function prepare({file,selected,current,fresh,calendars=null,restore=false,epoch}){

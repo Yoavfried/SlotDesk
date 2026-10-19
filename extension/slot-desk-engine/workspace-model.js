@@ -6,6 +6,7 @@
   function schedule(days,hours='09:00|18:00'){const [s,e]=hours.split('|');return Object.fromEntries(Array.from({length:7},(_,d)=>[d,{on:(days==='sun-thu'?[0,1,2,3,4]:[1,2,3,4,5]).includes(d),s,e}]));}
   function newProfile(email='',name='',tz='',calendars=[]){const key=emailKey(email),mapped=calendars.filter(c=>emailKey(c.id)===key);return {id:key?'person:'+key:'person:'+globalThis.crypto.randomUUID(),email:key,name,tz,tzConfirmed:false,enabled:true,required:true,calendarIds:mapped.map(c=>c.id),leaveCalendarIds:[],workingMode:'template',templateDays:tz==='Asia/Jerusalem'?'sun-thu':'mon-fri',templateHours:'09:00|18:00',manualDays:schedule(tz==='Asia/Jerusalem'?'sun-thu':'mon-fri'),days:schedule(tz==='Asia/Jerusalem'?'sun-thu':'mon-fri'),ignoreWorkingHours:false,ignoreConvenience:false,allowOverlap:false,limit:{s:'07:00',e:'20:00'},radius:{minutes:0,mode:'inconvenient'},notice:0,availability:[],travel:[],flights:[],holidayExclusions:[],eventOverrides:{}};}
   function migrate(state,account){
+    state.settings.spacingMode=state.settings.spacingMode==='custom'?'custom':'automatic';state.settings.perDayMode=state.settings.perDayMode==='custom'?'custom':'automatic';
     const byEmail=new Map(),others=[];
     for(const old of state.profiles){const p={...old,email:emailKey(old.email)},key=p.email;if(!p.workingMode){p.workingMode='manual';p.manualDays=p.days||schedule(p.tz==='Asia/Jerusalem'?'sun-thu':'mon-fri');}p.templateDays=p.templateDays||(p.tz==='Asia/Jerusalem'?'sun-thu':'mon-fri');p.templateHours=p.templateHours||'09:00|18:00';p.manualDays=p.manualDays||p.days||schedule(p.templateDays);p.ignoreWorkingHours=!!p.ignoreWorkingHours;p.ignoreConvenience=p.ignoreConvenience===true;p.allowOverlap=p.allowOverlap===true;
       if(!key){others.push(p);continue;}if(byEmail.has(key)){const first=byEmail.get(key);first.calendarIds=[...new Set([...(first.calendarIds||[]),...(p.calendarIds||[])])];first.leaveCalendarIds=[...new Set([...(first.leaveCalendarIds||[]),...(p.leaveCalendarIds||[])])];}else byEmail.set(key,p);
@@ -48,43 +49,53 @@
     return {label:unknown.length?'Calendar data incomplete':'Calendar data complete',incomplete:!!unknown.length,
       explanation:unknown.length?'Complete calendar data was unavailable for: '+unknown.map(p=>p.name+(p.required===false?' (optional)':'')).join(', ')+'. Their availability is unconfirmed.':'Calendar data covers this time for every included participant. Fit and conflicts are shown below; this does not mean invitations were accepted.'};
   }
+  function conflictLabel(conflicts){
+    const counts={meeting:0,leave:0,flight:0};for(const c of conflicts||[])counts[c.kind]=(counts[c.kind]||0)+1;
+    return [counts.meeting?counts.meeting+' meeting overlap'+(counts.meeting===1?'':'s'):'',counts.leave?'Day off'+(counts.leave>1?' ('+counts.leave+')':''):'',counts.flight?'Flight'+(counts.flight>1?' ('+counts.flight+')':''):''].filter(Boolean).join(' · ');
+  }
   function participantFit(p){
-    const timing=p.band==='bad'?'Outside acceptable hours':p.band==='stretch'?(p.inconvenientMinutes?p.inconvenientMinutes+' inconvenient minutes':'Inconvenient time'):'Comfortable time';
-    const incomplete=p.confirmed!==true,clash=p.hasCalendarConflict??(!p.available&&p.band!=='no');
-    if(clash)return {label:'Calendar conflict',tone:'stop',detail:[p.calendarConflictCount?p.calendarConflictCount+' overlapping meeting'+(p.calendarConflictCount===1?'':'s'):'Overlaps an existing meeting',p.band!=='ok'?timing:'',incomplete?'Calendar data incomplete':''].filter(Boolean).join(' · ')};
-    if(p.band==='no')return {label:'Does not fit profile',tone:'stop',detail:[p.availabilityReason||'Outside stated availability or profile rules',incomplete?'Calendar data incomplete':''].filter(Boolean).join(' · ')};
-    if(incomplete)return {label:'Availability unconfirmed',tone:'warn',detail:'Calendar data incomplete · '+timing};
-    if(p.band!=='ok')return {label:p.band==='bad'?'Outside acceptable hours':'Inconvenient time',tone:'warn',detail:'No calendar conflicts · '+timing};
+    const incomplete=p.confirmed!==true,clash=p.hasCalendarConflict??(!p.available&&p.band!=='no'),timing=[...new Set((p.timing||[]).map(t=>t.kind==='flight-buffer'?'Flight buffer':t.kind==='meeting-radius'?'Meeting buffer':t.kind==='manual-inconvenience'?'Marked inconvenient time':t.label))];
+    const issueLabels={'nonworking-day':'Nonworking day','acceptable-hours':'Outside acceptable hours',availability:'Outside stated availability',protected:'Protected time','meeting-radius':'Blocked meeting radius',notice:'Minimum notice',past:'In the past'};
+    if(p.band==='bad')timing.unshift('Outside acceptable hours');
+    const oldTiming=p.band==='bad'?'Outside acceptable hours':p.band==='stretch'?(p.inconvenientMinutes?p.inconvenientMinutes+' inconvenient minutes':'Inconvenient time'):'Comfortable time';
+    if(clash)return {label:Array.isArray(p.conflicts)?conflictLabel(p.conflicts):'Calendar conflict',tone:'stop',detail:[...(Array.isArray(p.conflicts)?[issueLabels[p.fitIssue?.kind],...timing]:[p.calendarConflictCount?p.calendarConflictCount+' overlapping meeting'+(p.calendarConflictCount===1?'':'s'):'Overlaps an existing meeting',p.band!=='ok'?oldTiming:'']),incomplete?'Calendar data incomplete':''].filter(Boolean).join(' · ')};
+    if(p.band==='no')return {label:issueLabels[p.fitIssue?.kind]||'Does not fit profile',tone:'stop',detail:[p.availabilityReason||'Outside stated availability or profile rules',incomplete?'Calendar data incomplete':''].filter(Boolean).join(' · ')};
+    if(incomplete)return {label:'Availability unconfirmed',tone:'warn',detail:['Calendar data incomplete',...timing.length?timing:[oldTiming]].join(' · ')};
+    if(p.band!=='ok')return {label:p.band==='bad'?'Outside acceptable hours':timing.join(' · ')||'Inconvenient time',tone:'warn',detail:'No calendar conflicts · '+p.inconvenientMinutes+' inconvenient minutes'};
     return {label:'Fits well',tone:'good',detail:'No calendar conflicts · Comfortable time'};
   }
   function proposalWarnings(slot,{clock='24',dateFormat='dmy',referenceZone,contactFor}={}){
-    const warnings=[],seen=new Set(),duplicateNotes=new Set(),overridden=new Set((slot.overrides||[]).flatMap(c=>c.participants||[]));
-    const add=(title,detail,identity)=>{const key=identity??title+'\n'+detail;if(!seen.has(key)){seen.add(key);warnings.push({title,detail});}};
+    const warnings=[],seen=new Set(),duplicates=new Set(),overridden=new Set((slot.overrides||[]).flatMap(c=>c.participants||[]));
+    const add=(title,detail,key=title+'\n'+detail)=>{if(!seen.has(key)){seen.add(key);warnings.push({title,detail});}};
     const local=p=>compactRange(slot.start,slot.end,p.tz,clock,{referenceZone,dateFormat,endZone:p.endTz})+' · '+zoneLabel(slot.start,slot.end,p.tz,p.endTz);
+    const eventTime=(event,zone)=>event.allDay?compactDate(E.startOfDay(event.start.slice(0,10),zone)+12*3600000,zone,{referenceZone,dateFormat})+(event.end.slice(0,10)>E.addDaysYmd(event.start.slice(0,10),1)?' - '+compactDate(E.startOfDay(E.addDaysYmd(event.end.slice(0,10),-1),zone)+12*3600000,zone,{referenceZone,dateFormat}):'')+' · All day':compactRange(event.start,event.end,zone,clock,{referenceZone,dateFormat});
     for(const p of slot.people){
       if(['stretch','bad'].includes(p.band)){
-        add(p.name+': '+(p.band==='bad'?'Outside acceptable hours':'Inconvenient time'),local(p)+'. '+(p.inconvenientMinutes?p.inconvenientMinutes+' minutes fall outside their comfortable times.':'This time falls outside their comfortable times.')+(p.band==='bad'?' Outside acceptable hours was explicitly enabled.':''));
-        duplicateNotes.add(p.local+' for '+p.name+': '+p.inconvenientMinutes+' inconvenient minutes');
-        duplicateNotes.add(p.name+': explicitly enabled hours outside acceptable range');
+        const groups=new Map();for(const t of p.timing||[]){const key=t.kind+'|'+t.label;if(!groups.has(key))groups.set(key,[]);groups.get(key).push(t);}
+        if(p.band==='bad')add(p.name+': Outside acceptable hours',local(p)+'. Outside acceptable hours was explicitly enabled.');
+        for(const items of groups.values()){
+          const first=items[0];if(p.band==='bad'&&['working-hours','convenience-hours'].includes(first.kind))continue;
+          const spans=items.filter(t=>t.from&&t.to),minutes=spans.length?E.merge(spans.map(t=>[Math.max(slot.start,Date.parse(t.from)),Math.min(slot.end,Date.parse(t.to))])).reduce((n,[a,b])=>n+(b-a)/60000,0):first.minutes;
+          const label=first.kind==='flight-buffer'?'Flight buffer':first.kind==='meeting-radius'?'Meeting buffer':first.kind==='manual-inconvenience'?'Marked inconvenient time':first.label;
+          const source=spans.length?' '+[...new Set(spans.map(t=>(t.label||label)+' · '+compactRange(t.from,t.to,p.tz,clock,{referenceZone,dateFormat})))].join('; ')+'.':'';
+          add(p.name+': '+label,local(p)+'. '+minutes+' minutes fall in this period.'+source);
+        }
+        if(!groups.size&&p.band!=='bad')add(p.name+': Inconvenient time',local(p)+'. '+(p.inconvenientMinutes?p.inconvenientMinutes+' minutes fall outside their comfortable times.':'This time falls outside their comfortable times.'));
+        duplicates.add(p.local+' for '+p.name+': '+p.inconvenientMinutes+' inconvenient minutes');duplicates.add(p.name+': explicitly enabled hours outside acceptable range');
       }
-      if((p.hasCalendarConflict??(!p.available&&p.band!=='no'))&&!overridden.has(p.id))add(p.name+': Calendar conflict',local(p)+'. '+(p.calendarConflictCount?p.calendarConflictCount+' overlapping meeting'+(p.calendarConflictCount===1?'':'s')+'.':'Overlaps an existing meeting.')+' They will still be invited unless you remove them.');
-      if(p.band==='no')add(p.name+': Does not fit profile',local(p)+'. '+(p.availabilityReason||'Outside stated availability or profile rules')+'. They will still be invited unless you remove them.');
-      if(p.confirmed!==true){
-        const prefix='cannot see '+p.name+"'s complete calendar — availability unconfirmed",notes=(slot.notes||[]).filter(n=>String(n).startsWith(prefix));
-        notes.forEach(n=>duplicateNotes.add(n));
-        const errors=notes.filter(n=>n.startsWith(prefix+': ')).map(n=>n.slice(prefix.length+2));
-        add(p.name+': Availability unconfirmed',local(p)+'. Complete calendar data is unavailable. Check their availability before sending.'+(errors.length?' '+errors.join(' · '):''));
+      if((p.hasCalendarConflict??(!p.available&&p.band!=='no'))&&!overridden.has(p.id)){
+        if(p.conflicts?.length)for(const fact of p.conflicts)add(p.name+': '+conflictLabel([fact]),fact.title+' · '+eventTime(fact,fact.tz||p.tz)+'. '+local(p)+'. They will still be invited unless you remove them.',p.id+'|'+fact.key);
+        else add(p.name+': Calendar conflict',local(p)+'. '+(p.calendarConflictCount?p.calendarConflictCount+' overlapping meeting'+(p.calendarConflictCount===1?'':'s')+'.':'Overlaps an existing meeting.')+' They will still be invited unless you remove them.');
       }
-      if(p.required===false&&!p.available)for(const note of slot.notes||[])if(String(note).startsWith('optional guest '+p.name+' cannot attend: '))duplicateNotes.add(note);
+      if(p.band==='no')add(p.name+': '+participantFit(p).label,local(p)+'. '+(p.availabilityReason||'Outside stated availability or profile rules')+'. They will still be invited unless you remove them.');
+      if(p.confirmed!==true){const prefix='cannot see '+p.name+"'s complete calendar — availability unconfirmed",notes=(slot.notes||[]).filter(n=>String(n).startsWith(prefix));notes.forEach(n=>duplicates.add(n));const errors=notes.filter(n=>n.startsWith(prefix+': ')).map(n=>n.slice(prefix.length+2));add(p.name+': Availability unconfirmed',local(p)+'. Complete calendar data is unavailable. Check their availability before sending.'+(errors.length?' '+errors.join(' · '):''));}
+      if(p.required===false&&!p.available)for(const note of slot.notes||[])if(String(note).startsWith('optional guest '+p.name+' cannot attend: '))duplicates.add(note);
     }
-    for(const c of slot.overrides||[]){
-      const organizer=String(c.organizer||''),calendarOwner=/@(?:group|resource)\.calendar\.google\.com$/i.test(organizer);
-      const contact=contactFor?.(c)||(calendarOwner?'Coordinate with the calendar owner':c.ask||'Ask '+c.who);
-      add(c.who+': Calendar conflict',c.label+'. This meeting would create a new overlap. '+(c.category==='own-leave'?'Review this time off before sending.':contact+'. Find a replacement time immediately.')+' Existing appointments remain in place.',E.eventKey(c.event));
+    for(const c of slot.overrides||[]){const person=slot.people.find(p=>c.participants.includes(p.id)),zone=c.event.tz||person?.tz||referenceZone||'UTC',organizer=String(c.organizer||''),calendarOwner=/@(?:group|resource)\.calendar\.google\.com$/i.test(organizer),contact=contactFor?.(c)||(calendarOwner?'Coordinate with the calendar owner':c.ask||'Ask '+c.who),kind=c.category==='own-leave'?'Day off':c.event.type==='flight'?'Flight':'Meeting overlap';
+      add(c.who+': '+kind,c.label+'. '+eventTime(c.event,zone)+' · '+zone+'. This meeting would create a new overlap. '+(c.category==='own-leave'?'Review this time off before sending.':contact+'. Find a replacement time immediately.')+' Existing appointments remain in place.',E.eventKey(c.event));
     }
-    if(slot.overrides?.length)duplicateNotes.add('Warning: this SlotDesk proposal introduces conflicts. Existing appointments are unchanged. Find replacement times immediately.');
-    for(const note of slot.notes||[])if(!duplicateNotes.has(note))add('Availability note',String(note));
-    return warnings;
+    if(slot.overrides?.length)duplicates.add('Warning: this SlotDesk proposal introduces conflicts. Existing appointments are unchanged. Find replacement times immediately.');
+    for(const note of slot.notes||[])if(!duplicates.has(note))add('Availability note',String(note));return warnings;
   }
   function fullTime(instant,zone,format='24',{dateFormat='dmy'}={}){return new Intl.DateTimeFormat(dateFormat==='mdy'?'en-US':'en-GB',{timeZone:zone,weekday:'short',year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:format==='12',timeZoneName:'shortOffset'}).format(new Date(instant));}
   function resolveLocal(date,time,zone,previous){const clock=parseClock(time);if(!clock)return NaN;if(Number.isFinite(previous)){const part=E.partsIn(previous,zone);if(part.ymd===date&&part.hh===+clock.slice(0,2)&&part.mm===+clock.slice(3))return previous;}return E.zonedToInstant(date,+clock.slice(0,2)*60 + +clock.slice(3),zone);}
@@ -100,5 +111,5 @@
   function calendarSuggestions(email,calendars,selected=[]){const key=emailKey(email),omit=new Set(selected);if(!validEmail(key))return [];return calendars.filter(c=>!omit.has(c.id)&&emailKey(c.id)!==key&&emailKey(c.dataOwner)===key);}
   function personLabel(person,profiles){const saved=profiles.find(p=>emailKey(p.email)===emailKey(person?.email));return {email:person?.email||'',name:saved?.name||person?.displayName||'',saved:!!saved};}
   function invitationEvents(source,email){const key=emailKey(email);return (source.items||[]).filter(event=>(event.attendees||[]).some(a=>emailKey(a.email)===key&&['accepted','tentative'].includes(a.responseStatus)));}
-  return {participant,effectiveParticipant,addEmailGuest,confirmGuestTimezone,setParticipantRule,promoteGuest,switchOrganizingCalendar,invitationEvents,calendarSuggestions,personLabel,emailKey,validEmail,writable,schedule,newProfile,migrate,selectedProfiles,addParticipant,removeParticipant,matchProfiles,dateRange,formatClock,parseClock,localTime,compactDate,compactRange,offsetAt,zoneLabel,calendarDataSummary,participantFit,proposalWarnings,fullTime,resolveLocal,flightFields,flightFromFields,contacts};
+  return {participant,effectiveParticipant,addEmailGuest,confirmGuestTimezone,setParticipantRule,promoteGuest,switchOrganizingCalendar,invitationEvents,calendarSuggestions,personLabel,emailKey,validEmail,writable,schedule,newProfile,migrate,selectedProfiles,addParticipant,removeParticipant,matchProfiles,dateRange,formatClock,parseClock,localTime,compactDate,compactRange,offsetAt,zoneLabel,calendarDataSummary,conflictLabel,participantFit,proposalWarnings,fullTime,resolveLocal,flightFields,flightFromFields,contacts};
 });

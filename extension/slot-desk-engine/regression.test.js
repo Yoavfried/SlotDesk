@@ -23,11 +23,11 @@ normalized=G.fromGoogle({items:[hidden,raw({id:'visible',visibility:'private'}),
 eq(E.classify(normalized.busy[0],profile()).cost,4,'Hidden event treated as ask first');eq(normalized.busy[1].detailsVisible,true,'Readable private event stays detailed');eq(normalized.busy[2].detailsVisible,true,'Untitled is not assumed hidden');
 
 // Positive availability: recurring exact starts off the grid and outside normal hours; full windows.
-const available=profile('a',{availability:[{days:[2,3],s:'06:17',exact:true,tz:'UTC'}]});
-r=E.evaluate(request([available]));eq(r.open.map(s=>s.start),[at(6,17)],'Exact stated start is added off grid and overrides hour limits');
+const available=profile('a',{availability:[{days:[2,3],s:'06:15',exact:true,tz:'UTC'}]});
+r=E.evaluate(request([available]));eq(r.open.map(s=>s.start),[at(6,15)],'Exact stated start on a 5-minute unit overrides usual hour limits');
 eq(r.open[0].maxOutside,0,'Requested positive availability is preferred availability');
 r=E.evaluate(request([available],{constraints:[{who:'a',from:iso(6),to:iso(7)}]}));eq(r.open.length,0,'Positive availability does not bypass protected constraints');
-r=E.evaluate(request([profile('a',{availability:[{days:[2],s:'10:00',e:'11:00',tz:'UTC'}]})]));eq(r.open.length,2,'Whole meeting must fit stated window');
+r=E.evaluate(request([profile('a',{availability:[{days:[2],s:'10:00',e:'11:00',tz:'UTC'}]})]));eq(r.open.length,4,'Whole meeting must fit stated window on the 10-minute base');
 r=E.evaluate(request([profile('a',{availability:[{from:'2026-10-21',to:'2026-10-21',s:'10:00',exact:true}]})]));eq(r.open.length,0,'One-off availability dates enforced');
 
 // Optional attendance breaks equal comfort ties, never outranks required comfort.

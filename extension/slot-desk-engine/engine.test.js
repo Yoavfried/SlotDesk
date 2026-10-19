@@ -47,8 +47,8 @@ const local = (iso, tz) => { const p = E.partsIn(new Date(iso).getTime(), tz); r
   const starts = all.open.map(s => local(s.start, 'Asia/Jerusalem').slice(11));
   ok(!starts.includes('16:00') && !starts.includes('16:30'), 'busy time not offered');
   ok(!starts.includes('17:00'), '17:00 breaks the 15-minute buffer after a meeting ending 17:00');
-  ok(starts.includes('17:15'), 'meeting boundary is considered even between 30-minute grid starts');
-  const fine = E.evaluate({ now: NOW, duration: 30, step: 15, range: { from: '2026-10-20', to: '2026-10-20' }, people: P });
+  ok(starts.includes('17:20'), 'prefer the valid 10-minute start over a redundant 17:15 boundary');
+  const fine = E.evaluate({ now: NOW, duration: 30, step: 15, spacingMode: 'custom', range: { from: '2026-10-20', to: '2026-10-20' }, people: P });
   ok(fine.open.map(s => local(s.start, 'Asia/Jerusalem').slice(11)).includes('17:15'), '17:15 respects buffer');
 }
 
@@ -85,8 +85,8 @@ const local = (iso, tz) => { const p = E.partsIn(new Date(iso).getTime(), tz); r
   ok(r.fallback.taken.length > 0, 'suggests taken slots');
   ok(!r.fallback.taken.some(s => s.day === '2026-10-19'), 'never suggests moving an out-of-office day');
   const first = r.fallback.taken[0];
-  ok(first.toMove.every(t => !/external/.test(t.label)), 'cheapest option does not touch the external meeting');
-  ok(first.cost <= r.fallback.taken[r.fallback.taken.length - 1].cost, 'sorted by cost');
+  ok(first.score.explicitMax === 0, 'best option avoids configured meeting-buffer inconvenience');
+  ok(first.score.guestMax === 0, 'guest working-hour fit precedes ordinary moving cost');
   console.log('\nFALLBACK sample:');
   r.fallback.softer.forEach(s => console.log('  softer:', s.change, '->', s.slots.map(x => local(x.start, 'Asia/Jerusalem')).join(' | ')));
   r.fallback.taken.forEach(s => console.log('  taken :', local(s.start, 'Asia/Jerusalem'), 'cost', s.cost, '->', s.toMove.map(t => t.who + ': ' + t.label).join('; ')));

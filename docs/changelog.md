@@ -1,5 +1,17 @@
 # SlotDesk changelog
 
+## 0.9.4 — 19 October 2026
+
+- Implement the [agreed scheduling rules](scheduling-ranking-review.md) in the shared creation/rescheduling engine. Use 10-minute starts by default; eligible 5-minute starts can avoid required conflicts or recover full optional attendance without worsening required fit. Never automatically suggest finer starts, even for an exact off-grid gap.
+- Separate explicit flight/manual inconvenience from usual hours. Apply equal required-guest fairness, guest working-hours preference over permitted own overlaps, and clash-free preference over own office hours when guests are equally served. Keep a useful own-working-hours overlap alternative when it offers a different time group.
+- Prioritize original duration/dates, then shorter and later alternatives. Select equally suitable options on the earliest date, one per time group, before moving dates. Avoid inferior extras solely to fill the requested count.
+- Retain Start-time spacing and Options per day under Advanced with Automatic/custom modes; preserve legacy values without silently activating them as overrides. Custom spacing must be a multiple of five. Include modes in full backups and shared-window settings.
+- Show all selected alternatives under Meeting options with the actual visible count and the agreed no-open-options notice. Distinguish meeting overlaps, day off, flight/manual inconvenience, working-hour restrictions and unconfirmed data. Expanded warnings identify actual event titles/times without counting holidays as meetings.
+- Allow own-profile title-based protection guesses as warned overlaps. Preserve explicit protection/leave overrides, saved flights, stated availability, working-day rules and blocked radii. Ignoring work/convenience no longer silently enables outside-hours proposals. Calendar writes remain reviewed creation and narrow updates.
+- Validation: 1,880 application checks, including 81 new ranking cases, plus 40 focused synthetic-browser assertions and three axe scans without automated violations. A synthetic creation preserved all nine baseline events; rescheduling changed only the chosen event’s start/end and preserved the other eight. No real accounts/invitations were used. Manual accessibility and owner UX approval remain open.
+- Move advanced profile-settings cleanup and improvement to **0.9.5**.
+
+
 ## 0.9.3.5 — 19 October 2026
 
 Same-version search hotfix: preserve participant order when an included profile is edited. Bundle offline GeoNames city/capital/country search with spelling tolerance and common timezone names; keep confirmed IANA choices and date-aware offsets. Automatically detected calendar time off on the own profile can appear as a warned overlap alternative, without moving that entry or asking to reschedule a holiday. Explicit protections, manual blocks, flights and other people’s time off remain blocking. When protection prevents options, identify the entries and offer profile-rule review instead of only anonymous rejection counts. Document regional holiday suggestions as deferred. No Calendar permissions or writer capabilities are added.

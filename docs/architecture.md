@@ -1,10 +1,11 @@
 # SlotDesk architecture
 
-Version 0.9.0 preview is a static Chrome side-panel application with a shared browser/Node scheduling engine and a separate insert-only registration service. The service is hosted on Vercel with a private Neon table; this preview is configured to submit registrations. Saved workspace settings and calendar processing remain in the browser. A loopback HTTP preview shows the disconnected interface; calendar sign-in uses Chrome extension identity. Synthetic fixtures are used only in development tests.
+Version 0.9.4 is a static Chrome side-panel application with a shared browser/Node scheduling engine and a separate insert-only registration service. The service is hosted on Vercel with a private Neon table; this preview is configured to submit registrations. Saved workspace settings and calendar processing remain in the browser. A loopback HTTP preview shows the disconnected interface; calendar sign-in uses Chrome extension identity. Synthetic fixtures are used only in development tests.
 
 | Module in `extension/` | Responsibility |
 | --- | --- |
-| `slot-desk-engine/slotdesk-engine.js` | Validation, constraints, candidate generation, ranking, fallback groups and overlap/replacement suggestions |
+| `slot-desk-engine/slotdesk-engine.js` | Validation, typed constraints/conflicts, 10-/5-minute candidate evaluation, unified alternatives and overlap/replacement suggestions |
+| `slot-desk-engine/scheduling-ranking.js` | Explicit inconvenience/guest/own priorities, precision qualification, time-group diversity, useful alternatives and Advanced per-day limits |
 | `slot-desk-engine/google-adapter.js` | Normalize supplied calendar/event data and preserve visibility, response and recurrence identity |
 | `slot-desk-engine/google-reader.js` | Google REST reads, calendar coverage, pagination, recurring instances and explicit failures |
 | `slot-desk-engine/google-auth.js` | Chrome identity token access, scope checks, invalidation and disconnect |

@@ -1,5 +1,8 @@
 # Scheduling decision register
 
+The [0.9.4 rule matrix](scheduling-ranking-review.md), approved and implemented 19 October, is the current authority for guest/own priorities, precision, automatic/custom search controls and selected-result variety. It supersedes earlier ranking/fallback ordering below where they differ. Advanced-profile UX cleanup is planned for 0.9.5.
+
+
 Decisions agreed 8 October 2026; updated for reviewed booking on 11 October 2026. The EA retains control over profiles, rules, participants and explicit overrides. The old unresolved SlotDesk questions are archived; this is the current record.
 
 | ID | Question | Decision | Status / remaining work |

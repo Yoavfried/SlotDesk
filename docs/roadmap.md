@@ -4,7 +4,7 @@ Updated 19 October 2026. Status reflects agreed scope, not a promise of public a
 
 ## Current release
 
-Version **0.9.3.5** retains the accepted [connection/recovery experience](recovery-experience.md), including read-only setup, stale in-memory lists, automatic read-only confirmation alerts, explicit reviewed retries and unreadable-storage recovery. It also implements the approved Settings, profile-list and responsive layout polish. The five-field [onboarding leads implementation](leads-table.md) has a deployed private intake and database. This pilot is configured to send registrations, keeping failed submissions queued locally. [Deployment checks](registration-deployment.md) passed; first real registration from the updated extension remains to be observed. See the [0.9.3 changelog](changelog.md).
+Version **0.9.4** implements the [confirmed scheduling/ranking policy](scheduling-ranking-review.md), unified typed result cards, five-minute minimum and retained Advanced overrides. It retains the accepted [connection/recovery experience](recovery-experience.md), including read-only setup, stale in-memory lists, automatic read-only confirmation alerts, explicit reviewed retries and unreadable-storage recovery. It also implements the approved Settings, profile-list and responsive layout polish. The five-field [onboarding leads implementation](leads-table.md) has a deployed private intake and database. This pilot is configured to send registrations, keeping failed submissions queued locally. [Deployment checks](registration-deployment.md) passed; first real registration from the updated extension remains to be observed. See the [version history](changelog.md).
 
 The existing [implemented work](implemented.md), [accepted UX](ux-decisions.md), reviewed calendar writes, management, profiles and design language remain. No new real Google or email-delivery verification is claimed by this update.
 
@@ -14,11 +14,11 @@ The authorized onboarding, travel, timezone, mapping, guest and flexibility work
 
 ## Next work item
 
-First settle the [19 October scheduling/ranking review](scheduling-ranking-review.md): 10-minute base starts, finer conflict-free exceptions, one truthful result list, required-guest/own-profile priorities, explicit conflict types and earliest-date/time-band variety. Confirmed decisions and remaining comparisons are separated in that record. Runtime behavior has not yet been changed for this redesign.
+The [19 October scheduling/ranking review](scheduling-ranking-review.md) is implemented in **0.9.4**: 10-minute base starts, eligible 5-minute refinements, a universal five-minute minimum, one truthful result list, required-guest/own-profile priorities, explicit conflict types and earliest-date/time-band variety. Advanced spacing/per-day controls retain explicit custom overrides.
 
 The owner authorized the [styling direction](styling-0.9.4.md) and basic profile/calendar cleanup as **0.9.3.5**. It implements DM Sans, sentence-case normalization, including the personal/More settings headings, provisional regular page titles, drawn arrows, compact spacing and stable scrollbar layout. The profile changes and field-level boundaries are documented in the [validation inventory](profile-validation.md).
 
-Next, review the individual **More settings** sections with the owner and complete that work as **0.9.4**. The intermediate release does not redesign those individual controls. Styling/UX visual approval remains with the owner.
+Next, review the individual **More settings** sections with the owner and complete that work as **0.9.5**. The intermediate release does not redesign those individual controls. Styling/UX visual approval remains with the owner.
 
 ## Current review work
 

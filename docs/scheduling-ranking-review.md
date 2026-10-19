@@ -1,6 +1,6 @@
 # Scheduling rules review — 19 October 2026
 
-Status: product planning. This document records confirmed directions, proposed details and open comparisons separately. Runtime behavior and the 0.9.3.5 package are unchanged by this planning record. The owner approves the resulting experience.
+Status: implemented in **0.9.4** after authorization on 19 October. This document records the confirmed directions, concrete implementation and clarification history. The owner retains approval of the overall experience; individual advanced-profile cleanup is scheduled for **0.9.5**.
 
 ## What exposed the problem
 
@@ -18,7 +18,7 @@ The redesign must separate candidate eligibility, participant preferences, calen
 | R04 | When own-profile overlap permission is enabled, the guest's working hours can outrank a clash-free option before that guest's working hours, while remaining within the own profile's convenience hours. Confirmed example: 18:00 Jerusalem / 09:00 Los Angeles with an own meeting overlap ahead of clash-free 17:00 / 08:00. |
 | R05 | Required guests have equal priority. Minimize the worst affected guest before total guest inconvenience. No new higher-priority guest control is requested. |
 | R06 | Prefer the requested duration and dates, then a shorter duration, then later dates. Show the changed duration/date explicitly on each relevant card. This supersedes the old fixed fallback-group ordering. |
-| R07 | Own-profile title-based guesses such as Personal or Doctor may become warned overlap alternatives. Explicit protected/leave overrides, manual blocks and saved flights remain blocking. This expands the previous own automatically detected time-off exception; the expansion is planned here, not already shipped. |
+| R07 | Own-profile title-based guesses such as Personal or Doctor may become warned overlap alternatives. Explicit protected/leave overrides, manual blocks and saved flights remain blocking. This expands the previous own automatically detected time-off exception; the expansion ships in 0.9.4. |
 | R08 | Among equally good options, use the earliest possible date and vary local times within it; morning, midday and afternoon are the main groups. Spill to the next date when that date cannot provide enough variety. Do not spread across later dates just to use more dates. |
 | R09 | Show the actual conflict types and affected entries. A holiday is not an overlapping meeting. Lack of calendar access is uncertainty, not proof of a conflict or of availability. |
 | R10 | If guests are equally well served, prefer an own after-work option with no overlaps over an own working-hours option with an overlap, while staying within own convenience hours. Also show the optimized overlap option as a useful different tradeoff. |
@@ -67,11 +67,11 @@ Saved profile defaults are copied into a meeting; an explicit per-meeting overri
 | Enable outside-hours last resort | Explicitly make additional candidates outside acceptable hours eligible, with per-person local-time warnings. Keep them visibly identified. | Flights, hard protections, positive availability and other independent blocks. |
 | Positive availability | Use the exact/window/date/weekday rule instead of ordinary working/hour defaults for that participant. | Other independent protections; do not invent availability beyond the supplied window. |
 | Meeting radius: inconvenient | Count only the affected portion as explicit inconvenience; disclose it separately from ordinary out-of-office hours. | Ordinary meeting conflicts are still separate. |
-| Meeting radius: blocked | Treat the configured radius as a user-set block. Proposed interpretation: overlap permission for an appointment does not silently disable this independently configured hard radius. | Owner may explicitly change the radius/rule. This interaction needs an implementation regression because current extended busy intervals are classified like their underlying meeting. |
+| Meeting radius: blocked | Treat the configured radius as a user-set block. Implemented interpretation: overlap permission for an appointment does not silently disable this independently configured hard radius. | Owner may explicitly change the radius/rule. 0.9.4 checks hard radii independently from the underlying meeting classification. |
 | Leave/holiday date exception | Remove the specified person's leave restriction on those dates only. | Other appointments, flights, timezones and date ranges. No calendar entry is changed. |
 | Event-specific treatment | Explicit ignore/protected/leave/soft/movable beats automatic title classification. | Own-profile automatic-title exception does not override explicit protection. |
 
-Current `ignoreWorkingHours` can allow outside-07:00–20:00 candidates without the separate bad-hours flag. The revised implementation must enforce the previously agreed outside-hours permission consistently. Current hour metrics also combine usual work, flight buffers and manual inconvenience; those components must be retained separately before ranking or explanation.
+The earlier `ignoreWorkingHours` path could allow outside-07:00–20:00 candidates without the separate bad-hours flag. Version 0.9.4 enforces that permission consistently and retains usual-hour, flight-buffer and manual-inconvenience components separately for ranking and explanation.
 
 ## Comparison pipeline
 
@@ -86,7 +86,7 @@ Use explicit comparison stages with an explanation, rather than opaque weighted 
 7. **Precision and ordinary tie-breaks:** use the confirmed 10/5 policy or the user's explicit Advanced spacing override, preserve optional attendance preference, and prefer :00/:30 over other equivalent permitted starts only when the actual fit is equivalent. All suggested local starts remain on 5-minute units. Do not let a round clock bypass a hard constraint or fixed availability.
 8. **Display variety:** select distinct useful choices from equally good candidates, using the earliest date and time-of-day bands. Do not spend worse guest fit or a new conflict merely to produce a different-looking card.
 
-The order between original-request overlap and changed-request clash-free choices follows R06. Inside an original request, permitted own overlap versus guest working-hours follows R04; an unnecessary own overlap when guests are equally served follows R10. Explicit soft inconvenience precedes ordinary-hour preferences under R11. Core comparisons are now answered; implementation details below remain a proposed design for owner review, not shipped behavior.
+The order between original-request overlap and changed-request clash-free choices follows R06. Inside an original request, permitted own overlap versus guest working-hours follows R04; an unnecessary own overlap when guests are equally served follows R10. Explicit soft inconvenience precedes ordinary-hour preferences under R11. Core comparisons are answered and implemented below. Overall owner UX approval remains separate.
 
 A participant's explicitly supplied positive availability is an independently authorized window, as already agreed. It can override that person's usual working/acceptable-hour defaults and counts as normally permitted availability for this comparison, rather than pretending the global last-resort checkbox was enabled. Keep that provenance in the explanation. With no own profile included or with it optional, do not invent a required-own-hour burden. A flexible executive saved as another required profile remains an equal guest, with their specific Ignore usual convenience/overlap settings changing those rules rather than introducing an undocumented executive role.
 
@@ -171,7 +171,7 @@ An example card can therefore say “1 meeting overlap · Day off” for the own
 
 ## Variety proposal
 
-Rank quality first. On the earliest equally suitable local date, select a strong representative from each feasible time-of-day band before selecting near-duplicates. Proposed fixed bands in the visible search timezone: morning 06:00–12:00, midday 12:00–14:00, afternoon 14:00–18:00, evening 18:00–22:00 and night 22:00–06:00. Evening/night support international work; the hour/protection policies still determine eligibility.
+Rank quality first. On the earliest equally suitable local date, select a strong representative from each feasible time-of-day band before selecting near-duplicates. Implemented fixed bands in the visible search timezone: morning 06:00–12:00, midday 12:00–14:00, afternoon 14:00–18:00, evening 18:00–22:00 and night 22:00–06:00. Evening/night support international work; the hour/protection policies still determine eligibility.
 
 If several candidates in a band are interchangeable, prefer a round clock and avoid duplicate overlapping proposals. The confirmed rule is one option per band/date, then spill to the next date. If only evenings fit, choose the best evening on the first date, then the next equally good evening on the next date. Morning/noon/afternoon are variety opportunities, not a requirement to suggest unusable times. The requested option count is a maximum, not a reason to invent poor alternatives.
 
@@ -179,7 +179,7 @@ R10 keeps the clear option first and allows a genuinely useful optimized overlap
 
 Keep Start-time spacing and Options per day under Advanced, as confirmed by the owner. Both need an explicit Automatic versus custom state so an untouched old default does not silently override the new rules. Automatic uses the 10-minute base with eligible 5-minute refinements and one-per-band selection on the earliest dates. A chosen custom spacing or per-day maximum overrides that particular default. Options to show remains the overall maximum; a per-day maximum is a cap, not a requirement to fill the list with inferior duplicates.
 
-Proposed implementation detail: custom spacing accepts multiples of 5 minutes and defines the user's requested start grid. The 5-minute minimum and independent hard constraints remain in force. Preserve legacy values and portable-file compatibility, but do not treat the old default 30-minute/one-per-day values as proof of an explicit custom choice. Store the mode explicitly for future saves/imports, and keep the active Automatic/custom state visible in the controls. An explicit 30-minute override can restrict starts to :00/:30; an untouched legacy default must not hide :10 options under Automatic.
+Implemented behavior: custom spacing accepts multiples of 5 minutes and defines the user's requested start grid. The 5-minute minimum and independent hard constraints remain in force. Preserve legacy values and portable-file compatibility, but do not treat the old default 30-minute/one-per-day values as proof of an explicit custom choice. Store the mode explicitly for future saves/imports, and keep the active Automatic/custom state visible in the controls. An explicit 30-minute override can restrict starts to :00/:30; an untouched legacy default must not hide :10 options under Automatic.
 
 ## Comparison decisions completed with the owner
 
@@ -198,9 +198,9 @@ The main comparisons above have answers. Follow-up answers and remaining clarifi
 | O06 | Keep or remove the old spacing/per-day controls? | Keep both as Advanced overrides, with automatic defaults and deliberate custom choices distinguished. Retain Options to show. | Confirmed; R13 |
 | O07 | Does “don't go under 5 minutes” apply to every automatic suggestion? | Yes: universal 5-minute minimum, including required-person searches, superseding the earlier finer-minute exception. | Confirmed; R02 |
 
-Band boundaries and the exact screen design remain reviewable implementation proposals. This is not a claim that every possible UX edge case has been approved.
+Band boundaries and the implemented screen design remain open to owner UX review. This is not a claim that every possible UX edge case has been approved.
 
-## Engineering checks required after approval
+## Engineering coverage
 
 - Table-driven fixtures for the case families above and paired comparisons that change only one input. Include both new invitations and rescheduling.
 - Deterministic results regardless of participant/profile source order; own profile identified explicitly; equal required guests; optional guests non-blocking.

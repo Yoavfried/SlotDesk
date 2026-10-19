@@ -1,6 +1,12 @@
 # SlotDesk validation record
 
-Current code: **0.9.3.5**. Automated evidence and user-reported live behavior are recorded separately. No formal manual acceptance checklist remains.
+Current code: **0.9.4**. Automated evidence and user-reported live behavior are recorded separately. No formal manual acceptance checklist remains.
+
+## 0.9.4 validation
+
+All **1,880 application checks** pass, including 81 new ranking-policy checks. The updated regressions now expect the five-minute floor, ten-minute preference and explicit outside-hours permission. They retain the existing writer/recovery, coverage, storage, recurrence, synchronization and calendar-integrity checks. The [focused browser journey](../scripts/accessibility/ranking-0.9.4.js) passes **40 assertions** covering old-default migration, automatic/custom overrides, precise conflict types and event times, visible counts, five widths from 320 to 1280px, typed booking warnings, fresh availability recheck, creation and rescheduling.
+
+Three axe scans (light/dark results and rescheduling review) report no automated violations. Incomplete checks and manual screen-reader/owner review remain open. Searches issue no event writes. One synthetic creation adds exactly one event while preserving all nine baseline events; the following synthetic reschedule patches only the selected event’s start/end, preserving the other eight and protected content/guests/video/reminder fields. No delete/move methods or real accounts/invitations are used.
 
 ## 0.9.3.5 validation
 
