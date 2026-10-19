@@ -5,6 +5,7 @@
 | Product | [Overview](overview.md), [onboarding and profiles](onboarding-and-profiles.md), [implemented work](implemented.md), [roadmap](roadmap.md) |
 | Decisions | [UX](ux-decisions.md), [scheduling](scheduling-decisions.md), [live-feedback implementation](pending-ux-review.md), [14 October product review](product-review-2026-10-14.md), [next usability review](usability-review.md), [concrete usability flows](usability-flows.md), [profile validation inventory](profile-validation.md) |
 | Meeting management | [Editing details/guests](meeting-editing.md), [rescheduling, alerts and overlaps](rescheduling.md) |
+| Scheduling review | [19 October ranking rules, situations and result UX](scheduling-ranking-review.md) — confirmed directions and proposed implementation details |
 | Recovery | [Accepted connection, permission and recovery experience](recovery-experience.md) |
 | Registration and leads | [Agreed five-column onboarding leads table](leads-table.md), [hosting and verification](registration-deployment.md) |
 | Future concepts | [Optional BYOK LLM assistance](llm-assistance.md), [unconfirmed availability emails](time-inquiries.md) |

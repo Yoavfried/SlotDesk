@@ -1,5 +1,10 @@
 # Repository changelog
 
+## 2026-10-19 — Scheduling rules review
+
+- Record confirmed 10-/5-minute precision, one result list, guest/own overlap priorities, equal required guests, original-request-first alternatives, own title-inference fallbacks and earliest-date time-band diversity.
+- Map situation families, flag interactions, honest calendar-confidence/conflict categories and confirmed comparison decisions. This is product planning; no ranking change or replacement package is shipped by this record.
+
 ## 2026-10-19 — SlotDesk 0.9.3.5
 
 - Same-version search hotfix: keep edited attendees in place; add broad offline city/country/timezone lookup; show own automatically detected time off as reviewed overlap alternatives and explain remaining protected blockers. Keep explicit protections and calendar-write boundaries. Record regional holidays as future work.
