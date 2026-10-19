@@ -82,7 +82,7 @@
       const contact=contactFor?.(c)||(calendarOwner?'Coordinate with the calendar owner':c.ask||'Ask '+c.who);
       add(c.who+': Calendar conflict',c.label+'. This meeting would create a new overlap. '+contact+'. Find a replacement time immediately. Existing appointments remain in place.',E.eventKey(c.event));
     }
-    if(slot.overrides?.length)duplicateNotes.add('WARNING: this SlotDesk proposal introduces conflicts. Existing appointments are unchanged. Find replacement times immediately.');
+    if(slot.overrides?.length)duplicateNotes.add('Warning: this SlotDesk proposal introduces conflicts. Existing appointments are unchanged. Find replacement times immediately.');
     for(const note of slot.notes||[])if(!duplicateNotes.has(note))add('Availability note',String(note));
     return warnings;
   }

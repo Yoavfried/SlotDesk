@@ -14,9 +14,9 @@ The authorized onboarding, travel, timezone, mapping, guest and flexibility work
 
 ## Next work item
 
-The owner authorized the [styling direction](styling-0.9.4.md) and basic profile/calendar cleanup as **0.9.3.5**. It implements DM Sans, sentence-case normalization with the explicit personal/More Settings headings, provisional regular page titles, drawn arrows, compact spacing and stable scrollbar layout. The profile changes and field-level boundaries are documented in the [validation inventory](profile-validation.md).
+The owner authorized the [styling direction](styling-0.9.4.md) and basic profile/calendar cleanup as **0.9.3.5**. It implements DM Sans, sentence-case normalization, including the personal/More settings headings, provisional regular page titles, drawn arrows, compact spacing and stable scrollbar layout. The profile changes and field-level boundaries are documented in the [validation inventory](profile-validation.md).
 
-Next, review the individual **More Settings** sections with the owner and complete that work as **0.9.4**. The intermediate release does not redesign those individual controls. Styling/UX visual approval remains with the owner.
+Next, review the individual **More settings** sections with the owner and complete that work as **0.9.4**. The intermediate release does not redesign those individual controls. Styling/UX visual approval remains with the owner.
 
 ## Current review work
 

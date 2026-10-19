@@ -2,6 +2,7 @@
 
 ## 2026-10-19 — SlotDesk 0.9.3.5
 
+- Same-version hotfix: audit the whole shipped interface for capitalization, correct the remaining title-case labels and generated warnings, and remove ordinary-heading exceptions from the style guide.
 - Implement the approved styling and profile/calendar intermediate release, retain the supplied logo/robotic accents, and add a working style guide.
 - Guard saved email changes and new-profile creation; simplify calendar links, no-access behavior and explicit scope removal. Document validation and preserve reviewed Calendar-write boundaries.
 - Keep the individual advanced settings review for 0.9.4 and overall UX approval with the owner.

@@ -14,14 +14,14 @@ async page=>{
     check(await page.locator('#meeting-workspace .back-home .action-arrow').count()===1,'Back action uses drawn arrow');
     check(await page.locator('#meeting-workspace h1').evaluate(el=>getComputedStyle(el).fontWeight)==='400','Page headline uses regular weight');
     await page.locator('#meeting-workspace .back-home').click();await page.locator('#home-profiles').click();check(Math.abs(await pos()-home)<1,'Header remains fixed on Manage profiles');
-    await page.locator('[data-profile-choice]').first().click();check(await page.locator('#editor-title').textContent()==='Edit Your Profile','Own editor has the requested heading');
+    await page.locator('[data-profile-choice]').first().click();check(await page.locator('#editor-title').textContent()==='Edit your profile','Own editor uses a sentence-case heading');
     check(await page.locator('#p-email').isDisabled(),'Own email is disabled');check(!await page.locator('#profile-context').isVisible(),'Generic autosave explanation is removed');
     const chevron=await page.locator('#p-zone').evaluate(el=>{const trigger=el._zonePicker.trigger,icon=trigger.querySelector('svg'),box=trigger.getBoundingClientRect();return {right:box.right-icon.getBoundingClientRect().right,present:!!icon};});check(chevron.present&&chevron.right<20,'Timezone chevron sits at the right edge');
     check(!await page.locator('#availability-calendars').evaluate(el=>el.open),'Availability calendars starts collapsed');
     await page.locator('#availability-calendars > summary').click();
     check(await page.locator('#mapping-list [data-map-calendar]').count()===0,'Selected calendars are not permanent dropdowns');
     check(await page.locator('#mapping-list [data-map-leave]').isVisible(),'Leave checkbox is directly visible');
-    check(await page.locator('#profile-advanced > summary').textContent()==='More Settings','More Settings is a separate expandable');
+    check(await page.locator('#profile-advanced > summary').textContent()==='More settings','More settings is a separate expandable');
     await page.locator('#p-no-calendar').check();check(!await page.locator('#mapping-controls').isVisible(),'No-access choice hides every mapping control');
     check(await page.locator('#mapping-coverage').textContent()==='Calendar availability will remain unconfirmed. You can still invite this profile.','No-access explanation matches requested wording');
     await wait(()=>JSON.parse(localStorage.getItem('slotdesk-settings-v2:google:'+encodeURIComponent('nina@example.test'))).profiles[0].calendarIds.length===0);

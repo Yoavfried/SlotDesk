@@ -1,6 +1,6 @@
 # Profile, Settings and travel usability flows
 
-0.9.3.5 update: profile calendar editing now has separate Availability calendars and More Settings expandables, fixed linked-calendar rows, explicit Add actions and no-access hiding. New profiles require explicit creation; saved invalid emails revert with a bell notice and own-profile email is locked. Explicitly deselecting calendars in Settings removes their profile links. The [validation inventory](profile-validation.md) supersedes earlier UI/save descriptions below where they differ. Individual advanced-section cleanup remains for 0.9.4.
+0.9.3.5 update: profile calendar editing now has separate Availability calendars and More settings expandables, fixed linked-calendar rows, explicit Add actions and no-access hiding. New profiles require explicit creation; saved invalid emails revert with a bell notice and own-profile email is locked. Explicitly deselecting calendars in Settings removes their profile links. The [validation inventory](profile-validation.md) supersedes earlier UI/save descriptions below where they differ. Individual advanced-section cleanup remains for 0.9.4.
 
 Implemented: **0.9.2 · 18 October 2026**. Live profile saving, independent flight/travel Save/Discard, portable backups/imports, initial wording and keyboard refinements follow this record. Existing 0.9.1 Settings, layout and recovery behavior is retained.
 

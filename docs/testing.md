@@ -6,6 +6,12 @@ Current code: **0.9.3.5**. Automated evidence and user-reported live behavior ar
 
 Application tests include 26 additional email/calendar-removal checks (1,710 total). Six backend and 22 calendar-comparison checks also pass. The shared accessibility journey passed 20 screen states without automated violations and 36 keyboard/focus/reflow assertions; the focused profile journey passed 37 assertions plus three persistence/empty-selection checks. The focused synthetic browser pass covers own-email locking, malformed email restoration and bell persistence, explicit valid-profile creation, the no-access/Add calendar flow, fixed selected rows and leave treatment, Settings removal, timezone chevron alignment, drawn menu arrows and header alignment between short and long screens. See the [exact validation inventory](profile-validation.md). No live calendar writes are used. Broader visual approval remains with the owner.
 
+## Same-version capitalization hotfix — 19 October 2026
+
+Reviewed all shipped HTML pages and production JavaScript, including generated labels, alerts, tooltips, accessibility instructions and copied proposal text. Remaining capitals identify sentence starts, named controls, proper names, acronyms, timezone/date data, user content or deliberate robotic accents. The working style guide no longer permits title-case profile headings.
+
+All 1,710 application checks and repository checks pass. The existing profile browser journey passes 37 assertions with the corrected headings. Twelve focused synthetic-browser checks cover meeting details, calendar tooltip/accessibility text, real one-/two-warning summaries, all five bundled HTML pages, Help action references, onboarding privacy copy and the manifest name. No calendar creates, patches or alterations occurred. This is a 0.9.3.5 hotfix; owner UX approval remains open.
+
 ## Same-version interface follow-up — 18 October 2026
 
 The participant-card follow-up also passed 28 focused browser assertions: compact name/email/timezone placement, connected and crossed-out calendar icons, the exact hover/focus wording, Escape dismissal, linked-calendar automatic-participant guidance, meeting-only copy, and six widths from 320 to 1280 pixels. Automated accessibility scans showed no violations in either theme after transitions completed. Synthetic appointments remained unchanged.

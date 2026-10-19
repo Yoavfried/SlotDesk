@@ -230,7 +230,7 @@
           for(const mk of p.markers||[])if(f.date>=mk.from&&f.date<mk.to)slot.notes.push(`${p.name}: all-day note “${mk.title||'untitled'}”${mk.review?' — review classification':''}`);
         });
         const blocking=[...clashes.values()];if(!blocking.length)open.push(slot);
-        else if(blocking.every(c=>Number.isFinite(c.cost))){slot.overrides=slot.toMove=blocking;slot.rescheduleCount=blocking.length;slot.cost=blocking.reduce((n,c)=>n+c.cost,0);slot.peopleHit=new Set(blocking.flatMap(c=>c.participants)).size;slot.notes.push('WARNING: this SlotDesk proposal introduces conflicts. Existing appointments are unchanged. Find replacement times immediately.');if(blocking.every(c=>c.category!=='hidden'&&c.participants.every(id=>people.find(p=>p.id===id)?.allowOverlap===true)))open.push(slot);else taken.push(slot);}
+        else if(blocking.every(c=>Number.isFinite(c.cost))){slot.overrides=slot.toMove=blocking;slot.rescheduleCount=blocking.length;slot.cost=blocking.reduce((n,c)=>n+c.cost,0);slot.peopleHit=new Set(blocking.flatMap(c=>c.participants)).size;slot.notes.push('Warning: this SlotDesk proposal introduces conflicts. Existing appointments are unchanged. Find replacement times immediately.');if(blocking.every(c=>c.category!=='hidden'&&c.participants.every(id=>people.find(p=>p.id===id)?.allowOverlap===true)))open.push(slot);else taken.push(slot);}
         else reject('runs into travel, time off or protected time');
       }
     }
@@ -256,7 +256,7 @@
     return result;
   }
   function proposalText(slot) {
-    return [`${slot.overrides?'OVERRIDE WARNING — ':''}${slot.confirmed?'Required calendars checked':'Availability unconfirmed'} · ${slot.duration} minutes`,...slot.people.map(p=>`${p.name}${p.required?'':' (optional)'}: ${p.date} ${p.local.slice(4)} – ${p.endDate} ${p.localEnd} (${p.tz}${p.endTz!==p.tz?' → '+p.endTz:''})${p.available?'':' — conflict / unavailable'}`),...(slot.overrides||[]).map(c=>`New conflict: ${c.who}: ${c.label}. ${c.ask}. ${c.action}.`),...slot.notes].join('\n');
+    return [`${slot.overrides?'Override warning — ':''}${slot.confirmed?'Required calendars checked':'Availability unconfirmed'} · ${slot.duration} minutes`,...slot.people.map(p=>`${p.name}${p.required?'':' (optional)'}: ${p.date} ${p.local.slice(4)} – ${p.endDate} ${p.localEnd} (${p.tz}${p.endTz!==p.tz?' → '+p.endTz:''})${p.available?'':' — conflict / unavailable'}`),...(slot.overrides||[]).map(c=>`New conflict: ${c.who}: ${c.label}. ${c.ask}. ${c.action}.`),...slot.notes].join('\n');
   }
   return {findSlots,evaluate,fitPerson,classify,conflictsFor,validate,partsIn,zonedToInstant,startOfDay,tzFor,addDaysYmd,eventKey,proposalText,merge,WEEK,WEEK_MON_FRI,WEEK_SUN_THU,DEFAULTS,RULES};
 });

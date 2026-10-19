@@ -75,7 +75,7 @@ Typography alone must not be the only indication of interactivity. Filled/outlin
 
 Use **sentence case** for ordinary interface headings, buttons, labels, options, tooltips and messages. Capitalize the first word, proper names and established acronyms. Examples: New meeting, Manage profiles, Edit profile, Create profile, Choose calendars, Clear data, Calendar connected.
 
-The owner subsequently explicitly requested **Edit Your Profile** and **More Settings** as profile headings; 0.9.3.5 retains those requested spellings as exceptions.
+The 0.9.3.5 capitalization hotfix applies this rule throughout the system, including **Edit your profile**, **More settings**, **Time & date**, privacy links, accessibility text and generated warnings. Ordinary headings have no title-case exceptions. Numbered counts use lowercase nouns, such as **1 warning** and **2 warnings**. References to named interface controls retain the control’s sentence-case label; proper product names and acronyms retain their established spelling.
 
 Keep brand names and proper spellings, including SlotDesk, Google Calendar, Google Meet and Outlook. Preserve people's names, calendar titles, timezone identifiers and user-entered content. Preserve the uppercase wordmark and robotic eyebrows as deliberate exceptions. Do not use a blanket CSS text transform to fix mixed source wording.
 
