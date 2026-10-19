@@ -3,7 +3,7 @@
 ## 2026-10-19 — Scheduling rules review
 
 - Record confirmed 10-/5-minute precision, one result list, guest/own overlap priorities, equal required guests, original-request-first alternatives, own title-inference fallbacks and earliest-date time-band diversity.
-- Clarify the 5-minute optional-attendance improvement, avoid redundant inferior overlaps in one time group, and explain legacy controls with examples. Keep universal minimum-precision and control-removal answers explicitly pending.
+- Confirm a universal 5-minute minimum for suggested starts, optional-attendance improvements at 5 minutes, and retained Advanced spacing/per-day overrides with automatic defaults. Avoid redundant inferior overlaps in one time group; a same-band overlap exception is not approved.
 - Map situation families, flag interactions, honest calendar-confidence/conflict categories and confirmed comparison decisions. This is product planning; no ranking change or replacement package is shipped by this record.
 
 ## 2026-10-19 — SlotDesk 0.9.3.5

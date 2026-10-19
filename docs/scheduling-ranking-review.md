@@ -12,8 +12,8 @@ The redesign must separate candidate eligibility, participant preferences, calen
 
 | ID | Decision |
 | --- | --- |
-| R01 | Default suggested start times use 10-minute units: :00, :10, :20, :30, :40 and :50. This governs starts, not duration: a 15-minute meeting can still end at :15. |
-| R02 | Prefer a 10-minute start when it provides the same conflict avoidance. A 5-minute start can beat it when needed to avoid required conflicts, or when it makes an optional guest fully clear of known overlaps without worsening the required participants' fit. A partial reduction of an optional clash is not that benefit. Optional attendance never justifies going below 5-minute units. Whether the minimum is now 5 minutes for every automatic suggestion is being clarified. Unknown calendars remain explicitly unconfirmed. |
+| R01 | Default suggested start times use 10-minute units: :00, :10, :20, :30, :40 and :50, with the R02 exception. Keep Start-time spacing in Advanced as an explicit override. This governs starts, not duration: a 15-minute meeting can still end at :15. |
+| R02 | Prefer a 10-minute start when it provides the same conflict avoidance. A 5-minute start can beat it when needed to avoid required conflicts, or when it makes an optional guest fully clear of known overlaps without worsening the required participants' fit. A partial reduction of an optional clash is not that benefit. Never suggest a start finer than 5-minute units, including when only :03 fits required participants. Unknown calendars remain explicitly unconfirmed. |
 | R03 | Show results together under Meeting options; remove Other ways to make room. When no clash-free option fits the original request but alternatives exist, say: “No open options in range. Here are the best options I found.” |
 | R04 | When own-profile overlap permission is enabled, the guest's working hours can outrank a clash-free option before that guest's working hours, while remaining within the own profile's convenience hours. Confirmed example: 18:00 Jerusalem / 09:00 Los Angeles with an own meeting overlap ahead of clash-free 17:00 / 08:00. |
 | R05 | Required guests have equal priority. Minimize the worst affected guest before total guest inconvenience. No new higher-priority guest control is requested. |
@@ -23,7 +23,8 @@ The redesign must separate candidate eligibility, participant preferences, calen
 | R09 | Show the actual conflict types and affected entries. A holiday is not an overlapping meeting. Lack of calendar access is uncertainty, not proof of a conflict or of availability. |
 | R10 | If guests are equally well served, prefer an own after-work option with no overlaps over an own working-hours option with an overlap, while staying within own convenience hours. Also show the optimized overlap option as a useful different tradeoff. |
 | R11 | Flight inconvenience buffers and manually marked inconvenient periods take priority over ordinary working-hour preferences. Actual flights remain hard protection. |
-| R12 | Show one option per time-of-day group per date, then move to the next date. Do not fill the list with multiple evening options from the earliest date. |
+| R12 | By default show one option per time-of-day group per date, then move to the next date. Do not fill the list with multiple evening options from the earliest date. Keep Options per day in Advanced as an explicit override to the per-date maximum. |
+| R13 | Retain both Start-time spacing and Options per day as Advanced overrides. Automatic mode uses the new defaults; a deliberate custom choice takes precedence for that control. Keep Options to show. No override may enable starts finer than 5-minute units or bypass hard protections. |
 
 ## Terms and independent dimensions
 
@@ -45,12 +46,12 @@ Unknown calendars must not make the engine prefer a person or imply that they ha
 
 1. Generate actual 10-minute starts throughout the chosen local dates, rather than merely sorting the old 30-minute grid. Preserve duration, real event boundaries, travel timezone changes and DST validity.
 2. Add 5-minute candidates to avoid required conflicts or make optional attendance fully clear without worsening required-person fit. Prefer a 10-minute start when it solves the same problem. Never return 17:57 simply to shave a few minutes off a still-conflicting proposal.
-3. Optional attendance cannot justify anything below 5-minute units. The owner is clarifying whether this minimum applies universally, superseding the earlier required-only finer-minute exception. An explicit exact availability window must still fit; do not silently round it into an unavailable time. Do not show neighboring :00/:05/:10 as three diverse options.
+3. Five-minute units are the universal minimum for automatically suggested starts, superseding the earlier required-only finer-minute exception. Never suggest :03 or :57, even if only that exact gap fits required participants. An explicit exact availability window must still fit; do not silently round it into an unavailable time. Do not show neighboring :00/:05/:10 as three diverse options.
 4. Required people remain primary. An optional person's clash cannot eliminate a required-clear option, and that person remains invited unless removed. A 5-minute optional-attendance improvement means fully avoiding their known overlap, not just reducing overlap minutes. Never describe everybody as free when an optional person has a known clash. Missing calendar coverage remains visibly unconfirmed. For equal fully attending optional counts and otherwise equivalent fit, keep the rounder start.
-5. Saved notice, hard radii/blocks and explicit availability still apply to finer candidates. Do not round through a meeting boundary or invent second-level starts. Manual entry/review of an exact time is separate from automatic suggestion precision.
+5. Saved notice, hard radii/blocks and explicit availability still apply to 5-minute candidates. Do not round through a meeting boundary or invent second-level starts. Manual entry/review of an exact time is separate from automatic suggestion precision.
 6. Roundness is measured in the visible search timezone. Another participant's local minutes can differ in a quarter-hour-offset timezone; display their real local time. Never distort an instant to make all clocks round.
 
-The exact comparison between finer starts and equally suitable coarse starts must be covered by fixtures: a free gap that only fits at :05; an optional guest becoming fully clear at :05; an optional clash only partly reduced; optional attendance swapped without increasing the attending count; and a dense calendar where :57 still overlaps something and must not be suggested. The :03 gap case awaits the universal-minimum clarification.
+The exact comparison between 5-minute and equally suitable 10-minute starts must be covered by fixtures: a free gap that only fits at :05; an optional guest becoming fully clear at :05; an optional clash only partly reduced; optional attendance swapped without increasing the attending count; and rejecting :03/:57 even when a required-person gap only fits at that minute. Advanced custom spacing remains subject to the same 5-minute minimum.
 
 ## Settings contract
 
@@ -82,7 +83,7 @@ Use explicit comparison stages with an explanation, rather than opaque weighted 
 4. **Permission category:** clash-free fits and overlaps explicitly allowed for all affected profiles can compete on guest fit. Ordinary overlaps for profiles without that permission remain disclosed fallback choices behind otherwise feasible candidates in the same request/hour category. Permission is not borrowed from another profile, and no ordinary permission overrides a hard block.
 5. **Explicit soft inconvenience, then guest fit:** avoid flight buffers and manually marked inconvenient periods before ordinary working-hour preferences. Among these explicit soft compromises, minimize the worst required-person burden before total burden, including the own profile. Then minimize the worst required guest's ordinary-hour compromise before the total guest compromise. Ignore a metric only when its specific confirmed control disables it.
 6. **Overlap disruption, then own ordinary hours:** when guests are equally well served, prefer the clash-free fit before improving own working-hour fit. Among otherwise equally suitable conflicts, favor fewer distinct affected appointments, then lower disruption and fewer affected people. Count a shared event once and separate a day-off warning from an actual meeting needing replacement. Retain the optimized own-working-hours overlap as an explicitly labelled tradeoff when it is useful, as required by R10.
-7. **Precision and ordinary tie-breaks:** use the confirmed 10/5/finer policy, preserve optional attendance preference, and prefer :00/:30 over other 10-minute starts only when the actual fit is equivalent. Do not let a round clock bypass a hard constraint or fixed availability.
+7. **Precision and ordinary tie-breaks:** use the confirmed 10/5 policy or the user's explicit Advanced spacing override, preserve optional attendance preference, and prefer :00/:30 over other equivalent permitted starts only when the actual fit is equivalent. All suggested local starts remain on 5-minute units. Do not let a round clock bypass a hard constraint or fixed availability.
 8. **Display variety:** select distinct useful choices from equally good candidates, using the earliest date and time-of-day bands. Do not spend worse guest fit or a new conflict merely to produce a different-looking card.
 
 The order between original-request overlap and changed-request clash-free choices follows R06. Inside an original request, permitted own overlap versus guest working-hours follows R04; an unnecessary own overlap when guests are equally served follows R10. Explicit soft inconvenience precedes ordinary-hour preferences under R11. Core comparisons are now answered; implementation details below remain a proposed design for owner review, not shipped behavior.
@@ -131,7 +132,7 @@ These cases combine through the pipeline; there is no separate arbitrary rule fo
 | Meeting crosses midnight | Apply both local dates' relevant rules and show the date change; preserve original duration. |
 | Actual gap only fits at :05 | Show it ahead of a conflicting 10-minute alternative, with any unknown availability still disclosed. |
 | Actual gap fits at :00 or :10 as well as :05 | Prefer the 10-minute option; :05 is not another useful diverse choice. |
-| Actual gap only fits at :03 | Awaiting clarification: the user said not to go below 5 minutes; confirm whether this now excludes :03 even for required participants before implementing. |
+| Actual gap only fits at :03 | Do not automatically suggest it, even for required participants. Explain that no eligible start meets the current availability and 5-minute minimum; do not round into a conflicting time. |
 | Odd boundary start still conflicts | Do not suggest :57 to reduce a still-present conflict; use the 10-minute base options. |
 | Normal grid misses explicit exact availability | Consider the stated exact time if all other rules fit and the precision/conflict policy permits it; otherwise explain the exact constraint. |
 | Explicit positive availability says 23:00 despite a usual 20:00 limit | Respect that participant's explicitly authorized availability, keeping other participants' applicable windows and all protections. Explain stated availability; do not claim a global last-resort switch was enabled. |
@@ -176,7 +177,9 @@ If several candidates in a band are interchangeable, prefer a round clock and av
 
 R10 keeps the clear option first and allows a genuinely useful optimized overlap alternative, for example a different time group that better suits ordinary own hours. Do not add an inferior overlap merely to produce another card. When the clear and overlapping candidates are in the same band/date and the clear option serves everybody at least as well, retain only the clear option under the one-per-band rule. The owner did not understand the suggested same-band tradeoff exception, so it is not approved. A possible distinction was own office hours versus after-work time within the same afternoon band; that example needs explanation rather than treating all overlaps as useful by default.
 
-Existing Start-time spacing and Options per day controls would otherwise contradict R01/R12. Proposed implementation: automatic search always uses the 10-minute base and one-per-band policy; remove those obsolete controls, migrate/ignore their legacy values without breaking portable-file compatibility, and retain Options to show plus the applicable shorter/extra-date settings. Do not let an old 30-minute grid hide a valid :10 option, or an old one-per-day default prevent morning/noon/afternoon choices.
+Keep Start-time spacing and Options per day under Advanced, as confirmed by the owner. Both need an explicit Automatic versus custom state so an untouched old default does not silently override the new rules. Automatic uses the 10-minute base with eligible 5-minute refinements and one-per-band selection on the earliest dates. A chosen custom spacing or per-day maximum overrides that particular default. Options to show remains the overall maximum; a per-day maximum is a cap, not a requirement to fill the list with inferior duplicates.
+
+Proposed implementation detail: custom spacing accepts multiples of 5 minutes and defines the user's requested start grid. The 5-minute minimum and independent hard constraints remain in force. Preserve legacy values and portable-file compatibility, but do not treat the old default 30-minute/one-per-day values as proof of an explicit custom choice. Store the mode explicitly for future saves/imports, and keep the active Automatic/custom state visible in the controls. An explicit 30-minute override can restrict starts to :00/:30; an untouched legacy default must not hide :10 options under Automatic.
 
 ## Comparison decisions completed with the owner
 
@@ -192,8 +195,8 @@ The main comparisons above have answers. Follow-up answers and remaining clarifi
 | --- | --- | --- | --- |
 | O04 | Optional attendance versus 10-/5-minute starts. | Owner confirmed prioritizing 5 minutes if it makes an optional guest fully nonoverlapping, with no below-5 refinement for optional attendance. Required-person priority and retained invitations still apply. | Answered; R02 updated |
 | O05 | Useful clear-versus-own-working-hours-overlap tradeoffs share one date and time band. | Owner questioned why an overlapping choice would help. Do not manufacture a worse duplicate; retain the clear choice when it serves everyone at least as well. No same-band exception has been approved. | Clarification explained; exception unapproved |
-| O06 | Old spacing/per-day controls contradict the new fixed policy. | Remove those controls, migrate legacy values and retain Options to show/duration/date choices. Explain the actual old fields with concrete examples instead of assuming the names are familiar. | Rephrased; awaiting answer |
-| O07 | Does “don't go under 5 minutes” apply to every automatic suggestion? | Recommend a universal 5-minute minimum, including required-person searches; explicitly confirm the change from the earlier finer-minute exception. | Asked; awaiting answer |
+| O06 | Keep or remove the old spacing/per-day controls? | Keep both as Advanced overrides, with automatic defaults and deliberate custom choices distinguished. Retain Options to show. | Confirmed; R13 |
+| O07 | Does “don't go under 5 minutes” apply to every automatic suggestion? | Yes: universal 5-minute minimum, including required-person searches, superseding the earlier finer-minute exception. | Confirmed; R02 |
 
 Band boundaries and the exact screen design remain reviewable implementation proposals. This is not a claim that every possible UX edge case has been approved.
 
@@ -201,7 +204,8 @@ Band boundaries and the exact screen design remain reviewable implementation pro
 
 - Table-driven fixtures for the case families above and paired comparisons that change only one input. Include both new invitations and rescheduling.
 - Deterministic results regardless of participant/profile source order; own profile identified explicitly; equal required guests; optional guests non-blocking.
-- Precision examples with :00/:10 versus :05/:03, real event seconds, arbitrary durations, exact availability and missing calendar coverage.
+- Precision examples comparing :00/:10 with eligible :05, rejecting :03/:57, real event seconds, arbitrary durations, exact availability and missing calendar coverage.
+- Automatic versus explicit Advanced spacing/per-day overrides, 5-minute-multiple validation, truthful active control state and legacy/default/import migration.
 - Individual flags and their combinations: working/convenience/overlap/required, with saved defaults, meeting overrides, restore/import and profile updates.
 - Preserve separate usual-hour, explicit-inconvenience and event-type facts; test accurate meeting/leave/flight/radius counts and warnings without duplicate blocks.
 - Shared occurrences deduplicate; existing unrelated overlaps do not create extra penalties; hidden data stays hidden; partial data remains unconfirmed.
