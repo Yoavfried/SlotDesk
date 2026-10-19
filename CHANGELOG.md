@@ -2,6 +2,7 @@
 
 ## 2026-10-19 — SlotDesk 0.9.4
 
+- Same-version hotfix: put rescheduling follow-ups in Existing meetings and bell alerts, clearing them from the main menu.
 - Implement the confirmed ranking, precision, Advanced overrides, unified results and conflict explanations for new meetings and rescheduling. Record current semantics, compatibility and synthetic validation; preserve Google identity/permissions and reviewed writes.
 - Package 0.9.4 for the private pilot. Schedule the individual advanced-profile UX work for 0.9.5; overall owner UX approval remains separate.
 

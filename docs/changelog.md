@@ -2,6 +2,8 @@
 
 ## 0.9.4 — 19 October 2026
 
+Same-version follow-up placement hotfix: move Appointments to reschedule out of the main menu and into Existing meetings. Include pending follow-ups in the bell count with a View appointments shortcut; dismissing or completing a follow-up updates both places. Calendar changes still require their own review.
+
 - Implement the [agreed scheduling rules](scheduling-ranking-review.md) in the shared creation/rescheduling engine. Use 10-minute starts by default; eligible 5-minute starts can avoid required conflicts or recover full optional attendance without worsening required fit. Never automatically suggest finer starts, even for an exact off-grid gap.
 - Separate explicit flight/manual inconvenience from usual hours. Apply equal required-guest fairness, guest working-hours preference over permitted own overlaps, and clash-free preference over own office hours when guests are equally served. Keep a useful own-working-hours overlap alternative when it offers a different time group.
 - Prioritize original duration/dates, then shorter and later alternatives. Select equally suitable options on the earliest date, one per time group, before moving dates. Avoid inferior extras solely to fill the requested count.
