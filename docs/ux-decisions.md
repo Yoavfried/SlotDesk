@@ -159,3 +159,12 @@ The [0.9.1 changelog](changelog.md) records the approved stable header/logo, mai
 - Portable file operations follow the [confirmed identity/replacement/compatibility contract](export-import.md). Only meeting drafts are resumable, and full restore clears them.
 - Dialog titles/focus, timezone keyboard behavior, purpose-based advanced sections, calendar-link status and initial wording are implemented with the supplied design language.
 \n## 0.9.3 accessibility and owner review\n\nThe open review covers overall flows, buttons, layouts across screen widths and wording. Only the owner decides when that experience is ready. Accessibility engineering proceeds separately: keyboard/combobox behavior, contextual labels, dialog focus, visible/associated validation, text contrast and reflow received a tested pass. Enter in a booking field cannot implicitly send; the explicit send button supports normal keyboard activation. Flight forms retain Save/Discard only. See [technical coverage and limits](accessibility.md).\n
+
+
+## 19 October search hotfix
+
+Profile edits preserve the current meeting participant order, including people automatically added from its organizing calendar. Genuine calendar switches still remove the previous automatic participants and append newly linked people while preserving manual choices.
+
+Own-profile automatically detected calendar time off may be proposed as a clearly warned overlap when ordinary options are unavailable. It stays in the calendar and does not create an instruction to reschedule a holiday. Saved overlap permission can include it among normal proposals, still with warnings. Explicit protections, manual blocks and saved flights remain blocking; other people’s time off remains protected. Missing calendar access is disclosed and does not itself exclude times. If hard protection leaves no options, identify the actual blocking entries and link to the relevant saved profile.
+
+Timezone selection remains a closed list, searched through local city/country names, common timezone terms and spelling variants. Typing does not confirm a change. See the [dataset provenance and rebuild instructions](timezone-search.md). Regional holiday suggestions remain deferred in the roadmap.

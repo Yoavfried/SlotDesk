@@ -4,7 +4,13 @@ Current code: **0.9.3.5**. Automated evidence and user-reported live behavior ar
 
 ## 0.9.3.5 validation
 
-Application tests include 26 additional email/calendar-removal checks and 16 cancelled-cache regression checks (1,726 total). Six backend and 22 calendar-comparison checks also pass. The shared accessibility journey passed 20 screen states without automated violations and 36 keyboard/focus/reflow assertions; the focused profile journey passed 37 assertions plus three persistence/empty-selection checks. The focused synthetic browser pass covers own-email locking, malformed email restoration and bell persistence, explicit valid-profile creation, the no-access/Add calendar flow, fixed selected rows and leave treatment, Settings removal, timezone chevron alignment, drawn menu arrows and header alignment between short and long screens. See the [exact validation inventory](profile-validation.md). No live calendar writes are used. Broader visual approval remains with the owner.
+Application tests total 1,798, including 72 search-experience checks, 26 email/calendar-removal checks and 16 cancelled-cache regressions. Earlier unchanged backend/calendar-comparison and accessibility evidence is recorded below. See the [exact validation inventory](profile-validation.md). No live calendar writes are used. Broader visual approval remains with the owner.
+
+## Same-version search hotfix — 19 October 2026
+
+All 1,798 application checks and repository checks pass. The new synthetic regressions cover repeated profile edits without participant reordering, genuine organizing-calendar switches/removals, Jerusalem/Los Angeles options on 27 October, dense ordinary clashes plus an automatically detected all-day holiday, own-profile time-off warnings, preserved explicit protection/manual blocks/flights/other-profile leave, unchanged source data, holiday follow-up exclusion and deduplicated blocker reporting. Offline timezone checks cover cities/capitals, countries with multiple zones, regions without a large city, accents, common names, spelling mistakes, ambiguous abbreviations and closed-list enforcement. No personal calendar data is committed as a fixture.
+
+The [focused browser journey](../scripts/accessibility/search-experience.js) passes 41 assertions, including participant order after live editing, city search/selection, unchanged timezone while typing, four widths from 320 to 1280px, own time-off fallback/review, a fresh booking availability check, exact blocker details and direct profile review. Three axe scans report no automated violations; incomplete checks and manual screen-reader assessment remain open. All nine synthetic baseline appointments remain unchanged, with zero POST/PATCH or unsafe methods. No real account or invitations are used. The version stays 0.9.3.5.
 
 ## Same-version meeting-loading/profile hotfix — 19 October 2026
 

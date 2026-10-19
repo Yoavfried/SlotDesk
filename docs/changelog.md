@@ -2,6 +2,8 @@
 
 ## 0.9.3.5 — 19 October 2026
 
+Same-version search hotfix: preserve participant order when an included profile is edited. Bundle offline GeoNames city/capital/country search with spelling tolerance and common timezone names; keep confirmed IANA choices and date-aware offsets. Automatically detected calendar time off on the own profile can appear as a warned overlap alternative, without moving that entry or asking to reschedule a holiday. Explicit protections, manual blocks, flights and other people’s time off remain blocking. When protection prevents options, identify the entries and offer profile-rule review instead of only anonymous rejection counts. Document regional holiday suggestions as deferred. No Calendar permissions or writer capabilities are added.
+
 Same-version meeting-loading/profile hotfix: restart cancelled loads when returning to Existing meetings, retain completed caches and prevent late cancelled results from replacing a fresh load. Place Refresh meetings beside the meeting count and source notices above it. Stopped loads use the requested calendar-specific message with an inline Refresh action. Remove routine profile Saving/Saved text while retaining validation and persistence errors. Calendar-write behavior is unchanged.
 
 Same-version capitalization hotfix: apply sentence case across ordinary interface copy, including More settings, Edit your profile, Time & date, warning counts, calendar tooltips, privacy links, Help instructions and the extension name. Remove the heading exceptions from the working style guide. Preserve brands, proper names, acronyms, user content and robotic accents. No version or scheduling behavior change.

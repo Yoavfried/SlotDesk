@@ -74,6 +74,7 @@ The user explicitly requested these as work **not to develop now**.
 | DF03 | Live flight updates | Possibly connect specific flights to an API for live updates. Provider, pricing and update policy are undecided. | Deferred; exploratory |
 | DF06 | Search meetings by written content | Possible search by meeting name, participants, location or any written appointment information. No search/indexing UI now. | Deferred; explicitly requested 13 October |
 | DF07 | Availability inquiry emails | Ask one/many people about one/many times; potentially BYOK-only, with LLM drafting and reply interpretation. Original inline form design remains recorded. | Unconfirmed future feature; parked, not a current milestone |
+| DF10 | Region-based holiday suggestions | Optionally suggest relevant holidays from a separately confirmed country/region, with date/person exceptions. A timezone alone does not establish a person’s holiday jurisdiction or availability. No automatic regional holiday feed or election-day knowledge is implemented. | Deferred; source, coverage and UX need planning |
 | DF09 | Developer issue reporting | Consider reporting repeatedly unconfirmed calendar writes to the developers, with a separately agreed data/consent design. No reporting is sent now. | Deferred |
 | DF08 | LLM-driven direct appointment creation | Create an optimized appointment with factual reasoning, subject to the full validated rule set and an explicitly enabled automation policy. | Future request; authorization/operating limits unsettled |
 

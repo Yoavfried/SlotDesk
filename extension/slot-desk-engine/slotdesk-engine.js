@@ -82,6 +82,7 @@
     if(override==='ignore')return {cost:0,category:'ignored',label:`${title} ignored by EA`};
     if(override==='protected'||override==='leave')return {cost:Infinity,category:override,label:`${title} protected by EA`};
     if(override==='soft'||override==='movable')return {cost:override==='soft'?1:3,category:override,label:`${title}: EA override (${override})`};
+    if(p.isOwnProfile&&ev.calendarId&&!override&&(ev.type==='ooo'||ev.type==='leave'||ev.allDay))return {cost:8,category:'own-leave',label:`${ev.detailsVisible===false?'Time off':title} is time off in your calendar — review before overlapping`};
     if(ev.type==='ooo'||ev.type==='leave'||ev.allDay)return {cost:Infinity,category:'leave',label:`${title}: leave / protected all-day time`};
     if(p.calendar!=='detail'||ev.detailsVisible===false)return {cost:4,category:'hidden',label:`busy, details hidden — ask ${p.name}`};
     const rules=p.eventRules||words||{},n=ev.attendees||1;
@@ -196,7 +197,7 @@
     req=req||{};
     const check=validate(req);if(check.errors.length)return {open:[],taken:[],rejected:{},...check};
     const duration=opt.duration??req.duration,to=opt.to||req.range.to,people=opt.people||req.people,anchor=req.anchorTz||Intl.DateTimeFormat().resolvedOptions().timeZone,now=ms(req.now??Date.now());
-    const open=[],taken=[],rejected={},seen=new Set(),caches=people.map(()=>({work:new Map(),ok:new Map(),day:new Map()}));
+    const open=[],taken=[],rejected={},protectedConflicts=new Map(),seen=new Set(),caches=people.map(()=>({work:new Map(),ok:new Map(),day:new Map()}));
     const reject=why=>{rejected[why]=(rejected[why]||0)+1;};
     const boundaries=new Map(),addBoundary=t=>{if(!Number.isFinite(t))return;const d=partsIn(t,anchor).ymd;if(d<req.range.from||d>to)return;if(!boundaries.has(d))boundaries.set(d,new Set());boundaries.get(d).add(t);};
     if(opt.exactStart===undefined)for(const p of people)for(const ev of eventsFor(p))if(eventOverride(ev,p)!=='ignore')for(const [s,e] of eventIntervals(ev,p)){const radius=!ev.allDay&&!['ooo','leave','flight'].includes(ev.type)?(p.radius?.minutes??p.buffer??0)*MIN:0;addBoundary(Math.floor((s-duration*MIN-radius)/MIN)*MIN);addBoundary(Math.ceil((e+radius)/MIN)*MIN);if(radius){addBoundary(Math.floor((s-duration*MIN)/MIN)*MIN);addBoundary(Math.ceil(e/MIN)*MIN);}}
@@ -231,11 +232,11 @@
         });
         const blocking=[...clashes.values()];if(!blocking.length)open.push(slot);
         else if(blocking.every(c=>Number.isFinite(c.cost))){slot.overrides=slot.toMove=blocking;slot.rescheduleCount=blocking.length;slot.cost=blocking.reduce((n,c)=>n+c.cost,0);slot.peopleHit=new Set(blocking.flatMap(c=>c.participants)).size;slot.notes.push('Warning: this SlotDesk proposal introduces conflicts. Existing appointments are unchanged. Find replacement times immediately.');if(blocking.every(c=>c.category!=='hidden'&&c.participants.every(id=>people.find(p=>p.id===id)?.allowOverlap===true)))open.push(slot);else taken.push(slot);}
-        else reject('runs into travel, time off or protected time');
+        else{for(const conflict of blocking.filter(c=>!Number.isFinite(c.cost))){const key=eventKey(conflict.event),previous=protectedConflicts.get(key),participants=[...new Set([...(previous?.participants||[]),...conflict.participants])];protectedConflicts.set(key,{...conflict,participants,who:people.filter(p=>participants.includes(p.id)).map(p=>p.name).join(', ')});}reject('runs into travel, time off or protected time');}
       }
     }
     const rank=(a,b)=>a.maxOutside-b.maxOutside||a.sumOutside-b.sumOutside||a.maxDistance-b.maxDistance||a.sumDistance-b.sumDistance||(a.rescheduleCount||0)-(b.rescheduleCount||0)||(a.cost||0)-(b.cost||0)||Math.min(b.margin,60)-Math.min(a.margin,60)||b.optionalAttendance-a.optionalAttendance||a.start-b.start;
-    open.sort(rank);taken.sort((a,b)=>a.rescheduleCount-b.rescheduleCount||a.cost-b.cost||a.peopleHit-b.peopleHit||rank(a,b));return {open,taken,rejected,errors:[],warnings:check.warnings};
+    open.sort(rank);taken.sort((a,b)=>a.rescheduleCount-b.rescheduleCount||a.cost-b.cost||a.peopleHit-b.peopleHit||rank(a,b));return {open,taken,rejected,protectedConflicts:[...protectedConflicts.values()],errors:[],warnings:check.warnings};
   }
   function spread(slots,want,perDay) {
     const out=[],counts={};for(const s of slots){if(out.length>=want)break;if((counts[s.day]||0)>=perDay||out.some(x=>overlap(s.start,s.end,x.start,x.end)))continue;out.push(s);counts[s.day]=(counts[s.day]||0)+1;}return out;
@@ -243,7 +244,7 @@
   function findSlots(req) {
     req=req||{};
     const base=evaluate(req),want=req.want??3,perDay=req.perDay??1;
-    const result={open:spread(base.open,want,perDay),openCount:base.open.length,rejected:base.rejected,errors:base.errors,warnings:base.warnings,fallback:null,lastResort:null};if(base.errors.length)return result;
+    const result={open:spread(base.open,want,perDay),openCount:base.open.length,rejected:base.rejected,protectedConflicts:base.protectedConflicts||[],errors:base.errors,warnings:base.warnings,fallback:null,lastResort:null};if(base.errors.length)return result;
     if(result.open.length<want) {
       const shorter=req.duration>(req.minDuration??30)?evaluate(req,{duration:req.minDuration??30}).open:[];
       const extended=req.extendDays===0?[]:evaluate(req,{to:addDaysYmd(req.range.to,req.extendDays??5)}).open.filter(s=>s.day>req.range.to);
