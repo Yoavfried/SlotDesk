@@ -1,6 +1,10 @@
 # SlotDesk validation record
 
-Current code: **0.9.3**. Automated evidence and user-reported live behavior are recorded separately. No formal manual acceptance checklist remains.
+Current code: **0.9.3.5**. Automated evidence and user-reported live behavior are recorded separately. No formal manual acceptance checklist remains.
+
+## 0.9.3.5 validation
+
+Application tests include 26 additional email/calendar-removal checks (1,710 total). Six backend and 22 calendar-comparison checks also pass. The shared accessibility journey passed 20 screen states without automated violations and 36 keyboard/focus/reflow assertions; the focused profile journey passed 37 assertions plus three persistence/empty-selection checks. The focused synthetic browser pass covers own-email locking, malformed email restoration and bell persistence, explicit valid-profile creation, the no-access/Add calendar flow, fixed selected rows and leave treatment, Settings removal, timezone chevron alignment, drawn menu arrows and header alignment between short and long screens. See the [exact validation inventory](profile-validation.md). No live calendar writes are used. Broader visual approval remains with the owner.
 
 ## Same-version interface follow-up — 18 October 2026
 

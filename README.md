@@ -1,8 +1,8 @@
 ![SlotDesk — make room for what matters](design/assets/slotdesk-banner.svg)
 
-**0.9.3 · Google Calendar · private Chrome pilot**
+**0.9.3.5 · Google Calendar · private Chrome pilot**
 
-Version 0.9.3 improves keyboard navigation, focus, control labels, validation and contrast. The overall UX, buttons, responsive layouts and wording remain under owner review. See [accessibility evidence](docs/accessibility.md), [version history](docs/changelog.md) and [backup/import rules](docs/export-import.md).
+Version 0.9.3.5 adds the approved DM Sans styling, stable navigation/header layout and simplified profile calendar settings, with guarded email editing. Individual advanced settings remain the next 0.9.4 work. The overall UX, buttons, responsive layouts and wording remain under owner review. See [accessibility evidence](docs/accessibility.md), [version history](docs/changelog.md) and [backup/import rules](docs/export-import.md).
 
 SlotDesk helps executive assistants find meeting times across people, calendars and timezones. Review a new invitation, browse existing meetings, edit its details and guests, or choose a new time for an appointment. Every calendar write requires an explicit review and confirmation.
 

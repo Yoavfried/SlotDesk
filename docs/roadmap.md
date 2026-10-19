@@ -4,7 +4,7 @@ Updated 19 October 2026. Status reflects agreed scope, not a promise of public a
 
 ## Current release
 
-Version **0.9.3** retains the accepted [connection/recovery experience](recovery-experience.md), including read-only setup, stale in-memory lists, automatic read-only confirmation alerts, explicit reviewed retries and unreadable-storage recovery. It also implements the approved Settings, profile-list and responsive layout polish. The five-field [onboarding leads implementation](leads-table.md) has a deployed private intake and database. This pilot is configured to send registrations, keeping failed submissions queued locally. [Deployment checks](registration-deployment.md) passed; first real registration from the updated extension remains to be observed. See the [0.9.3 changelog](changelog.md).
+Version **0.9.3.5** retains the accepted [connection/recovery experience](recovery-experience.md), including read-only setup, stale in-memory lists, automatic read-only confirmation alerts, explicit reviewed retries and unreadable-storage recovery. It also implements the approved Settings, profile-list and responsive layout polish. The five-field [onboarding leads implementation](leads-table.md) has a deployed private intake and database. This pilot is configured to send registrations, keeping failed submissions queued locally. [Deployment checks](registration-deployment.md) passed; first real registration from the updated extension remains to be observed. See the [0.9.3 changelog](changelog.md).
 
 The existing [implemented work](implemented.md), [accepted UX](ux-decisions.md), reviewed calendar writes, management, profiles and design language remain. No new real Google or email-delivery verification is claimed by this update.
 
@@ -14,9 +14,9 @@ The authorized onboarding, travel, timezone, mapping, guest and flexibility work
 
 ## Next work item
 
-Continue the [0.9.4 styling plan](styling-0.9.4.md): menu icons/descriptions, drawn navigation arrows, typography roles and compact page headings/spacing. The owner confirmed DM Sans for all ordinary interface text, sentence case, and provisional page headlines at weight 400 and 24px compact / 28px wide, with visual review later. Other detailed styling choices remain proposals; no 0.9.4 implementation is authorized by the planning request. Preserve robotic eyebrow text and the wordmark.
+The owner authorized the [styling direction](styling-0.9.4.md) and basic profile/calendar cleanup as **0.9.3.5**. It implements DM Sans, sentence-case normalization with the explicit personal/More Settings headings, provisional regular page titles, drawn arrows, compact spacing and stable scrollbar layout. The profile changes and field-level boundaries are documented in the [validation inventory](profile-validation.md).
 
-Then return to **profile advanced settings cleanup and improvement**. Review the existing controls, organization, wording and behavior before implementing changes. Planning or technical checks do not close the owner-led UX review.
+Next, review the individual **More Settings** sections with the owner and complete that work as **0.9.4**. The intermediate release does not redesign those individual controls. Styling/UX visual approval remains with the owner.
 
 ## Current review work
 

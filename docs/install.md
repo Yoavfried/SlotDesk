@@ -1,6 +1,6 @@
 # Install the SlotDesk pilot
 
-Current release: **0.9.3**. Chrome 116 or later. The configured build uses an existing owner-managed Google OAuth client; approved testers do not need to create a Google Cloud project.
+Current release: **0.9.3.5**. Chrome 116 or later. The configured build uses an existing owner-managed Google OAuth client; approved testers do not need to create a Google Cloud project.
 
 ## Prepare the package
 
@@ -10,7 +10,7 @@ From the repository root, using Node.js 18+:
 npm run package:slotdesk
 ```
 
-Give the tester `dist/SlotDesk-0.9.3.zip`. It includes the extension, local fonts, handoff guide, general Help and the privacy notice. Source tests and repository documentation are excluded. Do not include credentials or calendar exports.
+Give the tester `dist/SlotDesk-0.9.3.5.zip`. It includes the extension, local fonts, handoff guide, general Help and the privacy notice. Source tests and repository documentation are excluded. Do not include credentials or calendar exports.
 
 ## Tester setup
 
@@ -29,8 +29,8 @@ Help is available from the question-mark icon before and after connection. The a
 
 ## Updating
 
-Replace the contents of the existing installed folder with the new package and click Reload on its Chrome extension card. Keep the installed path and pinned identity. Close and reopen older SlotDesk windows after reloading. Saved account-specific profiles remain in the browser. Upgrades from before 0.8.0 ask you to confirm calendar scope; an already confirmed selection is retained in 0.9.3 and does not reopen at each start. Do not uninstall the extension as an update step, because uninstalling can remove its local workspace. Loading a second separate copy is not the normal update route.
+Replace the contents of the existing installed folder with the new package and click Reload on its Chrome extension card. Keep the installed path and pinned identity. Close and reopen older SlotDesk windows after reloading. Saved account-specific profiles remain in the browser. Upgrades from before 0.8.0 ask you to confirm calendar scope; an already confirmed selection is retained in 0.9.3.5 and does not reopen at each start. Do not uninstall the extension as an update step, because uninstalling can remove its local workspace. Loading a second separate copy is not the normal update route.
 
 From source, load `extension/`, not the repository root. The pinned extension ID is `blpliafbiiidhcffegochddjhagkhhip`. Owner OAuth configuration and access limitations are described in [architecture](architecture.md).
 
-Version 0.9.3 includes the registration notice and optional updates choice introduced in the 0.9.0 preview. Its central endpoint is configured. Settings shows whether registration is saved or waiting; a failed submission stays queued locally. The private 0.9.3 pilot package includes this configured service. On update, Chrome may ask you to accept access to the exact registration-service host.
+Version 0.9.3.5 includes the registration notice and optional updates choice introduced in the 0.9.0 preview. Its central endpoint is configured. Settings shows whether registration is saved or waiting; a failed submission stays queued locally. The private 0.9.3.5 pilot package includes this configured service. On update, Chrome may ask you to accept access to the exact registration-service host.

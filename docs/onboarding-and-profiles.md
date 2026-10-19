@@ -1,5 +1,7 @@
 # Onboarding, profiles and calendar scope — 0.8.0
 
+0.9.3.5 update: profile calendar editing now has separate Availability calendars and More Settings expandables, fixed linked-calendar rows, explicit Add actions and no-access hiding. New profiles require explicit creation; saved invalid emails revert with a bell notice and own-profile email is locked. Explicitly deselecting calendars in Settings removes their profile links. The [validation inventory](profile-validation.md) supersedes earlier UI/save descriptions below where they differ. Individual advanced-section cleanup remains for 0.9.4.
+
 Implemented 14 October 2026. This release covers accessible travel, main profile calendar assignments, searchable timezones, mapping-based automatic attendance, email-first guests, usual-hour convenience ignoring, participant-specific ordinary-overlap permission and workspace calendar selection. Larger settings redesign and optional LLM features remain future work.
 
 ## Three-step onboarding

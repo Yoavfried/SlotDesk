@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "SlotDesk Pilot",
-  "version": "0.9.3",
+  "version": "0.9.3.5",
   "minimum_chrome_version": "116",
   "description": "Find meeting times, review every detail, and send Google Calendar invitations.",
   "permissions": [

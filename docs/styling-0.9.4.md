@@ -1,6 +1,6 @@
 # Styling plan for 0.9.4
 
-Started 19 October 2026. **Planning only: no 0.9.4 implementation or release is authorized by this record.** Current shipped version remains 0.9.3. Settle the styling plan first, then return to profile advanced settings cleanup and improvement. The owner decides when the wider user experience is ready.
+Started 19 October 2026. **Authorized intermediate implementation: 0.9.3.5.** On 19 October the owner requested implementation of the styling and basic profile/calendar changes as 0.9.3.5, leaving individual advanced settings for 0.9.4. Settle the styling plan first, then return to profile advanced settings cleanup and improvement. The owner decides when the wider user experience is ready.
 
 The [original kit](../design/reference/style-guide.html) stays unchanged. This document proposes an explicit working-app adaptation; accepted rules should become a maintained, illustrated working-interface style guide with shared implementation tokens.
 
@@ -10,7 +10,7 @@ The [original kit](../design/reference/style-guide.html) stays unchanged. This d
 - **Sentence case throughout ordinary interface text**, including Edit profile, Create profile, Clear data and Calendar connected. Preserve proper names, brands and uppercase robotic text.
 - **Page headlines at weight 400, 24px in compact/sidebar layouts and 28px in wider layouts.** The owner chose these sizes for now, with visual review later; they are provisional rather than final visual approval. Reduce the space above headlines as planned.
 
-These answers settle the three typography/capitalization choices; they do not authorize application implementation or approve the overall styling.
+These choices are implemented in 0.9.3.5 following the subsequent explicit implementation request. They do not establish owner approval of the resulting visual experience.
 
 ## Requested direction
 
@@ -24,7 +24,7 @@ These answers settle the three typography/capitalization choices; they do not au
 - Use the confirmed DM Sans and regular-weight page-headline direction above; visually review the provisional sizes later.
 - Preserve the current robotic eyebrow text and wordmark styling.
 
-## Observations from current source
+## Source observations before 0.9.3.5
 
 The working app uses a system UI font stack, not DM Sans. Common headings use weight 640. Size tokens include 30px page titles and 26px section headings, but individual components add overrides. The two page-heading patterns differ: `.intro` has 54px top padding on wide screens and 36px on narrow screens, whereas `.view-heading` has its own margins. Some headlines contain forced line breaks.
 
@@ -75,6 +75,8 @@ Typography alone must not be the only indication of interactivity. Filled/outlin
 
 Use **sentence case** for ordinary interface headings, buttons, labels, options, tooltips and messages. Capitalize the first word, proper names and established acronyms. Examples: New meeting, Manage profiles, Edit profile, Create profile, Choose calendars, Clear data, Calendar connected.
 
+The owner subsequently explicitly requested **Edit Your Profile** and **More Settings** as profile headings; 0.9.3.5 retains those requested spellings as exceptions.
+
 Keep brand names and proper spellings, including SlotDesk, Google Calendar, Google Meet and Outlook. Preserve people's names, calendar titles, timezone identifiers and user-entered content. Preserve the uppercase wordmark and robotic eyebrows as deliberate exceptions. Do not use a blanket CSS text transform to fix mixed source wording.
 
 Functional headings and action labels do not end in a period. Supporting sentences use normal punctuation. Review the large editorial headlines separately: use one deliberate punctuation rule across them rather than accidental differences. Proposed default: keep a sentence's punctuation in editorial copy, with consistent application.
@@ -99,7 +101,7 @@ The owner reports that the main menu fits without a scrollbar while longer pages
 
 Recommended approach: reserve the normal scrollbar gutter consistently at the root page using `scrollbar-gutter: stable`. This keeps the existing page scroll and sticky header arrangement. With classic scrollbars, short pages keep empty gutter space rather than an unnecessary scrollbar thumb; overlay scrollbars do not consume layout width. See the [browser documentation](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/scrollbar-gutter). Do not add a hard-coded scrollbar-width padding or double-compensate for overlay scrollbars.
 
-The owner's alternative, scrolling only the content below a full-width header, remains recorded. It is not the recommended first approach because it changes the page's scrolling container and would require additional focus/scroll behavior review. The current source reserves a gutter inside Settings but not at the root page; this plan does not yet change either implementation.
+The owner's alternative, scrolling only the content below a full-width header, remains recorded. It is not the recommended first approach because it changes the page's scrolling container and would require additional focus/scroll behavior review. The current source reserves a gutter inside Settings but not at the root page; 0.9.3.5 adds the root gutter while retaining the Settings gutter.
 
 Verify unchanged horizontal positions for the logo, bell, Help, gear and main content when navigating between the menu and each main page, when content expands/collapses, and when dialogs open/close. Cover sidebar/full-window widths, text zoom and native scrollbar preferences. This is a 0.9.4 layout requirement; its implementation approach remains a recommendation for owner review.
 

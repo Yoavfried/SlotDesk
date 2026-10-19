@@ -1,5 +1,13 @@
 # SlotDesk changelog
 
+## 0.9.3.5 — 19 October 2026
+
+- Implement the approved styling direction with bundled DM Sans, shared type roles, regular-weight 24px/28px page titles, compact spacing, drawn menu/navigation icons and a stable page scrollbar gutter. Retain the wordmark, lime header and robotic eyebrows.
+- Separate Availability calendars and More Settings into prominent expandables. Replace linked-calendar selectors with saved rows, visible leave/holiday treatment and an explicit Add calendar/Add another calendar flow limited to the selected workspace calendars. The no-access checkbox hides the controls; leaving an empty selection returns it to checked.
+- Explicitly deselecting a calendar in Settings removes its saved profile/guest assignments and associated leave-calendar references. Other assignments remain; transient read failures do not remove links. Calendar appointments are not modified.
+- Lock the own-profile email and distinguish Edit Your Profile. Existing invalid or duplicate email edits revert to the saved address with a persistent bell notice; new profiles require explicit creation with a valid email and timezone. Remove generic autosave instructions and the Not saved/Use saved values recovery control while retaining specific validation/storage errors.
+- Anchor timezone chevrons to the right edge. Record a field-by-field validation inventory. Individual advanced-setting redesign remains for 0.9.4; visual approval remains with the owner.
+
 ## 0.9.3 — 18 October 2026
 
 Same-version follow-up: align the participant Add button with its search field; close suggestions on outside interaction and page scrolling, reopen on search interaction, and keep the popup below the header. Use the generic **Edit Profile** heading. Record advanced profile settings cleanup/improvement as the next task. No version or Calendar behavior change. A further card follow-up moves email directly below the name, replaces the availability text with an accessible calendar connection icon beside the timezone/local time, and removes the automatic-participant caption. Linked-calendar profile settings now explain automatic inclusion. Shorten the meeting-only overlap label and explanatory text as requested.

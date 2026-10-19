@@ -32,6 +32,10 @@
       return response;
     };
   }
+  function removeCalendarAssignments(state,removed){
+    const ids=new Set(removed);if(!ids.size)return;
+    for(const person of [...state.profiles,...(state.settings.guestProfiles||[])]){person.calendarIds=(person.calendarIds||[]).filter(id=>!ids.has(id));person.leaveCalendarIds=(person.leaveCalendarIds||[]).filter(id=>person.calendarIds.includes(id));if(person.calendarLabels)for(const id of ids)delete person.calendarLabels[id];}
+  }
   function scopeChange(state,selected,defaultId,list){
     const chosen=[...new Set(selected)],available=new Map(list.map(cal=>[cal.id,cal]));
     if(!chosen.length||chosen.some(id=>!available.has(id)))throw new Error('Choose at least one available calendar.');
@@ -41,5 +45,5 @@
     if(pending&&!chosen.includes(pending))throw new Error('Keep the calendar of the unfinished change selected until that change is resolved.');
     return {workspaceCalendarIds:chosen,calendarScopeConfirmed:true,scopeRevision:(state.settings.scopeRevision||0)+1,defaultCalendar:defaultId,defaultCalendarSelected:!!defaultId};
   }
-  return {ids,included,calendars,signature,suggestions,assertAccess,scopedFetch,scopeChange};
+  return {ids,included,calendars,signature,suggestions,assertAccess,scopedFetch,scopeChange,removeCalendarAssignments};
 });

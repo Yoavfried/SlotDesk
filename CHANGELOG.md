@@ -1,5 +1,11 @@
 # Repository changelog
 
+## 2026-10-19 — SlotDesk 0.9.3.5
+
+- Implement the approved styling and profile/calendar intermediate release, retain the supplied logo/robotic accents, and add a working style guide.
+- Guard saved email changes and new-profile creation; simplify calendar links, no-access behavior and explicit scope removal. Document validation and preserve reviewed Calendar-write boundaries.
+- Keep the individual advanced settings review for 0.9.4 and overall UX approval with the owner.
+
 ## 2026-10-18 — SlotDesk 0.9.3 accessibility
 
 - Further same-version card polish: place email with the name, replace availability captions with a timezone-row calendar icon and hover/focus explanation, move automatic inclusion guidance to linked-calendar profile settings, and shorten the per-meeting overlap copy.

@@ -30,6 +30,11 @@
     for(const value of Object.values(p.eventRules||{})){if(value.length>10000)fail('eventRules','Event-matching text is too long.');try{new RegExp(value);}catch(_){fail('eventRules','Check the event-matching expression.');}}
     return p;
   }
+  function emailEdit(existing,value,profiles,ownId){
+    const entered=U.emailKey(value),prior=existing.email;
+    const reason=existing.id===ownId&&entered!==U.emailKey(prior)?'Your profile email cannot be changed.':!U.validEmail(entered)?'The email address was invalid.':profiles.some(person=>person.id!==existing.id&&U.emailKey(person.email)===entered)?'That email belongs to another profile.':'';
+    return reason?{email:prior,restored:true,message:reason+' Restored '+prior+' for '+(existing.name||prior)+'.'}:{email:entered,restored:false};
+  }
   function localInstant(dateValue,timeValue,tz,previous){
     if(!date(dateValue)||!U.parseClock(timeValue)||!zone(tz))throw error('flight','Choose a date, time and timezone.');
     const time=U.parseClock(timeValue),base=E.zonedToInstant(dateValue,+time.slice(0,2)*60 + +time.slice(3),tz);
@@ -47,5 +52,5 @@
   function eventSettings(saved,entered,airport,defaults,baseTerms,compile){const prior=baseTerms||saved.ruleTerms||defaults,rules={...(saved.eventRules||{})};for(const key of ['protect','soft','leave'])if(entered[key]!== (prior[key]??defaults[key])||key==='protect'&&airport!==(saved.airportRule!==false)){rules[key]=compile(entered[key]);if(key==='protect'&&airport)rules[key]+='|\\b[A-Z]{3}\\s*>\\s*[A-Z]{3}\\b';}return {ruleTerms:entered,airportRule:airport,eventRules:rules};}
   function flightBatch(outbound,back,previous,uuid){const first=flight(outbound,previous,uuid),flights=[first];if(back){const second=flight(back,{},uuid);if(Date.parse(second.departure)<Date.parse(first.arrival))throw error('return','The return flight must depart after the outbound flight arrives.');flights.push(second);}return flights;}
   function flightWarnings(flights,existing,editingId){const warnings=[];for(const f of flights)for(const old of existing.filter(x=>!editingId||x.id!==editingId)){if(f.departure===old.departure&&f.arrival===old.arrival)warnings.push('A flight with these times is already saved.');else if(Date.parse(f.departure)<Date.parse(old.arrival)&&Date.parse(old.departure)<Date.parse(f.arrival))warnings.push('This flight overlaps another saved flight. Check the itinerary.');}return [...new Set(warnings)];}
-  return {fields,zone,date,instant,checkProfile,localInstant,flight,returnFields,flightBatch,flightWarnings,eventSettings,clone};
+  return {fields,zone,date,instant,checkProfile,emailEdit,localInstant,flight,returnFields,flightBatch,flightWarnings,eventSettings,clone};
 });

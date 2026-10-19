@@ -24,6 +24,8 @@ Native required errors are rendered beside fields and linked programmatically. H
 
 ## Evidence and limits
 
+Repeated for **0.9.3.5** after the typography/profile/calendar changes: 20 screen states with no automated violations and 36 keyboard/focus/reflow assertions passed. The [0.9.3.5 structured report](accessibility-results-0.9.3.5.json) retains Incomplete checks. A separate synthetic [profile-settings journey](../scripts/accessibility/profile-settings.js) passed 37 assertions; three additional checks covered duplicate-email restoration on close, unchosen calendar selectors and alert persistence. All nine baseline synthetic appointments remained unchanged, with no event writes.
+
 Verified for 0.9.3 using axe-core 4.14.0 and Chromium with synthetic calendars: 20 screen states had no automated violations, and 36 keyboard/focus/reflow assertions passed. Covered light/dark Settings, calendar selection, profile lists/advanced forms, return flights, profile export, participant choices, new meeting/review, existing meeting list/details/editing, alerts and rescheduling. Keyboard checks include contextual focus, active suggestions, required errors, flight containment, nested profile/reschedule return, deliberate send, forced colors and 320/390/1280px layouts. A 2x CSS zoom check at a 640px viewport passed; it is not a substitute for every browser zoom/text setting. Original synthetic appointments were unchanged and no event writes were sent.
 
 Some axe checks return Incomplete rather than Pass/Fail, including hidden-control relationships, label/content matching and color overlap cases. These are recorded in the [structured report](accessibility-results.json); they are not relabelled as passes.

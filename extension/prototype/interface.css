@@ -1,0 +1,25 @@
+/* Working-interface roles: DM Sans, fixed icons and shared type/spacing values. */
+html{scrollbar-gutter:stable}body{font-family:var(--f)}
+@media(min-width:761px){:root{--type-title:28px}}
+button,input,select,textarea{font-family:var(--f)}
+button,.button-link,.text-button{font-size:14px;font-weight:600}
+input:not([type=checkbox]):not([type=hidden]),select,textarea,.timezone-trigger{font-size:14px;font-weight:400}
+label{font-size:13px;font-weight:500}label.check{font-weight:400}
+.intro h1,.view-heading h1,.welcome h1{font-size:var(--type-title);font-weight:400;line-height:1.2;letter-spacing:-.02em}
+.intro p,.view-heading p{font-size:14px;line-height:1.5;margin:0}
+.back-home{margin:0 0 16px;padding:0;display:inline-flex;align-items:center;gap:8px}
+.action-arrow{display:inline-block;width:18px;height:18px;flex:none;vertical-align:-3px}
+button:has(>.action-arrow),.button-link:has(>.action-arrow){display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.workspace-choice{display:flex!important}.workspace-choice>span:last-child{display:flex;align-items:center}.menu-icon{display:flex;align-items:center;justify-content:center}.menu-icon svg{width:24px;height:24px;flex:none}
+.workspace-choice strong,.person-name,.meeting-entry h3,.slot-heading h3{font-size:16px;font-weight:600}
+.workspace-choice small,.person-email,.person-meta,.fit-detail,.participant-local-time{font-size:13px;font-weight:400}
+.dialog-heading h2{font-size:22px!important;font-weight:400}
+.timezone-trigger{display:flex;align-items:center;justify-content:space-between;gap:12px}.timezone-value{flex:1;min-width:0}.timezone-chevron{width:18px;height:18px;flex:none;margin-left:auto}
+#editor .profile-settings-group>summary{font-size:20px;font-weight:500;color:var(--ink);padding:15px 0;line-height:1.3}
+#editor .profile-settings-group>details>summary{font-size:14px;font-weight:500;padding:10px 0}
+#availability-calendars .mapping-controls>strong{flex:1;min-width:0;font-size:14px;overflow-wrap:anywhere}
+#availability-calendars .calendar-mapping{border:1px solid var(--line);border-radius:10px;padding:12px;margin:12px 0}
+.mapping-leave{border-top:1px solid var(--line);margin-top:12px;padding-top:8px}.mapping-leave .check{margin:0!important}
+#mapping-picker{margin:12px 0}#mapping-picker label{margin-top:0}#mapping-cancel{margin-top:8px}
+#p-email:disabled{color:var(--ink-3);background:var(--sunk);cursor:not-allowed;opacity:.75}
+#profile-save-status:empty,#profile-error:empty{display:none}#profile-save-status{min-height:0;margin-top:12px}

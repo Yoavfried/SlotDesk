@@ -1,0 +1,297 @@
+{
+  "axeVersion": "4.14.0",
+  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+  "checks": [
+    "Profile opens with context heading focused",
+    "Return departure timezone has contextual label",
+    "Timezone announces active result",
+    "Escape cannot discard flight",
+    "Required flight fields show associated errors",
+    "Corrected required field clears obsolete error",
+    "Nested form returns focus to Add flight",
+    "Profile arrows retain search focus",
+    "Profile choice is announced",
+    "Enter adds profile and closes suggestions",
+    "Suggestion Escape retains meeting editor",
+    "Forced colors retains focus outline",
+    "No horizontal overflow at 320",
+    "No horizontal overflow at 390",
+    "No horizontal overflow at 1280",
+    "Accessibility checks never changed appointments",
+    "Flight keyboard focus contained 0",
+    "Flight keyboard focus contained 1",
+    "Flight keyboard focus contained 2",
+    "Flight keyboard focus contained 3",
+    "Flight keyboard focus contained 4",
+    "Flight keyboard focus contained 5",
+    "Flight keyboard focus contained 6",
+    "Flight keyboard focus contained 7",
+    "Flight keyboard focus contained 8",
+    "Flight keyboard focus contained 9",
+    "Flight keyboard focus contained 10",
+    "Flight keyboard focus contained 11",
+    "Flight keyboard focus contained 12",
+    "Flight keyboard focus contained 13",
+    "Enter in booking field does not confirm",
+    "Typing Enter never sends invitation",
+    "Nested profile takes focus despite DOM order",
+    "Nested profile returns focus to reschedule",
+    "2x zoom reflows at 640px viewport",
+    "All original appointments unchanged"
+  ],
+  "scans": [
+    {
+      "name": "settings-light",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "count": 1
+        },
+        {
+          "id": "label-content-name-mismatch",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "name": "calendars-light",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "count": 1
+        },
+        {
+          "id": "label-content-name-mismatch",
+          "count": 5
+        }
+      ]
+    },
+    {
+      "name": "profiles-light",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "name": "profile-export-light",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "label-content-name-mismatch",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "name": "advanced-light",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-valid-attr-value",
+          "count": 1
+        },
+        {
+          "id": "label-content-name-mismatch",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "name": "flight-light",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-valid-attr-value",
+          "count": 4
+        }
+      ]
+    },
+    {
+      "name": "participant-list-light",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-valid-attr-value",
+          "count": 2
+        },
+        {
+          "id": "color-contrast",
+          "count": 10
+        },
+        {
+          "id": "label-content-name-mismatch",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "name": "new-meeting-light",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-valid-attr-value",
+          "count": 2
+        },
+        {
+          "id": "label-content-name-mismatch",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "name": "meetings-light",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-valid-attr-value",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "name": "meeting-details-light",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "label-content-name-mismatch",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "name": "meeting-edit-light",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-valid-attr-value",
+          "count": 1
+        },
+        {
+          "id": "label-content-name-mismatch",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "name": "settings-dark",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "label-content-name-mismatch",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "name": "meetings-dark",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-valid-attr-value",
+          "count": 1
+        },
+        {
+          "id": "color-contrast",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "name": "profiles-dark",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "name": "advanced-dark",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-valid-attr-value",
+          "count": 1
+        },
+        {
+          "id": "label-content-name-mismatch",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "name": "flight-dark",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-valid-attr-value",
+          "count": 4
+        }
+      ]
+    },
+    {
+      "name": "new-meeting-dark",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-valid-attr-value",
+          "count": 2
+        },
+        {
+          "id": "color-contrast",
+          "count": 1
+        },
+        {
+          "id": "label-content-name-mismatch",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "name": "booking-dark",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-valid-attr-value",
+          "count": 1
+        },
+        {
+          "id": "label-content-name-mismatch",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "name": "alerts-dark",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "count": 2
+        },
+        {
+          "id": "label-content-name-mismatch",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "name": "reschedule-dark",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-valid-attr-value",
+          "count": 2
+        },
+        {
+          "id": "label-content-name-mismatch",
+          "count": 1
+        }
+      ]
+    }
+  ],
+  "release": "0.9.3.5",
+  "verifiedAt": "2026-10-19"
+}
