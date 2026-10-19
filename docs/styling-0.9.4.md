@@ -4,6 +4,14 @@ Started 19 October 2026. **Planning only: no 0.9.4 implementation or release is 
 
 The [original kit](../design/reference/style-guide.html) stays unchanged. This document proposes an explicit working-app adaptation; accepted rules should become a maintained, illustrated working-interface style guide with shared implementation tokens.
 
+## Decisions confirmed — 19 October 2026
+
+- **DM Sans throughout ordinary interface text**: headings, body text, fields and buttons. Preserve the logo and robotic eyebrow text unchanged.
+- **Sentence case throughout ordinary interface text**, including Edit profile, Create profile, Clear data and Calendar connected. Preserve proper names, brands and uppercase robotic text.
+- **Page headlines at weight 400, 24px in compact/sidebar layouts and 28px in wider layouts.** The owner chose these sizes for now, with visual review later; they are provisional rather than final visual approval. Reduce the space above headlines as planned.
+
+These answers settle the three typography/capitalization choices; they do not authorize application implementation or approve the overall styling.
+
 ## Requested direction
 
 - Keep the New meeting plus icon's appearance.
@@ -13,7 +21,7 @@ The [original kit](../design/reference/style-guide.html) stays unchanged. This d
 - Replace navigation-arrow characters in all three menu choices, Continue unfinished meeting and return-to-workspace actions with a consistent drawn arrow.
 - Review capitalization and define font sizes/weights by their purpose, including the visual distinction between ordinary copy and text actions.
 - Reduce the large space above page headlines and consider smaller headlines.
-- Consider DM Sans and weight 400 for page headlines. This is a proposed font direction, not a settled implementation decision.
+- Use the confirmed DM Sans and regular-weight page-headline direction above; visually review the provisional sizes later.
 - Preserve the current robotic eyebrow text and wordmark styling.
 
 ## Observations from current source
@@ -40,7 +48,7 @@ Menu icons display at 24px; action arrows display at 18px. Align arrow and text 
 
 Arrows indicate navigation or progression, including Continue unfinished meeting and review/continue actions. Save, Discard, Remove and similar direct actions do not need a forward arrow. Audit navigation glyphs in generated content as well as static HTML; do not blindly replace arrows used as appointment/date data.
 
-## Typography proposal
+## Typography — accepted family, proposed role scale
 
 Use **DM Sans** for normal working-interface text, with locally bundled font files and their license. Retain the current VT323 wordmark, robotic eyebrow/step-label typography, case and letter spacing. Do not apply a font replacement to those components. Existing terminal-style handoff material remains outside this working-app proposal.
 
@@ -48,7 +56,7 @@ Use three normal-interface weights: 400 for reading, 500 for labels/section stru
 
 | Role | Proposed size | Weight | Purpose |
 | --- | --- | --- | --- |
-| Page title | 24px compact / 28px wide | 400 | Orient the user to the current screen |
+| Page title | 24px compact / 28px wide, accepted provisionally | 400 | Orient the user to the current screen; visual review remains pending |
 | Dialog title | 22px | 400 | Name the current task |
 | Section heading | 20px | 500 | Divide a screen into meaningful areas |
 | Card/menu title or person name | 16px | 600 | Identify an item or destination |
@@ -63,7 +71,7 @@ Page titles use line height 1.2; normal text uses 1.5. Controls inherit their de
 
 Typography alone must not be the only indication of interactivity. Filled/outlined buttons have their button surface, hover and visible keyboard focus. Text navigation actions consistently use weight 600 and a drawn direction arrow. Ordinary explanatory text stays weight 400 and has no arrow, pointer cursor or button hover treatment. Inline links retain an identifiable link treatment.
 
-## Capitalization proposal
+## Capitalization — accepted
 
 Use **sentence case** for ordinary interface headings, buttons, labels, options, tooltips and messages. Capitalize the first word, proper names and established acronyms. Examples: New meeting, Manage profiles, Edit profile, Create profile, Choose calendars, Clear data, Calendar connected.
 
@@ -93,7 +101,5 @@ After the owner settles the proposed choices, implementation should consolidate 
 
 ## Choices still to settle
 
-- DM Sans throughout the normal working interface versus headings only. Recommendation: use it throughout; preserve the robotic/wordmark exceptions.
-- The proposed heading sizes, 400-weight page/dialog titles, and the role scale above.
-- Sentence-case normalization of labels previously given capitalized wording, including Edit Profile, Clear Data and Calendar Connected.
-- Final menu description wording and page-header spacing after reviewing the proposed rules together.
+- Review the remaining type roles, arrow/icon details, final menu description wording and exact page-header spacing together. The DM Sans family/scope, sentence case and provisional page-headline scale are settled above.
+- Visually evaluate the 24px/28px page headlines later; only the owner can approve their final appearance.

@@ -14,7 +14,7 @@ The authorized onboarding, travel, timezone, mapping, guest and flexibility work
 
 ## Next work item
 
-First settle the [0.9.4 styling plan](styling-0.9.4.md): menu icons/descriptions, drawn navigation arrows, capitalization, typography roles and compact page headings/spacing. Font and detailed styling choices remain proposals; no 0.9.4 implementation is authorized by the planning request. Preserve robotic eyebrow text and the wordmark.
+Continue the [0.9.4 styling plan](styling-0.9.4.md): menu icons/descriptions, drawn navigation arrows, typography roles and compact page headings/spacing. The owner confirmed DM Sans for all ordinary interface text, sentence case, and provisional page headlines at weight 400 and 24px compact / 28px wide, with visual review later. Other detailed styling choices remain proposals; no 0.9.4 implementation is authorized by the planning request. Preserve robotic eyebrow text and the wordmark.
 
 Then return to **profile advanced settings cleanup and improvement**. Review the existing controls, organization, wording and behavior before implementing changes. Planning or technical checks do not close the owner-led UX review.
 
