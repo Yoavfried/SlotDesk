@@ -2,6 +2,8 @@
 
 The supplied design kits remain the reference: [written guide](reference/DESIGN.md), [visual style guide](reference/style-guide.html), [tokens](reference/tokens.json), original CSS, sample pages, fonts and screenshots.
 
+The [0.9.4 styling plan](../docs/styling-0.9.4.md) proposes working-interface typography, capitalization, icon/arrow and spacing standardization. It is a draft for owner review, not a change to the original reference or the currently implemented font rules below.
+
 ## Wordmark and lime header
 
 Use the actual bundled **VT323 regular 400** font for `[SLOT DESK]`, with brackets at 55% opacity and ink `#15160A`. The wordmark has no separate background box. The whole application header uses lime `#D8E84A`, including in the dark theme.

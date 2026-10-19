@@ -1,6 +1,6 @@
 # SlotDesk roadmap
 
-Updated 18 October 2026. Status reflects agreed scope, not a promise of public availability. The broader website remains on hold.
+Updated 19 October 2026. Status reflects agreed scope, not a promise of public availability. The broader website remains on hold.
 
 ## Current release
 
@@ -14,7 +14,9 @@ The authorized onboarding, travel, timezone, mapping, guest and flexibility work
 
 ## Next work item
 
-**Profile advanced settings cleanup and improvement** is the next task requested by the owner. Review the existing controls, organization, wording and behavior before implementing changes. This follow-up records the priority; it does not implement that cleanup or close the owner-led UX review.
+First settle the [0.9.4 styling plan](styling-0.9.4.md): menu icons/descriptions, drawn navigation arrows, capitalization, typography roles and compact page headings/spacing. Font and detailed styling choices remain proposals; no 0.9.4 implementation is authorized by the planning request. Preserve robotic eyebrow text and the wordmark.
+
+Then return to **profile advanced settings cleanup and improvement**. Review the existing controls, organization, wording and behavior before implementing changes. Planning or technical checks do not close the owner-led UX review.
 
 ## Current review work
 
