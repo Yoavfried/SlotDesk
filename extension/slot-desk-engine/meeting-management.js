@@ -36,12 +36,54 @@
     return {tracking:next,notices,resolved};
   }
   function dismiss(tracking,key,emails){const next=copy(tracking),record=next[key];if(record)for(const email of emails||Object.keys(record.responses))if(record.responses[U.emailKey(email)]==='declined')record.dismissed[U.emailKey(email)]=true;return next;}
-  function collisionTargets(slot,existing=[]){
-    const merged=new Map();function add(item){if(typeof item.calendarId!=='string'||!item.calendarId||typeof item.eventId!=='string'||!item.eventId||item.eventId.startsWith('freebusy:'))return;const key=JSON.stringify([item.calendarId,item.eventId]),record=merged.get(key)||{calendarId:item.calendarId,eventId:item.eventId,protectedTimes:[]};for(const time of item.protectedTimes||[item.protectedTime].filter(Boolean))if(time&&typeof time.start==='string'&&typeof time.end==='string'&&Number.isFinite(Date.parse(time.start))&&Date.parse(time.end)>Date.parse(time.start)&&!record.protectedTimes.some(old=>old.start===time.start&&old.end===time.end))record.protectedTimes.push({start:time.start,end:time.end});if(record.protectedTimes.length)merged.set(key,record);}
-    for(const item of existing)add(item);for(const clash of slot?.overrides||[])if(clash.causedBySlotDesk!==false&&clash.category!=='own-leave')add({calendarId:clash.event.calendarId,eventId:clash.event.id,protectedTime:{start:slot.startISO,end:slot.endISO}});return [...merged.values()];
+  function collisionTargets(slot,existing=[],origin=null){
+    const merged=new Map();
+    function add(item){
+      if(typeof item.calendarId!=='string'||!item.calendarId||typeof item.eventId!=='string'||!item.eventId||item.eventId.startsWith('freebusy:'))return;
+      const key=JSON.stringify([item.calendarId,item.eventId]),record=merged.get(key)||{calendarId:item.calendarId,eventId:item.eventId,protectedTimes:[]};
+      for(const time of item.protectedTimes||[item.protectedTime].filter(Boolean)){
+        if(!time||typeof time.start!=='string'||typeof time.end!=='string'||!Number.isFinite(Date.parse(time.start))||Date.parse(time.end)<=Date.parse(time.start))continue;
+        const source=time.origin||origin,valid=source&&typeof source.calendarId==='string'&&source.calendarId&&typeof source.eventId==='string'&&source.eventId;
+        const next={start:time.start,end:time.end,...(valid?{origin:{calendarId:source.calendarId,eventId:source.eventId}}:{})};
+        const same=record.protectedTimes.findIndex(old=>valid?old.origin?.calendarId===source.calendarId&&old.origin?.eventId===source.eventId:!old.origin&&old.start===time.start&&old.end===time.end);
+        if(same>=0)record.protectedTimes[same]=next;else record.protectedTimes.push(next);
+      }
+      if(record.protectedTimes.length)merged.set(key,record);
+    }
+    for(const item of existing)add(item);for(const clash of slot?.overrides||[])if(clash.causedBySlotDesk!==false&&clash.category!=='own-leave')add({calendarId:clash.event.calendarId,eventId:clash.event.id,protectedTime:{start:slot.startISO,end:slot.endISO}});
+    return [...merged.values()];
+  }
+  function linkFollowupOrigins(items,records){
+    return items.map(item=>({...item,protectedTimes:(item.protectedTimes||[item.protectedTime].filter(Boolean)).flatMap(time=>{
+      if(time.origin)return [time];const found=[];
+      for(const row of records){if(row.source.stale||row.source.failure)continue;for(const event of row.source.items||[]){
+        const interval=V.interval(event,row.source.timeZone||row.cal.timeZone||'UTC');
+        if(event.status!=='cancelled'&&event.transparency!=='transparent'&&V.slotdeskEvent(event)&&organizingCopy(event,row.cal)&&interval&&interval.start===Date.parse(time.start)&&interval.end===Date.parse(time.end)&&!(row.cal.id===item.calendarId&&event.id===item.eventId))found.push({...time,origin:{calendarId:row.cal.id,eventId:event.id}});
+      }}return found.length?found:[time];
+    })}));
   }
   function overlapChanges(before,slot,people=[]){for(const clash of slot.overrides||[]){const e=clash.event,time=V.interval({start:e.allDay?{date:e.start}:{dateTime:e.start},end:e.allDay?{date:e.end}:{dateTime:e.end}},e.tz||'UTC');if(!time)continue;const padding=e.allDay||['ooo','leave','flight'].includes(e.type)?0:Math.max(0,...people.filter(p=>clash.participants?.includes(p.id)).map(p=>p.radius?(p.radius.mode==='blocked'?p.radius.minutes:0):(p.buffer||0)))*60000,start=time.start-padding,end=time.end+padding,minutes=(s,t)=>Math.max(0,Math.min(t,end)-Math.max(s,start))/60000;clash.previousOverlapMinutes=minutes(before.start,before.end);clash.proposedOverlapMinutes=minutes(slot.start,slot.end);clash.preExisting=clash.previousOverlapMinutes>0;clash.causedBySlotDesk=!clash.preExisting||clash.proposedOverlapMinutes>clash.previousOverlapMinutes;}return slot;}
   function sameBusy(event,normalized,calendarId){if(normalized.calendarId===calendarId&&normalized.id===event.id)return true;if(!event.iCalUID||normalized.iCalUID!==event.iCalUID)return false;if(!event.recurringEventId&&!normalized.recurringEventId)return true;const original=event.originalStartTime||event.start;return !!(original.date?normalized.originalStart===original.date:original.dateTime&&Date.parse(normalized.originalStart)===Date.parse(original.dateTime));}
-  function remainingFollowups(items,records,profiles=[]){return items.filter(item=>{const record=records.find(row=>row.cal?.id===item.calendarId&&!row.source.stale&&row.source.coverage?.complete&&Array.isArray(row.source.items));if(!record)return true;const padding=Math.max(0,...profiles.filter(profile=>profile.calendarIds?.includes(item.calendarId)).map(profile=>profile.radius?.mode==='blocked'?profile.radius.minutes||0:profile.buffer||0))*60000,times=item.protectedTimes||[item.protectedTime].filter(Boolean),event=record.source.items.find(event=>event.id===item.eventId);if(event){if(event.status==='cancelled'||event.transparency==='transparent')return false;const interval=V.interval(event,record.source.timeZone||record.cal.timeZone||'UTC');return !interval||times.some(time=>interval.start-padding<Date.parse(time.end)&&interval.end+padding>Date.parse(time.start));}return !times.length||times.some(time=>Date.parse(record.source.coverage.from)>Date.parse(time.start)-padding||Date.parse(record.source.coverage.to)<Date.parse(time.end)+padding||!Number.isFinite(Date.parse(record.source.coverage.from))||!Number.isFinite(Date.parse(record.source.coverage.to)));});}
-  return {identity,organizingCopy,editReason,overlapIndex,observe,dismiss,sameBusy,collisionTargets,overlapChanges,remainingFollowups};
+  function remainingFollowups(items,records,profiles=[]){
+    const sources=records.filter(row=>row.cal&& !row.source.stale&&!row.source.failure&&Array.isArray(row.source.items));
+    const covers=(row,time)=>row?.source.coverage?.complete&&Date.parse(row.source.coverage.from)<=Date.parse(time.start)&&Date.parse(row.source.coverage.to)>=Date.parse(time.end);
+    const find=(cal,id)=>sources.find(row=>row.cal.id===cal&&row.source.items.some(event=>event.id===id));
+    return linkFollowupOrigins(items,sources).flatMap(item=>{
+      const padding=Math.max(0,...profiles.filter(profile=>profile.calendarIds?.includes(item.calendarId)).map(profile=>profile.radius?.mode==='blocked'?profile.radius.minutes||0:profile.buffer||0))*60000;
+      const record=find(item.calendarId,item.eventId),event=record?.source.items.find(event=>event.id===item.eventId),interval=event&&V.interval(event,record.source.timeZone||record.cal.timeZone||'UTC');
+      if(event&&(event.status==='cancelled'||event.transparency==='transparent'))return [];
+      const times=(item.protectedTimes||[item.protectedTime].filter(Boolean)).flatMap(time=>{
+        let next=time;
+        if(time.origin){const source=find(time.origin.calendarId,time.origin.eventId),origin=source?.source.items.find(event=>event.id===time.origin.eventId);
+          if(origin){if(origin.status==='cancelled'||origin.transparency==='transparent')return [];const moved=V.interval(origin,source.source.timeZone||source.cal.timeZone||'UTC');if(moved)next={...time,start:new Date(moved.start).toISOString(),end:new Date(moved.end).toISOString()};}
+          else if(sources.some(row=>row.cal.id===time.origin.calendarId&&covers(row,time)))return [];
+        }
+        if(interval)return interval.start-padding<Date.parse(next.end)&&interval.end+padding>Date.parse(next.start)?[next]:[];
+        if(!event&&sources.some(row=>row.cal.id===item.calendarId&&covers(row,{start:new Date(Date.parse(next.start)-padding).toISOString(),end:new Date(Date.parse(next.end)+padding).toISOString()})))return [];
+        return [next];
+      });
+      return times.length?[{...item,protectedTimes:times}]:[];
+    });
+  }
+  return {identity,organizingCopy,editReason,overlapIndex,observe,dismiss,sameBusy,collisionTargets,linkFollowupOrigins,overlapChanges,remainingFollowups};
 });

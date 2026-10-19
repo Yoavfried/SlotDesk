@@ -18,7 +18,14 @@ The [19 October scheduling/ranking review](scheduling-ranking-review.md) is impl
 
 The owner authorized the [styling direction](styling-0.9.4.md) and basic profile/calendar cleanup as **0.9.3.5**. It implements DM Sans, sentence-case normalization, including the personal/More settings headings, provisional regular page titles, drawn arrows, compact spacing and stable scrollbar layout. The profile changes and field-level boundaries are documented in the [validation inventory](profile-validation.md).
 
-Next, review the individual **More settings** sections with the owner and complete that work as **0.9.5**. The intermediate release does not redesign those individual controls. Styling/UX visual approval remains with the owner.
+## 0.9.5 — required owner reviews
+
+Do not begin the review-driven **0.9.5** fixes until the owner personally performs both reviews and specifies the required changes. **0.9.5 cannot happen without those owner reviews and directions; release also requires the owner’s approval of the resulting work**. Codex must not infer readiness or substitute automated/source review for these decisions.
+
+1. A complete **wording, UX and logic review of Edit profile’s advanced settings**, including every More settings section.
+2. A complete **wording and UX review of the Meeting options cards and the Advanced options under When would you like to meet?**
+
+Both are pending owner review. The intermediate releases do not complete or approve these reviews. The broader owner-led UX review also remains open.
 
 ## Current review work
 

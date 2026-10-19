@@ -24,7 +24,7 @@ A shared send lock coordinates creation, rescheduling and detail/guest edits acr
 
 A collision proposal exposes Plan replacement times for the other appointments. Each action opens the actual conflicting event, reads its full accessible roster and protects the selected new meeting's interval during replacement search. It does not create a duplicate replacement invitation.
 
-After a confirmed creation or reschedule introduces known collisions, Existing meetings lists Appointments to reschedule, with a matching bell alert that opens the list. Follow-ups do not appear on the main menu. A time change queues newly introduced or increased overlaps; pre-existing overlaps that stay the same or shrink remain visible warnings without generating new persisted work. Pending operations retain minimal collision IDs and intervals so this follow-up survives an uncertain response and reload. The active queue stores only calendar/event IDs and protected intervals; several new meetings affecting the same appointment combine their intervals. Each appointment needs its own review and confirmation. A successful replacement removes its follow-up; the EA may dismiss an item after coordinating elsewhere. Existing overlaps elsewhere in the calendar do not create this queue.
+After a confirmed creation or reschedule introduces known collisions, Existing meetings lists Appointments to reschedule, with a matching bell alert that opens the list. Follow-ups do not appear on the main menu. A time change queues newly introduced or increased overlaps; pre-existing overlaps that stay the same or shrink remain visible warnings without generating new persisted work. Pending operations retain minimal collision IDs and intervals so this follow-up survives an uncertain response and reload. The active queue stores only calendar/event IDs, protected intervals and source appointment IDs; several new meetings affecting the same appointment combine their intervals. Each appointment needs its own review and confirmation. A successful replacement removes its follow-up; the EA may dismiss an item after coordinating elsewhere. Existing overlaps elsewhere in the calendar do not create this queue.
 
 ## Existing overlap labels
 
@@ -41,3 +41,13 @@ Alerts update during normal calendar/contact/availability reads and explicit Ref
 **DF06: meeting search by name, participants, location or written content** is documented as a possible future feature. No meeting-search UI or content index is added now. Guest/content editing is available through the separate [Edit meeting](meeting-editing.md) action in 0.7.1. Whole-series edits, Outlook, background alerts and bulk automatic conflict resolution also remain outside this release.
 
 See [testing](testing.md), [security/privacy](security.md), [UX decisions](ux-decisions.md) and [roadmap](roadmap.md). The owner reports successful live rescheduling, working No alerts and correct overlap details. Automated coverage and the scope of those reports are recorded in testing.
+
+## Overlap alert actions — 0.9.4 hotfix
+
+The bell explains how many existing appointments overlap the SlotDesk-created appointment and offers **Reschedule old appointment** and **Reschedule SlotDesk appointment**. A single known target opens its rescheduling review; several targets require an explicit choice. No appointment is changed by opening an action. Unavailable-calendar targets cannot be changed.
+
+Confirmed creation, rescheduling and lost-response recovery attach the new appointment’s calendar/event IDs to each affected interval. Legacy follow-ups without that reference can be linked using successfully loaded organizing copies with a valid SlotDesk creation marker and exactly matching times. An unmarked or differently timed appointment is never guessed to be the source. Ambiguous matches stay separate choices; an unidentified source gets an explanation.
+
+Successful calendar reads recheck both sides. A follow-up clears when the old or source appointment no longer overlaps, is canceled or is shown as free; disappearance requires complete coverage. Partial/unavailable reads retain unresolved work. Follow-up metadata contains no fetched appointment titles or descriptions.
+
+The alert footer is **Last update:** followed by the latest successful alert-data scan time. It advances for successful calendar alert reads and pending-write confirmation checks; failed reads do not claim a fresh update. Opening the bell alone does not advance it.

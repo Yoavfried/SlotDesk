@@ -29,4 +29,34 @@ const base={profiles:[],constraints:[],settings:{},revision:0},plan={operationId
 const memory=new Map(),store=W.createStore({getItem:key=>memory.get(key),setItem:(key,value)=>memory.set(key,value)});store.save(cal.id,remote);eq(store.load(cal.id,base).pendingReschedule,plan,'unfinished changes survive reopening');eq(store.load('different@example.test',base),base,'pending change is account-scoped');
 const collision={startISO:new Date(at(9)).toISOString(),endISO:new Date(at(10)).toISOString(),overrides:[{event:{calendarId:cal.id,id:'other',title:'DO NOT STORE FETCHED TITLE',description:'DO NOT STORE CONTENT'}}]},targets=M.collisionTargets(collision);eq(targets,[{calendarId:cal.id,eventId:'other',protectedTimes:[{start:collision.startISO,end:collision.endISO}]}],'recovery metadata retains only target IDs and protected times');eq(M.collisionTargets({...collision,startISO:new Date(at(11)).toISOString(),endISO:new Date(at(12)).toISOString()},targets)[0].protectedTimes.length,2,'same appointment protects both introduced meeting intervals');eq(M.collisionTargets(null,[...targets,...targets]).length,1,'restored targets deduplicate');eq(M.collisionTargets({...collision,overrides:[{event:{calendarId:cal.id,id:'freebusy:unknown'}}]}),[],'freebusy ranges are not inventable event targets');
 const oldTime={start:at(9)+15*60000,end:at(10)},changed={...copy(collision),start:at(9),end:at(9)+45*60000};changed.overrides[0].event.start=new Date(at(9)).toISOString();changed.overrides[0].event.end=new Date(at(9)+45*60000).toISOString();M.overlapChanges(oldTime,changed);eq(changed.overrides[0].causedBySlotDesk,true,'increased overlap is attributable to the time change');const improved={...copy(changed),start:at(9)+20*60000,end:at(10)+5*60000};M.overlapChanges(oldTime,improved);eq(improved.overrides[0].causedBySlotDesk,false,'existing overlap is not a new follow-up when it shrinks');eq(M.collisionTargets(improved),[],'pre-existing overlap does not generate a persisted follow-up');M.overlapChanges({start:at(12),end:at(13)},changed);eq(changed.overrides[0].preExisting,false,'new appointment pair is distinguished from existing overlap');
+// Distinct, portable identity-only links to the newly scheduled appointment.
+const origin={calendarId:cal.id,eventId:'new-slotdesk'},linked=M.collisionTargets(collision,[],origin);
+eq(linked[0].protectedTimes[0].origin,origin,'new and old appointments have separate identifiers');
+ok(!JSON.stringify(linked).includes('DO NOT STORE'),'follow-up stores no appointment content');
+eq(M.collisionTargets(null,targets,origin)[0].protectedTimes[0].origin,origin,'lost-response completion attaches the confirmed source identity');
+eq(M.collisionTargets(null,[...linked,...linked]).length,1,'multiple reads do not duplicate old targets');
+eq(M.collisionTargets(null,[...linked,...linked])[0].protectedTimes.length,1,'same origin deduplicates');
+const linkedLater=M.collisionTargets({...collision,startISO:new Date(at(11)).toISOString(),endISO:new Date(at(12)).toISOString()},linked,origin);
+eq(linkedLater[0].protectedTimes.length,1,'moving the same origin replaces its previous interval');
+eq(linkedLater[0].protectedTimes[0].start,new Date(at(11)).toISOString());
+const another=M.collisionTargets(collision,linked,{...origin,eventId:'second-new'});
+eq(another[0].protectedTimes.length,2,'one old meeting retains distinct new-meeting references');
+const complete=items=>[{cal,source:{items,timeZone:'UTC',coverage:{complete:true,from:new Date(at(8)).toISOString(),to:new Date(at(13)).toISOString()}}}];
+const old=event('other',9,10),created=event('new-slotdesk',9,10);
+eq(M.remainingFollowups(linked,complete([old,created])).length,1,'actual overlapping old/new pair remains actionable');
+eq(M.remainingFollowups(linked,complete([old,event('new-slotdesk',11,12)])),[],'rescheduling the new meeting resolves its old overlap');
+eq(M.remainingFollowups(linked,complete([event('other',11,12),created])),[],'rescheduling the old meeting resolves the overlap');
+eq(M.remainingFollowups(linked,complete([old])),[],'complete coverage establishes a removed origin');
+eq(M.remainingFollowups(linked,complete([old,{...created,status:'cancelled'}])),[],'canceled origin clears its follow-up');
+eq(M.remainingFollowups(linked,[{cal,source:{items:[old],coverage:{complete:false}}}]).length,1,'partial source cannot establish disappearance');
+eq(M.remainingFollowups(linked,[]).length,1,'unloaded sources do not erase the queue');
+eq(M.remainingFollowups(linked,complete([old,event('new-slotdesk',9,11)]))[0].protectedTimes[0].end,new Date(at(11)).toISOString(),'still-overlapping origin interval follows actual event times');
+const markerId='sd'+'1'.repeat(32),legacyCreated=event(markerId,9,10,{extendedProperties:{private:{slotdeskRequest:markerId}}});
+eq(M.linkFollowupOrigins(targets,complete([legacyCreated]))[0].protectedTimes[0].origin,{calendarId:cal.id,eventId:markerId},'legacy alert links exact verified SlotDesk marker and time');
+ok(!M.linkFollowupOrigins(targets,complete([created]))[0].protectedTimes[0].origin,'unmarked same-time event is never guessed to be the new appointment');
+ok(!M.linkFollowupOrigins(targets,complete([{...legacyCreated,start:{dateTime:new Date(at(11)).toISOString()}}]))[0].protectedTimes[0].origin,'different times do not guess a legacy source');
+const secondMarker='sd'+'2'.repeat(32),two=M.linkFollowupOrigins(targets,complete([legacyCreated,event(secondMarker,9,10,{extendedProperties:{private:{slotdeskRequest:secondMarker}}})]));
+eq(two[0].protectedTimes.length,2,'ambiguous matching SlotDesk meetings remain distinct choices');
+eq(M.remainingFollowups(two,complete([old,event(markerId,11,12),event(secondMarker,9,10)]))[0].protectedTimes.length,1,'one resolved origin does not erase another genuine overlap');
+
 console.log(count+' meeting management checks passed; synthetic meetings only.');

@@ -2,6 +2,8 @@
 
 ## 0.9.4 — 19 October 2026
 
+Same-version alert-actions hotfix: use the requested overlap explanation and separate Reschedule old appointment / Reschedule SlotDesk appointment actions. Keep explicit target choice, link confirmed source IDs, recover legacy links only from verified SlotDesk markers and matching times, and recheck both sides without adding write capabilities. Replace the guest-response footer with Last update and its successful alert-scan timestamp. Validation: 1,901 application checks and 23 focused browser assertions; nine synthetic events unchanged with no Calendar writes. Record both required 0.9.5 owner reviews as a hard gate: advanced profile wording/UX/logic, and Meeting options/scheduling Advanced wording/UX. No 0.9.5 review-driven fixes or release without the owner’s reviews and directions.
+
 Same-version follow-up placement hotfix: move Appointments to reschedule out of the main menu and into Existing meetings. Include pending follow-ups in the bell count with a View appointments shortcut; dismissing or completing a follow-up updates both places. Calendar changes still require their own review.
 
 - Implement the [agreed scheduling rules](scheduling-ranking-review.md) in the shared creation/rescheduling engine. Use 10-minute starts by default; eligible 5-minute starts can avoid required conflicts or recover full optional attendance without worsening required fit. Never automatically suggest finer starts, even for an exact off-grid gap.
