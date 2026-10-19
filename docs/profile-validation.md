@@ -40,3 +40,14 @@ Saving calendar selection, including during onboarding, removes calendar links o
 ## Saving boundary
 
 Existing profiles continue saving valid changes live. New profiles use an explicit Create profile action; invalid email/timezone cannot be persisted as a new profile. Unchecking no access or opening Add calendar is temporary UI state until a calendar is chosen, with no resumable mapping draft. Own-profile onboarding retains Continue. Flights retain their independent Save/Discard boundary.
+
+The same-version loading/profile hotfix removes routine Saving/Saved indicators. Validation errors and persistence failures remain visible. The actual cases that can prevent a profile change from being saved are:
+
+- Invalid values or combinations in the tables above. Existing invalid/duplicate email edits are restored with an alert; other invalid settings retain their previous saved values and show the relevant field error.
+- A conflicting edit in another SlotDesk window, a replaced/reset workspace or a workspace last saved by a newer build. The current window must resolve the conflict or reload the applicable setup.
+- Local browser storage is unavailable, full or unreadable, or the browser cannot coordinate the write between windows. The editor keeps entered values and reports the failure; closing the profile retries and stays open if saving still fails.
+- The connected account changes or disconnects while a save is queued. That edit is not written into a different account's workspace.
+- An email change while an invitation or meeting change remains unconfirmed. Resolve that pending change first so the participant's identity remains consistent.
+- The entire app window closes or the browser/device crashes before a queued write finishes. Typing is debounced by 450ms; field changes and normal profile-dialog closing flush the save, but a process interruption cannot guarantee the last edit was persisted.
+
+An internet connection is not normally needed for these local profile/settings writes. Blank names use the email rather than failing validation. Closed-list choices and checkbox values do not create normal free-text validation errors.

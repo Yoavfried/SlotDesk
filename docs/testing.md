@@ -4,7 +4,11 @@ Current code: **0.9.3.5**. Automated evidence and user-reported live behavior ar
 
 ## 0.9.3.5 validation
 
-Application tests include 26 additional email/calendar-removal checks (1,710 total). Six backend and 22 calendar-comparison checks also pass. The shared accessibility journey passed 20 screen states without automated violations and 36 keyboard/focus/reflow assertions; the focused profile journey passed 37 assertions plus three persistence/empty-selection checks. The focused synthetic browser pass covers own-email locking, malformed email restoration and bell persistence, explicit valid-profile creation, the no-access/Add calendar flow, fixed selected rows and leave treatment, Settings removal, timezone chevron alignment, drawn menu arrows and header alignment between short and long screens. See the [exact validation inventory](profile-validation.md). No live calendar writes are used. Broader visual approval remains with the owner.
+Application tests include 26 additional email/calendar-removal checks and 16 cancelled-cache regression checks (1,726 total). Six backend and 22 calendar-comparison checks also pass. The shared accessibility journey passed 20 screen states without automated violations and 36 keyboard/focus/reflow assertions; the focused profile journey passed 37 assertions plus three persistence/empty-selection checks. The focused synthetic browser pass covers own-email locking, malformed email restoration and bell persistence, explicit valid-profile creation, the no-access/Add calendar flow, fixed selected rows and leave treatment, Settings removal, timezone chevron alignment, drawn menu arrows and header alignment between short and long screens. See the [exact validation inventory](profile-validation.md). No live calendar writes are used. Broader visual approval remains with the owner.
+
+## Same-version meeting-loading/profile hotfix — 19 October 2026
+
+All 1,726 application checks pass, including 16 new cache regressions: interrupted initial loads, return before cancellation settles, late old results, external aborts, completed-cache reuse and restored completeness. The focused [browser journey](../scripts/accessibility/meeting-loading.js) passes 29 assertions: leave/return recovery, stopping during the preliminary account check or event loading, exact warning copy and placement, inline refresh, cached completed returns, five widths from 320 to 1280px, quiet live saves for own/other profiles, invalid-time protection and a simulated full-storage failure/retry. Both focused light/dark axe scans report no automated violations; automated incomplete checks still require manual assessment. All nine synthetic appointments remain unchanged; there are no event writes. The version stays 0.9.3.5.
 
 ## Same-version capitalization hotfix — 19 October 2026
 
@@ -51,7 +55,7 @@ npm run check
 | Proposal display | 76 | Date/year/DST formatting, coverage and consolidated warnings |
 | Calendar view | 42 | Date ranges, events, RSVP display and source handling |
 | Upgrade/synchronization | 71 | Stored-state migration and concurrent-window behavior |
-| Multi-calendar cache | 48 | All-source reads, cached filters and partial coverage |
+| Multi-calendar cache | 64 | All-source reads, cached filters, partial coverage and interrupted-load recovery |
 | Meeting management | 457 | Overlap oracle, No transitions, identities and follow-up metadata |
 | Rescheduling | 112 | Time-only conditional writes, permissions, identity/version and recovery |
 | Meeting editing | 125 | Narrow detail/guest writes, preserved metadata, stale/permission guards and recovery |

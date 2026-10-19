@@ -2,6 +2,8 @@
 
 ## 0.9.3.5 — 19 October 2026
 
+Same-version meeting-loading/profile hotfix: restart cancelled loads when returning to Existing meetings, retain completed caches and prevent late cancelled results from replacing a fresh load. Place Refresh meetings beside the meeting count and source notices above it. Stopped loads use the requested calendar-specific message with an inline Refresh action. Remove routine profile Saving/Saved text while retaining validation and persistence errors. Calendar-write behavior is unchanged.
+
 Same-version capitalization hotfix: apply sentence case across ordinary interface copy, including More settings, Edit your profile, Time & date, warning counts, calendar tooltips, privacy links, Help instructions and the extension name. Remove the heading exceptions from the working style guide. Preserve brands, proper names, acronyms, user content and robotic accents. No version or scheduling behavior change.
 
 - Implement the approved styling direction with bundled DM Sans, shared type roles, regular-weight 24px/28px page titles, compact spacing, drawn menu/navigation icons and a stable page scrollbar gutter. Retain the wordmark, lime header and robotic eyebrows.

@@ -70,7 +70,7 @@ Implementation defaults supporting that decision:
 
 - Checkboxes and dropdowns save valid changes immediately. Text inputs save after a brief typing pause or leaving the field, without a separate button. Do not write on every keystroke.
 - Related values form one valid change: an unfinished email, invalid clock value or half-entered date/time range must not replace the last valid saved setting. Show a field-specific error, keep the input visible and make clear that it is not saved. Fixing it triggers automatic saving.
-- Use a small accessible Saving/Saved/Could not save status near the editor rather than repeated popups. Preserve input on failed persistence, allow retry, and do not silently lose a failed edit on close/navigation.
+- Save valid profile changes quietly. The 0.9.3.5 follow-up removes routine Saving/Saved status text; only validation and persistence errors are shown. Preserve input on failed persistence, allow retry, and do not silently lose a failed edit on profile close/navigation.
 - New-person setup still needs valid required identity fields before a saved person exists. An incomplete form is not added to the saved-profile list. Onboarding keeps its explicit Continue/setup steps and registration choices; these are not a general profile-save action.
 - Preserve inactive template/manual schedules, explicit timezones and the accepted scheduling semantics. A change must not reset unrelated settings.
 - Merge live changes under the existing account/workspace protection. Do not overwrite another window’s newer fields with a stale whole-profile snapshot. Any actual same-field conflict keeps the existing explicit resolution behavior.

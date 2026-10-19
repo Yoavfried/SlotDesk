@@ -5,17 +5,17 @@
   const key=(account,from,to)=>JSON.stringify([account,from,to]);
   function createCache({concurrency=3}={}){
     let current=null,generation=0;
-    function stop(){current?.controller?.abort();}
+    function stop(){if(current?.loading){current.interrupted=true;current.controller.abort();}}
     function clear(){stop();generation++;current=null;}
     function snapshot(account,from,to){return current?.key===key(account,from,to)?current:null;}
     function load({account,from,to,calendars,reader,refresh=false,onUpdate=()=>{},signal}){
       if(!account||!reader)throw new Error('Connect Google Calendar to continue.');
       const range=V.bounds(from,to,'UTC'),cacheKey=key(account,from,to);
-      if(!refresh&&current?.key===cacheKey)return current.promise||Promise.resolve(current);
+      if(!refresh&&current?.key===cacheKey&&!current.interrupted)return current.promise||Promise.resolve(current);
       const previous=current?.key===cacheKey?current:null;stop();
-      const token=++generation,target={key:cacheKey,account,from,to,calendars:[...new Map(calendars.map(c=>[c.id,c])).values()],sources:new Map(),done:false,loading:true,controller:new AbortController()};current=target;
+      const token=++generation,target={key:cacheKey,account,from,to,calendars:[...new Map(calendars.map(c=>[c.id,c])).values()],sources:new Map(),done:false,loading:true,interrupted:false,controller:new AbortController()};current=target;
       for(const cal of target.calendars){const old=previous?.sources.get(cal.id);if(old&&!old.source.stale&&old.source.coverage?.complete&&old.cal.accessRole===cal.accessRole)target.sources.set(cal.id,{cal,source:{...old.source,stale:true,coverage:{...old.source.coverage,complete:false},lastSuccessAt:old.source.lastSuccessAt||old.source.coverage.fetchedAt}});}
-      const cancel=()=>target.controller.abort();if(signal?.aborted)cancel();signal?.addEventListener('abort',cancel,{once:true});
+      const cancel=()=>{target.interrupted=true;target.controller.abort();};if(signal?.aborted)cancel();signal?.addEventListener('abort',cancel,{once:true});
       let next=0;
       const active=()=>current===target&&generation===token;
       const worker=async()=>{while(active()){
@@ -45,10 +45,10 @@
       if(Array.isArray(source.freeBusy)){
         for(const b of source.freeBusy){const time={start:Date.parse(b.start),end:Date.parse(b.end)};if(time.start<range.end&&time.end>range.start)rows.push({...time,cal,busyOnly:true,event:{summary:'Busy'},slotdesk:false,stale:source.stale,lastSuccessAt:source.lastSuccessAt});}
         issues.push({cal,busyOnly:true,error:'Your access shows busy times only. Meeting details and guest responses are unavailable.'});
-        if(!source.coverage?.complete&&!source.stale)issues.push({cal,error:source.error||source.coverage?.error||'Calendar data is incomplete.'});
+        if(!source.coverage?.complete&&!source.stale)issues.push({cal,error:source.error||source.coverage?.error||'Calendar data is incomplete.',failure:source.failure});
       }else{
         const parsed=V.entries(source,range);rows.push(...parsed.rows.map(row=>({...row,cal,stale:source.stale,lastSuccessAt:source.lastSuccessAt})));
-        if(!parsed.complete&&!source.stale)issues.push({cal,error:source.error||source.coverage?.error||(parsed.invalid?parsed.invalid+' entries have unreadable dates.':'Calendar data is incomplete.')});
+        if(!parsed.complete&&!source.stale)issues.push({cal,error:source.error||source.coverage?.error||(parsed.invalid?parsed.invalid+' entries have unreadable dates.':'Calendar data is incomplete.'),failure:source.failure});
       }
     }
     rows.sort((a,b)=>a.start-b.start||a.end-b.end||String(a.event.summary||'').localeCompare(String(b.event.summary||''))||String(a.cal.id).localeCompare(String(b.cal.id)));
