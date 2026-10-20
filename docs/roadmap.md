@@ -27,6 +27,10 @@ Do not begin the review-driven **0.9.5** fixes until the owner personally perfor
 
 Both are pending owner review. The intermediate releases do not complete or approve these reviews. The broader owner-led UX review also remains open.
 
+Agreed on 20 October for implementation in 0.9.5: each connected group of actual overlaps has an alert with **Review overlaps**, opening a dedicated screen. Show each involved appointment once with name, date/time, calendar, exact overlapping appointments and an individual Reschedule action. Keep unrelated groups separate. Back to alerts returns to the list; choosing a replacement still requires individual review/confirmation. Recheck relationships after changes and clear only resolved overlaps. This approval of the overlap-screen direction does not close either required review above.
+
+The [Meeting options participant-row and warning review](meeting-options-review-0.9.5.md) records the owner's directions and the proposed factual statuses, source mapping and presentation priorities. The review remains open; proposed details are not approved implementation scope yet.
+
 ## Current review work
 
 | Workstream | Status | Completion authority |

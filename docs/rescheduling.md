@@ -51,3 +51,7 @@ Confirmed creation, rescheduling and lost-response recovery attach the new appoi
 Successful calendar reads recheck both sides. A follow-up clears when the old or source appointment no longer overlaps, is canceled or is shown as free; disappearance requires complete coverage. Partial/unavailable reads retain unresolved work. Follow-up metadata contains no fetched appointment titles or descriptions.
 
 The alert footer is **Last update:** followed by the latest successful alert-data scan time. It advances for successful calendar alert reads and pending-write confirmation checks; failed reads do not claim a fresh update. Opening the bell alone does not advance it.
+
+## Accepted next UX — 0.9.5, not implemented
+
+Agreed 20 October: replace the two general old/SlotDesk actions with **Review overlaps** per connected group of actual overlaps. Open a dedicated screen showing each appointment once, its name, date/time, calendar, actual overlap relationships and an individual **Reschedule** action. Keep unrelated groups separate; Back to alerts returns to the alert list. Handle one-to-one, one-to-many and many-to-many relationships without implying every appointment overlaps every other one. One change still requires its own review and confirmation; fresh data removes only resolved relationships. The [0.9.5 owner-review gate](roadmap.md#095--required-owner-reviews) remains in force.
