@@ -7,6 +7,7 @@
 | Meeting management | [Editing details/guests](meeting-editing.md), [rescheduling, alerts and overlaps](rescheduling.md) |
 | Scheduling review | [19 October ranking rules, situations and result UX](scheduling-ranking-review.md) — current 0.9.4 behavior and decision history |
 | 0.9.5 owner review | [Meeting options rows, factual statuses and warnings](meeting-options-review-0.9.5.md) — in progress; proposed priorities require owner decisions |
+| Planning email | [Plain-text options email request and proposed wording](planning-email.md) — requested, not implemented; separate from interactive inquiries |
 | Recovery | [Accepted connection, permission and recovery experience](recovery-experience.md) |
 | Registration and leads | [Agreed five-column onboarding leads table](leads-table.md), [hosting and verification](registration-deployment.md) |
 | Future concepts | [Optional BYOK LLM assistance](llm-assistance.md), [unconfirmed availability emails](time-inquiries.md) |

@@ -1,6 +1,8 @@
 # Ask about times — structured inquiries before booking
 
-Recorded 14 October 2026. **Unconfirmed future feature; parked, non-blocking and not implemented in 0.8.0.** After reviewing Gmail AMP compatibility and sender/service requirements, the owner does not consider it a good current solution. Availability emails are outside the next product update. One integrated flow would cover one person/one time, one person/many times, many people/one time and many people/many times, before creating an appointment and separately from an existing Calendar invitation/RSVP.
+On 20 October the owner separately requested [plain-text planning email generation](planning-email.md): prepare all displayed options and caveats for the EA to copy into an ordinary email. That request does not need the interactive controls or response service described below and does not claim to implement this parked structured-inquiry feature.
+
+Recorded 14 October 2026. **Unconfirmed future feature; parked, non-blocking and not implemented in 0.8.0.** After reviewing Gmail AMP compatibility and sender/service requirements, the owner does not consider it a good current solution. This structured interactive feature remains outside the next product update. One integrated flow would cover one person/one time, one person/many times, many people/one time and many people/many times, before creating an appointment and separately from an existing Calendar invitation/RSVP.
 
 The owner is considering availability emails as part of optional [LLM assistance using the user's API key](llm-assistance.md). The LLM could prepare inquiries and interpret replies. BYOK-only access and the final reply protocol are unconfirmed. The original interactive concept below is preserved for future consideration; no external response page is approved, and an LLM does not remove inline-email compatibility or submission-service requirements.
 
