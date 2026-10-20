@@ -2,6 +2,8 @@
 
 Status: implemented in **0.9.4** after authorization on 19 October. This document records the confirmed directions, concrete implementation and clarification history. The owner retains approval of the overall experience; individual advanced-profile cleanup is scheduled for **0.9.5**.
 
+On 20 October, the owner changed the planned 0.9.5 direction: remove the Start-time spacing and Options per day UI overrides, replace Options to show with results-level behavior, and require non-overlapping displayed suggestions. See the [current search-controls review](search-options-review-0.9.5.md). The retained-override descriptions below remain a record of 0.9.4 behavior, not the new UI direction.
+
 ## What exposed the problem
 
 The reported 27 October result starts at 17:57, labels a day-off entry as an overlapping meeting, and says 0 candidates / 0 shown above an actual fallback card. The current engine adds event-boundary starts and orders occupied slots by affected-appointment count and cost before participant comfort. That can favor an awkward boundary minute. The UI counts only its primary `open` array, omitting displayed fallback cards; `open` can also include permitted conflicts, so it is not a reliable definition of clash-free.

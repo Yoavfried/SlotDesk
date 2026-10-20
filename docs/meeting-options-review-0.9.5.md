@@ -2,6 +2,8 @@
 
 Owner review started 20 October 2026. This is a planning record, not an implementation or readiness decision. The [0.9.5 owner-review gate](roadmap.md#095--required-owner-reviews) remains in force. The owner must review and specify the final wording, UX and advanced-option changes before implementation.
 
+The companion [search-controls review](search-options-review-0.9.5.md) records removal of spacing/per-day/count fields, proposed Generate more options behavior, counts, mutually non-overlapping suggestions, meeting-wide exclusions and explanations of the remaining fallback controls.
+
 ## Owner directions already given
 
 - Remove the Calendar data incomplete bubble below the proposed meeting date. Participant-level calendar icons carry coverage information instead of a card-level badge.
