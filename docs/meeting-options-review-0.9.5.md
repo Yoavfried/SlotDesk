@@ -2,7 +2,7 @@
 
 Owner review started 20 October 2026. This is a planning record, not an implementation or readiness decision. The [0.9.5 owner-review gate](roadmap.md#095--required-owner-reviews) remains in force. The owner must review and specify the final wording, UX and advanced-option changes before implementation.
 
-The companion [search-controls review](search-options-review-0.9.5.md) records removal of spacing/per-day/count fields, proposed Generate more options behavior, counts, mutually non-overlapping suggestions, meeting-wide exclusions and explanations of the remaining fallback controls.
+The companion [search-controls review](search-options-review-0.9.5.md) records removal of spacing/per-day/count fields, accepted Generate more options behavior and counts, mutually non-overlapping suggestions, meeting-wide exclusions, and automatic duration/workweek fallback policies replacing the old fields. The owner has also settled conflict/blocking-only shortening, the earliest required-participant workweek deadline, and expanding Ignore usual convenience hours to permit outside-range times for that person. Remaining presentation and profile details stay under owner review.
 
 ## Owner directions already given
 
@@ -36,7 +36,7 @@ First matching applicable row wins. Priority is for presentation, not search eli
 | 7 | Unavailable · Outside stated availability | The effective positive availability windows/exact starts entered for the person do not contain the meeting. No inference from email prose. |
 | 8 | Unavailable · Nonworking day | The local weekday is disabled in the effective work schedule, unless Ignore working days/hours or a matching positive availability rule removes this restriction. |
 | 9 | Unavailable · Less than 2 hours' notice | The slot is inside that person's explicitly configured notice period. Default notice is zero. |
-| 10 | Inconvenient · Outside acceptable hours | The meeting falls outside the person's configured acceptable-hour range and the explicit last-resort permission allows the displayed candidate. Without that permission, a required-person candidate is excluded. Positive availability retains its separately agreed behavior. |
+| 10 | Inconvenient · Outside acceptable hours — wording still under review | The meeting falls outside the person's usual acceptable-hour range. The accepted per-person Ignore usual convenience hours permission allows such times in 0.9.5 and removes the usual hour ranking penalty; without it, a required-person candidate is excluded unless independently authorized by positive availability. There is no planned global last-resort switch. Whether/how this fact appears as a status or warning when the preference is ignored remains for the owner review; this proposed row is not approved final text. |
 | 11 | Inconvenient · Flight buffer | The slot intersects the configured two-hour vicinity of a saved departure/arrival, outside actual flight time. Distinguish the actual flight (priority 1). |
 | 12 | Inconvenient · Marked time: School pickup | An explicitly entered inconvenient interval intersects the slot; use its entered label. |
 | 13 | Inconvenient · Time around Budget review | An explicitly configured inconvenient meeting radius intersects the slot. A blocked radius uses priority 4. |
@@ -48,7 +48,7 @@ For several facts in one category, show the count where meaningful and one sourc
 
 Past/expired candidates, invalid timezones, invalid durations and malformed profile rules are search/card validity errors rather than normal participant statuses. They must not become an Available fallback. Travel dates normally change timezone; they do not alone imply unavailability. Free all-day notes and a guest's previous RSVP do not independently become unavailability reasons for a new proposal.
 
-The current profile has one convenience/acceptable range, normally 07:00–20:00. With work hours ignored, falling outside that range already uses Outside acceptable hours (priority 10) when last-resort permission allows it. Do not invent a separate Outside usual convenience hours state unless the owner later approves separate ranges.
+The current profile has one convenience/acceptable range, normally 07:00–20:00. In released 0.9.4, outside-range proposals require the global last-resort permission. Planned 0.9.5 removes that control and expands per-person Ignore usual convenience hours to allow outside-range times as well as remove their usual hour penalty. Keep flight buffers, manual inconvenience and other independent rules. Do not invent separate ranges, or treat the old proposed outside-hours status as approved final wording under the new permission.
 
 ## Warnings proposal — owner decision pending
 

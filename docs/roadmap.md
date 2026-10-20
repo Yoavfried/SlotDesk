@@ -1,6 +1,6 @@
 # SlotDesk roadmap
 
-Updated 19 October 2026. Status reflects agreed scope, not a promise of public availability. The broader website remains on hold.
+Updated 20 October 2026. Status reflects agreed scope, not a promise of public availability. The broader website remains on hold.
 
 ## Current release
 
@@ -25,13 +25,13 @@ Do not begin the review-driven **0.9.5** fixes until the owner personally perfor
 1. A complete **wording, UX and logic review of Edit profile’s advanced settings**, including every More settings section.
 2. A complete **wording and UX review of the Meeting options cards and the Advanced options under When would you like to meet?**
 
-Both are pending owner review. The intermediate releases do not complete or approve these reviews. The broader owner-led UX review also remains open.
+The profile advanced-settings review remains pending, and the Meeting options/search review is in progress. Neither review is complete. The intermediate releases do not complete or approve these reviews. The broader owner-led UX review also remains open.
 
 Agreed on 20 October for implementation in 0.9.5: each connected group of actual overlaps has an alert with **Review overlaps**, opening a dedicated screen. Show each involved appointment once with name, date/time, calendar, exact overlapping appointments and an individual Reschedule action. Keep unrelated groups separate. Back to alerts returns to the list; choosing a replacement still requires individual review/confirmation. Recheck relationships after changes and clear only resolved overlaps. This approval of the overlap-screen direction does not close either required review above.
 
 The [Meeting options participant-row and warning review](meeting-options-review-0.9.5.md) records the owner's directions and the proposed factual statuses, source mapping and presentation priorities. The review remains open; proposed details are not approved implementation scope yet.
 
-The [search-controls review](search-options-review-0.9.5.md) records removal of spacing/per-day/count fields and the explanatory spacing paragraph, the requested count mapping and mutually non-overlapping suggestions, a proposed Generate more options action, meeting-only exclusions below the search timezone, and outstanding fallback/outside-hours/control decisions. The old 0.9.4 retained-override policy is superseded for the planned UI; the current runtime remains unchanged.
+The [search-controls review](search-options-review-0.9.5.md) records removal of spacing/per-day/count fields and the explanatory spacing paragraph, the requested count mapping and mutually non-overlapping suggestions, an approved Generate more options action, meeting-only exclusions below the search timezone, and automatic 15-minute shortening/workweek-based later-date rules replacing fallback fields. Shortening addresses actual conflicts or blocking rules, not soft timing alone. Later dates stop at the earliest required participant's next-workweek deadline, anchored to the selected search end's week; optional guests remain non-blocking. Remove the global outside-hours control and expand per-person Ignore usual convenience hours to permit that person's outside-range times. These supersede the corresponding 0.9.4 policies for the planned update; the current runtime remains unchanged. Nonstandard workweeks and final status/mitigation details remain under owner review.
 
 Additional directions from that review: [planning emails](planning-email.md) include all displayed options and only the approved known-unavailable optional-participant sentence, without exposing optional status, overlaps or internal availability reasoning. [Timezone labels](timezone-search.md#friendly-display-labels--095-owner-direction) become City, Country or US City, State code across the UI and copied text; non-city selections such as UTC keep their simple name. These are planned directions, not a completed 0.9.5 review or release.
 
