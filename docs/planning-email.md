@@ -1,6 +1,6 @@
 # Planning email — plain-text proposal
 
-Requested 20 October 2026 during the 0.9.5 planning review. Not implemented. The feature request is accepted; the wording/template and detailed UX below are proposals for owner review. This does not close either mandatory [0.9.5 review](roadmap.md#095--required-owner-reviews).
+Requested 20 October 2026 during the original 0.9.5 planning review; now assigned to 0.9.4.5 with the new-meeting work. Not implemented. The feature request and caveat boundary are accepted; the wording/template and detailed UX below remain under owner review. See the [0.9.4.5 plan](release-plan-0.9.4.5.md).
 
 ## Owner requirements
 
@@ -55,8 +55,8 @@ The only availability caveat is **“[Name] is unavailable for this option.”**
 
 Calendar conflicts, all other warning categories, unknown calendar coverage, rules and internal reasoning stay in SlotDesk's EA review and are not exported into this message. This content rule does not alter candidate eligibility/ranking, remove invitees or suppress internal warnings. There is no promise in the email that every proposed option is conflict-free or already confirmed.
 
-Recipient-facing timezones follow the [friendly label direction](timezone-search.md#friendly-display-labels--095-owner-direction): City, Country; US City, State code; a non-city choice such as UTC keeps its simple name. No raw IANA paths, slashes or underscore-separated city names appear in the shared email.
+Recipient-facing timezones follow the [friendly label direction](timezone-search.md#friendly-display-labels--0945-owner-direction): City, Country; US City, State code; a non-city choice such as UTC keeps its simple name. No raw IANA paths, slashes or underscore-separated city names appear in the shared email.
 
 ## Open owner review
 
-The caveat boundary and friendly timezone formats above are owner directions. The remaining greeting/closing and preview/copy controls remain under review. The proposal does not authorize implementing or releasing 0.9.5 before the mandatory owner reviews and directions are complete.
+The caveat boundary and friendly timezone formats above are owner directions. The remaining greeting/closing and preview/copy controls remain under review. The proposal does not authorize implementing or releasing 0.9.4.5 before the owner settles the remaining new-meeting review and authorizes implementation. Advanced-profile-editor review remains separate for 0.9.5.

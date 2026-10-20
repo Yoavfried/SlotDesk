@@ -24,9 +24,9 @@ The script uses only the Python standard library, preserves the visible primary 
 
 The index does not provide holidays. A timezone does not identify which country’s holidays a person observes. Region-based holiday suggestions are [deferred](roadmap.md).
 
-## Friendly display labels — 0.9.5 owner direction
+## Friendly display labels — 0.9.4.5 owner direction
 
-Agreed 20 October 2026; planned, not implemented. Replace raw IANA identifiers in ordinary UI, selected fields, participant rows, copied summaries and planning emails with:
+Agreed 20 October 2026; moved from the original 0.9.5 plan to 0.9.4.5 with the new-meeting work. Planned, not implemented. Replace raw IANA identifiers in ordinary UI, selected fields, participant rows, copied summaries and planning emails with:
 
 - **City, Country** outside the US: Paris, France; London, United Kingdom; Jerusalem, Israel.
 - **City, State code** for US locations: Los Angeles, CA; San Francisco, CA; New York, NY.
