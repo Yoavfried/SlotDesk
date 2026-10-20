@@ -1,5 +1,17 @@
 # SlotDesk changelog
 
+## 0.9.4.5 — 20 October 2026
+
+- Simplify Find a time: remove search Advanced controls and diagnostic refresh; retain fresh search/final-write checks, meeting-wide exclusions and per-person temporary rules.
+- Apply the accepted automatic duration/workweek fallbacks, initial counts and append-three batches. Suggestions never overlap one another across categories or batches. Keep ten-minute preference, eligible five-minute refinement and the five-minute minimum.
+- Replace card-wide calendar coverage with per-person icons, compact identity/local-time rows, one prioritized factual status and substantive deduplicated warnings. Remove Copy option and excluded-candidate diagnostics; shorten Copy meeting details in final review.
+- Add an editable, copyable planning email for all visible suggestions. Shared text omits calendar conflicts, unknown coverage and internal rules; its sole availability caveat identifies a known unavailable optional guest without labelling them optional.
+- Use friendly city/country or US city/state labels and retain selected-city identity through saving, travel and portable files. IANA scheduling and date-specific offsets remain authoritative.
+- Expand Ignore usual convenience hours to permit outside-range proposals for that person only; independent flights, blocks, availability and configured inconvenience remain in force.
+- Group related overlap alerts into Review overlaps with each appointment once, exact neighbor details and individual reviewed rescheduling. Calendar-write transports, permissions and account identity remain unchanged.
+- Validation: 1,990 application checks, 51 focused synthetic-browser assertions and three axe scans without automated violations. Creation preserved nine baseline events; rescheduling patched only the selected occurrence's times while preserving the other eight and protected fields. No real account/invitation or delete/move request was used. Manual accessibility and owner UX review remain open.
+- Keep advanced profile settings for the owner-led 0.9.5 review. Further appointment-logic iteration remains expected.
+
 ## 0.9.4 — 19 October 2026
 
 Same-version alert-actions hotfix: use the requested overlap explanation and separate Reschedule old appointment / Reschedule SlotDesk appointment actions. Keep explicit target choice, link confirmed source IDs, recover legacy links only from verified SlotDesk markers and matching times, and recheck both sides without adding write capabilities. Replace the guest-response footer with Last update and its successful alert-scan timestamp. Validation: 1,901 application checks and 23 focused browser assertions; nine synthetic events unchanged with no Calendar writes. Record both required 0.9.5 owner reviews as a hard gate: advanced profile wording/UX/logic, and Meeting options/scheduling Advanced wording/UX. No 0.9.5 review-driven fixes or release without the owner’s reviews and directions.

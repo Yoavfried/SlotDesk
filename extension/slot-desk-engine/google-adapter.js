@@ -47,7 +47,7 @@
       // Private does not imply hidden: a private event with readable details stays detailed.
       const hidden=out.calendar==='busy'||ev.detailsVisible===false||ev.redacted===true||(enumKey(ev.visibility)==='private'&&!Object.prototype.hasOwnProperty.call(ev,'summary'));
       out.busy.push({id:ev.id,calendarId,identity,iCalUID:ev.iCalUID,originalStart:original,organizer:ev.organizer?.email||null,start,end,tz:eventTz,title:ev.summary||'(no title)',detailsVisible:!hidden,
-        type:leave?'leave':kind==='focustime'?'focus':'default',allDay,override,
+        type:leave?'leave':kind==='focustime'?'focus':'default',leaveSource:leave?(override==='leave'?'ea':kind==='outofoffice'?'google':options.leaveCalendar?'calendar':'title'):'',allDay,override,
         status:enumKey(ev.status)==='tentative'||enumKey(me?.responseStatus)==='tentative'?'tentative':'accepted',eventStatus:ev.status,responseStatus:me?.responseStatus,
         attendees:Math.max(1,others.length),external:!!home&&others.some(a=>domain(a.email)&&domain(a.email)!==home),recurring:!!ev.recurringEventId,recurringEventId:ev.recurringEventId});
     }return out;

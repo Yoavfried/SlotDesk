@@ -1,6 +1,14 @@
 # SlotDesk API and semantics
 
-Updated 19 October 2026 for 0.9.4; the [current ranking policy](scheduling-ranking-review.md) supersedes older ranking descriptions. The scheduling semantics were agreed 8 October 2026. The browser and Node use the same UMD engine. Participant results additionally expose `inconvenientMinutes`, `availabilityReason`, `hasCalendarConflict` and `calendarConflictCount` for UI explanations; these report existing scheduling decisions. Browser globals are `SlotEngine`, `SlotGoogle` and `SlotGoogleReader`; Node uses `require()`.
+## 0.9.4.5 automatic policy
+
+The browser's creation and rescheduling requests set `automaticAlternatives:true`. This selects `search-policy.js`: automatic ten-/eligible-five-minute starts, qualifying 15-minute shortening, required-participant next-workweek horizon and globally distinct/non-overlapping suggestions. See the full [policy contract](search-options-review-0.9.4.5.md). Initial `options` contains 1–5 meaningful choices according to `clearCount`, or up to three permitted alternatives when no original opening exists. `allOptions` is the frozen eligible list for append-three batches. `extended-shorter` is an additional alternative type. `openCount` remains a raw evaluation count, not a displayed count.
+
+Legacy programmatic callers omitting this flag retain the old spacing/per-day/shorter/extension arguments and compatibility result views documented below; those controls are absent from the UI. The modern path ignores a global outside-hours bypass, including exact pre-write evaluation. A person's `ignoreConvenience` both removes usual-hour penalties and permits their outside-range times. All other independent rules still apply.
+
+Each modern participant result retains `issues` as well as typed conflicts, timing, coverage and `statusPolicy`. `participant-status.js` follows the accepted [18-category priority table](meeting-options-review-0.9.4.5.md); secondary warning generation excludes routine unknown-coverage repeats. `tzLocation` and time-setting location metadata are optional display-only city references. Four-part application versions are compared numerically for cross-window/newer-version protection.
+
+Updated 20 October 2026 for 0.9.4.5; the [current ranking policy](scheduling-ranking-review.md) supersedes older ranking descriptions. The scheduling semantics were agreed 8 October 2026. The browser and Node use the same UMD engine. Participant results additionally expose `inconvenientMinutes`, `availabilityReason`, `hasCalendarConflict` and `calendarConflictCount` for UI explanations; these report existing scheduling decisions. Browser globals are `SlotEngine`, `SlotGoogle` and `SlotGoogleReader`; Node uses `require()`.
 
 ## Request
 
@@ -8,13 +16,11 @@ Updated 19 October 2026 for 0.9.4; the [current ranking policy](scheduling-ranki
 const result = SlotEngine.findSlots({
   duration: 45, range: {from: '2026-10-19', to: '2026-10-22'},
   anchorTz: 'Asia/Jerusalem', people, constraints: [],
-  spacingMode: 'automatic', step: 10, want: 3,
-  perDayMode: 'automatic', perDay: 3, minDuration: 30, extendDays: 5,
-  allowBadHours: false, now: Date.now()
+  automaticAlternatives: true, now: Date.now()
 });
 ```
 
-Dates are inclusive in the EA/search zone. The UI requires that zone; engine callers omitting it get the runtime's local timezone. It does not depend on participant ordering. Durations/grid are integer minutes; notice is hours. Search range is at most 93 days; extension is at most 30 extra days. Validation returns `errors` and `warnings`; absent constraint targets are warned and ignored. Do not confuse an empty result with a validation failure.
+Dates are inclusive in the EA/search zone. The UI requires that zone; engine callers omitting it get the runtime's local timezone. It does not depend on participant ordering. Durations/grid are integer minutes; notice is hours. New-meeting search range is at most 93 days. This is separate from the unlimited Existing meetings browser. Automatic later alternatives use the required participants’ workweek deadlines; legacy callers retain the older explicit extension limit. Validation returns `errors` and `warnings`; absent constraint targets are warned and ignored. Do not confuse an empty result with a validation failure.
 
 ## Profile
 

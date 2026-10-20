@@ -85,5 +85,10 @@
       return times.length?[{...item,protectedTimes:times}]:[];
     });
   }
-  return {identity,organizingCopy,editReason,overlapIndex,observe,dismiss,sameBusy,collisionTargets,linkFollowupOrigins,overlapChanges,remainingFollowups};
+  function overlapGroups(items){
+    const nodes=new Map(),edges=[];const node=(calendarId,eventId,slotdesk=false)=>{const key=JSON.stringify([calendarId,eventId]);if(!nodes.has(key))nodes.set(key,{key,calendarId,eventId,slotdesk,neighbors:new Set(),times:[]});if(slotdesk)nodes.get(key).slotdesk=true;return nodes.get(key);};
+    for(const item of items){const old=node(item.calendarId,item.eventId);for(const time of item.protectedTimes||[item.protectedTime].filter(Boolean)){if(!time.origin)continue;const current=node(time.origin.calendarId,time.origin.eventId,true);if(old.key===current.key)continue;old.neighbors.add(current.key);current.neighbors.add(old.key);current.times.push(time);edges.push([old.key,current.key]);}}
+    const seen=new Set(),groups=[];for(const current of nodes.values()){if(seen.has(current.key)||!current.neighbors.size)continue;const stack=[current],group=[];while(stack.length){const n=stack.pop();if(seen.has(n.key))continue;seen.add(n.key);group.push(n);for(const neighbor of n.neighbors)stack.push(nodes.get(neighbor));}groups.push({id:group.map(n=>n.key).sort().join('|'),nodes:group,edges:edges.filter(([key])=>group.some(n=>n.key===key))});}return groups;
+  }
+  return {overlapGroups,identity,organizingCopy,editReason,overlapIndex,observe,dismiss,sameBusy,collisionTargets,linkFollowupOrigins,overlapChanges,remainingFollowups};
 });

@@ -1,4 +1,4 @@
-(function(root,factory){if(typeof module==='object'&&module.exports)module.exports=factory(require('./slotdesk-engine.js'));else root.SlotWorkspace=factory(root.SlotEngine);})(typeof self!=='undefined'?self:this,function(E){
+(function(root,factory){if(typeof module==='object'&&module.exports)module.exports=factory(require('./slotdesk-engine.js'),require('./participant-status.js'),require('./timezone-search.js'));else root.SlotWorkspace=factory(root.SlotEngine,root.SlotParticipantStatus,root.SlotTimezoneSearch);})(typeof self!=='undefined'?self:this,function(E,Status,TZ){
   'use strict';
   const emailKey=value=>String(value||'').trim().toLowerCase();
   const validEmail=value=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailKey(value));
@@ -43,7 +43,7 @@
     return compactDate(start,zone,options)+', '+localTime(start,zone,format).toUpperCase()+' - '+(sameDate?'':compactDate(end,endZone,options)+', ')+localTime(end,endZone,format).toUpperCase();
   }
   function offsetAt(instant,zone){const value=new Intl.DateTimeFormat('en-GB',{timeZone:zone,timeZoneName:'shortOffset'}).formatToParts(new Date(instant)).find(p=>p.type==='timeZoneName').value;return value==='GMT'?'GMT+0':value;}
-  function zoneLabel(start,end,zone,endZone=zone){const from=offsetAt(start,zone),to=offsetAt(end,endZone);return endZone!==zone?zone+' ('+from+') → '+endZone+' ('+to+')':zone+' ('+from+(from===to?'':' → '+to)+')';}
+  function zoneLabel(start,end,zone,endZone=zone,location){const from=offsetAt(start,zone),to=offsetAt(end,endZone);return endZone!==zone?TZ.label(zone,location)+' ('+from+') → '+TZ.label(endZone)+' ('+to+')':TZ.label(zone,location)+(TZ.label(zone,location)==='UTC'?'':' ('+from+(from===to?'':' → '+to)+')');}
   function calendarDataSummary(slot){
     const unknown=slot.people.filter(p=>p.confirmed!==true);
     return {label:unknown.length?'Calendar data incomplete':'Calendar data complete',incomplete:!!unknown.length,
@@ -54,6 +54,7 @@
     return [counts.meeting?counts.meeting+' meeting overlap'+(counts.meeting===1?'':'s'):'',counts.leave?'Day off'+(counts.leave>1?' ('+counts.leave+')':''):'',counts.flight?'Flight'+(counts.flight>1?' ('+counts.flight+')':''):''].filter(Boolean).join(' · ');
   }
   function participantFit(p){
+    if(p.statusPolicy)return Status.primary(p);
     const incomplete=p.confirmed!==true,clash=p.hasCalendarConflict??(!p.available&&p.band!=='no'),timing=[...new Set((p.timing||[]).map(t=>t.kind==='flight-buffer'?'Flight buffer':t.kind==='meeting-radius'?'Meeting buffer':t.kind==='manual-inconvenience'?'Marked inconvenient time':t.label))];
     const issueLabels={'nonworking-day':'Nonworking day','acceptable-hours':'Outside acceptable hours',availability:'Outside stated availability',protected:'Protected time','meeting-radius':'Blocked meeting radius',notice:'Minimum notice',past:'In the past'};
     if(p.band==='bad')timing.unshift('Outside acceptable hours');
@@ -64,7 +65,8 @@
     if(p.band!=='ok')return {label:p.band==='bad'?'Outside acceptable hours':timing.join(' · ')||'Inconvenient time',tone:'warn',detail:'No calendar conflicts · '+p.inconvenientMinutes+' inconvenient minutes'};
     return {label:'Fits well',tone:'good',detail:'No calendar conflicts · Comfortable time'};
   }
-  function proposalWarnings(slot,{clock='24',dateFormat='dmy',referenceZone,contactFor}={}){
+  function proposalWarnings(slot,{clock='24',dateFormat='dmy',referenceZone,contactFor,includePrimary=false}={}){
+    if(slot.automaticAlternatives)return Status.warnings(slot,{includePrimary,format:(from,to,zone,allDay)=>allDay?compactDate(E.startOfDay(from.slice(0,10),zone)+43200000,zone,{referenceZone,dateFormat})+' · All day':compactRange(from,to,zone,clock,{referenceZone,dateFormat})+' · '+zoneLabel(from,to,zone)});
     const warnings=[],seen=new Set(),duplicates=new Set(),overridden=new Set((slot.overrides||[]).flatMap(c=>c.participants||[]));
     const add=(title,detail,key=title+'\n'+detail)=>{if(!seen.has(key)){seen.add(key);warnings.push({title,detail});}};
     const local=p=>compactRange(slot.start,slot.end,p.tz,clock,{referenceZone,dateFormat,endZone:p.endTz})+' · '+zoneLabel(slot.start,slot.end,p.tz,p.endTz);
@@ -99,7 +101,7 @@
   }
   function fullTime(instant,zone,format='24',{dateFormat='dmy'}={}){return new Intl.DateTimeFormat(dateFormat==='mdy'?'en-US':'en-GB',{timeZone:zone,weekday:'short',year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:format==='12',timeZoneName:'shortOffset'}).format(new Date(instant));}
   function resolveLocal(date,time,zone,previous){const clock=parseClock(time);if(!clock)return NaN;if(Number.isFinite(previous)){const part=E.partsIn(previous,zone);if(part.ymd===date&&part.hh===+clock.slice(0,2)&&part.mm===+clock.slice(3))return previous;}return E.zonedToInstant(date,+clock.slice(0,2)*60 + +clock.slice(3),zone);}
-  function flightFields(flight,defaultZone,date){const out={label:flight.label||''};for(const key of ['departure','arrival']){const zone=flight[key+'Zone']||defaultZone,instant=Date.parse(flight[key]);out[key+'Zone']=zone;const part=Number.isFinite(instant)?E.partsIn(instant,zone):null;out[key+'Date']=part?.ymd||date;out[key+'Time']=part?String(part.hh).padStart(2,'0')+':'+String(part.mm).padStart(2,'0'):key==='departure'?'09:00':'11:00';}return out;}
+  function flightFields(flight,defaultZone,date){const out={label:flight.label||''};for(const key of ['departure','arrival']){const zone=flight[key+'Zone']||defaultZone,instant=Date.parse(flight[key]);out[key+'Zone']=zone;if(flight[key+'ZoneLocation'])out[key+'ZoneLocation']=flight[key+'ZoneLocation'];const part=Number.isFinite(instant)?E.partsIn(instant,zone):null;out[key+'Date']=part?.ymd||date;out[key+'Time']=part?String(part.hh).padStart(2,'0')+':'+String(part.mm).padStart(2,'0'):key==='departure'?'09:00':'11:00';}return out;}
   function flightFromFields(fields,previous={},defaultZone){const f={label:fields.label||''};for(const key of ['departure','arrival']){const zone=fields[key+'Zone'],date=fields[key+'Date'],time=parseClock(fields[key+'Time']);f[key+'Zone']=zone;try{const old=Number.isFinite(Date.parse(previous[key]))?flightFields(previous,defaultZone,date):null;if(old&&old[key+'Zone']===zone&&old[key+'Date']===date&&old[key+'Time']===time){f[key]=previous[key];continue;}const instant=time?E.zonedToInstant(date,+time.slice(0,2)*60 + +time.slice(3),zone):NaN;f[key]=Number.isFinite(instant)?new Date(instant).toISOString():'';}catch(_){f[key]='';}}return f;}
   function contacts(sources,profiles,ownEmail,limit=5){
     const excluded=new Set([...profiles.map(p=>emailKey(p.email)),emailKey(ownEmail)]),people=new Map(),seen=new Set();

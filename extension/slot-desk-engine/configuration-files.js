@@ -1,13 +1,13 @@
 (function(root,factory){if(typeof module==='object'&&module.exports)module.exports=factory(require('./workspace-model'),require('./profile-configuration'));else root.SlotConfigurationFiles=factory(root.SlotWorkspace,root.SlotProfileConfiguration);})(typeof self!=='undefined'?self:this,function(U,C){
   'use strict';
-  const clone=C.clone,version='0.9.4',columns=C.fields.map(k=>k==='tz'?'timezone':k).concat('constraints');
-  const settingKeys=['from','to','anchor','duration','step','spacingMode','want','perDay','perDayMode','minDuration','extendDays','dateChoice','defaultCalendar','defaultCalendarSelected','calendarScopeConfirmed','workspaceCalendarIds','meetingsCalendars','meetingsCalendarLabels','meetingsFrom','meetingsTo','meetingsTimezone','dismissSuggestions'];
+  const clone=C.clone,version='0.9.4.5',columns=C.fields.map(k=>k==='tz'?'timezone':k).concat('constraints');
+  const settingKeys=['from','to','anchor','anchorLocation','duration','step','spacingMode','want','perDay','perDayMode','minDuration','extendDays','dateChoice','defaultCalendar','defaultCalendarSelected','calendarScopeConfirmed','workspaceCalendarIds','meetingsCalendars','meetingsCalendarLabels','meetingsFrom','meetingsTo','meetingsTimezone','meetingsTimezoneLocation','dismissSuggestions'];
   const defaults=p=>({...U.newProfile(p.email,p.name,p.tz),calendarLabels:{},eventRules:{},ruleTerms:{},airportRule:true});
   function safe(value){if(value&&typeof value==='object')for(const key of Object.keys(value)){if(['__proto__','constructor','prototype'].includes(key))throw new Error('The file contains an unsupported field.');safe(value[key]);}return value;}
   function constraint(c){if(!c||typeof c!=='object'||!['blocked','inconvenient'].includes(c.kind)||!C.instant(c.from)||!C.instant(c.to)||Date.parse(c.from)>=Date.parse(c.to)||typeof c.label!=='string')throw new Error('Check the protected or inconvenient time rules in this file.');return {kind:c.kind,from:c.from,to:c.to,label:c.label};}
   function exportFile(state,display,ids=null,now=new Date()){
     const profiles=ids===null?state.profiles:state.profiles.filter(p=>ids.includes(p.id));if(ids!==null&&!profiles.length)throw new Error('Select at least one profile.');
-    const rows=profiles.map(p=>{const full={...defaults(p),...p,constraints:state.constraints.filter(c=>c.who===p.id).map(constraint)};return columns.map(k=>clone(full[k==='timezone'?'tz':k]));});
+    const rows=profiles.map(p=>{const full={...defaults(p),...p,constraints:state.constraints.filter(c=>c.who===p.id).map(constraint)};return columns.map(k=>clone(full[k==='timezone'?'tz':k]===undefined?null:full[k==='timezone'?'tz':k]));});
     const file={format:ids===null?'slotdesk-backup':'slotdesk-profiles',schemaVersion:1,appVersion:version,exportedAt:now.toISOString(),columns:[...columns],rows};
     if(ids===null){file.settings=Object.fromEntries(settingKeys.filter(k=>state.settings[k]!==undefined).map(k=>[k,clone(state.settings[k])]));file.display={theme:display.theme,clock:display.clock,dateFormat:display.dateFormat};file.constraints=state.constraints.filter(c=>!c.who||c.who==='all').map(constraint);const known=new Set(state.profiles.map(p=>p.id));if(state.constraints.some(c=>c.who&&c.who!=='all'&&!known.has(c.who)))throw new Error('Some time rules refer to missing profiles. Correct those rules before backing up.');}
     return file;
@@ -24,7 +24,7 @@
     const missing=columns.filter(k=>!['email','timezone','name'].includes(k)&&!file.columns.includes(k)),warnings=missing.length?['Missing settings use this version’s defaults: '+missing.join(', ')+'.']:[],seen=new Set(),profiles=[],rules=[];
     for(const index of selected){const row=file.rows[index];if(!row)throw new Error('Choose valid profile rows.');const values=Object.fromEntries(file.columns.map((k,i)=>[k,row[i]])),email=U.emailKey(values.email),name=typeof values.name==='string'&&values.name.trim()?values.name.trim():email,p=defaults({email,name,tz:values.timezone});
       if(seen.has(email))throw new Error('The selected file rows contain more than one profile for '+email+'.');seen.add(email);
-      for(const key of C.fields){const publicKey=key==='tz'?'timezone':key;if(file.columns.includes(publicKey))p[key]=clone(values[publicKey]);}p.email=email;p.name=name;p.id='person:'+email;
+      for(const key of C.fields){const publicKey=key==='tz'?'timezone':key;if(file.columns.includes(publicKey)){if(key!=='tzLocation'||values[publicKey]!==null)p[key]=clone(values[publicKey]);}}p.email=email;p.name=name;p.id='person:'+email;
       try{C.checkProfile(p);}catch(error){throw new Error((name||email)+': '+error.message);}
       const items=file.columns.includes('constraints')?values.constraints:[];if(!Array.isArray(items))throw new Error(name+': time rules must be a list.');rules.push(...items.map(c=>({...constraint(c),who:p.id})));profiles.push(p);
     }return {profiles,rules,warnings};
@@ -39,7 +39,7 @@
       if(['defaultCalendar','dateChoice'].includes(key)&&typeof v!=='string')throw new Error('Invalid setting: '+key+'.');
       if(['defaultCalendarSelected','calendarScopeConfirmed','dismissSuggestions'].includes(key)&&typeof v!=='boolean')throw new Error('Invalid setting: '+key+'.');
       if(['workspaceCalendarIds','meetingsCalendars'].includes(key)&&(!Array.isArray(v)||v.some(x=>typeof x!=='string'||!x)||new Set(v).size!==v.length))throw new Error('Invalid calendar selection.');
-      if(key==='meetingsCalendarLabels'&&(!v||typeof v!=='object'||Array.isArray(v)||Object.values(v).some(x=>typeof x!=='string')))throw new Error('Invalid calendar labels.');out[key]=clone(v);
+      if(key==='meetingsCalendarLabels'&&(!v||typeof v!=='object'||Array.isArray(v)||Object.values(v).some(x=>typeof x!=='string')))throw new Error('Invalid calendar labels.');if(['anchorLocation','meetingsTimezoneLocation'].includes(key)&&v!==null&&(!v||typeof v!=='object'||typeof v.timezone!=='string'||!C.zone(v.timezone)))throw new Error('Invalid timezone display location.');out[key]=clone(v);
     }if(out.spacingMode==='custom'&&out.step%5!==0)throw new Error('Custom spacing must use multiples of 5 minutes.');if(out.from&&out.to&&out.from>out.to||out.meetingsFrom&&out.meetingsTo&&out.meetingsFrom>out.meetingsTo)throw new Error('The start date must be before the end date.');return out;
   }
   function displaySettings(v){if(v!==undefined&&(!v||typeof v!=='object'||Array.isArray(v)))throw new Error('Invalid display preferences in this backup.');const out={theme:'system',clock:'24',dateFormat:'dmy',...v};if(!['system','light','dark'].includes(out.theme)||!['12','24'].includes(out.clock)||!['dmy','mdy'].includes(out.dateFormat))throw new Error('Invalid display preferences in this backup.');return {theme:out.theme,clock:out.clock,dateFormat:out.dateFormat};}

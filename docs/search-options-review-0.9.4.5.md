@@ -1,6 +1,6 @@
 # Search controls review for 0.9.4.5
 
-Owner feedback recorded 20 October 2026. Planning only; no runtime changes. Originally part of the 0.9.5 review, this new-meeting work is now assigned to 0.9.4.5 by the owner. See the [release scope and remaining review](release-plan-0.9.4.5.md). The separate advanced-profile cleanup remains in 0.9.5 and does not block this update; scheduling rules needed by this release still need an explicit policy.
+Owner feedback recorded 20 October 2026. Implemented after explicit owner authorization as 0.9.4.5; the policy below records the agreed contract. Originally part of the 0.9.5 review, this new-meeting work is now assigned to 0.9.4.5 by the owner. See the [release scope and remaining review](release-plan-0.9.4.5.md). The separate advanced-profile cleanup remains in 0.9.5 and does not block this update; the required scheduling interactions are settled below.
 
 ## Owner directions
 
@@ -20,7 +20,7 @@ When there are no open choices, show up to three best permitted alternatives und
 
 Agreed Generate more options behavior: append the next three useful choices, retain existing cards/order and exclude duplicates or choices overlapping any already displayed option. Hide the action when no further eligible choices exist. The automatic duration/date policies and per-person permissions apply equally to initial and additional results; the button does not itself authorize a new exception. There must be no rotations of the same meeting around one small gap. Internal batch/diversity/freshness details must support that contract without reviving removed controls.
 
-Apply the no-overlapping-suggestions rule across the complete visible list, including shorter/later categories and later batches. Endpoints that merely touch are not overlaps. This concerns suggestions overlapping one another; it does not remove the separately approved warned alternatives that overlap existing calendar appointments. The current 0.9.4 selector only excludes mutually overlapping suggestions within the same alternative category, so the complete-list behavior needs an implementation change.
+Apply the no-overlapping-suggestions rule across the complete visible list, including shorter/later categories and later batches. Endpoints that merely touch are not overlaps. This concerns suggestions overlapping one another; it does not remove the separately approved warned alternatives that overlap existing calendar appointments. The 0.9.4.5 selector applies this across the entire eligible snapshot, including later batches and alternative categories.
 
 ## Automatic shortening — owner direction
 
@@ -60,7 +60,7 @@ Accepted horizon: anchor to the week containing the selected search end date, no
 
 Accepted perfect-fit test: all required participants meet their active rules with no known calendar conflict or active timing inconvenience. Unknown calendar access does not itself disqualify a later choice, but coverage remains visibly unconfirmed; optional participants' conflicts do not block it. An explicitly ignored usual-hour preference is not a remaining compromise. “Perfect” is an internal qualifying test, not a claim that unshared calendars were checked or the person accepted the invitation.
 
-Historical note: 0.9.4 currently tries one entered shorter duration (default 30) and extends by the entered day count (default five). Those controls and behaviors are superseded by the planned rules above, not already changed in runtime.
+Historical note: 0.9.4 tried one entered shorter duration (default 30) and extends by the entered day count (default five). Those controls and behaviors are superseded in 0.9.4.5 by the automatic rules above.
 
 ## Meeting-wide excluded times — accepted UX
 
@@ -68,13 +68,13 @@ Below Search timezone, show **+ Exclude a time**. Open a short form with start d
 
 These are hard exclusions for this meeting only. Any suggestion intersecting the excluded interval is rejected, not just suggestions starting inside it. They do not create calendar events, alter anyone's profile or affect later unrelated meetings. Preserve the actual excluded instants and convert their visible times if the search display timezone changes.
 
-Current implementation gaps: state.constraints is stored at account/workspace scope and can target one person or everyone. It survives ordinary meeting creation; it is not already a clean meeting-only exclusion model. Temporary person-specific periods are not fully implemented merely because the three per-meeting preference checkboxes exist. New storage/scope boundaries and the treatment of existing saved dated constraints need deliberate migration; do not silently turn old entries into permanent profile rules or delete them as if they were empty. Profile advanced UX remains owner-led pending work.
+Implemented scope: temporary exclusions and person-specific rules live in the current meeting configuration and clear on a new meeting or successful booking. Older saved dated constraints remain separate Saved time rules; they are not deleted or reclassified. Input/profile changes invalidate the option snapshot. Generate more options adds three from the same snapshot without calendar reads or reordering.
 
 ## Outside-hours control — removal and per-person semantics accepted
 
 Remove the global Enable last-resort times outside acceptable hours checkbox. Do not add the proposed results-level Include very early or late times action. The owner considers per-person/per-meeting control sufficient.
 
-Historical/current-code distinction: in 0.9.4 each participant's Ignore usual convenience hours flag only removes the usual ranking penalty. It does **not** authorize proposals outside their acceptable-hour range, normally 07:00–20:00. The separate global allowBadHours flag enables those times. That is the released behavior, not the new contract below.
+Historical/current-code distinction: in 0.9.4 each participant's Ignore usual convenience hours flag only removes the usual ranking penalty. It does **not** authorize proposals outside their acceptable-hour range, normally 07:00–20:00. The separate global allowBadHours flag enables those times. That was the older released behavior, superseded by the 0.9.4.5 contract below.
 
 Accepted for 0.9.4.5: expand **Ignore usual convenience hours** so it both removes that person's usual time-of-day convenience ranking penalty and permits proposals outside that person's usual acceptable-hour range. Use the saved profile default with the existing per-meeting override. This is one per-person choice, with no global replacement or additional outside-hours checkbox. Permission for one person never permits outside-range times for another required person. With it off, the usual range remains enforced unless that person's separately authorized positive availability permits the time.
 
@@ -86,10 +86,10 @@ The current Calendar data / Refresh calendars panel reports fetch coverage, sour
 
 Agreed: remove this panel and its separate Refresh calendars button from new-meeting search. Use the per-person calendar icon for meaningful source/coverage issues and Find a time to retry. Preserve the separately required Refresh meetings action in Existing meetings. Internal read logic and error detection remain; technical counts are not required in the main flow.
 
-## Remaining owner decisions
+## Settled decisions and continuing owner review
 
 The owner agreed to the unannotated parts of the previous review: initial counts, distinct suggestions, Exclude a time form/scope, removal of the spacing note, and removal of the search Calendar data/Refresh panel while retaining Refresh meetings. Generate more options appending three was explicitly approved.
 
 All three targeted questions are answered: shortening addresses only actual conflicts or blocking rules; the earliest required-participant next-workweek deadline bounds later dates, anchored to the selected search end; and Ignore usual convenience hours also permits outside-range times for that person. Optional guests remain non-blocking.
 
-The owner has also accepted the single-gap full/shorter choice, mitigation comparison, perfect-fit test and ignored/missing-workweek reference described above, followed by the full participant-status/category/source/wording/priority table. The [0.9.4.5 plan](release-plan-0.9.4.5.md) records these as accepted decisions. Responsive and detailed warning UX remain subject to owner review. Advanced-profile-editor cleanup remains separate for 0.9.5. No review-driven implementation or 0.9.4.5 release is authorized by this record.
+The owner has also accepted the single-gap full/shorter choice, mitigation comparison, perfect-fit test and ignored/missing-workweek reference described above, followed by the full participant-status/category/source/wording/priority table. The [0.9.4.5 plan](release-plan-0.9.4.5.md) records these as accepted decisions. Responsive and detailed warning UX remain subject to owner review. Advanced-profile-editor cleanup remains separate for 0.9.5. The owner subsequently explicitly authorized implementation. The implemented checks are recorded in [testing](testing.md); wider UX approval remains owner-led.

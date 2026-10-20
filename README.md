@@ -1,8 +1,8 @@
 ![SlotDesk — make room for what matters](design/assets/slotdesk-banner.svg)
 
-**0.9.4 · Google Calendar · private Chrome pilot**
+**0.9.4.5 · Google Calendar · private Chrome pilot**
 
-Version 0.9.4 implements the agreed scheduling priorities, 10-/5-minute start rules, one unified options list, specific conflict details and earliest-date time-of-day variety. Advanced spacing/per-day overrides remain available. The planned [0.9.4.5 update](docs/release-plan-0.9.4.5.md) covers the new-meeting flow, result cards, automatic alternatives, planning emails, friendly timezone labels and agreed overlap-review screen; the owner’s remaining review and implementation authorization are pending. Version 0.9.5 is reserved for the owner-led wording/UX/logic review and cleanup of advanced profile settings. The overall UX, buttons, responsive layouts and wording remain under owner review. See [accessibility evidence](docs/accessibility.md), [version history](docs/changelog.md) and [backup/import rules](docs/export-import.md).
+Version **0.9.4.5** adds automatic shorter/later alternatives, distinct suggestion batches, compact factual participant rows, friendly timezone labels, a copyable planning email and grouped overlap review. See the [release scope](docs/release-plan-0.9.4.5.md), [validation](docs/testing.md) and [version history](docs/changelog.md). Appointment logic and the wider UX remain under active owner review. Advanced profile-settings cleanup is reserved for the owner-led 0.9.5 review.
 
 SlotDesk helps executive assistants find meeting times across people, calendars and timezones. Review a new invitation, browse existing meetings, edit its details and guests, or choose a new time for an appointment. Every calendar write requires an explicit review and confirmation.
 

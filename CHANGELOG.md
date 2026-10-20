@@ -1,5 +1,10 @@
 # Repository changelog
 
+## 2026-10-20 — SlotDesk 0.9.4.5
+
+- Implement the authorized new-meeting policy, compact factual option cards, friendly selected-city labels, local planning-email preview and connected overlap review. Preserve narrow reviewed Calendar writes and existing OAuth identity/scopes.
+- Record accepted policy interactions, implementation boundaries, synthetic integrity evidence and the separate owner-led 0.9.5 advanced-profile review. Package 0.9.4.5 for the private pilot; appointment logic remains open for further owner feedback.
+
 ## 2026-10-19 — SlotDesk 0.9.4
 
 - Same-version hotfix: separate old/new appointment rescheduling actions, verified source links and Last update in alerts. Record both mandatory owner reviews before 0.9.5; no autonomous review substitution.

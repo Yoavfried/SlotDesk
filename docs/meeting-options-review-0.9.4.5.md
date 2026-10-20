@@ -1,6 +1,6 @@
 # Meeting options review for 0.9.4.5
 
-Owner review started 20 October 2026, originally for 0.9.5; the owner moved the new-meeting work to 0.9.4.5 later that day. The owner has accepted the full second-row category/source/wording/priority table below. This is an accepted planning contract, not implementation authorization or final UX/release approval. See the [0.9.4.5 plan](roadmap.md#0945--new-meeting-update). Advanced-profile cleanup is separately reserved for 0.9.5 and does not block this release.
+Owner review started 20 October 2026, originally for 0.9.5; the owner moved the new-meeting work to 0.9.4.5 later that day. The owner has accepted the full second-row category/source/wording/priority table below. The owner subsequently explicitly authorized implementation as 0.9.4.5. Wider UX approval remains with the owner. See the [0.9.4.5 plan](roadmap.md#0945--new-meeting-update). Advanced-profile cleanup is separately reserved for 0.9.5 and does not block this release.
 
 The companion [search-controls review](search-options-review-0.9.4.5.md) records removal of spacing/per-day/count fields, accepted Generate more options behavior and counts, mutually non-overlapping suggestions, meeting-wide exclusions, and automatic duration/workweek fallback policies replacing the old fields. The owner has also settled conflict/blocking-only shortening, the earliest required-participant workweek deadline, and expanding Ignore usual convenience hours to permit outside-range times for that person. Remaining presentation and profile details stay under owner review.
 
@@ -11,7 +11,7 @@ The companion [search-controls review](search-options-review-0.9.4.5.md) records
 - The next row shows one main status/reason only. A known meeting overlap takes precedence over a day-off reason.
 - Review the extra warnings. Do not add a standalone “Nina Banai: Availability unconfirmed” item there.
 
-## Proposed first row — owner decision pending
+## Implemented first row — continuing owner review
 
 Example: `Nina Banai [calendar icon] · Los Angeles, CA (GMT−7) · 09:00–09:15`. The [friendly timezone label direction](timezone-search.md#friendly-display-labels--0945-owner-direction) applies throughout the UI and exported text; UTC stays UTC.
 
@@ -50,11 +50,11 @@ For several facts in one category, show the count where meaningful and one sourc
 
 Past/expired candidates, invalid timezones, invalid durations and malformed profile rules are search/card validity errors rather than normal participant statuses. They must not become an Available fallback. Travel dates normally change timezone; they do not alone imply unavailability. Free all-day notes and a guest's previous RSVP do not independently become unavailability reasons for a new proposal.
 
-The current profile has one convenience/acceptable range, normally 07:00–20:00. In released 0.9.4, outside-range proposals require the global last-resort permission. Planned 0.9.4.5 removes that control and expands per-person Ignore usual convenience hours to allow outside-range times as well as remove their usual hour penalty. With that preference ignored, do not add a usual-hour unavailability/inconvenience reason; keep the actual local time visible and retain flight buffers, manual inconvenience and independent rules.
+The current profile has one convenience/acceptable range, normally 07:00–20:00. In released 0.9.4, outside-range proposals require the global last-resort permission. Implemented 0.9.4.5 removes that control and expands per-person Ignore usual convenience hours to allow outside-range times as well as remove their usual hour penalty. With that preference ignored, do not add a usual-hour unavailability/inconvenience reason; keep the actual local time visible and retain flight buffers, manual inconvenience and independent rules.
 
 Travel timezone changes, DST changes, optional designation, calendar connection state and old guest responses are not additional second-row conflict categories. Timezone/date changes belong in the time row; calendar coverage belongs in the icon and row 17 when no known reason wins. A previous No to a different invitation is not unavailability for a new proposed time. Free/canceled/EA-ignored entries, invitations declined by this person and unclassified all-day notes do not become busy conflicts merely by existing. Invalid inputs and meeting-wide excluded intervals prevent result generation instead of being participant statuses.
 
-## Warnings proposal — owner decision pending
+## Implemented warnings — 0.9.4.5
 
 - Remove routine unconfirmed-availability entries and their generated generic notes from the extra warning list. Keep coverage reasons in the participant calendar popup and status, and retain truthful availability disclosure in the final booking review.
 - Retain substantive detail: actual conflicting appointment titles/times and affected participants, additional lower-priority reasons, explicit flight/manual/radius intervals, and any independently necessary review action.
@@ -63,17 +63,19 @@ Travel timezone changes, DST changes, optional designation, calendar connection 
 - Keep shorter duration/later date labels on the option itself. Do not repeat them as generic warnings. Put travel-zone/date/DST transitions in readable time detail, with an additional warning only if a meaningful consequence remains.
 - Count distinct substantive warning entries, not repeated summaries or generic availability notes. When none remain, hide the expandable.
 
-## Data work needed before implementation
+## Implemented data and presentation
 
-The current engine exposes typed conflicts, timing facts, fitIssue and source coverage, but fitPerson returns at the first hard failure. It does not yet provide a complete simultaneous-fact set for the proposed presentation order. Evaluation must retain all applicable display facts without weakening hard exclusions. Preserve leave-classification provenance so a structured out-of-office entry, EA treatment, leave-calendar mapping and title inference can be distinguished; today's adapter collapses these to one leave type. Explicit busy all-day appointments must not be mislabeled as leave solely because they are all-day. Flight destination fields and explicit block/radius source labels also need to reach the participant result; the renderer must not reconstruct them from prose or event-title guesses. The current calendar icon tests linking only and must be adapted to actual per-slot coverage before replacing the badge.
+The engine retains simultaneous typed hard-fit issues, conflicts and timing facts. Calendar normalization preserves leave provenance (structured provider out-of-office, EA override, leave-calendar mapping and title inference); explicit busy all-day appointments do not become leave solely because they span a date. Saved flights carry destination labels and person-specific identity. The participant-status module selects the first applicable row reason using the accepted table; the renderer uses per-slot source coverage for the calendar icon. Unknown availability stays in the row/icon and final review, rather than routine extra warning entries.
 
-The full second-row categories, source mapping, order and row text are accepted. The owner also accepted keeping other useful reasons in Warnings, with travel/timezone changes in the time row and no false unavailability from free entries, unclassified all-day notes or old invitation responses. First-row responsive handling and detailed warning presentation remain subject to the owner's UX review; do not reopen the accepted status table as unanswered. This record does not authorize implementing or releasing 0.9.4.5.
+The compact identity/icon/location/time row stays on one line at tested widths. Long names/locations truncate visually with full accessible labels and tooltips. Compact 12-hour time and differing-date labels avoid overflow; full local dates, years, offsets and transitions remain available in the row's accessible detail. Secondary warnings add actual appointment times, shared affected people or independent reasons rather than repeating a label alone. Final booking/rescheduling reviews retain coverage disclosure and material restrictions.
+
+Implementation is authorized. This evidence does not replace the owner's continuing UX review.
 
 ## Copy actions and excluded candidates — 20 October discussion
 
 The owner questioned the usefulness of Copy option / Copy meeting and expressed a preference to remove the excluded-candidates list. The current Copy option copies plain text with the proposed title, per-person local dates/times, calendar confidence and warnings. The review's Copy meeting copies the full unsent details, including guest emails, organizing calendar, location and description. Neither creates a calendar event, sends an invitation or produces an importable calendar file. The review copy supports the previously requested manual-booking fallback. Current proposal text includes internal availability/conflict notes and is not a polished guest-facing email.
 
-Agreed by the owner on 20 October: remove Copy option from individual result cards; retain Copy meeting details as a secondary action in the final review. The copied text must be much shorter and suitable for pasting to an executive. This remains planned 0.9.4.5 work; the current implementation still produces the long text.
+Agreed by the owner on 20 October: remove Copy option from individual result cards; retain Copy meeting details as a secondary action in the final review. The copied text must be much shorter and suitable for pasting to an executive. Implemented in 0.9.4.5 with the concise summary below.
 
 Plan a brief summary: meeting title; date and start–end time with timezone/offset; participant names in one short line. Include another local-time line only for a distinct relevant timezone, using the actual local date when different. Omit calendar identifiers, duplicated dates/times, email-address dumps, routine coverage messages, rule explanations and the full warning list. Include a location or existing joining link only when useful and already available; never invent an unsent Google Meet link. A material known availability conflict can receive one short note, without exposing other appointment titles. Copying remains plain text and performs no booking or sending. This replaces the old long copied-report format; it does not add another general export feature.
 
@@ -81,4 +83,4 @@ Owner direction for 0.9.4.5: remove the user-facing Why other candidates were ex
 
 ## Planning email request
 
-The owner also requested a **Generate planning email** action after options are generated: copyable text for all participants containing every displayed suggestion. After correction, its only availability caveat is “[Name] is unavailable for this option” for a known unavailable optional participant, without labelling them optional. Do not mention unconfirmed availability, overlaps, rearranging commitments, convenience/working hours or my profile in the shared email. The [planning-email proposal](planning-email.md) records the scope, example and caveat translation for review. It is plain text for manual copying, separate from deferred interactive email inquiries. No implementation or 0.9.4.5 readiness is implied.
+The owner also requested a **Generate planning email** action after options are generated: copyable text for all participants containing every displayed suggestion. After correction, its only availability caveat is “[Name] is unavailable for this option” for a known unavailable optional participant, without labelling them optional. Do not mention unconfirmed availability, overlaps, rearranging commitments, convenience/working hours or my profile in the shared email. The [planning-email proposal](planning-email.md) records the scope, example and caveat translation for review. It is plain text for manual copying, separate from deferred interactive email inquiries. The local preview/copy feature is implemented in 0.9.4.5; wider UX approval remains with the owner.

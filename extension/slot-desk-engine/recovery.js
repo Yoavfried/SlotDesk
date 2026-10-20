@@ -29,6 +29,6 @@
     state.settings.recoveryHistory=[...(state.settings.recoveryHistory||[]),{id:operationKey(item),type:item.type,operation:JSON.parse(JSON.stringify(item.value)),status:result==='found'?'reported_found':'unverified',resolvedAt:now}];
     if(item.type==='booking')delete state.pendingBooking;else delete state.pendingReschedule;return state.settings.recoveryHistory.at(-1);
   }
-  function sameVersion(a,b){const parts=v=>String(v||'0').split('.').map(Number),x=parts(a),y=parts(b);for(let i=0;i<3;i++){if((x[i]||0)!==(y[i]||0))return (x[i]||0)-(y[i]||0);}return 0;}
+  function sameVersion(a,b){const parts=v=>String(v||'0').split('.').map(Number),x=parts(a),y=parts(b);for(let i=0;i<Math.max(x.length,y.length);i++){if((x[i]||0)!==(y[i]||0))return (x[i]||0)-(y[i]||0);}return 0;}
   return {issue,provider,network,auth,describe,metadata,transient,retryDelay,pending,operationKey,resolveManually,sameVersion};
 });

@@ -52,8 +52,8 @@ const manual=person('own',{isOwnProfile:true,inconvenience:[{from:iso(10),to:iso
 const radius=person('own',{isOwnProfile:true,allowOverlap:true,radius:{minutes:15,mode:'blocked'},busy:[event('previous',9,10)]});eq(exact([radius,guest],10),undefined,'ordinary overlap permission cannot erase a blocked halo');
 const softRadius={...radius,radius:{minutes:15,mode:'inconvenient'}};eq(exact([softRadius,guest],10).people[0].calendarConflictCount,0,'a radius is not an overlapping meeting');eq(exact([softRadius,guest],10).people[0].timing[0].kind,'meeting-radius');
 
-// Outside-hours permission remains independent from work/convenience flags.
-for(const ignoreConvenience of [false,true]){const p=person('late',{ignoreWorkingHours:true,ignoreConvenience});eq(exact([p],23),undefined);ok(exact([p],23,0,{allowBadHours:true}).outsideHours);}
+// 0.9.4.5: per-person ignore-convenience explicitly permits outside-range times.
+for(const ignoreConvenience of [false,true]){const p=person('late',{ignoreWorkingHours:true,ignoreConvenience});if(ignoreConvenience){ok(exact([p],23));eq(exact([p],23).outsideHours,false);}else{eq(exact([p],23),undefined);ok(exact([p],23,0,{allowBadHours:true}).outsideHours);}}
 const explicitLate=person('late',{availability:[{days:[2],s:'23:00',e:'23:30',tz:'UTC'}]});ok(exact([explicitLate],23));
 const sunday='2026-11-01',sundayReq=req([person('weekday')],{range:{from:sunday,to:sunday}});eq(E.findSlots(sundayReq).options.length,0);ok(E.findSlots({...sundayReq,people:[person('weekday',{ignoreWorkingHours:true})]}).options.length>0);
 

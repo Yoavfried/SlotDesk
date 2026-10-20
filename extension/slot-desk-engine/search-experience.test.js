@@ -32,7 +32,7 @@ const options=[...new Set([...Intl.supportedValuesOf('timeZone'),'UTC'])].map(va
 const first=(query,zone)=>eq(canonical(T.search(options,query)[0]?.value),canonical(zone),query+' resolves to expected zone');
 for(const query of ['san francisco','san fransisco','San Francisco USA'])first(query,'America/Los_Angeles');
 for(const [query,zone]of [['uts','UTC'],['easterm','America/New_York'],['mountain','America/Denver'],['mountian','America/Denver'],['Ottawa','America/Toronto'],['São Paulo','America/Sao_Paulo'],['Cape Town','Africa/Johannesburg'],['Vaduz','Europe/Vaduz'],['Ngerulmud','Pacific/Palau'],['Palikir','Pacific/Pohnpei'],['France','Europe/Paris']])first(query,zone);
-ok(T.search(options,'san francisco')[0].displayLabel.includes('San Francisco · United States'));
+ok(T.search(options,'san francisco')[0].displayLabel.includes('San Francisco, CA'));
 const australia=T.search(options,'Australia').map(o=>canonical(o.value));for(const zone of ['Australia/Sydney','Australia/Perth','Australia/Darwin'])ok(australia.includes(canonical(zone)),'country returns multiple valid zones');
 const ambiguous=T.search(options,'IST').map(o=>canonical(o.value));for(const zone of ['Asia/Kolkata','Asia/Jerusalem','Europe/Dublin'])ok(ambiguous.includes(canonical(zone)),'ambiguous abbreviation retains choices');
 ok(T.search(options,'Antarctica').some(o=>o.value==='Antarctica/Casey'),'country zones without a large city are present');

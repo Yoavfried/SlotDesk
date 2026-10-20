@@ -10,9 +10,9 @@ eq(U.compactRange('2026-12-31T21:30:00Z','2026-12-31T22:30:00Z','Asia/Jerusalem'
 ok(U.fullTime(start,'Asia/Jerusalem','24',{dateFormat:'mdy'}).includes('Oct 20, 2026'));
 ok(U.fullTime(start,'Asia/Jerusalem','24',{dateFormat:'dmy'}).includes('20 Oct 2026'));
 ok(/01:00 PM - 01:45 PM$/.test(U.compactRange(start,end,'Asia/Jerusalem','12',{...options,dateFormat:'mdy'})));
-eq(U.zoneLabel(start,end,'Asia/Jerusalem'),'Asia/Jerusalem (GMT+3)');
-eq(U.zoneLabel(start,end,'UTC'),'UTC (GMT+0)');
-eq(U.zoneLabel(start,end,'Asia/Kolkata'),'Asia/Kolkata (GMT+5:30)');
+eq(U.zoneLabel(start,end,'Asia/Jerusalem'),'Jerusalem, Israel (GMT+3)');
+eq(U.zoneLabel(start,end,'UTC'),'UTC');
+eq(U.zoneLabel(start,end,'Asia/Kolkata'),'Kolkata, India (GMT+5:30)');
 eq(U.compactRange('2027-01-05T10:00:00Z','2027-01-05T10:45:00Z','Asia/Jerusalem','24',options),'Tue, 5 Jan 2027, 12:00 - 12:45');
 eq(U.compactRange('2027-01-05T10:00:00Z','2027-01-05T10:45:00Z','Asia/Jerusalem','24',{...options,now:Date.parse('2027-01-02T10:00:00Z')}),'Tue, 5 Jan, 12:00 - 12:45');
 ok(U.compactDate('2028-01-05T10:00:00Z','Asia/Jerusalem',options).includes('2028'));
@@ -21,8 +21,8 @@ ok(!U.compactDate('2025-10-20T10:00:00Z','Asia/Jerusalem',options).includes('202
 ok(!U.compactDate('2027-01-01T10:00:00Z','Asia/Jerusalem',{...options,now:Date.parse('2026-12-31T22:30:00Z')}).includes('2027'));
 eq(U.compactRange('2026-10-20T20:30:00Z','2026-10-20T21:30:00Z','Asia/Jerusalem','24',options),'Tue, 20 Oct, 23:30 - Wed, 21 Oct, 00:30');
 eq(U.compactRange('2026-12-31T21:30:00Z','2026-12-31T22:30:00Z','Asia/Jerusalem','24',options),'Thu, 31 Dec, 23:30 - Fri, 1 Jan 2027, 00:30');
-eq(U.zoneLabel('2026-10-25T00:30:00Z','2026-10-25T01:30:00Z','Europe/London'),'Europe/London (GMT+1 → GMT+0)');
-eq(U.zoneLabel(start,end,'Asia/Jerusalem','America/New_York'),'Asia/Jerusalem (GMT+3) → America/New_York (GMT-4)');
+eq(U.zoneLabel('2026-10-25T00:30:00Z','2026-10-25T01:30:00Z','Europe/London'),'London, United Kingdom (GMT+1 → GMT+0)');
+eq(U.zoneLabel(start,end,'Asia/Jerusalem','America/New_York'),'Jerusalem, Israel (GMT+3) → New York, NY (GMT-4)');
 ok(/01:00 PM - 01:45 PM$/.test(U.compactRange(start,end,'Asia/Jerusalem','12',options)));
 ok(U.fullTime(start,'Asia/Jerusalem').includes('2026')); // Copied manual-booking details retain an explicit date.
 const known=id=>({...U.newProfile(id+'@example.test',id,'UTC'),tzConfirmed:true,calendar:'detail',busy:[],coverages:[{from:'2026-10-20T00:00:00Z',to:'2026-10-21T00:00:00Z',complete:true,fetchedAt:new Date(now).toISOString()}]});

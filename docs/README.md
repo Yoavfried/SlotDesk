@@ -5,11 +5,11 @@
 | Product | [Overview](overview.md), [onboarding and profiles](onboarding-and-profiles.md), [implemented work](implemented.md), [roadmap](roadmap.md) |
 | Decisions | [UX](ux-decisions.md), [scheduling](scheduling-decisions.md), [live-feedback implementation](pending-ux-review.md), [14 October product review](product-review-2026-10-14.md), [next usability review](usability-review.md), [concrete usability flows](usability-flows.md), [profile validation inventory](profile-validation.md) |
 | Meeting management | [Editing details/guests](meeting-editing.md), [rescheduling, alerts and overlaps](rescheduling.md) |
-| Scheduling review | [19 October ranking rules, situations and result UX](scheduling-ranking-review.md) — current 0.9.4 behavior and decision history |
+| Scheduling review | [19 October ranking rules, situations and result UX](scheduling-ranking-review.md) — ranking foundations and decision history |
 | 0.9.4.5 owner review | [Meeting options rows, factual statuses and warnings](meeting-options-review-0.9.4.5.md) — full 18-category source/wording/priority table accepted; final responsive/warning UX remains owner-led |
-| Release split | [0.9.4.5 scope and remaining decisions](release-plan-0.9.4.5.md) — advanced-profile cleanup alone remains in 0.9.5 |
-| Search controls review | [Counts, more options, exclusions and fallback controls](search-options-review-0.9.4.5.md) — 20 October directions and open UX decisions |
-| Planning email | [Plain-text options email request and proposed wording](planning-email.md) — requested, not implemented; separate from interactive inquiries |
+| Release split | [0.9.4.5 scope and implementation checks](release-plan-0.9.4.5.md) — advanced-profile cleanup alone remains in 0.9.5 |
+| Search controls review | [Counts, more options, exclusions and fallback controls](search-options-review-0.9.4.5.md) — implemented 20 October policy and continuing owner review |
+| Planning email | [Plain-text options email request and proposed wording](planning-email.md) — implemented local preview/copy; separate from interactive inquiries |
 | Recovery | [Accepted connection, permission and recovery experience](recovery-experience.md) |
 | Registration and leads | [Agreed five-column onboarding leads table](leads-table.md), [hosting and verification](registration-deployment.md) |
 | Future concepts | [Optional BYOK LLM assistance](llm-assistance.md), [unconfirmed availability emails](time-inquiries.md) |

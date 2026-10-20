@@ -1,6 +1,6 @@
 # 0.9.4.5 — new-meeting release plan
 
-Owner scope change: 20 October 2026. All currently planned new-meeting development moves from 0.9.5 to 0.9.4.5; only advanced-profile-settings review/cleanup remains in 0.9.5. The agreed overlap-alert review screen also moves here so it is not left behind in a profile-only release. Planning only: implementation authorization and owner UX approval are still pending. Current runtime/package remain 0.9.4.
+Owner scope change: 20 October 2026. All currently planned new-meeting development moves from 0.9.5 to 0.9.4.5; only advanced-profile-settings review/cleanup remains in 0.9.5. The agreed overlap-alert review screen also moves here so it is not left behind in a profile-only release. Implementation was explicitly authorized on 20 October and is implemented as 0.9.4.5. Engineering verification is recorded in [testing](testing.md). Wider UX approval remains with the owner; appointment logic can continue evolving after this release.
 
 ## Scope already directed by the owner
 
@@ -19,7 +19,7 @@ See the detailed [cards/warnings](meeting-options-review-0.9.4.5.md), [search po
 
 ## Accepted policy interactions and remaining owner review
 
-On 20 October, the owner accepted items 1–4 below, then requested and accepted the complete 18-category source/wording/priority table for item 5. All five policy decisions are accepted, not outstanding questions. Final responsive/warning UX remains subject to owner review; acceptance of the planning contract is not implementation authorization or release approval.
+On 20 October, the owner accepted items 1–4 below, then requested and accepted the complete 18-category source/wording/priority table for item 5. All five policy decisions are accepted, not outstanding questions. Final responsive/warning UX remains subject to owner review; implementation authorization was subsequently given explicitly. This does not establish final owner UX approval.
 
 1. **Full versus shortened choices occupying the same gap.** Example: requested 45 minutes at 13:00 overlaps an appointment from 13:30; 13:00–13:30 is clear. Requested-duration-first ordering and forbidding overlapping suggestion cards cannot retain both. Recommendation: keep the clash-free shortened choice for that gap; preserve requested-duration-first ordering for other independent choices. If neither is clear, only replace a full-duration choice with a shorter one when it genuinely reduces known conflict, not merely timing inconvenience.
 2. **What counts as a perfect later-date option.** Recommendation: all required participants meet their active rules with no known calendar conflict or active timing inconvenience. Unknown calendar access remains visibly unconfirmed and does not itself forbid a later choice; an optional participant's conflict does not block it. An explicitly ignored usual-hour preference is not a remaining compromise. This must not be described as calendar-confirmed availability when sources are missing.
@@ -37,6 +37,6 @@ On 20 October, the owner accepted items 1–4 below, then requested and accepted
 
 These implementation choices are recommendations within the intended scope, not a declaration that the remaining owner review is complete.
 
-## Verification after implementation authorization
+## Implemented verification
 
 Exercise duration boundaries (30/45/60/90 and non-multiples), full/short single-gap choices, hard-block rejection, genuine conflict reduction, required/optional and missing-calendar cases, mixed/custom/ignored workweeks, DST/travel dates, per-person outside-hours permissions, counts/diversity/non-overlap across batches, changed-input invalidation, private event details, email caveat boundaries and narrow-width keyboard-accessible cards. Verify booking and rescheduling retain fresh checks, explicit confirmation and correct original-event targeting. Synthetic checks do not certify owner UX approval or live Google behavior.

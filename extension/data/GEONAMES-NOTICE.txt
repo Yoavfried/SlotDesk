@@ -4,7 +4,7 @@ Contains information from GeoNames (https://www.geonames.org/), licensed under
 Creative Commons Attribution 4.0: https://creativecommons.org/licenses/by/4.0/
 
 Source: https://download.geonames.org/export/dump/
-Snapshot downloaded: 2026-10-19
+Snapshot downloaded: 2026-10-20
 Adapted by SlotDesk: selected city names/spelling variants, countries, IANA
 timezone references and population ordering, transformed into a local index.
 No coordinates or user information are sent to GeoNames during searches.

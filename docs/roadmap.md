@@ -4,7 +4,7 @@ Updated 20 October 2026. Status reflects agreed scope, not a promise of public a
 
 ## Current release
 
-Version **0.9.4** implements the [confirmed scheduling/ranking policy](scheduling-ranking-review.md), unified typed result cards, five-minute minimum and retained Advanced overrides. It retains the accepted [connection/recovery experience](recovery-experience.md), including read-only setup, stale in-memory lists, automatic read-only confirmation alerts, explicit reviewed retries and unreadable-storage recovery. It also implements the approved Settings, profile-list and responsive layout polish. The five-field [onboarding leads implementation](leads-table.md) has a deployed private intake and database. This pilot is configured to send registrations, keeping failed submissions queued locally. [Deployment checks](registration-deployment.md) passed; first real registration from the updated extension remains to be observed. See the [version history](changelog.md).
+Version **0.9.4.5** implements the authorized [new-meeting update](release-plan-0.9.4.5.md): automatic alternatives and batching, compact factual rows, friendly zones, planning-email text and grouped overlap review. The existing onboarding, profile/calendar scope, live configuration, backup/import, connection recovery and reviewed calendar writes remain. The five-field onboarding leads service is deployed and configured for the private pilot. See [version history](changelog.md) and [validation](testing.md).
 
 The existing [implemented work](implemented.md), [accepted UX](ux-decisions.md), reviewed calendar writes, management, profiles and design language remain. No new real Google or email-delivery verification is claimed by this update.
 
@@ -14,13 +14,13 @@ The authorized onboarding, travel, timezone, mapping, guest and flexibility work
 
 ## Next work item
 
-The [19 October scheduling/ranking review](scheduling-ranking-review.md) is implemented in **0.9.4**: 10-minute base starts, eligible 5-minute refinements, a universal five-minute minimum, one truthful result list, required-guest/own-profile priorities, explicit conflict types and earliest-date/time-band variety. Advanced spacing/per-day controls retain explicit custom overrides.
+The [19 October scheduling/ranking review](scheduling-ranking-review.md) is implemented in **0.9.4**: 10-minute base starts, eligible 5-minute refinements, a universal five-minute minimum, one truthful result list, required-guest/own-profile priorities, explicit conflict types and earliest-date/time-band variety. Historical 0.9.4 spacing/per-day overrides are removed from the 0.9.4.5 UI in favor of the accepted automatic policy.
 
 The owner authorized the [styling direction](styling-0.9.4.md) and basic profile/calendar cleanup as **0.9.3.5**. It implements DM Sans, sentence-case normalization, including the personal/More settings headings, provisional regular page titles, drawn arrows, compact spacing and stable scrollbar layout. The profile changes and field-level boundaries are documented in the [validation inventory](profile-validation.md).
 
 ## 0.9.4.5 — new-meeting update
 
-On 20 October, the owner moved the complete new-meeting development previously planned for 0.9.5 into **0.9.4.5**, leaving only advanced-profile-settings cleanup in **0.9.5**. This changes the release split; it does not itself authorize implementation or declare the UX ready. See the [scope, remaining decisions and implementation checks](release-plan-0.9.4.5.md).
+On 20 October, the owner moved the complete new-meeting development previously planned for 0.9.5 into **0.9.4.5**, leaving only advanced-profile-settings cleanup in **0.9.5**. The owner then explicitly authorized implementation; the update is implemented. This does not declare the wider UX ready. See the [scope, remaining decisions and implementation checks](release-plan-0.9.4.5.md).
 
 The [Meeting options participant-row and warning review](meeting-options-review-0.9.4.5.md) records the owner's accepted 18-category table: factual data sources, row wording and first-applicable display priority. Responsive first-row handling and detailed warning presentation remain subject to owner UX review. The accepted status table is no longer an outstanding decision.
 
@@ -30,7 +30,7 @@ The [search-controls review](search-options-review-0.9.4.5.md) covers removal of
 
 The agreed overlap-alert screen also moves to 0.9.4.5: each connected group of actual overlaps offers **Review overlaps**, showing each appointment once with its date/time, calendar, exact overlapping appointments and an individual Reschedule action. Keep unrelated groups separate, require individual review/confirmation and clear only resolved relationships after fresh checks. See [rescheduling](rescheduling.md).
 
-This release may apply the agreed scheduling semantics to existing saved defaults and per-meeting overrides without redesigning the advanced-profile editor. The separate profile review does not block 0.9.4.5. The owner must settle the remaining new-meeting decisions and authorize implementation; release approval remains the owner's decision. Current runtime and published package remain 0.9.4.
+This release may apply the agreed scheduling semantics to existing saved defaults and per-meeting overrides without redesigning the advanced-profile editor. The separate profile review does not block 0.9.4.5. All targeted policy decisions were accepted and implementation was authorized. Current runtime/package is 0.9.4.5. The owner expects to continue appointment-logic and issue review after this update; do not auto-start the advanced-profile review or infer final UX approval.
 
 ## 0.9.5 — advanced profile settings
 

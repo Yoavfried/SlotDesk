@@ -2,6 +2,10 @@
 
 Started 18 October 2026 against 0.9.2. This work records technical findings and checks. The owner-led overall UX, buttons, layouts at different screen widths and wording review remains open; only the owner decides its readiness.
 
+## 0.9.4.5 follow-up
+
+The new participant identity/calendar/time rows and local planning-email dialog retain keyboard access, full accessible date/time labels and named controls. Five widths in both clock styles are covered by the [focused appearance journey](../scripts/accessibility/appearance-0945.js). Three axe scans report no automated violations; incomplete findings and their counts are retained in the [structured validation report](validation-0.9.4.5.json). Manual screen-reader, touch and label/ARIA assessments remain open. This does not certify conformance or owner UX approval.
+
 ## Scope
 
 - Keyboard access to profiles, participant search, calendars, flights/travel, meeting details/editing/rescheduling and local files.

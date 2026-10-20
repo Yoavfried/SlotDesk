@@ -8,7 +8,7 @@ Examples include San Francisco / san fransisco → America/Los_Angeles, Eastern 
 
 The bundled 19 October 2026 snapshot adapts [GeoNames cities15000, countryInfo and timeZones](https://download.geonames.org/export/dump/) under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Its [source description](https://download.geonames.org/export/dump/readme.txt) specifies populated places over 15,000 inhabitants or capitals. This snapshot contains 34,173 city records, 252 countries/territories and 418 source timezone identifiers; only supported dropdown choices are returned. Country-zone rows also cover regions without a large city. It is a broad lookup aid, not a promise that every settlement or abbreviation is unambiguous.
 
-The [bundled notice](../extension/data/GEONAMES-NOTICE.txt) records attribution, transformation and source SHA256 hashes. Help exposes the notice, GeoNames and licence links. The application sends no search input to GeoNames or another geocoding service. The index adds about 3.2 MB of uncompressed local data and no runtime dependency, network permission or API key. Source-data downloads are build inputs outside the extension package.
+The [bundled notice](../extension/data/GEONAMES-NOTICE.txt) records attribution, transformation and source SHA256 hashes. Help exposes the notice, GeoNames and licence links. The application sends no search input to GeoNames or another geocoding service. The index adds about 3.6 MB of uncompressed local data and no runtime dependency, network permission or API key. Source-data downloads are build inputs outside the extension package.
 
 ## Rebuild
 
@@ -26,7 +26,7 @@ The index does not provide holidays. A timezone does not identify which country�
 
 ## Friendly display labels — 0.9.4.5 owner direction
 
-Agreed 20 October 2026; moved from the original 0.9.5 plan to 0.9.4.5 with the new-meeting work. Planned, not implemented. Replace raw IANA identifiers in ordinary UI, selected fields, participant rows, copied summaries and planning emails with:
+Agreed 20 October 2026; moved from the original 0.9.5 plan to 0.9.4.5 with the new-meeting work. Implemented in 0.9.4.5. Replace raw IANA identifiers in ordinary UI, selected fields, participant rows, copied summaries and planning emails with:
 
 - **City, Country** outside the US: Paris, France; London, United Kingdom; Jerusalem, Israel.
 - **City, State code** for US locations: Los Angeles, CA; San Francisco, CA; New York, NY.
@@ -36,4 +36,4 @@ Keep real IANA identifiers internally for scheduling, DST/offset calculations an
 
 Preserve the city actually selected where available. Choosing San Francisco must remain San Francisco, CA even though its scheduling timezone is America/Los_Angeles. Do not claim a timezone's representative city is the person's known physical location. Existing records that only store the IANA identifier can use its documented representative city until the user explicitly picks a city; never guess a different city from their email or calendar prose.
 
-Current implementation gaps: the search dataset retains city/country but omits US state metadata, and saved profiles retain only the timezone identifier rather than the selected city's display identity. Implementation needs structured city/country/state metadata and a portable optional selected-location reference, with deterministic migration/fallback for old profiles, travel/flight timezone fields and imported files. Missing display metadata must not invalidate an otherwise valid timezone or change the scheduled instant. Add state data from the local build inputs and keep attribution/rebuild records accurate. Replacing underscores alone would not satisfy this direction.
+Implementation: the offline GeoNames build includes city ID, country and US state codes. Optional selected-location metadata persists with profiles, search/display settings, travel, flight endpoints and portable configuration. Existing IANA-only records retain deterministic representative labels; missing metadata never changes an instant. Search continues accepting city/country/common timezone terms and IANA identifiers. UTC and fixed-offset signs are normalized for display. See the bundled attribution and rebuild script; no runtime geocoding request is made.

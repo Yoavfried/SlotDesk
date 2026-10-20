@@ -27,7 +27,7 @@ with zipfile.ZipFile(args.source/'cities15000.zip') as archive:
             if len(name)>90:continue
             value=normalized(name)
             if value and value not in names and len(value.split())<=7:names.append(value)
-        cities.append([zone_ids[zone],country_ids[country],row[1],'|'.join(names),int(row[14] or 0)])
+        cities.append([zone_ids[zone],country_ids[country],row[1],'|'.join(names),int(row[14] or 0),row[10] if country=='US' else '',row[0]])
 country_zones=[]
 for line in (args.source/'timeZones.txt').read_text(encoding='utf-8').splitlines()[1:]:
     row=line.split('\t')

@@ -1,6 +1,12 @@
 # SlotDesk architecture
 
-Version 0.9.4 is a static Chrome side-panel application with a shared browser/Node scheduling engine and a separate insert-only registration service. The service is hosted on Vercel with a private Neon table; this preview is configured to submit registrations. Saved workspace settings and calendar processing remain in the browser. A loopback HTTP preview shows the disconnected interface; calendar sign-in uses Chrome extension identity. Synthetic fixtures are used only in development tests.
+## Automatic search and presentation — 0.9.4.5
+
+`search-policy.js` applies automatic duration/date alternatives and global suggestion selection over the shared engine. `participant-status.js` chooses a factual primary reason and substantive deduplicated warnings. `meeting-text.js` produces concise review details and recipient-safe planning text. Both creation and rescheduling use the automatic policy. These modules do not write calendars. Existing reviewed create, reschedule and edit transports retain their identity/version checks and narrow mutations.
+
+Selected-city metadata is optional portable configuration; IANA identifiers and actual instants remain authoritative. Generated additional options reuse one snapshot; Find a time and final write review still load fresh data. No new Google scopes, external services, email permissions or LLM calls are added.
+
+Version 0.9.4.5 is a static Chrome side-panel application with a shared browser/Node scheduling engine and a separate insert-only registration service. The service is hosted on Vercel with a private Neon table; this preview is configured to submit registrations. Saved workspace settings and calendar processing remain in the browser. A loopback HTTP preview shows the disconnected interface; calendar sign-in uses Chrome extension identity. Synthetic fixtures are used only in development tests.
 
 | Module in `extension/` | Responsibility |
 | --- | --- |

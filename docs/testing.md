@@ -1,6 +1,16 @@
 # SlotDesk validation record
 
-Current code: **0.9.4**. Automated evidence and user-reported live behavior are recorded separately. No formal manual acceptance checklist remains.
+## 0.9.4.5 validation
+
+All **1,990 application checks** pass: the previous 1,901 plus 89 automatic-search/status/text/version/portable-city cases. These cover duration boundaries, same-gap shortening, strict partial mitigation, mixed/ignored/missing workweeks, required/optional/unknown calendars, per-person outside-hour permission, hard-block preservation, distinct counts/batches, all 18 status priorities, shared/private conflicts, planning-email disclosure boundaries and four-part version protection.
+
+The focused CLI browser journeys pass **51 assertions**: [new-meeting flow](../scripts/accessibility/new-meeting-0945.js), [reviewed creation and overlap rescheduling](../scripts/accessibility/booking-overlaps-0945.js), and [light/dark/12-hour responsive checks](../scripts/accessibility/appearance-0945.js). The tested widths are 320, 390, 514, 680 and 1280 pixels. More options keeps the first cards and performs no new calendar read; planning text includes every displayed option. Different local dates and future-year meetings retain full accessible time detail without overflowing the narrow row.
+
+Synthetic creation makes exactly one POST and leaves all nine baseline appointments unchanged. Rescheduling makes one PATCH targeting the selected recurring occurrence, containing only start/end; all eight unrelated appointments and retained guest/video/recurrence/protected fields are unchanged. No delete or move request occurs. The write transport files and Google OAuth identity/scopes are unchanged.
+
+Three axe scans (light options, dark 12-hour options and planning-email dialog) report no automated violations. Incomplete checks remain recorded in [the structured report](validation-0.9.4.5.json), including ARIA/browser and label-name cases requiring manual assessment. This is not a WCAG certification or owner UX approval. No real Google account, live invitation or email sending is used. Continued appointment-logic review and manual screen-reader assessment remain open.
+
+Current code: **0.9.4.5**. Automated evidence and user-reported live behavior are recorded separately. No formal manual acceptance checklist remains.
 
 ## 0.9.4 validation
 

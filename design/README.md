@@ -33,3 +33,7 @@ The explicit full-lime header decision supersedes the kit's neutral app header. 
 The [0.7.0 before/after review](../docs/assets/rescheduling-v070.png) and [overlap details](../docs/assets/overlaps-v070.png) show the current meeting-management treatment. Examples contain synthetic data, not actual calendars.
 
 DM Sans is bundled from the [official Google Fonts source](https://github.com/google/fonts/tree/main/ofl/dmsans), with its [license](../extension/fonts/LICENSE-DM-Sans.txt). Keep the supplied [VT323 license](../extension/fonts/LICENSE-VT323.txt) and [IBM Plex Mono license](../extension/fonts/LICENSE-IBM-Plex-Mono.txt). The original reference kit remains unchanged; adaptation decisions live in [UX decisions](../docs/ux-decisions.md).
+
+## Compact meeting-option rows — 0.9.4.5
+
+Use DM Sans 14px for the participant identity/status row: name at 600, city/time at 400, one 20px drawn calendar icon, and a separate factual reason. Keep the logo, IBM Plex Mono eyebrow and established headline roles unchanged. In narrow windows, truncate name/city with full focusable labels and keep compact time text visible. A different local date appears beside the time; full dates, years and zone transitions are available in accessible detail. The shared one-row contract is checked at 320–1280px in 24-/12-hour modes, including future dates. Owner visual approval remains separate.

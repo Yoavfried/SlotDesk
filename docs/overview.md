@@ -1,6 +1,6 @@
 # SlotDesk product overview
 
-**Current version: 0.7.1 · Google Calendar first · private Chrome pilot**
+**Current version: 0.9.4.5 · Google Calendar first · private Chrome pilot**
 
 SlotDesk helps executive assistants find, compare and book meeting times across calendars and timezones. Profiles represent people by email. Calendars provide availability sources and a writable organizing calendar; they are not the profile identity.
 

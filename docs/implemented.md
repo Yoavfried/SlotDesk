@@ -1,5 +1,11 @@
 # Implemented scheduling work
 
+## New-meeting workflow — 0.9.4.5
+
+Automatic count/batching, globally distinct suggestions, qualifying shorter/later alternatives, meeting-only exclusions and per-person outside-hour semantics are implemented for new meetings and rescheduling. Cards show compact participant identity/time rows, actual coverage icons and one prioritized factual status with substantive warnings. Friendly city labels retain the selected city. A local editable planning email includes every displayed option without exposing internal conflicts or coverage. Final-review copying is concise. Grouped overlap alerts show each appointment and its exact neighbors once, with individual reviewed rescheduling.
+
+This supersedes earlier UI descriptions of global outside-hours/shorter/extension/grid controls. Calendar write transports and OAuth permissions are unchanged. Appointment logic and broader UX remain open to owner feedback; advanced profile editor cleanup remains reserved for the owner's 0.9.5 review.
+
 ## Ranking and result explanations — 0.9.4
 
 The [confirmed policy matrix](scheduling-ranking-review.md) now governs both creation and rescheduling: ten-minute defaults, eligible five-minute improvements and a universal five-minute minimum; separate explicit/guest/own priorities; retained automatic/custom Advanced overrides; earliest-date time-group diversity; one result list with typed conflict details and actual event times. Own title guesses can become warned overlaps, while explicit protections, flights, blocks and positive availability remain authoritative. The individual advanced-profile UX review is planned for 0.9.5.
@@ -9,7 +15,7 @@ The [confirmed policy matrix](scheduling-ranking-review.md) now governs both cre
 
 Live profile saving, per-entry flight/travel Save/Discard, optional return-flight entry, complete setup backup/restore and selectable person-profile export/import are implemented. [File contract](export-import.md) and [screen/save flows](usability-flows.md) describe identity, replacement and compatibility behavior. Keyboard/dialog/timezone controls and initial wording have been refined; a complete copy/accessibility review remains future work.
 
-Current code: **0.9.4**. F01–F28 are implemented; the registration service is deployed and configured in this pilot. F01–F04 are the original four reproduced defects. New-meeting booking was added in 0.3.0; reviewed rescheduling and decline alerts are implemented in 0.7.0.
+Current code: **0.9.4.5**. F01–F28 are implemented; the registration service is deployed and configured in this pilot. F01–F04 are the original four reproduced defects. New-meeting booking was added in 0.3.0; reviewed rescheduling and decline alerts are implemented in 0.7.0.
 
 | ID | Work | Accepted behavior | Status |
 | --- | --- | --- | --- |

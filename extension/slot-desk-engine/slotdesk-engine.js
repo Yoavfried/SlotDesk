@@ -1,8 +1,8 @@
 /* Dependency-free scheduling engine. Calendar creation lives in google-writer.js.
  * API and scheduling semantics: docs/products/slotdesk/engine-api.md at repo root. */
 (function(root, factory) {
-  if (typeof module === 'object' && module.exports) module.exports = factory(require('./scheduling-ranking.js')); else root.SlotEngine = factory(root.SlotRanking);
-})(typeof self !== 'undefined' ? self : this, function(Ranking) {
+  if (typeof module === 'object' && module.exports) module.exports = factory(require('./scheduling-ranking.js'),require('./search-policy.js')); else root.SlotEngine = factory(root.SlotRanking,root.SlotSearchPolicy);
+})(typeof self !== 'undefined' ? self : this, function(Ranking,Policy) {
   'use strict';
   const MIN = 60000, DAY3 = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], formats = new Map(), instants = new Map();
   const DEFAULTS = { work: {s:'09:00',e:'18:00'}, ok: {s:'07:00',e:'20:00'}, radius:0, notice:0 };
@@ -98,7 +98,7 @@
     if(ev.type==='ooo'||ev.type==='leave'||eventOverride(ev,p)==='leave')intervals=subtract(intervals,(p.holidayExclusions||[]).map(x=>[startOfDay(x.from,tz),startOfDay(addDaysYmd(x.to||x.from,1),tz)]));
     return intervals;
   }
-  const eventsFor=p=>[...(p.busy||[]),...(p.flights||[]).map((f,i)=>({id:`flight-${i}`,start:f.departure,end:f.arrival,title:f.label||'Flight',override:'protected',type:'flight',detailsVisible:true}))];
+  const eventsFor=p=>[...(p.busy||[]),...(p.flights||[]).map((f,i)=>({id:`flight-${p.id}-${f.id||i}`,start:f.departure,end:f.arrival,title:f.label||'Flight',override:'protected',type:'flight',arrivalLocation:f.arrivalLocation||'',detailsVisible:true}))];
   function conflictsFor(p,start,end) {
     const out=[],seen=new Set();
     for(const ev of eventsFor(p)) {
@@ -110,12 +110,12 @@
   }
   function fitPerson(p,start,end,now=0,options={}) {
     const zone=tzFor(p,start).tz,endZone=tzFor(p,end-1).tz,L=partsIn(start,zone),R=partsIn(end,endZone);
-    const res={band:'ok',outside:0,usualOutside:0,explicitOutside:0,distance:0,margin:1e9,why:null,issue:null,timing:[],local:`${DAY3[L.wd]} ${hhmm(L.min)}`,localEnd:hhmm(R.min),date:L.ymd,endDate:R.ymd,tz:zone,endTz:endZone,notes:[]};
-    const no=(why,kind='protected',detail={})=>Object.assign(res,{band:'no',why,issue:{kind,detail},margin:0});
-    if(start<now)return no('already in the past','past');
-    if(start<now+(p.notice||0)*3600000)return no(`less than ${p.notice}h notice for ${p.name}`,'notice');
+    const res={band:'ok',outside:0,usualOutside:0,explicitOutside:0,distance:0,margin:1e9,why:null,issue:null,issues:[],timing:[],local:`${DAY3[L.wd]} ${hhmm(L.min)}`,localEnd:hhmm(R.min),date:L.ymd,endDate:R.ymd,tz:zone,endTz:endZone,notes:[]};
+    const no=(why,kind='protected',detail={})=>{const issue={kind,detail};res.issues.push(issue);if(!res.issue){res.issue=issue;res.why=why;}res.band='no';res.margin=0;return res;};
+    if(start<now)no('already in the past','past');
+    if(start<now+(p.notice||0)*3600000)no(`less than ${p.notice}h notice for ${p.name}`,'notice',{hours:p.notice});
     const positive=(p.availability||[]).length>0;
-    if(!availabilityFits(p,start,end))return no(`outside stated availability for ${p.name}`,'availability');
+    if(!availabilityFits(p,start,end))no(`outside stated availability for ${p.name}`,'availability');
     const usual=[],explicit=[],cache=options.cache;
     const addExplicit=(s,e,kind,label)=>{if(overlap(start,end,s,e)){explicit.push([s,e]);res.timing.push({kind,label,from:new Date(s).toISOString(),to:new Date(e).toISOString(),minutes:overlap(start,end,s,e)/MIN});}};
     for(let s=start;s<end;) {
@@ -123,23 +123,23 @@
       const work=localWindows(s,e,tz,wd=>days[wd]?.on?[days[wd]]:[],cache&&cache.work);
       const acceptable=localWindows(s,e,tz,wd=>{const r=days[wd];if(!p.ignoreWorkingHours&&(!r||!r.on))return [];const lim=p.limit||DEFAULTS.ok;return [{s:hhmm(p.ignoreWorkingHours?toMin(lim.s):Math.min(toMin(r.s),toMin(lim.s))),e:hhmm(p.ignoreWorkingHours?toMin(lim.e):Math.max(toMin(r.e),toMin(lim.e)))}];},cache&&cache.ok);
       if(!positive){
-        if(!p.ignoreWorkingHours){const workDay=localWindows(s,e,tz,wd=>days[wd]?.on?[{s:'00:00',e:'24:00'}]:[],cache&&cache.day);if(!covered(workDay,s,e))return no(`not a working day for ${p.name}`,'nonworking-day');}
-        if(!covered(acceptable,s,e)){if(!options.allowBadHours)return no(`bad hour for ${p.name} (outside acceptable hours)`,'acceptable-hours');res.band='bad';res.notes.push(`${p.name}: explicitly enabled hours outside acceptable range`);}
+        if(!p.ignoreWorkingHours){const workDay=localWindows(s,e,tz,wd=>days[wd]?.on?[{s:'00:00',e:'24:00'}]:[],cache&&cache.day);if(!covered(workDay,s,e))no(`not a working day for ${p.name}`,'nonworking-day');}
+        if(!covered(acceptable,s,e)){if(!options.allowBadHours&&!p.ignoreConvenience)no(`bad hour for ${p.name} (outside acceptable hours)`,'acceptable-hours');if(!p.ignoreConvenience&&res.band!=='no')res.band='bad';if(!p.ignoreConvenience)res.notes.push(`${p.name}: explicitly enabled hours outside acceptable range`);}
         const comfort=p.ignoreWorkingHours?acceptable:work;
         if(!p.ignoreConvenience)usual.push(...subtract([[s,e]],comfort));
         const inside=comfort.find(w=>w[0]<=s&&w[1]>=e);res.margin=Math.min(res.margin,inside?Math.min(s-inside[0],inside[1]-e)/MIN:0);
         if(!p.ignoreConvenience){const distance=comfort.length?Math.min(...comfort.map(([a,b])=>e<=a?(a-e)/MIN:s>=b?(s-b)/MIN:0)):0;res.distance=Math.max(res.distance,distance);}
       }
-      if(localWindows(s,e,tz,wd=>(p.blocks||[]).filter(b=>b.day===wd)).some(b=>overlap(s,e,...b)))return no(`runs into protected time for ${p.name}`,'protected');
+      if(localWindows(s,e,tz,wd=>(p.blocks||[]).filter(b=>b.day===wd)).some(b=>overlap(s,e,...b)))no(`runs into protected time for ${p.name}`,'protected',{label:'Blocked time'});
       if(!(e>s))throw new Error('Unable to resolve local date boundary');s=e;
     }
     if(p.ignoreConvenience){res.margin=60;res.distance=0;}
-    for(const c of options.constraints||[]){if(c.who&&c.who!=='all'&&c.who!==p.id)continue;if(!overlap(start,end,ms(c.from),ms(c.to)))continue;if(c.kind==='inconvenient')addExplicit(ms(c.from),ms(c.to),'manual-inconvenience',c.label||'Marked inconvenient time');else return no(`blocked: ${c.label||'manual constraint'} (${p.name})`,'protected',{label:c.label,from:c.from,to:c.to});}
+    for(const c of options.constraints||[]){if(c.who&&c.who!=='all'&&c.who!==p.id)continue;if(!overlap(start,end,ms(c.from),ms(c.to)))continue;if(c.kind==='inconvenient')addExplicit(ms(c.from),ms(c.to),'manual-inconvenience',c.label||'Marked inconvenient time');else no(`blocked: ${c.label||'manual constraint'} (${p.name})`,'protected',{label:c.label,from:c.from,to:c.to});}
     const radius=p.radius?.minutes??p.buffer??0,blocked=p.radius?p.radius.mode==='blocked':!!p.buffer;
     if(radius)for(const ev of eventsFor(p))if(eventOverride(ev,p)!=='ignore'&&!ev.allDay&&!['ooo','leave','flight'].includes(ev.type))for(const [a,b]of eventIntervals(ev,p)){
       for(const [s,e]of [[a-radius*MIN,a],[b,b+radius*MIN]])if(overlap(start,end,s,e)){
-        if(blocked)return no(`runs into a blocked meeting radius for ${p.name}`,'meeting-radius',{label:ev.detailsVisible===false?'Busy appointment':ev.title,from:new Date(s).toISOString(),to:new Date(e).toISOString()});
-        addExplicit(s,e,'meeting-radius',ev.detailsVisible===false?'Time around a busy appointment':'Time around '+(ev.title||'an appointment'));
+        if(blocked)no(`runs into a blocked meeting radius for ${p.name}`,'meeting-radius',{label:ev.detailsVisible===false?'Busy appointment':ev.title,from:new Date(s).toISOString(),to:new Date(e).toISOString()});
+        if(!blocked)addExplicit(s,e,'meeting-radius',ev.detailsVisible===false?'Time around a busy appointment':'Time around '+(ev.title||'an appointment'));
       }
     }
     for(const f of p.flights||[])for(const t of [ms(f.departure),ms(f.arrival)])addExplicit(t-120*MIN,t+120*MIN,'flight-buffer',f.label||'Flight buffer');
@@ -147,7 +147,7 @@
     const minutes=intervals=>merge(intervals).reduce((n,[a,b])=>n+overlap(start,end,a,b)/MIN,0);
     res.usualOutside=minutes(usual);res.explicitOutside=minutes(explicit);res.outside=minutes([...usual,...explicit]);
     if(res.usualOutside)res.timing.unshift({kind:p.ignoreWorkingHours?'convenience-hours':'working-hours',label:p.ignoreWorkingHours?'Outside usual convenience hours':'Outside working hours',minutes:res.usualOutside});
-    if(res.outside){if(res.band!=='bad')res.band='stretch';res.margin=0;res.why=`${res.local} for ${p.name}: ${res.outside} inconvenient minutes`;res.notes.push(res.why);}
+    if(res.outside){if(!['bad','no'].includes(res.band))res.band='stretch';res.margin=0;const note=`${res.local} for ${p.name}: ${res.outside} inconvenient minutes`;if(!res.issue)res.why=note;res.notes.push(note);}
     if(res.margin===1e9)res.margin=60;return res;
   }
   const dateValid=d=>/^\d{4}-\d{2}-\d{2}$/.test(d||'')&&Number.isFinite(Date.parse(d))&&new Date(d).toISOString().slice(0,10)===d;
@@ -196,7 +196,7 @@
     return p.calendar!=='none'&&sources.length>0&&sources.every(c=>c.complete&&!c.error&&ms(c.from)<=start&&ms(c.to)>=end&&(!c.fetchedAt||now-ms(c.fetchedAt)<=(c.maxAgeMinutes??5)*MIN));
   }
   function conflictFact(event,p,rule){
-    return {key:eventKey(event),id:event.id,calendarId:event.calendarId,kind:event.type==='flight'?'flight':event.allDay||['ooo','leave'].includes(event.type)?'leave':'meeting',title:event.detailsVisible===false?'Busy appointment':event.title||'Untitled appointment',start:event.start,end:event.end,tz:event.tz||p.tz,allDay:!!event.allDay,hidden:event.detailsVisible===false,category:rule.category,label:rule.label};
+    return {key:eventKey(event),id:event.id,calendarId:event.calendarId,kind:event.type==='flight'?'flight':['ooo','leave'].includes(event.type)||eventOverride(event,p)==='leave'?'leave':'meeting',title:event.detailsVisible===false?'Busy appointment':event.title||'Untitled appointment',start:event.start,end:event.end,tz:event.tz||p.tz,allDay:!!event.allDay,hidden:event.detailsVisible===false,category:rule.category,label:rule.label,leaveSource:event.leaveSource||'',arrivalLocation:event.arrivalLocation||'',override:eventOverride(event,p)};
   }
   function evaluate(req,opt={}) {
     req=req||{};const check=validate(req);if(check.errors.length)return {open:[],taken:[],rejected:{},protectedConflicts:[],rejectionDetails:[],...check};
@@ -207,15 +207,15 @@
       const starts=new Set();if(opt.exactStart!==undefined)starts.add(opt.exactStart);else for(let m=0;m<1440;m+=step)starts.add(zonedToInstant(day,m,anchor));
       for(const start of starts){
         if(!Number.isFinite(start)||seen.has(start)||partsIn(start,anchor).ymd!==day)continue;seen.add(start);
-        const end=start+duration*MIN,fits=people.map((p,i)=>fitPerson(p,start,end,now,{constraints:req.constraints,allowBadHours:opt.allowBadHours,cache:caches[i]}));
+        const end=start+duration*MIN,fits=people.map((p,i)=>fitPerson(p,start,end,now,{constraints:req.constraints,allowBadHours:req.automaticAlternatives?false:opt.allowBadHours,cache:caches[i]}));
         const bad=fits.findIndex((f,i)=>f.band==='no'&&people[i].required!==false);
         if(bad>=0){const f=fits[bad],p=people[bad];reject(f.why);const key=p.id+'|'+f.issue?.kind+'|'+JSON.stringify(f.issue?.detail||{});if(!rejectionDetails.has(key))rejectionDetails.set(key,{personId:p.id,name:p.name,reason:f.why,...f.issue});continue;}
         const required=fits.filter((_,i)=>people[i].required!==false),clashes=new Map();
-        const slot={start,end,startISO:new Date(start).toISOString(),endISO:new Date(end).toISOString(),day,duration,anchorMinute:partsIn(start,anchor).min,maxOutside:Math.max(0,...required.map(f=>f.outside)),sumOutside:required.reduce((n,f)=>n+f.outside,0),maxDistance:Math.max(0,...required.map(f=>f.distance)),sumDistance:required.reduce((n,f)=>n+f.distance,0),margin:Math.min(...required.map(f=>f.margin)),optionalAttendance:0,notes:[],confirmed:true,people:[]};
+        const slot={automaticAlternatives:req.automaticAlternatives===true,start,end,startISO:new Date(start).toISOString(),endISO:new Date(end).toISOString(),day,duration,anchorMinute:partsIn(start,anchor).min,maxOutside:Math.max(0,...required.map(f=>f.outside)),sumOutside:required.reduce((n,f)=>n+f.outside,0),maxDistance:Math.max(0,...required.map(f=>f.distance)),sumDistance:required.reduce((n,f)=>n+f.distance,0),margin:Math.min(...required.map(f=>f.margin)),optionalAttendance:0,notes:[],confirmed:true,people:[]};
         people.forEach((p,i)=>{
           const f=fits[i],conflicts=conflictsFor(p,start,end),available=f.band!=='no'&&!conflicts.length,confirmed=coverageKnown(p,start,end,now);
           const facts=conflicts.map(ev=>conflictFact(ev,p,classify(ev,p,req.words)));
-          slot.people.push({id:p.id,name:p.name,email:p.email,required:p.required!==false,local:f.local,localEnd:f.localEnd,date:f.date,endDate:f.endDate,tz:f.tz,endTz:f.endTz,band:f.band,available,confirmed,inconvenientMinutes:f.outside,usualInconvenientMinutes:f.usualOutside,explicitInconvenientMinutes:f.explicitOutside,distance:f.distance,timing:f.timing,fitIssue:f.issue,availabilityReason:f.band==='no'?f.why:null,hasCalendarConflict:!!conflicts.length,calendarConflictCount:conflicts.length,conflicts:facts,ignoreConvenience:p.ignoreConvenience===true,allowOverlap:p.allowOverlap===true});slot.notes.push(...f.notes);
+          slot.people.push({slotStart:start,slotEnd:end,id:p.id,name:p.name,email:p.email,required:p.required!==false,local:f.local,localEnd:f.localEnd,date:f.date,endDate:f.endDate,tz:f.tz,endTz:f.endTz,band:f.band,available,confirmed,inconvenientMinutes:f.outside,usualInconvenientMinutes:f.usualOutside,explicitInconvenientMinutes:f.explicitOutside,distance:f.distance,timing:f.timing,fitIssue:f.issue,issues:f.issues,statusPolicy:req.automaticAlternatives===true,notice:p.notice,availabilityReason:f.band==='no'?f.why:null,hasCalendarConflict:!!conflicts.length,calendarConflictCount:conflicts.length,conflicts:facts,ignoreConvenience:p.ignoreConvenience===true,allowOverlap:p.allowOverlap===true});slot.notes.push(...f.notes);
           if(!confirmed){if(p.required!==false)slot.confirmed=false;slot.notes.push(`cannot see ${p.name}'s complete calendar — availability unconfirmed${p.calendarError?': '+p.calendarError:''}`);}
           if(p.required===false){if(available)slot.optionalAttendance++;else slot.notes.push(`optional guest ${p.name} cannot attend: ${f.why||'busy'}`);}
           else for(const ev of conflicts){const c=classify(ev,p,req.words);if(c.category==='ignored')continue;const key=eventKey(ev),old=clashes.get(key);if(old){if(c.cost>old.cost){old.cost=c.cost;old.label=c.label;old.category=c.category;}old.participants.push(p.id);old.who+=', '+p.name;}else clashes.set(key,{who:p.name,participants:[p.id],required:true,cost:c.cost,category:c.category,label:c.label,event:ev,organizer:ev.organizer||null,ask:ev.organizer?`Coordinate with ${ev.organizer}`:`Ask ${p.name}`,action:c.category==='own-leave'?'Review this time off before sending':'Find a replacement time immediately'});}
@@ -231,6 +231,7 @@
     return {open:open.filter(s=>allowed.has(s)).sort(Ranking.compare),taken:taken.filter(s=>allowed.has(s)).sort(Ranking.compare),rejected,protectedConflicts:[...protectedConflicts.values()],rejectionDetails:[...rejectionDetails.values()],errors:[],warnings:check.warnings};
   }
   function findSlots(req){
+    if(req?.automaticAlternatives===true)return Policy.find(req,{evaluate,fitPerson,conflictsFor,eventKey,startOfDay,addDaysYmd,partsIn,tzFor});
     req=req||{};const base=evaluate(req),want=req.want??3,perDay=req.perDayMode==='automatic'?Infinity:req.perDay??Infinity;
     const choose=slots=>Ranking.select(slots,want,perDay),result={open:[],openCount:base.open.length,clearCount:base.open.filter(s=>!s.requiredConflictCount).length,options:[],rejected:base.rejected,protectedConflicts:base.protectedConflicts,rejectionDetails:base.rejectionDetails,errors:base.errors,warnings:base.warnings,fallback:null,lastResort:null};if(base.errors.length)return result;
     result.open=choose(base.open);

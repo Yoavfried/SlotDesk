@@ -1,0 +1,151 @@
+{
+  "version": "0.9.4.5",
+  "date": "2026-10-20",
+  "environment": "isolated localhost fixture; synthetic accounts/events only",
+  "browserAssertions": 51,
+  "journeys": {
+    "newMeeting": {
+      "checks": [
+        "Removed advanced controls are absent",
+        "Five initial useful options when at least five exist",
+        "No individual Copy option action",
+        "No card-level coverage badge",
+        "Excluded candidate diagnostics removed",
+        "Full coverage and no conflict produce Available",
+        "More options appends three",
+        "Existing card order preserved",
+        "Appending uses current calendar snapshot",
+        "Planning email includes every visible option",
+        "Shared planning email contains no internal caveats or IANA paths",
+        "Email preview is editable",
+        "No horizontal overflow at 320",
+        "Participant identity/icon/timezone/time stay in one row at 320",
+        "No horizontal overflow at 390",
+        "Participant identity/icon/timezone/time stay in one row at 390",
+        "No horizontal overflow at 514",
+        "Participant identity/icon/timezone/time stay in one row at 514",
+        "No horizontal overflow at 680",
+        "Participant identity/icon/timezone/time stay in one row at 680",
+        "No horizontal overflow at 1280",
+        "Participant identity/icon/timezone/time stay in one row at 1280",
+        "Meeting-wide exclusion shown as removable interval",
+        "Per-person time rule action exists",
+        "Per-person rule offers blocked/inconvenient types",
+        "Chosen city persists in participant label",
+        "UI/search/preview operations leave all nine appointments unchanged",
+        "No runtime page errors"
+      ],
+      "errors": [],
+      "stats": {
+        "posts": 0,
+        "patches": 0,
+        "unchanged": 9,
+        "unsafeMethods": 0
+      }
+    },
+    "bookingOverlaps": {
+      "checks": [
+        "Only permitted in-range overlap is suggested first",
+        "Participant row identifies actual appointment",
+        "Expanded warning gives the source appointment time",
+        "Fresh review retains actual conflict details",
+        "One reviewed creation leaves all nine existing appointments unchanged",
+        "No delete/move request",
+        "Overlap review shows both appointments once",
+        "Created appointment is marked as SlotDesk",
+        "Each appointment has its exact neighbor details",
+        "Rescheduling updates only the individually selected occurrence",
+        "Rescheduling patch contains times only",
+        "Eight unrelated appointments remain byte-for-byte unchanged",
+        "Guest lists, recurrence neighbors and protected fields are preserved",
+        "Resolved relationship clears its overlap alert",
+        "No runtime errors in creation/overlap/rescheduling flow"
+      ],
+      "errors": [],
+      "stats": {
+        "posts": 1,
+        "patches": [
+          {
+            "calendarId": "nina@example.test",
+            "eventId": "instance",
+            "body": {
+              "start": {
+                "dateTime": "2026-10-22T07:00:00.000Z",
+                "timeZone": "Asia/Jerusalem"
+              },
+              "end": {
+                "dateTime": "2026-10-22T07:30:00.000Z",
+                "timeZone": "Asia/Jerusalem"
+              }
+            }
+          }
+        ],
+        "unchanged": 8,
+        "altered": [
+          "nina@example.test|instance"
+        ],
+        "unsafeMethods": 0
+      }
+    },
+    "appearance": {
+      "checks": [
+        "New options light has no automated violations",
+        "Actual participant cells fit inside card at 320 in 12-hour mode with a different local date",
+        "Actual participant cells fit inside card at 390 in 12-hour mode with a different local date",
+        "Actual participant cells fit inside card at 514 in 12-hour mode with a different local date",
+        "Actual participant cells fit inside card at 680 in 12-hour mode with a different local date",
+        "Actual participant cells fit inside card at 1280 in 12-hour mode with a different local date",
+        "New options dark 12-hour has no automated violations",
+        "Planning email dialog has no automated violations"
+      ],
+      "scans": [
+        {
+          "name": "New options light",
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "aria-prohibited-attr",
+              "count": 5
+            },
+            {
+              "id": "aria-valid-attr-value",
+              "count": 2
+            },
+            {
+              "id": "label-content-name-mismatch",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "name": "New options dark 12-hour",
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "aria-prohibited-attr",
+              "count": 5
+            },
+            {
+              "id": "aria-valid-attr-value",
+              "count": 2
+            },
+            {
+              "id": "label-content-name-mismatch",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "name": "Planning email dialog",
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "label-content-name-mismatch",
+              "count": 1
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,6 +1,6 @@
-# Planning email — plain-text proposal
+# Planning email — local text preview
 
-Requested 20 October 2026 during the original 0.9.5 planning review; now assigned to 0.9.4.5 with the new-meeting work. Not implemented. The feature request and caveat boundary are accepted; the wording/template and detailed UX below remain under owner review. See the [0.9.4.5 plan](release-plan-0.9.4.5.md).
+Requested 20 October 2026 during the original 0.9.5 planning review; now assigned to 0.9.4.5 with the new-meeting work. Implemented in 0.9.4.5 after explicit owner authorization. The template and wider UX remain open to owner feedback. See the [0.9.4.5 plan](release-plan-0.9.4.5.md).
 
 ## Owner requirements
 
@@ -11,13 +11,13 @@ Requested 20 October 2026 during the original 0.9.5 planning review; now assigne
 
 This request is distinct from the deferred [interactive availability-email feature](time-inquiries.md). This feature only prepares text for the EA to copy; it does not send mail, process replies, provide in-email response controls or create a calendar event.
 
-## Proposed UX and scope
+## Implemented UX and scope
 
 One **Generate planning email** action for the complete current set of displayed Meeting options, outside the individual cards. Include every displayed option in its displayed order and number them for easy replies. Internal search candidates and excluded times are not suggestions and must not be exported.
 
 Open an editable preview with a suggested subject and message, allowing copying into the EA's email app. Keep subject and message separately copyable so the Subject line does not have to be removed from the pasted body. Generate from current option facts rather than screen text, ellipses or technical diagnostics. Subsequent profile/date/participant changes that invalidate options require a fresh search before generating a new preview. No saved email-draft lifecycle or sending integration is added by this proposal.
 
-## Proposed email example
+## Email example
 
 Subject: Time options for Partnership discussion
 
@@ -57,6 +57,6 @@ Calendar conflicts, all other warning categories, unknown calendar coverage, rul
 
 Recipient-facing timezones follow the [friendly label direction](timezone-search.md#friendly-display-labels--0945-owner-direction): City, Country; US City, State code; a non-city choice such as UTC keeps its simple name. No raw IANA paths, slashes or underscore-separated city names appear in the shared email.
 
-## Open owner review
+## Implementation and continuing review
 
-The caveat boundary and friendly timezone formats above are owner directions. The remaining greeting/closing and preview/copy controls remain under review. The proposal does not authorize implementing or releasing 0.9.4.5 before the owner settles the remaining new-meeting review and authorizes implementation. Advanced-profile-editor review remains separate for 0.9.5.
+The preview and separate copy controls are implemented in 0.9.4.5. It includes all currently displayed valid options, uses each person's effective timezone and enforces the approved caveat boundary. It is editable only for the current preview: no saved email draft, sending integration or reply collection is added. The greeting/closing can be revised by the EA and remains open to owner feedback. Interactive inquiries and BYOK LLM assistance remain separate deferred features.
