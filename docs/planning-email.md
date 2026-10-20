@@ -5,8 +5,8 @@ Requested 20 October 2026 during the 0.9.5 planning review. Not implemented. The
 ## Owner requirements
 
 - After meeting options are generated, offer one button to generate a planning email as text.
-- The message is copy-pastable to all participants and includes all suggestions and their caveats.
-- Do not directly mention convenience, working hours, profile settings or the concept of my profile in recipient-facing text. Treat the EA/own participant by name just like other participants.
+- The message is copy-pastable to all participants and includes every displayed suggestion. The only availability caveat is a known unavailable optional participant: “[Name] is unavailable for this option.” Do not describe them as optional in the shared message.
+- Do not mention unconfirmed availability, overlaps, rearranging commitments, convenience, working hours, profile settings or my profile in recipient-facing text. Do not reveal that the executive has overlaps. These internal facts remain visible to the EA inside SlotDesk.
 - Keep the wording concise and useful for real recipients.
 
 This request is distinct from the deferred [interactive availability-email feature](time-inquiries.md). This feature only prepares text for the EA to copy; it does not send mail, process replies, provide in-email response controls or create a calendar event.
@@ -28,18 +28,17 @@ Please let me know which options work for you. If several work,
 please include all of them and indicate your preference.
 
 1. Tue, 27 Oct · 45 minutes
-   18:00–18:45 Jerusalem (GMT+2)
-   09:00–09:45 Los Angeles (GMT−7)
-   Yoav would need to rearrange an existing commitment.
+   18:00–18:45 Jerusalem, Israel (GMT+2)
+   09:00–09:45 Los Angeles, CA (GMT−7)
 
 2. Wed, 28 Oct · 45 minutes
-   17:00–17:45 Jerusalem (GMT+2)
-   08:00–08:45 Los Angeles (GMT−7)
-   Nina, please confirm whether this time is possible.
+   17:00–17:45 Jerusalem, Israel (GMT+2)
+   08:00–08:45 Los Angeles, CA (GMT−7)
+   Tal is unavailable for this option.
 
 3. Tue, 3 Nov · 30 minutes — shorter option
-   18:00–18:30 Jerusalem (GMT+2)
-   08:00–08:30 Los Angeles (GMT−8)
+   18:00–18:30 Jerusalem, Israel (GMT+2)
+   08:00–08:30 Los Angeles, CA (GMT−8)
 
 Once we agree on a time, I’ll send the calendar invitation.
 
@@ -48,21 +47,16 @@ Thanks!
 
 Dates/offsets are example data. Actual messages use each option's exact instants, duration and effective participant timezones, including saved travel. Show each distinct relevant timezone once per option; a different local date must appear on its own line. Respect the agreed clock/date/year conventions and compute offsets for each option, especially across DST changes. Never imply that all options have the same duration or offset. A later-date alternative is visible through its actual date; a changed duration is explicit without a second repetitive warning.
 
-## Proposed caveat translation
+## Approved email caveat boundary — 20 October correction
 
-Every material scheduling caveat must survive as a practical condition, while technical descriptions and duplicate facts are removed. The following wording is proposed, not final owner-approved copy.
+The owner rejected the previous caveat translation. The shared email must not mention overlaps or the need to rearrange existing commitments, even indirectly; those facts could reveal the executive's calendar to outside guests. Do not mention unconfirmed availability or add person-specific confirmation requests based on internal timing/coverage rules. The greeting can still ask all recipients to reply with the options that work for them.
 
-| Source fact | Recipient-facing wording |
-| --- | --- |
-| Actual existing busy appointment overlap | “Yoav would need to rearrange an existing commitment.” Include affected names; do not disclose other appointments' titles, calendar IDs or internal classification. |
-| Actual blocking commitment for an optional participant | “Nina, who is optional, is unavailable for this option.” Use only when a known blocking commitment supports it. Do not silently remove the person from the inquiry or invitation list. |
-| Timing preference, entered availability restriction or practical buffer needing flexibility | “Nina, please confirm whether this time is possible.” Do not describe profile concepts or convert a preference into a claim that the person cannot attend. |
-| Availability cannot be fully checked | “Nina’s availability still needs confirmation,” where a participant-specific caveat is needed. Merge with an existing confirmation request for that person rather than repeating it. Never state that everyone is available or has accepted. |
-| Several issues for the same person/option | Combine into the shortest accurate condition, preserving the need for confirmation and/or rearrangement. Do not dump the internal warning list. Distinct practical consequences must not disappear merely because the participant row shows one priority reason. |
-| Shorter or later alternative | Show actual duration and dates on that option, with a concise shorter/later label when useful. No duplicate paragraph about search settings. |
+The only availability caveat is **“[Name] is unavailable for this option.”** It applies to a participant who is optional in the meeting's effective participant list and is known to be unavailable for that specific option. Never include “who is optional” or otherwise reveal the participant's optional designation in that sentence. Do not infer unavailability merely from missing calendar access, stale/partial coverage or an ordinary timing preference. Actual dates and durations remain explicit option facts, including shorter options; they are not explanations of internal constraints.
 
-Avoid revealing medical reasons, flight destinations, leave details or unrelated appointment content in the shared message. Use names and the practical scheduling consequence. This is recipient-facing content selection, not permission to omit material conflicts or change scheduling rules. A one-option message should naturally ask about that time; several options should ask recipients to reply with all numbered options they can attend. Ordinary free-text replies are handled by the EA outside SlotDesk in this feature.
+Calendar conflicts, all other warning categories, unknown calendar coverage, rules and internal reasoning stay in SlotDesk's EA review and are not exported into this message. This content rule does not alter candidate eligibility/ranking, remove invitees or suppress internal warnings. There is no promise in the email that every proposed option is conflict-free or already confirmed.
+
+Recipient-facing timezones follow the [friendly label direction](timezone-search.md#friendly-display-labels--095-owner-direction): City, Country; US City, State code; a non-city choice such as UTC keeps its simple name. No raw IANA paths, slashes or underscore-separated city names appear in the shared email.
 
 ## Open owner review
 
-The final greeting/closing, caveat wording and preview/copy controls remain under review. The proposal does not authorize implementing or releasing 0.9.5 before the mandatory owner reviews and directions are complete.
+The caveat boundary and friendly timezone formats above are owner directions. The remaining greeting/closing and preview/copy controls remain under review. The proposal does not authorize implementing or releasing 0.9.5 before the mandatory owner reviews and directions are complete.

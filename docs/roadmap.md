@@ -31,6 +31,8 @@ Agreed on 20 October for implementation in 0.9.5: each connected group of actual
 
 The [Meeting options participant-row and warning review](meeting-options-review-0.9.5.md) records the owner's directions and the proposed factual statuses, source mapping and presentation priorities. The review remains open; proposed details are not approved implementation scope yet.
 
+Additional directions from that review: [planning emails](planning-email.md) include all displayed options and only the approved known-unavailable optional-participant sentence, without exposing optional status, overlaps or internal availability reasoning. [Timezone labels](timezone-search.md#friendly-display-labels--095-owner-direction) become City, Country or US City, State code across the UI and copied text; non-city selections such as UTC keep their simple name. These are planned directions, not a completed 0.9.5 review or release.
+
 ## Current review work
 
 | Workstream | Status | Completion authority |

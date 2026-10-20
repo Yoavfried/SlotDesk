@@ -11,7 +11,7 @@ Owner review started 20 October 2026. This is a planning record, not an implemen
 
 ## Proposed first row — owner decision pending
 
-Example: `Nina Banai [calendar icon] · Los Angeles GMT−7 · 09:00–09:15`.
+Example: `Nina Banai [calendar icon] · Los Angeles, CA (GMT−7) · 09:00–09:15`. The [friendly timezone label direction](timezone-search.md#friendly-display-labels--095-owner-direction) applies throughout the UI and exported text; UTC stays UTC.
 
 Use the effective profile timezone for the actual meeting instant, including a saved travel timezone. A timezone's display city is a timezone label, not proof of physical location. A flight's arrival location must not become the person's location before arrival. Keep the profile's Optional context accessible without treating it as an availability reason.
 
@@ -75,4 +75,4 @@ Owner direction for 0.9.5: remove the user-facing Why other candidates were excl
 
 ## Planning email request
 
-The owner also requested a **Generate planning email** action after options are generated: copyable text for all participants, containing all suggestions and recipient-appropriate caveats, without references to convenience/working hours or my profile. The [planning-email proposal](planning-email.md) records the scope, example and caveat translation for review. It is plain text for manual copying, separate from deferred interactive email inquiries. No implementation or 0.9.5 readiness is implied.
+The owner also requested a **Generate planning email** action after options are generated: copyable text for all participants containing every displayed suggestion. After correction, its only availability caveat is “[Name] is unavailable for this option” for a known unavailable optional participant, without labelling them optional. Do not mention unconfirmed availability, overlaps, rearranging commitments, convenience/working hours or my profile in the shared email. The [planning-email proposal](planning-email.md) records the scope, example and caveat translation for review. It is plain text for manual copying, separate from deferred interactive email inquiries. No implementation or 0.9.5 readiness is implied.
