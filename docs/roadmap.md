@@ -22,7 +22,7 @@ The owner authorized the [styling direction](styling-0.9.4.md) and basic profile
 
 On 20 October, the owner moved the complete new-meeting development previously planned for 0.9.5 into **0.9.4.5**, leaving only advanced-profile-settings cleanup in **0.9.5**. This changes the release split; it does not itself authorize implementation or declare the UX ready. See the [scope, remaining decisions and implementation checks](release-plan-0.9.4.5.md).
 
-The [Meeting options participant-row and warning review](meeting-options-review-0.9.4.5.md) covers compact identity/time rows, factual statuses, source mapping, presentation priorities and warning contents. Remaining proposals require owner decisions.
+The [Meeting options participant-row and warning review](meeting-options-review-0.9.4.5.md) records the owner's accepted 18-category table: factual data sources, row wording and first-applicable display priority. Responsive first-row handling and detailed warning presentation remain subject to owner UX review. The accepted status table is no longer an outstanding decision.
 
 The [search-controls review](search-options-review-0.9.4.5.md) covers removal of spacing/per-day/count fields and the explanatory spacing paragraph; the accepted initial counts, mutually non-overlapping suggestions and Generate more options batches; meeting-only exclusions; automatic conflict/blocking-only shortening and workweek-based later dates; and removing the global outside-hours control while expanding per-person Ignore usual convenience hours to permit that person's outside-range times. Existing hard protections and independent settings remain in force.
 

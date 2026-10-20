@@ -1,6 +1,6 @@
 # Meeting options review for 0.9.4.5
 
-Owner review started 20 October 2026, originally for 0.9.5; the owner moved the new-meeting work to 0.9.4.5 later that day. This is a planning record, not an implementation or readiness decision. The [0.9.4.5 new-meeting review](roadmap.md#0945--new-meeting-update) remains open. The owner must settle the remaining wording/UX directions before implementation. Advanced-profile cleanup is separately reserved for 0.9.5 and does not block this release.
+Owner review started 20 October 2026, originally for 0.9.5; the owner moved the new-meeting work to 0.9.4.5 later that day. The owner has accepted the full second-row category/source/wording/priority table below. This is an accepted planning contract, not implementation authorization or final UX/release approval. See the [0.9.4.5 plan](roadmap.md#0945--new-meeting-update). Advanced-profile cleanup is separately reserved for 0.9.5 and does not block this release.
 
 The companion [search-controls review](search-options-review-0.9.4.5.md) records removal of spacing/per-day/count fields, accepted Generate more options behavior and counts, mutually non-overlapping suggestions, meeting-wide exclusions, and automatic duration/workweek fallback policies replacing the old fields. The owner has also settled conflict/blocking-only shortening, the earliest required-participant workweek deadline, and expanding Ignore usual convenience hours to permit outside-range times for that person. Remaining presentation and profile details stay under owner review.
 
@@ -21,11 +21,11 @@ To retain one row in a narrow sidebar, keep the icon and time readable and allow
 
 The icon has three proposed states: checked coverage; linked but incomplete/stale/unavailable coverage; no linked availability calendar. Its popup explains the actual sources and current search coverage, including busy-only data. “Connected” alone never means “available.” Known invitations can still reveal a clash without a linked availability calendar. Every selected required availability source must cover the entire slot, load completely and be fresh before the participant can be labelled Available.
 
-## Proposed second-row priority — owner decision pending
+## Accepted second-row categories, sources and priority
 
-The owner accepted the other four release-policy recommendations and requested this complete category/source/priority review on 20 October. The detailed order and text below remain proposed. First applicable active reason wins; priority is for presentation, not search eligibility or ranking. A required person's hard block excludes the candidate, rather than producing an ordinary suggestion with that row; the reason can still appear for an optional participant or during review of an explicitly entered time. Existing own-profile fallback exceptions remain in force. Lower-priority facts remain available as substantive detail, not repeated summaries.
+Accepted by the owner on 20 October after the complete 18-category table was presented: category definitions, factual data sources, suggested row text and display priority. First applicable active reason wins; priority is for presentation, not search eligibility or ranking. A required person's hard block excludes the candidate, rather than producing an ordinary suggestion with that row; the reason can still appear for an optional participant or during review of an explicitly entered time. Existing own-profile fallback exceptions remain in force. Lower-priority facts remain available as substantive detail, not repeated summaries.
 
-| Priority | Category | Proposed second-row text | Data source and exact condition |
+| Priority | Category | Accepted second-row text | Data source and exact condition |
 | --- | --- | --- | --- |
 | 1 | Actual flight | Unavailable · Flight to London | A flight saved in Travel & flights; the meeting intersects its actual departure–arrival interval. Use the saved destination only when present, otherwise Flight or its entered label. An event title containing flight is not proof of a flight. |
 | 2 | Manually blocked time | Unavailable · Blocked time: Lunch | An explicit recurring profile block or person-specific dated block, including a meeting-only block when entered. Its blocked interval intersects the meeting. Use its label if present. A meeting-wide exclusion rejects the entire option instead of becoming a person's status. |
@@ -67,7 +67,7 @@ Travel timezone changes, DST changes, optional designation, calendar connection 
 
 The current engine exposes typed conflicts, timing facts, fitIssue and source coverage, but fitPerson returns at the first hard failure. It does not yet provide a complete simultaneous-fact set for the proposed presentation order. Evaluation must retain all applicable display facts without weakening hard exclusions. Preserve leave-classification provenance so a structured out-of-office entry, EA treatment, leave-calendar mapping and title inference can be distinguished; today's adapter collapses these to one leave type. Explicit busy all-day appointments must not be mislabeled as leave solely because they are all-day. Flight destination fields and explicit block/radius source labels also need to reach the participant result; the renderer must not reconstruct them from prose or event-title guesses. The current calendar icon tests linking only and must be adapted to actual per-slot coverage before replacing the badge.
 
-The proposed priorities, exact text, one-row truncation/date handling and warning contents remain open for the owner's review. This record does not authorize implementing or releasing 0.9.4.5.
+The full second-row categories, source mapping, order and row text are accepted. The owner also accepted keeping other useful reasons in Warnings, with travel/timezone changes in the time row and no false unavailability from free entries, unclassified all-day notes or old invitation responses. First-row responsive handling and detailed warning presentation remain subject to the owner's UX review; do not reopen the accepted status table as unanswered. This record does not authorize implementing or releasing 0.9.4.5.
 
 ## Copy actions and excluded candidates — 20 October discussion
 
