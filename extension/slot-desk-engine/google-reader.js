@@ -46,6 +46,27 @@
       if(items.some(c=>!c||typeof c.id!=='string'))throw new Error('Google returned a calendar without an identifier.');
       return items.filter(c=>!c.deleted);
     }
+    async function suggestOwnName(email,selectedCalendars,{signal}={}){
+      const key=String(email||'').trim().toLowerCase();if(!key)return '';
+      const list=selectedCalendars.filter(c=>c.accessRole!=='freeBusyReader').sort((a,b)=>Number(b.id===email)-Number(a.id===email)).slice(0,3);
+      for(const calendar of list){
+        if(signal?.aborted)return '';
+        try{
+          const q=new URLSearchParams({timeMin:new Date(now()-30*86400000).toISOString(),timeMax:new Date(now()+30*86400000).toISOString(),singleEvents:'true',orderBy:'startTime',maxResults:'100',fields:'kind,items(status,organizer(email,displayName),attendees(email,displayName))'});
+          const data=await request(`calendars/${encodeURIComponent(calendar.id)}/events?${q}`,null,signal),names=new Map();
+          for(const event of pageItems(data,'calendar#events')){
+            if(event.status==='cancelled')continue;
+            for(const person of [event.organizer,...(Array.isArray(event.attendees)?event.attendees:[])]){
+              const name=typeof person?.displayName==='string'?person.displayName.trim():'';
+              if(String(person?.email||'').trim().toLowerCase()!==key||!name||name.includes('@')||name.length>200||/[\u0000-\u001f\u007f]/.test(name))continue;
+              names.set(name,(names.get(name)||0)+1);
+            }
+          }
+          if(names.size)return [...names].sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0]))[0][0];
+        }catch{/* Optional name hints never block setup or establish calendar coverage. */}
+      }
+      return '';
+    }
     // Fetch a shared source once, then apply each participant’s own rules locally.
     async function readSource(calendar,range,{maxPages:pageLimit=maxPages,signal}={}){
       const coverage={from:range.from,to:range.to,complete:false,fetchedAt:new Date(now()).toISOString(),maxAgeMinutes:5},items=[];let timeZone=calendar.timeZone;
@@ -68,7 +89,7 @@
       return {...normalized,error,failure:source.failure,coverage:{...source.coverage,complete,error}};
     }
     async function readCalendar(calendar,range,profile={}){return normalizeSource(await readSource(calendar,range),profile);}
-    return {listCalendars,readSource,normalizeSource,readCalendar};
+    return {listCalendars,suggestOwnName,readSource,normalizeSource,readCalendar};
   }
   return {createReader};
 });

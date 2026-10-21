@@ -10,7 +10,7 @@ Created and maintained by **[Yoavfried](https://github.com/Yoavfried)** and **[n
 
 ## What you can do
 
-- Follow three-step onboarding: your profile, selected workspace calendars and optional familiar people.
+- Follow three-step onboarding: selected workspace calendars, your profile and optional familiar people. Incomplete setup starts again at calendars after reopening; completed setup is retained.
 - Set up email-based profiles with searchable timezones, visible calendar mappings and direct Travel & flights access.
 - Add email guests with a meeting-only timezone; saving a profile is optional. Automatically include profiles mapped to the organizing calendar.
 - Use saved and per-meeting working/convenience/ordinary-overlap preferences, with protected rules and clear warnings.

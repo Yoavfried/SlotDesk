@@ -1,7 +1,7 @@
 {
   "version": "0.9.4.6",
   "date": "2026-10-21",
-  "applicationChecks": 2099,
+  "applicationChecks": 2118,
   "newPlatformAuthChecks": 55,
   "backend": {
     "intakeTests": 6,
@@ -127,5 +127,31 @@
     "secretValuesRead": false,
     "realGoogleConsentVerified": false,
     "runtimePackagesChanged": false
+  },
+  "onboardingHotfix": {
+    "date": "2026-10-21",
+    "newUnitChecks": 19,
+    "onboardingUnitChecks": 90,
+    "browserAssertions": 24,
+    "order": [
+      "workspace calendars",
+      "own profile",
+      "familiar people"
+    ],
+    "incompleteRestart": "restart all three steps from calendar selection; retain saved entries as prefills",
+    "completedRestart": "open workspace",
+    "nameHint": "exact-email organizer/attendee displayName in up to three selected detail calendars; at most 100 metadata entries each",
+    "extraGoogleScopes": false,
+    "lateHintOverwritesTyping": false,
+    "widths": [
+      320,
+      514,
+      1280
+    ],
+    "calendarPosts": 0,
+    "calendarPatches": 0,
+    "unchangedBaselineAppointments": 9,
+    "realGoogleAccountUsed": false,
+    "hostingChanged": false
   }
 }

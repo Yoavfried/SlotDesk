@@ -1,5 +1,9 @@
 # SlotDesk UX decision register
 
+## 21 October — onboarding order and restart policy
+
+The owner explicitly confirmed: workspace calendars → own profile → optional familiar people. If any step remains unfinished when the app restarts/reopens, start again at calendars; saved entries may prefill, but all steps require confirmation. Do not resume directly at the unfinished step. Completed onboarding remains complete. The calendar exclusion note sits below the list. Suggest the own-profile name from matching Calendar organizer/attendee metadata when available, without overwriting typing or adding Google permissions.
+
 Implemented decisions are recorded through 13 October 2026. The [14 October product review](product-review-2026-10-14.md) records new planned directions and unresolved details separately. Implemented in 0.3.0 and retained in 0.6.1 unless stated otherwise. The [scheduling register](scheduling-decisions.md) supplies the underlying rules; this register describes the user experience.
 
 | ID | Area | Agreed behavior | Status |

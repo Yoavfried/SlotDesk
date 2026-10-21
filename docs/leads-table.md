@@ -39,3 +39,5 @@ Owners view the private table through Neon. This implementation has no email/new
 ## Browser-independent sign-in relay — 0.9.4.6
 
 The new sign-in function can authenticate delivery of these same five user-confirmed fields from additional browser targets. It does not add token/calendar columns or change the optional updates choice. The existing direct Chrome intake remains. Tokens are handled transiently by the separate auth function and are never inserted into the leads database. [Connection design](google-connection.md) and [activation](browser-signin-setup.md).
+
+The own-profile name can be prefilled from exact-email organizer/attendee metadata in selected calendars. It remains editable; registration uses the final field value the user confirms during setup. No additional lead column is introduced.

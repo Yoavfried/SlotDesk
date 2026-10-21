@@ -1,5 +1,13 @@
 # SlotDesk validation record
 
+## 21 October — onboarding hotfix
+
+All **2,118 application checks** pass, including 19 new calendar-first state and name-hint checks. These cover incomplete/completed/restore states, exact email matching, cancelled/other-person/email-only metadata, bounded selected-source reads, busy-only skipping, abort and non-blocking failure.
+
+The [focused synthetic browser journey](../scripts/accessibility/onboarding-0946.js) passes **24 assertions**: first-step order/counters, no event read before selection, required confirmation, notice placement, automatic name, interruption at steps two/three returning to calendars, saved prefills, final completion, completed-user bypass, 320/514/1280px calendar layouts and Settings Discard, and typed-name protection against a delayed response. All nine baseline appointments stay unchanged, with zero POST/PATCH/delete/move requests and no runtime page errors. This uses synthetic Calendar data; no real Google sign-in is claimed. A narrow screenshot was visually inspected.
+
+These changes refresh the 0.9.4.6 runtime download without changing Google scopes, the hosted broker or its activated environment. The original release tag remains historical; the integration record/release notes pin the refreshed package's exact source and checksum.
+
 ## 21 October — owner activation completed
 
 The owner reports completing the Google Web client, four production environment values and Vercel redeployment. Independently checked production deployment `dpl_8Ln2uogLSpikGfw9qRqi1vzXdUUe` is READY. The public status endpoint returns HTTP 200 with `ready:true`, version 0.9.4.6 and flow authorization-code. No secrets were read or recorded. This verifies configuration readiness only; real Google consent/token exchange and Calendar loading through that real connection remain to be checked after loading/reloading the updated extension.

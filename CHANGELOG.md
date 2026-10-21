@@ -1,5 +1,11 @@
 # Repository changelog
 
+## 2026-10-21 — 0.9.4.6 onboarding hotfix
+
+- Implement the owner-confirmed calendar → own-profile → familiar-people flow, below-list notice and interrupted-onboarding restart policy. Saved entries remain available to prefill; completion still requires the third-step action.
+- Add a bounded exact-email name hint from selected calendar metadata without extra Google permission, blocking setup or overwriting typing. Validate 2,118 application checks and 24 synthetic browser assertions with nine unchanged appointments and zero writes.
+- Refresh the same-version beta packages and parent source/hash reference; keep hosting configuration and the original release tag intact.
+
 ## 2026-10-21 — Google browser connection activated
 
 - Record the owner-completed Google/Vercel setup and READY production redeployment, independently verified as HTTP 200 / ready true / version 0.9.4.6. No secrets enter Git.

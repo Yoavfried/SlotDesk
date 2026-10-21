@@ -4,6 +4,15 @@
   const signature=context=>JSON.stringify([context.account,context.settings?.calendarScopeConfirmed===true,context.generation||0,ids(context.settings).sort()]);
   const included=(settings,id)=>settings?.calendarScopeConfirmed===true&&ids(settings).includes(id);
   const calendars=(settings,list)=>list.filter(calendar=>included(settings,calendar.id));
+  // Incomplete onboarding restarts at calendars in each new app session. Saved
+  // entries prefill the steps; only the final action completes onboarding.
+  function onboardingStage(state,phase='calendars') {
+    const own=state.profiles.find(person=>person.id===state.settings.ownProfileId),scope=state.settings.calendarScopeConfirmed===true;
+    if(!scope)return 'calendars';
+    if(state.settings.onboardingComplete===true)return own?.tzConfirmed?'complete':'profile';
+    if(phase==='people'&&own?.tzConfirmed)return 'people';
+    return phase==='profile'||phase==='people'?'profile':'calendars';
+  }
   function suggestions(state,list,account){
     const available=new Set(list.map(calendar=>calendar.id));
     return [...new Set([account,state.settings.defaultCalendar,state.settings.organizingCalendar,state.pendingBooking?.request?.calendarId,state.pendingReschedule?.calendarId,...state.profiles.flatMap(p=>p.calendarIds||[]),...(state.settings.meetingsCalendars||[])].filter(id=>available.has(id)))];
@@ -45,5 +54,5 @@
     if(pending&&!chosen.includes(pending))throw new Error('Keep the calendar of the unfinished change selected until that change is resolved.');
     return {workspaceCalendarIds:chosen,calendarScopeConfirmed:true,scopeRevision:(state.settings.scopeRevision||0)+1,defaultCalendar:defaultId,defaultCalendarSelected:!!defaultId};
   }
-  return {ids,included,calendars,signature,suggestions,assertAccess,scopedFetch,scopeChange,removeCalendarAssignments};
+  return {ids,included,calendars,signature,suggestions,assertAccess,scopedFetch,scopeChange,removeCalendarAssignments,onboardingStage};
 });
