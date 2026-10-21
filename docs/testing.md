@@ -1,5 +1,9 @@
 # SlotDesk validation record
 
+## 21 October — sign-in reporting hotfix
+
+All **2,044 application checks** pass. The 54 added checks exercise the reproduced Vivaldi refusal, absent identity methods, known authentication failures, stable diagnostic metadata, safe unknown messages and wrapper propagation. Repository checks pass. No real Google sign-in or calendar write is used. The existing 51-assertion browser evidence below belongs to the prior new-meeting update; it is not a live Vivaldi test. This hotfix improves reporting and Help only; independent OAuth remains proposed. The [system-wide error-reporting review](error-reporting-review.md) is required and remains open.
+
 ## 0.9.4.5 validation
 
 All **1,990 application checks** pass: the previous 1,901 plus 89 automatic-search/status/text/version/portable-city cases. These cover duration boundaries, same-gap shortening, strict partial mitigation, mixed/ignored/missing workweeks, required/optional/unknown calendars, per-person outside-hour permission, hard-block preservation, distinct counts/batches, all 18 status priorities, shared/private conflicts, planning-email disclosure boundaries and four-part version protection.

@@ -2,6 +2,8 @@
 
 ## 0.9.4.5 — 20 October 2026
 
+Same-version sign-in reporting hotfix — 21 October: distinguish browser identity availability, disabled browser sign-in, missing account, explicit organization block, OAuth configuration, missing permissions, network failure, absent token, canceled consent and unknown failures. Provide actionable messages and safe reference codes; do not expose arbitrary provider details. Add identity-method preflight and Help explanations. No OAuth flow, scope, token-storage or calendar-write change. Record the required system-wide error-reporting review and the proposed browser-independent closed-beta connection. Validation: all 2,044 application checks pass, including 54 new sign-in reporting cases; no real sign-in or Calendar write.
+
 - Simplify Find a time: remove search Advanced controls and diagnostic refresh; retain fresh search/final-write checks, meeting-wide exclusions and per-person temporary rules.
 - Apply the accepted automatic duration/workweek fallbacks, initial counts and append-three batches. Suggestions never overlap one another across categories or batches. Keep ten-minute preference, eligible five-minute refinement and the five-minute minimum.
 - Replace card-wide calendar coverage with per-person icons, compact identity/local-time rows, one prioritized factual status and substantive deduplicated warnings. Remove Copy option and excluded-candidate diagnostics; shorten Copy meeting details in final review.

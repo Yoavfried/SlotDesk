@@ -7,9 +7,9 @@
     let pending=null;
     async function getToken(interactive=false){
       if(pending)return pending;
-      pending=(async()=>{let result;try{result=await identity.getAuthToken({interactive,enableGranularPermissions:true,scopes:[...SCOPES]});}catch(error){throw R.auth(error,interactive);}
+      pending=(async()=>{let result;try{if(typeof identity?.getAuthToken!=='function')throw new Error('identity.getAuthToken is unavailable');result=await identity.getAuthToken({interactive,enableGranularPermissions:true,scopes:[...SCOPES]});}catch(error){throw R.auth(error,interactive);}
         if(!result?.token)throw R.auth(null,interactive);
-        if(Array.isArray(result.grantedScopes)&&SCOPES.some(scope=>!result.grantedScopes.includes(scope))){await identity.removeCachedAuthToken({token:result.token});throw R.issue('permissions','Review Google permissions to enable the calendar list, events and free/busy features. Your saved profiles are kept.',{requiresReconnect:true});}
+        if(Array.isArray(result.grantedScopes)&&SCOPES.some(scope=>!result.grantedScopes.includes(scope))){await identity.removeCachedAuthToken({token:result.token});throw R.issue('permissions','Review Google permissions to enable the calendar list, events and free/busy features. Your saved profiles are kept. Reference: G106.',{requiresReconnect:true,diagnosticCode:'G106'});}
         return result.token;
       })();try{return await pending;}finally{pending=null;}
     }

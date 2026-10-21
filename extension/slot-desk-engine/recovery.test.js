@@ -5,6 +5,23 @@ async function main(){
   for(const [status,reasons,kind]of [[401,[],'auth'],[403,['forbidden'],'access'],[403,['accessNotConfigured'],'configuration'],[403,['dailyLimitExceeded'],'quota'],[403,['userRateLimitExceeded'],'rate'],[404,[],'missing'],[410,[],'missing'],[412,[],'changed'],[429,[],'rate'],[503,[],'temporary']])eq(R.provider(status,reasons).kind,kind);
   eq(R.provider(503,[],{write:true}).outcome,'uncertain');eq(R.provider(403,[],{write:true}).outcome,'rejected');eq(R.provider(429,[],{retryAfter:'12',now:1000}).retryAt,13000);eq(R.retryDelay('Wed, 21 Oct 2026 10:00:00 GMT',Date.parse('2026-10-21T09:59:00Z')),60000);
   eq(R.auth(new Error('The user did not approve access'),true).kind,'cancelled');eq(R.auth(new Error('admin_policy_enforced'),true).kind,'organization');eq(R.auth(new Error('mysterious failure'),true).kind,'connection');ok(!R.auth(new Error('mysterious failure'),true).message.includes('administrator'));
+  for(const [text,kind,code] of [
+    ['The user turned off browser signin','browser-auth','G102'],
+    ['Browser sign-in is not allowed','browser-auth','G102'],
+    ['identity.getAuthToken is unavailable','browser-auth','G101'],
+    ['identity.getAuthToken is not a function','browser-auth','G101'],
+    ['The user is not signed in.','auth','G103'],
+    ['admin_policy_enforced','organization','G104'],
+    ['Invalid OAuth2 Client ID.','configuration','G105'],
+    ['redirect_uri_mismatch','configuration','G105'],
+    ['OAuth2 not granted or revoked.','permissions','G106'],
+    ['net::ERR_INTERNET_DISCONNECTED','network','G107'],
+    ['The user did not approve access.','cancelled','G109'],
+    ['private provider detail bearer secret-value','connection','G199']
+  ]){const failure=R.auth(new Error(text),true);eq(failure.kind,kind);eq(failure.diagnosticCode,code);ok(failure.message.includes(code));eq(R.metadata(failure).diagnosticCode,code);}
+  const disabled=R.auth(new Error('The user turned off browser signin'),true);ok(!disabled.message.includes('Try again'));eq(R.auth(disabled,true),disabled);ok(!R.auth(new Error('private provider detail bearer secret-value'),true).message.includes('secret-value'));eq(R.auth(null,true).diagnosticCode,'G108');
+  await assert.rejects(()=>A.createAuth({}).getToken(true),error=>error.kind==='browser-auth'&&error.diagnosticCode==='G101');checks++;
+  await assert.rejects(()=>A.createAuth({getAuthToken:async()=>{throw new Error('The user turned off browser signin');}}).getToken(true),error=>error.kind==='browser-auth'&&error.diagnosticCode==='G102');checks++;
   eq(R.network(new TypeError(),{write:true}).uncertain,true);eq(R.network(null,{cancelled:true}).kind,'cancelled');eq(R.network(null,{offline:true}).kind,'offline');eq(R.sameVersion('0.10.0','0.9.9'),1);
   const booking={account:'a@example.test',request:{calendarId:'calendar',eventId:'stable',event:{summary:'Exact outgoing draft'}}},state={settings:{},pendingBooking:booking},item=R.pending(state);R.resolveManually(state,item,'unverified','2026-10-15T12:00:00Z');eq(state.pendingBooking,undefined);eq(state.settings.recoveryHistory[0].status,'unverified');eq(state.settings.recoveryHistory[0].operation,booking);assert.throws(()=>R.resolveManually(state,item,'found'));checks++;
   const change={account:'a@example.test',operationId:'change',eventId:'same',before:{},after:{}},s2={settings:{},pendingReschedule:change};R.resolveManually(s2,R.pending(s2),'found');eq(s2.settings.recoveryHistory[0].status,'reported_found');eq(s2.pendingReschedule,undefined);

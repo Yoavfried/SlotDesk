@@ -10,7 +10,7 @@
 | Release split | [0.9.4.5 scope and implementation checks](release-plan-0.9.4.5.md) — advanced-profile cleanup alone remains in 0.9.5 |
 | Search controls review | [Counts, more options, exclusions and fallback controls](search-options-review-0.9.4.5.md) — implemented 20 October policy and continuing owner review |
 | Planning email | [Plain-text options email request and proposed wording](planning-email.md) — implemented local preview/copy; separate from interactive inquiries |
-| Recovery | [Accepted connection, permission and recovery experience](recovery-experience.md) |
+| Recovery | [Accepted connection, permission and recovery experience](recovery-experience.md), [system-wide error-reporting review](error-reporting-review.md), [Google connection and closed-beta direction](google-connection.md) |
 | Registration and leads | [Agreed five-column onboarding leads table](leads-table.md), [hosting and verification](registration-deployment.md) |
 | Future concepts | [Optional BYOK LLM assistance](llm-assistance.md), [unconfirmed availability emails](time-inquiries.md) |
 | Development | [Architecture](architecture.md), [engine API](engine-api.md), [installation](install.md), [local export/import](export-import.md) |

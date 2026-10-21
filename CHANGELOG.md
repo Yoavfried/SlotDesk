@@ -1,5 +1,10 @@
 # Repository changelog
 
+## 2026-10-21 — Sign-in error-reporting hotfix
+
+- Classify Google sign-in failures with actionable messages and stable safe references, beginning with the reproduced Vivaldi browser-sign-in refusal. Keep the current OAuth flow and Calendar writes unchanged.
+- Record the required system-wide error-reporting review and explain independent Google consent, approved beta audiences and the separate store-publication process.
+
 ## 2026-10-20 — SlotDesk 0.9.4.5
 
 - Implement the authorized new-meeting policy, compact factual option cards, friendly selected-city labels, local planning-email preview and connected overlap review. Preserve narrow reviewed Calendar writes and existing OAuth identity/scopes.
