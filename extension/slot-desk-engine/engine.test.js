@@ -23,7 +23,7 @@ const local = (iso, tz) => { const p = E.partsIn(new Date(iso).getTime(), tz); r
 
 /* B. open slots: everyone inside working hours beats a stretch; weekends respected */
 {
-  const r = E.findSlots({ now: NOW, duration: 45, range: { from: '2026-10-19', to: '2026-10-23' }, people: people(), want: 3 });
+  const r = E.findSlots({ now: NOW, anchorTz: 'Asia/Jerusalem', duration: 45, range: { from: '2026-10-19', to: '2026-10-23' }, people: people(), want: 3 });
   ok(r.open.length === 3, 'three options');
   ok(new Set(r.open.map(s => s.day)).size === 3, 'on three different days');
   ok(r.open.every(s => s.maxOutside === 0), 'top options need no stretch');
@@ -31,7 +31,7 @@ const local = (iso, tz) => { const p = E.partsIn(new Date(iso).getTime(), tz); r
   ok(!r.open.some(s => s.day === '2026-10-23'), 'no Friday (not a working day in Israel)');
   ok(!r.open.some(s => s.day === '2026-10-21' && E.partsIn(s.start, 'Asia/Jerusalem').hh >= 13), 'Wednesday focus block respected');
   ok(r.open.every(s => s.notes.some(x => /cannot see Mike/.test(x))), 'flags the calendar it cannot see');
-  const all = E.evaluate({ now: NOW, duration: 45, range: { from: '2026-10-19', to: '2026-10-23' }, people: people() });
+  const all = E.evaluate({ now: NOW, anchorTz: 'Asia/Jerusalem', duration: 45, range: { from: '2026-10-19', to: '2026-10-23' }, people: people() });
   ok(all.open.every(s => new Date(s.start) >= new Date('2026-10-19T08:00:00+03:00')), '24h notice');
   // the only fully comfortable window is 16:00–18:00 Israel time (NY starts at 09:00)
   ok(all.open.filter(s => s.maxOutside === 0).every(s => { const p = E.partsIn(s.start, 'Asia/Jerusalem'); return p.min >= 960 && p.min + 45 <= 1080; }), 'comfortable window is 16:00-18:00 IL');
@@ -43,19 +43,19 @@ const local = (iso, tz) => { const p = E.partsIn(new Date(iso).getTime(), tz); r
 {
   const P = people();
   P[0].busy = [{ start: '2026-10-20T16:00:00+03:00', end: '2026-10-20T17:00:00+03:00', title: 'Board prep', attendees: 3 }];
-  const all = E.evaluate({ now: NOW, duration: 45, range: { from: '2026-10-20', to: '2026-10-20' }, people: P });
+  const all = E.evaluate({ now: NOW, anchorTz: 'Asia/Jerusalem', duration: 45, range: { from: '2026-10-20', to: '2026-10-20' }, people: P });
   const starts = all.open.map(s => local(s.start, 'Asia/Jerusalem').slice(11));
   ok(!starts.includes('16:00') && !starts.includes('16:30'), 'busy time not offered');
   ok(!starts.includes('17:00'), '17:00 breaks the 15-minute buffer after a meeting ending 17:00');
   ok(starts.includes('17:20'), 'prefer the valid 10-minute start over a redundant 17:15 boundary');
-  const fine = E.evaluate({ now: NOW, duration: 30, step: 15, spacingMode: 'custom', range: { from: '2026-10-20', to: '2026-10-20' }, people: P });
+  const fine = E.evaluate({ now: NOW, anchorTz: 'Asia/Jerusalem', duration: 30, step: 15, spacingMode: 'custom', range: { from: '2026-10-20', to: '2026-10-20' }, people: P });
   ok(fine.open.map(s => local(s.start, 'Asia/Jerusalem').slice(11)).includes('17:15'), '17:15 respects buffer');
 }
 
 /* D. manual constraint */
 {
   const c = [{ from: '2026-10-20T00:00:00+03:00', to: '2026-10-21T00:00:00+03:00', who: 'all', label: 'Board week — keep Tuesday clear' }];
-  const all = E.evaluate({ now: NOW, duration: 45, range: { from: '2026-10-19', to: '2026-10-22' }, people: people(), constraints: c });
+  const all = E.evaluate({ now: NOW, anchorTz: 'Asia/Jerusalem', duration: 45, range: { from: '2026-10-19', to: '2026-10-22' }, people: people(), constraints: c });
   ok(!all.open.some(s => s.day === '2026-10-20'), 'manually blocked day removed');
   ok(Object.keys(all.rejected).some(k => /Board week/.test(k)), 'and the reason is reported');
 }
@@ -77,7 +77,7 @@ const local = (iso, tz) => { const p = E.partsIn(new Date(iso).getTime(), tz); r
     ev(22, '16:45', '18:00', { title: 'Hiring sync', attendees: 3, status: 'tentative' }),
   ];
   P[1].busy = [ev(22, '16:00', '17:30', {})];   // Sarah: busy block only
-  const r = E.findSlots({ now: NOW, duration: 45, range: { from: '2026-10-19', to: '2026-10-22' }, people: P, want: 3 });
+  const r = E.findSlots({ now: NOW, anchorTz: 'Asia/Jerusalem', duration: 45, range: { from: '2026-10-19', to: '2026-10-22' }, people: P, want: 3 });
   ok(r.open.length < 3, 'not enough open slots');
   ok(r.fallback, 'fallback offered');
   const changes = r.fallback.softer.map(s => s.change);
@@ -127,7 +127,7 @@ const local = (iso, tz) => { const p = E.partsIn(new Date(iso).getTime(), tz); r
 {
   const P = people();
   P[0].blocks = []; P[0].travel = [{ from: '2026-10-19', to: '2026-10-23', tz: 'America/New_York', label: 'New York' }];
-  const all = E.evaluate({ now: NOW, duration: 45, range: { from: '2026-10-19', to: '2026-10-22' }, people: P });
+  const all = E.evaluate({ now: NOW, anchorTz: 'Asia/Jerusalem', duration: 45, range: { from: '2026-10-19', to: '2026-10-22' }, people: P });
   ok(all.open.length > 0 && all.open.every(s => { const p = E.partsIn(s.start, 'America/New_York'); return p.min >= 420 && p.min + 45 <= 1200; }), 'slots follow New York hours while travelling');
 }
 console.log('\n' + n + ' checks passed');

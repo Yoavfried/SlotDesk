@@ -106,5 +106,12 @@
     "manual screen reader",
     "owner UX approval"
   ],
-  "calendarWriteTransportsUnchanged": true
+  "calendarWriteTransportsUnchanged": true,
+  "testPortability": {
+    "hostTimezonesPassed": [
+      "Asia/Jerusalem",
+      "UTC"
+    ],
+    "correction": "Legacy engine fixture now explicitly sets its intended search timezone. Test-only follow-up; packaged runtime and hashes unchanged."
+  }
 }

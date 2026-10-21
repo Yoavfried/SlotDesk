@@ -2,6 +2,8 @@
 
 ## 0.9.4.6 — 21 October 2026
 
+Post-package test-only correction: explicitly anchor the legacy engine fixture to its intended Jerusalem search timezone. The full 2,099-check suite passes on a UTC host as well. Runtime/package bytes and immutable release tag remain unchanged.
+
 - Add shared browser capabilities, guarded native-sidebar/full-tab launch and background messaging without weakening shared-window locks.
 - Implement independent Google consent with a hosted state/PKCE code exchange, session-only credentials, refresh/disconnect and an authenticated registration relay. Preserve the original Chrome pilot as an inactive-service fallback and the existing Google scopes. Activation needs owner Google/Vercel settings; real-provider consent is not claimed tested.
 - Build distinct Chromium, unsigned Firefox and Safari-source artifacts. Firefox needs real-browser/signing/policy work; Safari needs a separate authentication bridge and Apple packaging/testing. Record actual browser evidence and all remaining store requirements.

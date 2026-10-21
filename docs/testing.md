@@ -2,6 +2,8 @@
 
 ## 21 October — 0.9.4.6 browser compatibility
 
+Post-package test portability correction: the remote UTC runner exposed a legacy engine fixture that omitted its intended search timezone. Its requests now explicitly use Asia/Jerusalem. All 2,099 application checks also pass with the host set to UTC. No runtime/packaged file changes; the release artifacts and hashes remain identical.
+
 All **2,099 application checks** pass, including **55 new platform/authentication checks** for missing/rejecting panels, tab/sidebar adapters, safe lock failure, shared token requests, PKCE, worker suspension/session reuse, refresh, invalid/canceled states, sender authorization and disconnect races. The backend passes **six intake tests and 65 OAuth checks**; the separate calendar-comparison suite passes **22 checks**. No Google client secrets or real credentials are used in tests.
 
 Actual installed **Edge 155.0.4283.62** and the separately labelled **Chromium 151 reference** each pass 13 focused assertions using their real native identity windows and a local synthetic provider/Calendar transport: connection without browser sign-in, calendar loading, 320/514/1280px reflow, second-tab reuse, safe connection details, session cleanup and reconnect. Actual **Vivaldi 8.2.4133.84** completes its native identity window and loads Calendar data; its background disconnect clears session credentials. Its broader CDP-driven journey stalls on tab visibility/actionability, so it is recorded as partial, not a full pass. Actual **Chrome 155** automation rejects the unpacked page despite returning an installation ID; this attempt is not counted as a pass or confused with the Chromium reference.
