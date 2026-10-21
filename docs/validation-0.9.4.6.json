@@ -1,0 +1,110 @@
+{
+  "version": "0.9.4.6",
+  "date": "2026-10-21",
+  "applicationChecks": 2099,
+  "newPlatformAuthChecks": 55,
+  "backend": {
+    "intakeTests": 6,
+    "oauthChecks": 65
+  },
+  "calendarComparisonChecks": 22,
+  "browser": [
+    {
+      "target": "Edge 155.0.4283.62 Windows",
+      "installedExtension": true,
+      "transport": "real identity.launchWebAuthFlow; local synthetic provider and Calendar",
+      "passedAssertions": 13,
+      "responsiveWidths": [
+        320,
+        514,
+        1280
+      ],
+      "scenarios": [
+        "native OAuth window",
+        "calendar browsing",
+        "cross-tab reuse",
+        "safe details",
+        "session cleanup",
+        "reconnect"
+      ],
+      "limitations": [
+        "no real Google consent",
+        "native toolbar/sidebar lifecycle not manually certified"
+      ]
+    },
+    {
+      "target": "Chromium 151 reference Windows",
+      "installedExtension": true,
+      "passedAssertions": 13,
+      "responsiveWidths": [
+        320,
+        514,
+        1280
+      ],
+      "transport": "real identity window; local synthetic provider/Calendar",
+      "notActualChrome": true
+    },
+    {
+      "target": "Vivaldi 8.2.4133.84 Windows",
+      "installedExtension": true,
+      "verified": [
+        "native identity window completes without browser sign-in",
+        "background credential reaches Calendar reader",
+        "safe capabilities available",
+        "background disconnect clears storage.session"
+      ],
+      "incomplete": [
+        "full focused journey stopped at native tab-visibility/actionability after secondary-tab handling"
+      ],
+      "note": "CDP port attachment used because pipe launch stalled. Do not count the incomplete journey as a full pass."
+    },
+    {
+      "target": "Actual Chrome 155.0.8059.41 Windows",
+      "passed": false,
+      "reason": "Isolated automation refused unpacked page with ERR_BLOCKED_BY_CLIENT even though browser CDP returned the expected load ID. Existing owner-reported Chrome pilot remains separate evidence."
+    }
+  ],
+  "writeIntegrity": {
+    "browser": "Edge with new background authentication",
+    "synthetic": true,
+    "passedAssertions": 15,
+    "created": 1,
+    "existingEventsUnchangedAfterCreate": 9,
+    "reschedulePatches": 1,
+    "rescheduledOccurrence": "synthetic neighbor occurrence only",
+    "patchFields": [
+      "start",
+      "end"
+    ],
+    "unrelatedEventsUnchangedAfterReschedule": 8,
+    "guestVideoRecurrenceAndProtectedFieldsPreserved": true,
+    "deleteOrMoveRequests": 0
+  },
+  "firefoxLint": {
+    "errors": 0,
+    "notices": 0,
+    "warnings": 68
+  },
+  "hosting": {
+    "deploymentId": "dpl_32tLxkfrtKXPmetpJiuMCRvqeHzQ",
+    "status": "READY",
+    "publicStatusHTTP": 200,
+    "authReady": false,
+    "versionReported": "0.9.4.6",
+    "invalidExistingIntakeHTTP": 400,
+    "realRegistrationsInserted": 0,
+    "activation": "owner Google client and four environment variables required"
+  },
+  "notVerified": [
+    "real Google authorization for new flow",
+    "Firefox runtime/signing",
+    "Safari runtime/authentication",
+    "Brave/Opera",
+    "macOS/Linux",
+    "mobile",
+    "store review",
+    "manual screen reader",
+    "owner UX approval"
+  ],
+  "calendarWriteTransportsUnchanged": true
+}

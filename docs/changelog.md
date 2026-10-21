@@ -1,5 +1,12 @@
 # SlotDesk changelog
 
+## 0.9.4.6 — 21 October 2026
+
+- Add shared browser capabilities, guarded native-sidebar/full-tab launch and background messaging without weakening shared-window locks.
+- Implement independent Google consent with a hosted state/PKCE code exchange, session-only credentials, refresh/disconnect and an authenticated registration relay. Preserve the original Chrome pilot as an inactive-service fallback and the existing Google scopes. Activation needs owner Google/Vercel settings; real-provider consent is not claimed tested.
+- Build distinct Chromium, unsigned Firefox and Safari-source artifacts. Firefox needs real-browser/signing/policy work; Safari needs a separate authentication bridge and Apple packaging/testing. Record actual browser evidence and all remaining store requirements.
+- Add safe connection details, update installation/privacy/help and correct the malformed UTF-8 summary separator with strict encoding checks. Preserve reviewed Calendar write transports and the owner-led 0.9.5 gate.
+
 ## 0.9.4.5 — 20 October 2026
 
 Same-version sign-in reporting hotfix — 21 October: distinguish browser identity availability, disabled browser sign-in, missing account, explicit organization block, OAuth configuration, missing permissions, network failure, absent token, canceled consent and unknown failures. Provide actionable messages and safe reference codes; do not expose arbitrary provider details. Add identity-method preflight and Help explanations. No OAuth flow, scope, token-storage or calendar-write change. Record the required system-wide error-reporting review and the proposed browser-independent closed-beta connection. Validation: all 2,044 application checks pass, including 54 new sign-in reporting cases; no real sign-in or Calendar write.

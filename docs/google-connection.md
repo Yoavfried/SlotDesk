@@ -1,36 +1,25 @@
-# Google connection: closed-beta direction
+# Google connection
 
-Recorded 21 October 2026. The owner asked whether SlotDesk can show Google's normal account/permission flow independently of Chrome's browser profile and whether that requires a Chrome Web Store release. This document answers feasibility and records a proposed direction; the new authentication flow and Cloud changes are not implemented or deployed.
+Implemented for **0.9.4.6**, with owner activation still required. The original Vivaldi failure was `The user turned off browser signin`: the old Chrome-managed token service rejected before Google opened. Signing into Gmail did not enable that browser service. The new path uses an independent account/consent window and does not require browser sign-in or Sync.
 
-## Current implementation and observed failure
+## Implemented flow
 
-The extension uses `chrome.identity.getAuthToken`, its pinned extension identity and a Chrome Extension OAuth client. Chrome obtains/caches tokens through its account integration. Chrome can use its signed-in profile account or the first Google web account; enabling Chrome Sync is not a prerequisite. The dependency is availability of the browser-managed Google identity service. The owner's Vivaldi call immediately rejected with `The user turned off browser signin`, before an account/consent window opened. This identifies the current failing stage; it does not prove a Google test-user rejection or require a new PC-specific audience entry.
+1. Connect Google asks the hosted service whether the new connection is configured.
+2. The background generates a random PKCE verifier/challenge. An encrypted, ten-minute transaction binds the extension origin, exact registered return address and challenge.
+3. `identity.launchWebAuthFlow` opens a hosted bootstrap, then Google's account/consent page. The bootstrap includes the extension return address for Firefox's initial redirect check. Google's actual registered callback is the hosted HTTPS address.
+4. The callback validates the transaction and redirects only to its exact allowlisted extension return. That URL contains the authorization code and state, never an access/refresh token.
+5. The extension verifies the return/state. The server exchanges the one-use Google code with the verifier and server-only Web application client secret. Calendar access remains the same three scopes.
+6. Access tokens plus an encrypted refresh-session envelope and its verifier stay in background memory / `storage.session`, not settings, localStorage, backup files or Neon. Background restarts can reuse session storage; closing the browser clears it. Reconnect on a later browser session. A Google Testing grant is capped at seven days; the service also caps its envelope at seven days.
+7. Disconnect clears the local session. It does not revoke Google's existing consent grant. Calendar account reads still determine the account-specific workspace and every write rechecks account/permissions.
 
-The [error-reporting hotfix](error-reporting-review.md) explains this case. Browser-independent sign-in still needs implementation and a real Vivaldi validation; installing the extension in a Chromium browser alone does not establish complete compatibility.
+The service handles authorization and registration relay only. Calendar event reads/writes continue directly between the extension and Google. It does not store credentials in the leads table or log credential payloads. The pre-existing direct registration route is retained for the native Chrome pilot. Browser origins are transport isolation, not identity proof: sensitive broker operations also require the encrypted origin-bound ticket/session and PKCE verifier. Firefox installation origins vary, so its transport permits a Firefox extension origin while restricting returns to the stable approved add-on identity.
 
-## Desired experience
+If the hosted path is not configured, Chrome may retain its existing managed-token connection. Browsers that expose that method but cannot use it receive the owner-setup message G110. A blocked/refused ready broker does not silently switch to another account flow. No new public audience or Google scope is introduced.
 
-1. Click Connect Google in SlotDesk.
-2. A Google-hosted window lets the user choose or sign in to their Google account, independently of the browser's profile account.
-3. Google checks the beta audience and asks for the Calendar permissions. Keep the project in External/Testing and retain its explicitly approved test emails.
-4. Return to SlotDesk with the selected account verified against its Calendar account. Account switching must retain the existing separation of local workspaces and unfinished writes.
-5. Handle cancellation, partial consent, expiry, reconnection and disconnection clearly. No meeting is created or changed by signing in.
+## Activation and approval
 
-## Technical direction to implement next
+All remaining owner steps are together in [Browser sign-in activation](browser-signin-setup.md). No private client secret belongs in a chat, repository or extension ZIP. The current deployment is guarded until hosting has the four required values. A real Google account/consent check remains unperformed for the new path; synthetic native-window checks do not establish Google approval.
 
-Use an extension-managed OAuth window such as `launchWebAuthFlow` with correctly registered Google authorization/redirect configuration. A recommended design is Google's authorization-code flow with a small hosted callback/exchange component and deliberate token/session handling; keep client secrets out of the extension. Final redirect binding, one-time state/PKCE as supported, token ownership/storage/renewal/revocation, account binding and failure behavior must be specified before implementation. The existing leads database is not a proposed token store. Do not assume the current Chrome Extension client can simply be reused for an arbitrary web redirect; create the matching client configuration in the existing project as needed.
+Keep the existing Google project External / Testing and its listed test users. Current Google documentation allows up to 100 test users and gives Calendar test authorizations/refresh tokens a seven-day lifetime. Workplace administrators can separately block consent. A store listing is not required to test an unpacked extension; store review and Google OAuth production verification are separate later steps.
 
-The user's requested outcome is ordinary Google account choice and Calendar consent. It does not require signing into Chrome or enabling browser Sync. Keeping the existing Google project lets its project-level test-user audience continue applying to the new client. Retain current Calendar scope needs unless a separately justified change is reviewed.
-
-## Store publication and Google approval
-
-Chrome Web Store publication is not a prerequisite for implementing/testing this OAuth flow with a manually loaded beta extension. Distribution/store review and Google OAuth verification are separate processes. Testing does not remove Google's applicable OAuth/security requirements or workplace restrictions.
-
-Google's current Testing mode allows up to 100 listed test users. Calendar scopes do not qualify for the basic-profile-only exception: test authorizations expire after seven days, including refresh tokens when issued. Make reconnection understandable during the beta. Public production access and store distribution need their own later preparation; neither is authorized by this discussion.
-
-Checked against primary documentation on 21 October 2026:
-
-- [Chrome identity: account choice, getAuthToken and launchWebAuthFlow](https://developer.chrome.com/docs/extensions/reference/api/identity)
-- [Google project audience, Testing users and seven-day expiry](https://support.google.com/cloud/answer/15549945?hl=en)
-- [Google web-server authorization code flow and client-secret handling](https://developers.google.com/identity/protocols/oauth2/web-server)
-- [Google OAuth policy and secure redirects](https://developers.google.com/identity/protocols/oauth2/production-readiness/policy-compliance)
+Sources checked 21 October 2026: [Chrome identity](https://developer.chrome.com/docs/extensions/reference/api/identity), [Google authorization code flow](https://developers.google.com/identity/protocols/oauth2/web-server), [Google Testing audience](https://support.google.com/cloud/answer/15549945?hl=en), [Firefox identity implementation](https://raw.githubusercontent.com/mozilla/gecko-dev/master/toolkit/components/extensions/child/ext-identity.js), [Chrome session storage](https://developer.chrome.com/docs/extensions/reference/api/storage), [Firefox session storage](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/storage/session).

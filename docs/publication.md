@@ -1,5 +1,9 @@
 # Distribution and publication decisions
 
+## 0.9.4.6 store preparation
+
+See the [per-store readiness table](extension-stores.md) for Chrome, Edge, Firefox listed/unlisted, Safari and Opera. Generated packages are development/beta artifacts, not approved listings. [Browser evidence](browser-compatibility.md) and [Google activation](browser-signin-setup.md) are separate records. No public visibility change or publisher-account purchase is authorized by this release.
+
 The repository is private and the product is an approved Google Calendar Chrome pilot. This document records unfinished distribution work; it does not authorize a visibility change.
 
 - Maintain accurate automated and user-reported validation evidence; do not mark unperformed checks as passed.

@@ -35,3 +35,7 @@ The owner configured the server environment variables and the Vercel intake is d
 The final onboarding step shows the accepted notice and unchecked checkbox. Both Start using SlotDesk and I’ll add people later save the same five-field record; the checkbox is optional. Existing completed users see the notice/choice once before explicitly continuing; there is no undisclosed automatic backfill. Submission failure keeps setup usable. Settings shows pending/saved status and a retry action.
 
 Owners view the private table through Neon. This implementation has no email/newsletter sending feature. Corrections, removal and opt-out requests go to the person who provided the private pilot. See the [shipped privacy notice](../extension/privacy.html).
+
+## Browser-independent sign-in relay — 0.9.4.6
+
+The new sign-in function can authenticate delivery of these same five user-confirmed fields from additional browser targets. It does not add token/calendar columns or change the optional updates choice. The existing direct Chrome intake remains. Tokens are handled transiently by the separate auth function and are never inserted into the leads database. [Connection design](google-connection.md) and [activation](browser-signin-setup.md).

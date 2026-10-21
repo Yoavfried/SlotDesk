@@ -2,6 +2,7 @@ import { readFile, readdir, stat } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
+import {browserManifest} from './browser-targets.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const files = [];
@@ -49,6 +50,7 @@ let syntaxCount = 0;
 let documentCount = 0;
 for (const file of files) {
   const name = relative(file);
+  if(name.startsWith('extension/')&&/\.(?:js|json|html|css|txt)$/.test(file))try{new TextDecoder('utf-8',{fatal:true}).decode(await readFile(file));}catch{errors.push(`${name}: invalid UTF-8 text`);}
   if (/\.(?:js|cjs|mjs)$/.test(file)) {
     const result = spawnSync(process.execPath, ['--check', file], { encoding: 'utf8' });
     syntaxCount++;
@@ -73,6 +75,15 @@ for (const file of files) {
 
 const app = path.join(root, 'extension');
 const manifest = JSON.parse(await read(path.join(app, 'manifest.json')));
+for(const target of ['chromium','firefox','safari-source']) {
+  const generated=browserManifest(manifest,target);
+  if(generated.version!==manifest.version||generated.manifest_version!==3)errors.push(target+': invalid generated version');
+  for(const script of generated.background?.scripts || [])await checkLink(path.join(app,'manifest.json'),script);
+  for(const entry of [generated.background?.service_worker,generated.side_panel?.default_path,generated.sidebar_action?.default_panel].filter(Boolean))await checkLink(path.join(app,'manifest.json'),entry);
+  if(target!=='chromium'&&(generated.key||generated.oauth2||generated.side_panel||generated.permissions.includes('sidePanel')))errors.push(target+': unsupported Chromium manifest fields');
+  if(target==='firefox'&&(!generated.browser_specific_settings?.gecko?.id||!generated.background?.scripts))errors.push('firefox: stable ID/background missing');
+  if(target==='safari-source'&&generated.permissions.includes('identity'))errors.push('safari-source: unsupported identity permission');
+}
 for (const key of ['side_panel', 'background']) {
   const entry = key === 'side_panel' ? manifest[key]?.default_path : manifest[key]?.service_worker;
   if (entry) await checkLink(path.join(app, 'manifest.json'), entry);

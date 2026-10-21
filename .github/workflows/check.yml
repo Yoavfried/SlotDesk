@@ -16,6 +16,7 @@ jobs:
           node-version: '22'
           package-manager-cache: false
       - run: npm test
+      - run: npm run test:backend
       - run: npm run test:calendar-kit
       - run: npm run check
       - run: npm run package:slotdesk

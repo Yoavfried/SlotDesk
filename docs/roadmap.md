@@ -4,7 +4,7 @@ Updated 20 October 2026. Status reflects agreed scope, not a promise of public a
 
 ## Current release
 
-Version **0.9.4.5** implements the authorized [new-meeting update](release-plan-0.9.4.5.md): automatic alternatives and batching, compact factual rows, friendly zones, planning-email text and grouped overlap review. The existing onboarding, profile/calendar scope, live configuration, backup/import, connection recovery and reviewed calendar writes remain. The five-field onboarding leads service is deployed and configured for the private pilot. See [version history](changelog.md) and [validation](testing.md).
+Version **0.9.4.6** adds the [desktop compatibility implementation](release-plan-0.9.4.6.md), with [activation](browser-signin-setup.md), per-target evidence and [remaining store work](extension-stores.md) documented. The prior **0.9.4.5** implements the authorized [new-meeting update](release-plan-0.9.4.5.md): automatic alternatives and batching, compact factual rows, friendly zones, planning-email text and grouped overlap review. The existing onboarding, profile/calendar scope, live configuration, backup/import, connection recovery and reviewed calendar writes remain. The five-field onboarding leads service is deployed and configured for the private pilot. See [version history](changelog.md) and [validation](testing.md).
 
 The existing [implemented work](implemented.md), [accepted UX](ux-decisions.md), reviewed calendar writes, management, profiles and design language remain. No new real Google or email-delivery verification is claimed by this update.
 
@@ -30,19 +30,19 @@ The [search-controls review](search-options-review-0.9.4.5.md) covers removal of
 
 The agreed overlap-alert screen also moves to 0.9.4.5: each connected group of actual overlaps offers **Review overlaps**, showing each appointment once with its date/time, calendar, exact overlapping appointments and an individual Reschedule action. Keep unrelated groups separate, require individual review/confirmation and clear only resolved relationships after fresh checks. See [rescheduling](rescheduling.md).
 
-This release may apply the agreed scheduling semantics to existing saved defaults and per-meeting overrides without redesigning the advanced-profile editor. The separate profile review does not block 0.9.4.5. All targeted policy decisions were accepted and implementation was authorized. Current runtime/package is 0.9.4.5. The owner expects to continue appointment-logic and issue review after this update; do not auto-start the advanced-profile review or infer final UX approval.
+This release may apply the agreed scheduling semantics to existing saved defaults and per-meeting overrides without redesigning the advanced-profile editor. The separate profile review does not block 0.9.4.5. All targeted policy decisions were accepted and implementation was authorized. That new-meeting release was 0.9.4.5; current runtime/packages are 0.9.4.6. The owner expects to continue appointment-logic and issue review after this update; do not auto-start the advanced-profile review or infer final UX approval.
 
 ## 0.9.5 — advanced profile settings
 
 Reserved only for a complete owner-led **wording, UX and logic review of Edit profile's advanced settings**, including every More settings section, followed by the specified fixes. Do not begin that review-driven cleanup or release 0.9.5 until the owner performs the review and gives directions; release also requires their approval. Codex must not infer readiness or substitute source/tests for the owner's review.
 
-## Browser compatibility — proposed plan
+## Browser compatibility — 0.9.4.6 implemented foundation
 
-The owner requested broad browser-compatibility planning on 21 October. The [source-based plan](browser-compatibility.md) recommends desktop Chromium first (Chrome/Vivaldi/Edge, then Brave/Opera), followed by Firefox and Safari. Shared core/platform adapters, independent Google consent, safe native-sidebar/full-tab launch, stable package identities, exact service origins and unchanged calendar-write guards are the foundation. Actual browser/OS validation precedes any support claim. Mobile and a hosted no-install workspace remain separate later decisions. This is planning only, with no runtime port, OAuth deployment or store submission.
+The owner approved and authorized the [compatibility implementation](browser-compatibility.md). Shared platform/authentication, separate packages and store-readiness documentation are delivered. [Owner activation](browser-signin-setup.md), real-provider verification, Brave/Opera/Firefox/Apple/other-OS validation, Firefox signing and Safari's separate authentication bridge remain. No public store submission is made. Mobile and a hosted no-install workspace remain separate decisions.
 
 ## Error reporting — system-wide review required
 
-Owner direction, 21 October: review explanations, next actions and presentation throughout the system. The first same-version 0.9.4.5 hotfix classifies Google sign-in failures, including unsupported/disabled browser identity. The [full review inventory](error-reporting-review.md) remains open; this is separate from the advanced-profile review reserved for 0.9.5. [Browser-independent Google consent](google-connection.md) is feasible in the approved-email closed beta without Chrome Web Store publication; its authentication/configuration work remains proposed, not implemented.
+Owner direction, 21 October: review explanations, next actions and presentation throughout the system. The first same-version 0.9.4.5 hotfix classifies Google sign-in failures, including unsupported/disabled browser identity. The [full review inventory](error-reporting-review.md) remains open; this is separate from the advanced-profile review reserved for 0.9.5. [Browser-independent Google consent](google-connection.md) is feasible in the approved-email closed beta without Chrome Web Store publication; its authentication code is implemented in 0.9.4.6; hosting activation and real-provider verification remain.
 
 ## Current review work
 

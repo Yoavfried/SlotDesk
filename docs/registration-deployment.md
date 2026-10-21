@@ -1,6 +1,6 @@
 # Registration service activation
 
-Activated 15 October 2026 for the private 0.9.0 preview. The latest published extension release remains 0.8.1.
+Original activation: 15 October 2026 for the private 0.9.0 preview. The table and evidence below describe that activation. Current release is 0.9.4.6: Vercel deployment `dpl_32tLxkfrtKXPmetpJiuMCRvqeHzQ` is READY with the unchanged intake plus the guarded Google sign-in route. Its public readiness is false until [owner activation](browser-signin-setup.md). Invalid intake input still returns 400; no lead was inserted during the 21 October checks.
 
 | Component | Configuration |
 | --- | --- |

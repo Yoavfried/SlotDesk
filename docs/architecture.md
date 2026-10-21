@@ -1,5 +1,13 @@
 # SlotDesk architecture
 
+## Desktop platform and hosted authentication — 0.9.4.6
+
+`browser-platform.js` wraps runtime/capabilities, launcher fallback, safe locks and the UI/background RPC. `web-auth.js` serializes authorization and owns browser-memory credentials. Chromium uses one worker; Firefox preloads the same modules in a scripts/event-page background and uses its sidebar API. Browser manifests are generated from one source. Safari preparation excludes unsupported Chrome identity and requires its own bridge before sign-in can work.
+
+The Vercel `api/google.mjs` route delegates to `google-auth.mjs`: allowlisted returns, encrypted purpose-bound state/session, PKCE, bounded provider requests, exact-origin CORS, fixed Google endpoints and five-field registration relay. Calendar payloads stay on direct Google requests; Neon holds registrations only. Session storage preserves credentials across worker suspension but clears on browser exit. No client secret, refresh token or session goes into local workspace/configuration files. See [connection design](google-connection.md), [activation](browser-signin-setup.md) and [platform evidence](browser-compatibility.md).
+
+The historical Chrome-only descriptions below describe their original release; current code also has these shared adapters. This update does not change the reviewed Calendar mutation transports.
+
 ## Automatic search and presentation — 0.9.4.5
 
 `search-policy.js` applies automatic duration/date alternatives and global suggestion selection over the shared engine. `participant-status.js` chooses a factual primary reason and substantive deduplicated warnings. `meeting-text.js` produces concise review details and recipient-safe planning text. Both creation and rescheduling use the automatic policy. These modules do not write calendars. Existing reviewed create, reschedule and edit transports retain their identity/version checks and narrow mutations.

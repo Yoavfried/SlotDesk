@@ -1,5 +1,10 @@
 # Repository changelog
 
+## 2026-10-21 — SlotDesk 0.9.4.6
+
+- Implement the owner-authorized browser platform/authentication/package work with explicit per-target evidence and limits. Add hosted broker source and a single owner activation guide; no store publication or Google audience change.
+- Record session-only credential handling, unchanged calendar mutation boundaries and the remaining Firefox/Safari, browser/OS and store preparation work. Keep the parent website on hold and 0.9.5 advanced profiles owner-led.
+
 ## 2026-10-21 — Browser compatibility planning
 
 - Inventory authentication, native panel startup, manifests/backgrounds, locks/local storage, file/clipboard/UI and service-origin dependencies. Propose a shared platform layer and desktop Chromium → Firefox → Safari sequence with actual-package integration evidence.

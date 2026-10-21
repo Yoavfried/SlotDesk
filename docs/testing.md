@@ -1,5 +1,20 @@
 # SlotDesk validation record
 
+## 21 October — 0.9.4.6 browser compatibility
+
+All **2,099 application checks** pass, including **55 new platform/authentication checks** for missing/rejecting panels, tab/sidebar adapters, safe lock failure, shared token requests, PKCE, worker suspension/session reuse, refresh, invalid/canceled states, sender authorization and disconnect races. The backend passes **six intake tests and 65 OAuth checks**; the separate calendar-comparison suite passes **22 checks**. No Google client secrets or real credentials are used in tests.
+
+Actual installed **Edge 155.0.4283.62** and the separately labelled **Chromium 151 reference** each pass 13 focused assertions using their real native identity windows and a local synthetic provider/Calendar transport: connection without browser sign-in, calendar loading, 320/514/1280px reflow, second-tab reuse, safe connection details, session cleanup and reconnect. Actual **Vivaldi 8.2.4133.84** completes its native identity window and loads Calendar data; its background disconnect clears session credentials. Its broader CDP-driven journey stalls on tab visibility/actionability, so it is recorded as partial, not a full pass. Actual **Chrome 155** automation rejects the unpacked page despite returning an installation ID; this attempt is not counted as a pass or confused with the Chromium reference.
+
+The Edge reviewed-write journey passes 15 assertions through the new authentication path. Exactly one new event is created while all nine baseline events remain unchanged. One selected future recurring occurrence then receives a start/end-only PATCH; the eight unrelated events plus guests, recurrence, video and protected fields remain unchanged. There are no delete/move requests. Calendar create/reschedule/editor transport source is unchanged.
+
+Mozilla **web-ext 10.8.0** reports **0 errors, 0 notices and 68 warnings** for the generated unsigned Firefox port. The [warning inventory](firefox-lint-0.9.4.6.json) records dynamic HTML sink warnings and the Android minimum/data-consent warning. These are not waived as safe or presented as approval. Actual Firefox, signing, policy/consent review and reviewer source evidence remain required. Safari is preparation-only because its authentication bridge is missing.
+
+The new Vercel deployment is READY. Its public status returns version 0.9.4.6 and `ready:false` until owner secrets/allowlist are configured. Invalid registration input still returns 400 from the existing intake; no registration was inserted by these checks. The [activation guide](browser-signin-setup.md) contains all owner actions in one place. No real Google sign-in/invitations, store submissions or other-device validation are claimed. The synthetic fixture copy alone adds a local transport and a labelled banner; those changes are excluded from released artifacts.
+
+See [structured evidence](validation-0.9.4.6.json), [browser matrix](browser-compatibility.md), [release scope](release-plan-0.9.4.6.md) and [store requirements](extension-stores.md). These checks do not complete the broader error-reporting/accessibility/owner UX reviews or the owner-led 0.9.5 advanced-profile review.
+
+
 ## 21 October — sign-in reporting hotfix
 
 All **2,044 application checks** pass. The 54 added checks exercise the reproduced Vivaldi refusal, absent identity methods, known authentication failures, stable diagnostic metadata, safe unknown messages and wrapper propagation. Repository checks pass. No real Google sign-in or calendar write is used. The existing 51-assertion browser evidence below belongs to the prior new-meeting update; it is not a live Vivaldi test. This hotfix improves reporting and Help only; independent OAuth remains proposed. The [system-wide error-reporting review](error-reporting-review.md) is required and remains open.

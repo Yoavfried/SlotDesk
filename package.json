@@ -12,9 +12,9 @@
     "test:calendar-kit": "node scripts/calendar-test/compare.test.mjs",
     "fixtures:slotdesk": "node scripts/calendar-test/generate.mjs",
     "package:slotdesk": "node scripts/package-slotdesk.mjs",
-    "test:backend": "node --test backend/intake.test.mjs"
+    "test:backend": "node --test backend/intake.test.mjs && node backend/google-auth.test.mjs"
   },
-  "version": "0.9.4.5",
+  "version": "0.9.4.6",
   "repository": {
     "type": "git",
     "url": "https://github.com/Yoavfried/slotdesk.git"

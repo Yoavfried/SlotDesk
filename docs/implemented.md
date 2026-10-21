@@ -1,5 +1,9 @@
 # Implemented scheduling work
 
+## 0.9.4.6 — browser platform implementation
+
+Shared API/launcher/lock adapters, serialized background OAuth, hosted code/PKCE exchange and session-only refresh, authenticated registration relay, connection diagnostics, three target packages and store/activation documentation are implemented. [The compatibility matrix](browser-compatibility.md) distinguishes actual synthetic native-browser evidence from unverified Firefox/Apple/other-OS targets. Hosting activation and real Google consent remain owner steps; store listings are not submitted.
+
 ## New-meeting workflow — 0.9.4.5
 
 Automatic count/batching, globally distinct suggestions, qualifying shorter/later alternatives, meeting-only exclusions and per-person outside-hour semantics are implemented for new meetings and rescheduling. Cards show compact participant identity/time rows, actual coverage icons and one prioritized factual status with substantive warnings. Friendly city labels retain the selected city. A local editable planning email includes every displayed option without exposing internal conflicts or coverage. Final-review copying is concise. Grouped overlap alerts show each appointment and its exact neighbors once, with individual reviewed rescheduling.

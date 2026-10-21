@@ -1,5 +1,11 @@
 # SlotDesk registration intake
 
+## Browser-independent Google connection — 0.9.4.6
+
+The same hosting project also provides `api/google.mjs`, backed by the testable `google-auth.mjs` broker. It uses server-only Web client/encryption secrets and an exact return allowlist. Code exchange, state/PKCE and encrypted session refresh are separate from the insert-only leads database; no token table is created. The new authenticated registration relay still inserts only the original five fields. The existing direct intake stays available for the old Chrome path.
+
+Run `npm run test:backend` at the repository root. Set up hosting through [the single owner guide](../docs/browser-signin-setup.md). `GET /api/google?op=status` returns `ready:false` until all required variables are configured. Never deploy `.env`, private OAuth secrets, test credentials or calendar exports. See [security](../docs/security.md) for boundaries and wider-rollout limits.
+
 This optional server component stores the five-column [leads record](../docs/leads-table.md). It never receives Google tokens or calendar content. The Chrome app remains usable when submission is unavailable, keeping the original registration queued locally.
 
 ## Activation status

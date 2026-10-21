@@ -1,0 +1,357 @@
+{
+  "date": "2026-10-21",
+  "tool": "web-ext 10.8.0",
+  "target": "Firefox unsigned 0.9.4.6",
+  "summary": {
+    "errors": 0,
+    "notices": 0,
+    "warnings": 68
+  },
+  "warningCodes": {
+    "KEY_FIREFOX_ANDROID_UNSUPPORTED_BY_MIN_VERSION": 1,
+    "UNSAFE_VAR_ASSIGNMENT": 67
+  },
+  "warnings": [
+    {
+      "code": "KEY_FIREFOX_ANDROID_UNSUPPORTED_BY_MIN_VERSION",
+      "file": "manifest.json",
+      "line": null
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/configuration-ui.js",
+      "line": 8
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/meeting-editor.js",
+      "line": 20
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/meeting-editor.js",
+      "line": 24
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/meeting-editor.js",
+      "line": 26
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/meeting-editor.js",
+      "line": 38
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/meeting-editor.js",
+      "line": 46
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/meeting-management.js",
+      "line": 24
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/meeting-management.js",
+      "line": 24
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/meeting-management.js",
+      "line": 38
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/meeting-management.js",
+      "line": 41
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/meeting-management.js",
+      "line": 51
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/meeting-management.js",
+      "line": 75
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/meeting-management.js",
+      "line": 79
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/meeting-management.js",
+      "line": 85
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/meeting-management.js",
+      "line": 90
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/meeting-management.js",
+      "line": 113
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/meeting-management.js",
+      "line": 129
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/recovery-ui.js",
+      "line": 12
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/recovery-ui.js",
+      "line": 22
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/travel-editor.js",
+      "line": 13
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/travel-editor.js",
+      "line": 14
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/travel-editor.js",
+      "line": 15
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/travel-editor.js",
+      "line": 20
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/app.js",
+      "line": 28
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/app.js",
+      "line": 119
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/app.js",
+      "line": 224
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/app.js",
+      "line": 237
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/app.js",
+      "line": 255
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/app.js",
+      "line": 256
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/app.js",
+      "line": 257
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/app.js",
+      "line": 258
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/app.js",
+      "line": 269
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/app.js",
+      "line": 270
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/app.js",
+      "line": 278
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/app.js",
+      "line": 279
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/app.js",
+      "line": 320
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/app.js",
+      "line": 353
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/app.js",
+      "line": 355
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/app.js",
+      "line": 356
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/app.js",
+      "line": 363
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/app.js",
+      "line": 368
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/app.js",
+      "line": 388
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/app.js",
+      "line": 392
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/app.js",
+      "line": 414
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/app.js",
+      "line": 418
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/app.js",
+      "line": 419
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/app.js",
+      "line": 422
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/app.js",
+      "line": 485
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/app.js",
+      "line": 490
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/app.js",
+      "line": 510
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/app.js",
+      "line": 538
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/app.js",
+      "line": 538
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/app.js",
+      "line": 542
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/app.js",
+      "line": 552
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/app.js",
+      "line": 579
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/app.js",
+      "line": 599
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/app.js",
+      "line": 619
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/app.js",
+      "line": 626
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/app.js",
+      "line": 627
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/app.js",
+      "line": 639
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/app.js",
+      "line": 668
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/app.js",
+      "line": 673
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/app.js",
+      "line": 685
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/app.js",
+      "line": 689
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/app.js",
+      "line": 698
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/app.js",
+      "line": 699
+    },
+    {
+      "code": "UNSAFE_VAR_ASSIGNMENT",
+      "file": "prototype/app.js",
+      "line": 706
+    }
+  ],
+  "disposition": "No linter errors. Warnings are not waived or certified safe: dynamic HTML sinks need existing escaping/source evidence for review; Android minimum/data-consent warning is outside the desktop support claim. Signing, actual Firefox runtime and policy review remain."
+}

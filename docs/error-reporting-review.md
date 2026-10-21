@@ -26,3 +26,7 @@ The Google authentication wrapper checks for the required method before calling 
 For each case record the trigger, reliable evidence, user-facing explanation, affected data/action, whether an operation is rejected or unconfirmed, a safe next action, placement, persistence/dismissal and verification. Do not automatically retry a calendar mutation or promise that it failed when only its reply was lost. Prefer clear cause/action over repeated generic Try again. Define safe diagnostic facts and references for currently unmapped failures during the wider review; no telemetry or developer reporting service is authorized by this record.
 
 The owner still controls wording/UX approval. Coverage of this first failure family is engineering evidence, not completion of the system-wide review.
+
+## 0.9.4.6 connection additions
+
+The independent path is now implemented, with G110 for owner setup, G111 for an unregistered package return, G112 for missing background communication and G114 for an unverifiable sign-in result. Help → Connection details provides a safe local capability report. [Activation](browser-signin-setup.md) and real Google consent remain pending; this still does not complete the system-wide reporting review.

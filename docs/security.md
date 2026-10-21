@@ -1,5 +1,13 @@
 # SlotDesk security and privacy
 
+## 0.9.4.6 authentication and platform boundary
+
+The independent OAuth service receives Google authorization codes/tokens transiently for exchange and refresh. Server-only Web client/encryption secrets remain in hosting. Purpose-bound AES-256-GCM envelopes bind exact approved return URI, originating extension and PKCE challenge; sensitive exchanges/refreshes require the verifier. The callback returns only code/state. Tokens and the encrypted refresh envelope/verifier remain in background memory or `storage.session`, never workspace localStorage, backups, logs or Neon. Session storage clears at browser exit; provider/envelope expiry is at most seven days in this beta. The older Chrome fallback remains browser-managed while the service is inactive.
+
+The service performs fixed-endpoint, bounded, timed Google requests; exact approved Chromium origins and Firefox extension transport origins receive CORS without cookies. Firefox dynamic origins are not authentication: proof and origin-bound encrypted credentials are required separately. Registration relays only the existing five user-confirmed fields to the existing insert-only table. Public status exposes readiness/build only. Coarse in-memory throttling is not distributed production abuse control. Server/hosting access logs must not record codes, tokens or request bodies; review platform logging/redaction before wider rollout.
+
+The new `storage` permission is for session-only credentials. The existing Google scopes/host permissions, account checks and reviewed create/reschedule/edit transports are unchanged. Missing Web Locks fails closed; missing sidebar support opens a full tab. These focused implementation tests are not a new exhaustive repository-wide security certification. Real-provider activation, other engines and store-specific privacy/consent review remain open.
+
 Version 0.7.1 adds a separate allowlisted guest/detail editing path with identity, organizer, permission, ETag and shared-write protections. No deletion or calendar move operation is introduced.
 
 Version 0.7.0 adds an explicit, time-only existing-event PATCH boundary with account, organizer, permission and ETag guards. Creation remains a separate guarded writer. No calendar deletion or move exists; no meeting changes automatically. Focused automated checks and reported live outcomes are recorded below.
@@ -24,7 +32,7 @@ Google's **calendar.events permission includes editing/deleting events**. SlotDe
 
 | Data | Handling |
 | --- | --- |
-| Google access tokens | Accessed through Chrome identity; not written to SlotDesk settings, event logs or Git. Chrome manages its token cache. |
+| Google access tokens | New broker path: transient hosted exchange/refresh, then browser-memory/session storage. Legacy Chrome path: browser identity cache. Neither enters workspace settings, event logs, backups or Git. |
 | Fetched calendars/events | Held in session memory and displayed when needed; not stored in SlotDesk settings. Disconnect clears session state, editors and calendar-derived DOM. |
 | Profiles, contact emails, mappings, constraints, travel, preferences | Persist in extension localStorage, separated by connected account. These may contain sensitive scheduling information. |
 | Prepared unfinished outgoing invitation | Persists for duplicate-safe recovery, including title, attendee emails, times, location/description and identifiers. Removed after confirmed completion. |
@@ -39,7 +47,7 @@ Local settings and pending invitations are **not encrypted by SlotDesk**. Accoun
 
 The packaged [privacy notice](../extension/privacy.html) is accessible through Help before and after connection.
 
-Disconnect clears Chrome's cached tokens through its identity API; it does not remove Google's existing consent grant or saved settings. Loaded data is cleared from the current window; other open same-account SlotDesk windows receive the disconnect notification and clear their displayed session too. Settings → Clear saved SlotDesk data removes the connected account's saved workspace after any unfinished send is resolved; it does not delete Calendar appointments. Remove the app grant separately through Google account controls if access must be revoked.
+Disconnect clears the current background/session credentials and, for the native Chrome path, Chrome's cached tokens through identity; it does not remove Google's existing consent grant or saved settings. Loaded data is cleared from the current window; other open same-account SlotDesk windows receive the disconnect notification and clear their displayed session too. Settings → Clear saved SlotDesk data removes the connected account's saved workspace after any unfinished send is resolved; it does not delete Calendar appointments. Remove the app grant separately through Google account controls if access must be revoked.
 
 Calendar text is escaped or inserted with textContent. Receipt links are restricted to HTTPS Google Calendar/Meet hosts. Manifest CSP restricts extension scripts; there are no content scripts, external messaging bridge or web-accessible resources. Reader/writer fetches reject redirects and omit cookies, referrers and cache reuse. Never add tokens, client secrets, real calendar exports or private screenshots to Git. The extension key and OAuth client ID are public identifiers.
 

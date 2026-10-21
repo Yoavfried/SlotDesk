@@ -1,8 +1,8 @@
 ![SlotDesk — make room for what matters](design/assets/slotdesk-banner.svg)
 
-**0.9.4.5 · Google Calendar · private Chrome pilot**
+**0.9.4.6 · Google Calendar · private desktop-extension beta**
 
-Version **0.9.4.5** adds automatic shorter/later alternatives, distinct suggestion batches, compact factual participant rows, friendly timezone labels, a copyable planning email and grouped overlap review. See the [release scope](docs/release-plan-0.9.4.5.md), [validation](docs/testing.md) and [version history](docs/changelog.md). Appointment logic and the wider UX remain under active owner review. Advanced profile-settings cleanup is reserved for the owner-led 0.9.5 review.
+Version **0.9.4.6** adds shared desktop-browser adapters, independent Google sign-in code, safe tab fallback, connection diagnostics and separate Chromium/Firefox/Safari-source packages. The new sign-in service needs [owner activation](docs/browser-signin-setup.md). See the [release scope](docs/release-plan-0.9.4.6.md), [actual compatibility matrix](docs/browser-compatibility.md), [store requirements](docs/extension-stores.md), [validation](docs/testing.md) and [version history](docs/changelog.md). Appointment logic and the wider UX remain under active owner review. Advanced profile-settings cleanup is reserved for the owner-led 0.9.5 review.
 
 SlotDesk helps executive assistants find meeting times across people, calendars and timezones. Review a new invitation, browse existing meetings, edit its details and guests, or choose a new time for an appointment. Every calendar write requires an explicit review and confirmation.
 
@@ -25,7 +25,7 @@ SlotDesk never moves another appointment automatically. Its application code has
 
 ## Try the approved pilot
 
-Download the ZIP from [releases](https://github.com/Yoavfried/slotdesk/releases), extract it and open `START-HERE.html`. Load the extracted folder as an unpacked Chrome extension. Google sign-in is currently limited to the owner's approved pilot audience; a work account also needs workplace approval.
+Download the ZIP from [releases](https://github.com/Yoavfried/slotdesk/releases), extract it and open `START-HERE.html`. Load the Chromium ZIP as an unpacked desktop extension. Other target artifacts have explicit unsigned/source-only limits; consult the compatibility matrix. Google sign-in is currently limited to the owner's approved pilot audience; a work account also needs workplace approval.
 
 For source installation, load the **`extension/`** folder. The repository move preserves the extension identity and Google OAuth configuration. [Installation and updates](docs/install.md).
 
@@ -42,7 +42,7 @@ npm run check
 npm run package:slotdesk
 ```
 
-The preview at `http://127.0.0.1:8770/` shows the disconnected interface. Calendar connection uses Chrome extension identity. The package is generated in ignored `dist/`.
+The preview at `http://127.0.0.1:8770/` shows the disconnected interface. Calendar connection needs the installed extension. The browser-independent path needs owner hosting activation; the native Chrome pilot remains available. Target packages are generated in ignored `dist/`.
 
 ## Decisions, evidence and next work
 
@@ -59,14 +59,14 @@ The preview at `http://127.0.0.1:8770/` shows the disconnected interface. Calend
 | [Design language](design/README.md) | Original style guide, fonts and design assets |
 | [Product changelog](docs/changelog.md) · [repository changelog](CHANGELOG.md) | Product releases and repository migration |
 
-Local validation includes 1,684 synthetic application checks and 22 export-comparison checks. The onboarding, scope, guest and flexibility flows have synthetic browser/transport coverage; real Google guest-edit delivery has not been independently observed. Basic live creation and the first dense-calendar integrity comparison passed. The owner also reports working decline alerts, sensible proposals, successful rescheduling and correct overlap details. Work-account access depends on the organization allowing the extension and Google permissions.
+Current exact validation counts and per-browser scope are recorded in [the validation record](docs/testing.md), alongside 22 export-comparison checks. The onboarding, scope, guest and flexibility flows have synthetic browser/transport coverage; real Google guest-edit delivery has not been independently observed. Basic live creation and the first dense-calendar integrity comparison passed. The owner also reports working decline alerts, sensible proposals, successful rescheduling and correct overlap details. Work-account access depends on the organization allowing the extension and Google permissions.
 
 ![Overlap details with synthetic calendar data](docs/assets/overlaps-v070.png)
 
 ## Repository map
 
 ```text
-extension/       Chrome application, scheduling engine, bundled fonts and tests
+extension/       Shared browser application, scheduling engine, bundled fonts and tests
 docs/            Product decisions, architecture, roadmap and acceptance records
 design/          Original design-kit references and documentation artwork
 scripts/         Preview, validation, synthetic fixtures and ZIP packaging
