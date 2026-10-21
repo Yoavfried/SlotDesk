@@ -5,6 +5,7 @@ The repository is private and the product is an approved Google Calendar Chrome 
 - Maintain accurate automated and user-reported validation evidence; do not mark unperformed checks as passed.
 - Confirm the target organization allows the extension and requested Google access for work-account use.
 - Choose a supported extension installation/update channel and organization onboarding guidance.
+- Follow the proposed [browser compatibility plan](browser-compatibility.md): explicit targets and evidence, stable per-store identities, appropriate manifests/redirects and browser-specific signing/distribution. Compatibility work and closed-beta OAuth do not by themselves authorize public store publication.
 - Complete applicable Google OAuth/distribution approval and target-organization requirements.
 - Review source, history, screenshots and downloadable artifacts for credentials or private data before public publication. Keep the intentionally public extension/OAuth identifiers distinct from secrets.
 - Choose and record the project-wide public software license. Preserve existing third-party/font license texts.

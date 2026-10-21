@@ -36,6 +36,10 @@ This release may apply the agreed scheduling semantics to existing saved default
 
 Reserved only for a complete owner-led **wording, UX and logic review of Edit profile's advanced settings**, including every More settings section, followed by the specified fixes. Do not begin that review-driven cleanup or release 0.9.5 until the owner performs the review and gives directions; release also requires their approval. Codex must not infer readiness or substitute source/tests for the owner's review.
 
+## Browser compatibility — proposed plan
+
+The owner requested broad browser-compatibility planning on 21 October. The [source-based plan](browser-compatibility.md) recommends desktop Chromium first (Chrome/Vivaldi/Edge, then Brave/Opera), followed by Firefox and Safari. Shared core/platform adapters, independent Google consent, safe native-sidebar/full-tab launch, stable package identities, exact service origins and unchanged calendar-write guards are the foundation. Actual browser/OS validation precedes any support claim. Mobile and a hosted no-install workspace remain separate later decisions. This is planning only, with no runtime port, OAuth deployment or store submission.
+
 ## Error reporting — system-wide review required
 
 Owner direction, 21 October: review explanations, next actions and presentation throughout the system. The first same-version 0.9.4.5 hotfix classifies Google sign-in failures, including unsupported/disabled browser identity. The [full review inventory](error-reporting-review.md) remains open; this is separate from the advanced-profile review reserved for 0.9.5. [Browser-independent Google consent](google-connection.md) is feasible in the approved-email closed beta without Chrome Web Store publication; its authentication/configuration work remains proposed, not implemented.

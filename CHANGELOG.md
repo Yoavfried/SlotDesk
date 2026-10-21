@@ -1,5 +1,10 @@
 # Repository changelog
 
+## 2026-10-21 — Browser compatibility planning
+
+- Inventory authentication, native panel startup, manifests/backgrounds, locks/local storage, file/clipboard/UI and service-origin dependencies. Propose a shared platform layer and desktop Chromium → Firefox → Safari sequence with actual-package integration evidence.
+- Keep store rollout, mobile and a hosted no-install workspace as separate decisions. No runtime/browser port, package refresh or authentication deployment in this documentation change.
+
 ## 2026-10-21 — Sign-in error-reporting hotfix
 
 - Classify Google sign-in failures with actionable messages and stable safe references, beginning with the reproduced Vivaldi browser-sign-in refusal. Keep the current OAuth flow and Calendar writes unchanged.

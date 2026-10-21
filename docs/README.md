@@ -13,7 +13,7 @@
 | Recovery | [Accepted connection, permission and recovery experience](recovery-experience.md), [system-wide error-reporting review](error-reporting-review.md), [Google connection and closed-beta direction](google-connection.md) |
 | Registration and leads | [Agreed five-column onboarding leads table](leads-table.md), [hosting and verification](registration-deployment.md) |
 | Future concepts | [Optional BYOK LLM assistance](llm-assistance.md), [unconfirmed availability emails](time-inquiries.md) |
-| Development | [Architecture](architecture.md), [engine API](engine-api.md), [installation](install.md), [local export/import](export-import.md) |
+| Development | [Architecture](architecture.md), [engine API](engine-api.md), [installation](install.md), [local export/import](export-import.md), [browser compatibility plan](browser-compatibility.md) |
 | Accessibility | [Technical fixes, coverage and remaining checks](accessibility.md) |
 | Validation | [Validation record](testing.md), [optional calendar comparison kit](calendar-acceptance.md) |
 | Privacy and distribution | [Security/privacy](security.md), [publication checklist](publication.md) |
