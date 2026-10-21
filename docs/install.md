@@ -4,7 +4,7 @@
 
 Use `SlotDesk-0.9.4.6.zip` for the manually loaded Chromium desktop beta: `chrome://extensions` (Chrome), `edge://extensions` (Edge), `vivaldi://extensions` (Vivaldi), or the browser's Extensions manager → Developer mode → Load unpacked. Extract the entire ZIP first. Retain the same installed folder/identity and use Reload when updating. Native panel availability varies; the full workspace tab is a supported fallback. Current [browser evidence and limits](browser-compatibility.md) apply.
 
-The existing Chrome pilot can connect while the new service is inactive. Vivaldi/Edge independent consent requires the owner's [one-time Google/Vercel activation](browser-signin-setup.md); testers do not create Cloud projects.
+The owner completed [one-time Google/Vercel activation](browser-signin-setup.md) on 21 October. Public readiness is true for 0.9.4.6. Update/reload the extension to use the independent connection; testers do not create Cloud projects. Actual new-flow Google consent is the next check.
 
 The Firefox artifact is an **unsigned development XPI**. For temporary source testing, extract it and select its manifest through `about:debugging` → This Firefox → Load Temporary Add-on. Normal release-channel distribution needs Mozilla signing; temporary loads disappear after restart. Safari's ZIP is **source preparation only**, not a working installable app; authentication and Apple packaging/signing/testing remain. Do not load Chrome's service-worker manifest as the Firefox port.
 
@@ -45,4 +45,4 @@ From source, load `extension/`, not the repository root. The pinned extension ID
 
 Version 0.9.4.6 includes the registration notice and optional updates choice introduced in the 0.9.0 preview. Its central endpoint is configured. Settings shows whether registration is saved or waiting; a failed submission stays queued locally. The private 0.9.4.6 pilot package includes this configured service. On update, Chrome may ask you to accept access to the exact registration-service host.
 
-Version 0.9.4.6 adds `storage` permission for browser-memory credentials. The independent path clears sign-in at browser exit while retaining saved workspace settings. The existing registration endpoint remains configured; the new sign-in endpoint is deployed but guarded until owner activation.
+Version 0.9.4.6 adds `storage` permission for browser-memory credentials. The independent path clears sign-in at browser exit while retaining saved workspace settings. The existing registration endpoint remains configured; the new sign-in endpoint is deployed and activated. Its public readiness is verified; that is separate from completing a real Google sign-in.

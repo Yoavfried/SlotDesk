@@ -13,7 +13,7 @@ Prepared for **0.9.4.6**, 21 October 2026. No submission, publisher account purc
 
 ## Common blockers and decisions
 
-1. Activate the server-side Google Web client using [the consolidated guide](browser-signin-setup.md); retain the approved test audience. Store review, OAuth verification and workplace administration are three separate approvals.
+1. The server-side Google connection was activated on 21 October; retain the approved test audience and complete real-provider verification in the updated extension. Keep [the consolidated guide](browser-signin-setup.md) as the configuration reference. Store review, OAuth verification and workplace administration are three separate approvals.
 2. Publish an accurate reachable privacy notice/support contact for review. Explain that Google codes/tokens pass transiently through the auth service, calendar operations stay direct to Google, local credentials are session-only, and the leads table receives the five user-confirmed fields. State required registration and the separate optional updates checkbox accurately. Review each store's data/consent policy before submission; do not silently relabel or remove the agreed leads feature.
 3. Choose the project software/distribution license and final listing/publisher names. Preserve both GitHub credits, [Website name TBD] and third-party font/data notices. The repository remains private until a separate owner decision.
 4. Prepare brand-consistent toolbar/listing raster icons and genuine synthetic-data screenshots. Existing in-app wordmark/design-kit assets remain authoritative; do not invent a different logo or substitute private calendar screenshots.

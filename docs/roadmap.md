@@ -38,11 +38,11 @@ Reserved only for a complete owner-led **wording, UX and logic review of Edit pr
 
 ## Browser compatibility — 0.9.4.6 implemented foundation
 
-The owner approved and authorized the [compatibility implementation](browser-compatibility.md). Shared platform/authentication, separate packages and store-readiness documentation are delivered. [Owner activation](browser-signin-setup.md), real-provider verification, Brave/Opera/Firefox/Apple/other-OS validation, Firefox signing and Safari's separate authentication bridge remain. No public store submission is made. Mobile and a hosted no-install workspace remain separate decisions.
+The owner approved and authorized the [compatibility implementation](browser-compatibility.md). Shared platform/authentication, separate packages and store-readiness documentation are delivered. [Owner activation](browser-signin-setup.md) completed on 21 October with public readiness verified true. Real-provider verification, Brave/Opera/Firefox/Apple/other-OS validation, Firefox signing and Safari's separate authentication bridge remain. No public store submission is made. Mobile and a hosted no-install workspace remain separate decisions.
 
 ## Error reporting — system-wide review required
 
-Owner direction, 21 October: review explanations, next actions and presentation throughout the system. The first same-version 0.9.4.5 hotfix classifies Google sign-in failures, including unsupported/disabled browser identity. The [full review inventory](error-reporting-review.md) remains open; this is separate from the advanced-profile review reserved for 0.9.5. [Browser-independent Google consent](google-connection.md) is feasible in the approved-email closed beta without Chrome Web Store publication; its authentication code is implemented in 0.9.4.6; hosting activation and real-provider verification remain.
+Owner direction, 21 October: review explanations, next actions and presentation throughout the system. The first same-version 0.9.4.5 hotfix classifies Google sign-in failures, including unsupported/disabled browser identity. The [full review inventory](error-reporting-review.md) remains open; this is separate from the advanced-profile review reserved for 0.9.5. [Browser-independent Google consent](google-connection.md) is feasible in the approved-email closed beta without Chrome Web Store publication; its authentication code is implemented in 0.9.4.6; hosting activation is complete and public readiness verified; real-provider verification remains.
 
 ## Current review work
 

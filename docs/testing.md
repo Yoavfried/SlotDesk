@@ -1,5 +1,11 @@
 # SlotDesk validation record
 
+## 21 October — owner activation completed
+
+The owner reports completing the Google Web client, four production environment values and Vercel redeployment. Independently checked production deployment `dpl_8Ln2uogLSpikGfw9qRqi1vzXdUUe` is READY. The public status endpoint returns HTTP 200 with `ready:true`, version 0.9.4.6 and flow authorization-code. No secrets were read or recorded. This verifies configuration readiness only; real Google consent/token exchange and Calendar loading through that real connection remain to be checked after loading/reloading the updated extension.
+
+This is a hosting/documentation update. Runtime files, released ZIPs, hashes and the immutable 0.9.4.6 tag are unchanged. Existing installations should replace files in the same installed folder and Reload, retaining local profiles; uninstalling is not the update route.
+
 ## 21 October — 0.9.4.6 browser compatibility
 
 Post-package test portability correction: the remote UTC runner exposed a legacy engine fixture that omitted its intended search timezone. Its requests now explicitly use Asia/Jerusalem. All 2,099 application checks also pass with the host set to UTC. No runtime/packaged file changes; the release artifacts and hashes remain identical.
@@ -12,7 +18,7 @@ The Edge reviewed-write journey passes 15 assertions through the new authenticat
 
 Mozilla **web-ext 10.8.0** reports **0 errors, 0 notices and 68 warnings** for the generated unsigned Firefox port. The [warning inventory](firefox-lint-0.9.4.6.json) records dynamic HTML sink warnings and the Android minimum/data-consent warning. These are not waived as safe or presented as approval. Actual Firefox, signing, policy/consent review and reviewer source evidence remain required. Safari is preparation-only because its authentication bridge is missing.
 
-The new Vercel deployment is READY. Its public status returns version 0.9.4.6 and `ready:false` until owner secrets/allowlist are configured. Invalid registration input still returns 400 from the existing intake; no registration was inserted by these checks. The [activation guide](browser-signin-setup.md) contains all owner actions in one place. No real Google sign-in/invitations, store submissions or other-device validation are claimed. The synthetic fixture copy alone adds a local transport and a labelled banner; those changes are excluded from released artifacts.
+At the initial pre-activation check, the new Vercel deployment was READY and its public status returned version 0.9.4.6 with `ready:false`. The later owner activation and readiness check are recorded above. Invalid registration input still returns 400 from the existing intake; no registration was inserted by these checks. The [activation guide](browser-signin-setup.md) contains all owner actions in one place. No real Google sign-in/invitations, store submissions or other-device validation are claimed. The synthetic fixture copy alone adds a local transport and a labelled banner; those changes are excluded from released artifacts.
 
 See [structured evidence](validation-0.9.4.6.json), [browser matrix](browser-compatibility.md), [release scope](release-plan-0.9.4.6.md) and [store requirements](extension-stores.md). These checks do not complete the broader error-reporting/accessibility/owner UX reviews or the owner-led 0.9.5 advanced-profile review.
 

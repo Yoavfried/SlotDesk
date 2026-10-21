@@ -2,7 +2,7 @@
 
 ## 0.9.4.6 — browser platform implementation
 
-Shared API/launcher/lock adapters, serialized background OAuth, hosted code/PKCE exchange and session-only refresh, authenticated registration relay, connection diagnostics, three target packages and store/activation documentation are implemented. [The compatibility matrix](browser-compatibility.md) distinguishes actual synthetic native-browser evidence from unverified Firefox/Apple/other-OS targets. Hosting activation and real Google consent remain owner steps; store listings are not submitted.
+Shared API/launcher/lock adapters, serialized background OAuth, hosted code/PKCE exchange and session-only refresh, authenticated registration relay, connection diagnostics, three target packages and store/activation documentation are implemented. [The compatibility matrix](browser-compatibility.md) distinguishes actual synthetic native-browser evidence from unverified Firefox/Apple/other-OS targets. Hosting activation completed on 21 October with public readiness verified true. Real Google consent remains the next check; store listings are not submitted.
 
 ## New-meeting workflow — 0.9.4.5
 

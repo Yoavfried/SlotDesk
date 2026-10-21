@@ -93,7 +93,8 @@
     "versionReported": "0.9.4.6",
     "invalidExistingIntakeHTTP": 400,
     "realRegistrationsInserted": 0,
-    "activation": "owner Google client and four environment variables required"
+    "activation": "owner Google client and four environment variables required",
+    "phase": "Initial deployment before owner activation"
   },
   "notVerified": [
     "real Google authorization for new flow",
@@ -113,5 +114,18 @@
       "UTC"
     ],
     "correction": "Legacy engine fixture now explicitly sets its intended search timezone. Test-only follow-up; packaged runtime and hashes unchanged."
+  },
+  "activationVerification": {
+    "date": "2026-10-21",
+    "reportedByOwner": "Google Web client, four Production variables and redeployment completed",
+    "deploymentId": "dpl_8Ln2uogLSpikGfw9qRqi1vzXdUUe",
+    "deploymentStatus": "READY",
+    "publicStatusHTTP": 200,
+    "ready": true,
+    "version": "0.9.4.6",
+    "flow": "authorization-code",
+    "secretValuesRead": false,
+    "realGoogleConsentVerified": false,
+    "runtimePackagesChanged": false
   }
 }

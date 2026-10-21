@@ -1,6 +1,6 @@
 # Activate browser-independent Google sign-in
 
-Owner configuration for **0.9.4.6**. Testers do not perform these steps. The code is deployed in Vercel deployment `dpl_32tLxkfrtKXPmetpJiuMCRvqeHzQ`; its status is READY and public auth readiness is false until these settings are entered. The release preserves the existing Chrome pilot while this service is inactive. No Chrome Web Store listing is needed for this closed-beta setup.
+Owner configuration for **0.9.4.6**. Testers do not perform these steps. **Activation completed on 21 October 2026.** The owner reports completing these steps. Production redeployment `dpl_8Ln2uogLSpikGfw9qRqi1vzXdUUe` is READY, and an independent public check returned HTTP 200 with `ready:true`, version 0.9.4.6 and flow authorization-code. These instructions remain a configuration reference; completed steps do not need repeating. Next, load/reload the 0.9.4.6 extension and check real Google consent. The release preserves the existing Chrome pilot when the independent service is inactive. No Chrome Web Store listing is needed for this closed-beta setup.
 
 ## 1. Add one Google Web application client
 
@@ -41,4 +41,4 @@ Environment changes apply to a new deployment. Redeploy the latest **slotdesk-le
 
 Load/reload the 0.9.4.6 Chromium package in your regular Vivaldi, Edge or Chrome browser. Connect Google should open Google's own account choice and permission window. Choose an already approved test email. Check that your calendar list loads; signing in does not create an invitation. If it fails, Help → Connection details provides a safe report without tokens or account/calendar contents.
 
-The agent's hosting connection could read this Vercel project but could not manage its environment variables; its CLI account also lacked access. Therefore private values and Google Cloud setup are left for the owner together here. No additional database/table configuration is needed. Firefox still needs real-browser validation and signing; Safari authentication is not implemented by these settings.
+The agent's hosting connection could read this Vercel project but could not manage its environment variables; its CLI account also lacked access. The owner subsequently completed Google Cloud setup, entered the private values directly and redeployed; configuration readiness is now verified. No additional database/table configuration is needed. Firefox still needs real-browser validation and signing; Safari authentication is not implemented by these settings.

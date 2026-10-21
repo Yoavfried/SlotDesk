@@ -1,5 +1,7 @@
 # SlotDesk changelog
 
+Activation update — 21 October 2026: the owner completed Google/Vercel configuration and redeployed. Public readiness is independently verified true for 0.9.4.6. Runtime/package files and checksums are unchanged; real new-flow Google consent is the next check. See the [activation record](browser-signin-setup.md).
+
 ## 0.9.4.6 — 21 October 2026
 
 Post-package test-only correction: explicitly anchor the legacy engine fixture to its intended Jerusalem search timezone. The full 2,099-check suite passes on a UTC host as well. Runtime/package bytes and immutable release tag remain unchanged.

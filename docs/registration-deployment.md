@@ -1,6 +1,6 @@
 # Registration service activation
 
-Original activation: 15 October 2026 for the private 0.9.0 preview. The table and evidence below describe that activation. Current release is 0.9.4.6: Vercel deployment `dpl_32tLxkfrtKXPmetpJiuMCRvqeHzQ` is READY with the unchanged intake plus the guarded Google sign-in route. Its public readiness is false until [owner activation](browser-signin-setup.md). Invalid intake input still returns 400; no lead was inserted during the 21 October checks.
+Original activation: 15 October 2026 for the private 0.9.0 preview. The table and evidence below describe that activation. Current release is 0.9.4.6. The owner completed [Google/Vercel activation](browser-signin-setup.md); production redeployment `dpl_8Ln2uogLSpikGfw9qRqi1vzXdUUe` is READY. A public check on 21 October returned HTTP 200 with `ready:true`, version 0.9.4.6 and flow authorization-code. This confirms configuration readiness, not a completed Google sign-in. The earlier initial broker deployment was `dpl_32tLxkfrtKXPmetpJiuMCRvqeHzQ`, before these values were configured. Invalid intake input still returns 400; no lead was inserted during the 21 October checks.
 
 | Component | Configuration |
 | --- | --- |

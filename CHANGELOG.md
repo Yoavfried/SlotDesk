@@ -1,5 +1,10 @@
 # Repository changelog
 
+## 2026-10-21 — Google browser connection activated
+
+- Record the owner-completed Google/Vercel setup and READY production redeployment, independently verified as HTTP 200 / ready true / version 0.9.4.6. No secrets enter Git.
+- Keep real-provider consent separate from configuration readiness. Retain the exact released runtime/package hashes and document updating the existing installed folder plus Reload, preserving local data.
+
 ## 2026-10-21 — SlotDesk 0.9.4.6
 
 - Implement the owner-authorized browser platform/authentication/package work with explicit per-target evidence and limits. Add hosted broker source and a single owner activation guide; no store publication or Google audience change.

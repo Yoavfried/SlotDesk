@@ -2,7 +2,7 @@
 
 **0.9.4.6 · Google Calendar · private desktop-extension beta**
 
-Version **0.9.4.6** adds shared desktop-browser adapters, independent Google sign-in code, safe tab fallback, connection diagnostics and separate Chromium/Firefox/Safari-source packages. The new sign-in service needs [owner activation](docs/browser-signin-setup.md). See the [release scope](docs/release-plan-0.9.4.6.md), [actual compatibility matrix](docs/browser-compatibility.md), [store requirements](docs/extension-stores.md), [validation](docs/testing.md) and [version history](docs/changelog.md). Appointment logic and the wider UX remain under active owner review. Advanced profile-settings cleanup is reserved for the owner-led 0.9.5 review.
+Version **0.9.4.6** adds shared desktop-browser adapters, independent Google sign-in code, safe tab fallback, connection diagnostics and separate Chromium/Firefox/Safari-source packages. The new sign-in service was activated on 21 October; its public status reports `ready:true` for 0.9.4.6. The [owner setup guide](docs/browser-signin-setup.md) is retained for configuration reference. Actual new-flow Google sign-in still needs checking in the updated extension. See the [release scope](docs/release-plan-0.9.4.6.md), [actual compatibility matrix](docs/browser-compatibility.md), [store requirements](docs/extension-stores.md), [validation](docs/testing.md) and [version history](docs/changelog.md). Appointment logic and the wider UX remain under active owner review. Advanced profile-settings cleanup is reserved for the owner-led 0.9.5 review.
 
 SlotDesk helps executive assistants find meeting times across people, calendars and timezones. Review a new invitation, browse existing meetings, edit its details and guests, or choose a new time for an appointment. Every calendar write requires an explicit review and confirmation.
 
@@ -42,7 +42,7 @@ npm run check
 npm run package:slotdesk
 ```
 
-The preview at `http://127.0.0.1:8770/` shows the disconnected interface. Calendar connection needs the installed extension. The browser-independent path needs owner hosting activation; the native Chrome pilot remains available. Target packages are generated in ignored `dist/`.
+The preview at `http://127.0.0.1:8770/` shows the disconnected interface. Calendar connection needs the installed extension. The browser-independent service is activated; use the updated 0.9.4.6 extension to connect. The native Chrome pilot remains available as a fallback when that service is inactive. Target packages are generated in ignored `dist/`.
 
 ## Decisions, evidence and next work
 

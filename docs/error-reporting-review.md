@@ -29,4 +29,4 @@ The owner still controls wording/UX approval. Coverage of this first failure fam
 
 ## 0.9.4.6 connection additions
 
-The independent path is now implemented, with G110 for owner setup, G111 for an unregistered package return, G112 for missing background communication and G114 for an unverifiable sign-in result. Help → Connection details provides a safe local capability report. [Activation](browser-signin-setup.md) and real Google consent remain pending; this still does not complete the system-wide reporting review.
+The independent path is now implemented, with G110 for owner setup, G111 for an unregistered package return, G112 for missing background communication and G114 for an unverifiable sign-in result. Help → Connection details provides a safe local capability report. [Activation](browser-signin-setup.md) completed on 21 October with public readiness verified true; real Google consent remains pending; this still does not complete the system-wide reporting review.

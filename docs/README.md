@@ -1,6 +1,6 @@
 # SlotDesk documentation
 
-Current release: **0.9.4.6**. [Scope](release-plan-0.9.4.6.md) · [Browser evidence](browser-compatibility.md) · [Owner sign-in activation](browser-signin-setup.md) · [Store requirements](extension-stores.md). Google/Vercel activation remains required for the independent path; unsigned Firefox and Safari-source are not approved store releases.
+Current release: **0.9.4.6**. [Scope](release-plan-0.9.4.6.md) · [Browser evidence](browser-compatibility.md) · [Owner sign-in activation](browser-signin-setup.md) · [Store requirements](extension-stores.md). Google/Vercel activation completed on 21 October, with public readiness verified true. Real new-flow Google consent remains to be checked; unsigned Firefox and Safari-source are not approved store releases.
 
 | Area | Records |
 | --- | --- |
