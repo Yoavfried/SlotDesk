@@ -44,7 +44,7 @@ The owner explicitly confirmed: **Protect and saved flights still block; ignore 
 - This does not remove another participant, their invite, their own independent rules or accurate calendar-coverage status. It does not move, cancel, delete or reschedule the original appointment.
 - Saved profile defaults and the existing per-meeting override use the same semantics. Turning an override off restores the active meeting conflicts for that person in that search.
 - Explicit manually blocked periods, configured meeting radii, flight buffers and notice remain independent controls. Ignore an individual meeting removes its derived radius as well; simply allowing overlaps does not turn off a separately configured radius. Review any ambiguous combined case visibly before implementation rather than inventing an exception.
-- Ensure ignored conflicts do not reappear in immediate post-booking alerts/follow-ups. The treatment of calendar-wide factual Overlapping labels and subsequent preference changes needs an explicit implementation boundary: those labels describe actual event intersections, whereas this setting governs participant scheduling and warnings. Do not silently alter the existing management screen's factual overlap detection while implementing a profile preference.
+- Ensure ignored conflicts do not reappear in immediate post-booking scheduling alerts/follow-ups. The owner explicitly confirmed that factual Overlapping labels and their actual-intersection details remain in Existing meetings, even when the saved profile preference or a per-meeting override ignores those overlaps for scheduling. Keep these factual labels distinct from warnings, ranking and automatic rescheduling follow-ups.
 
 ## Independent working and convenience rules
 
@@ -59,21 +59,17 @@ Each checkbox removes its corresponding rule completely. Current source combines
 
 Ignoring one rule must remove it from all candidate selection and fallback classifications, not just the participant's visible status. Keep other participants' active rules. No warning may be synthesized from a rule the user chose to ignore.
 
-## Timezone clues to confirm — explanation and recommendation
+## Timezone clues to confirm — removal accepted
 
-Current source: the separate Show suggestions action calls the deterministic Google adapter helper. It combines manually typed clue text, already loaded linked-calendar event titles/locations/office labels, and a linked calendar's timezone. It recognizes explicit IANA names and a small fixed list such as New York/US Eastern, London, Tokyo, Jerusalem/Tel Aviv, Singapore and Sydney. It does not read emails or use an LLM. Choosing a suggestion changes the profile timezone only after the user clicks it.
+The owner confirmed removal of this standalone advanced section after reviewing its use case. Keep the main searchable timezone selector. The old helper used manually typed text, calendar timezone and already loaded event title/location clues to offer a suggestion for confirmation; this was redundant with city search for known locations and did not reliably establish the person's usual location. Travel-specific clues remain part of the pending Travel & flights review.
 
-This helper predates the broader searchable city/timezone picker. Recommendation, **not yet an owner-confirmed removal**: remove the redundant standalone advanced section; keep the main searchable timezone field. A calendar timezone is only a clue about a calendar and must not be claimed to prove a person's location. Travel-specific suggestions belong to the pending travel/flight review and are not automatically removed with this section.
+## Availability and recurring profile blockers — direction reopened
 
-## Available times — accepted removal from saved settings
+Earlier in this review the owner agreed to remove new recurring Available times from saved settings while retaining explicit positive availability for individual meetings. They have now questioned the meeting-specific use case and proposed **constant blockers per profile** instead. Do not implement a new positive per-meeting availability form as an already settled 0.9.5 requirement.
 
-The owner confirmed: **remove recurring Available times from saved profile settings; retain explicit availability for an individual meeting**. The existing use case, such as a guest available only Tuesdays/Wednesdays at 18:00 Eastern for a particular request, remains supported at meeting scope.
+The current direction to develop is recurring profile blocks, for example Every Tuesday, 13:00–14:00, with their timezone, scheduling effect and editor still to be reviewed. This is a saved-profile rule, distinct from working/convenience hours and existing one-off meeting exclusions. The owner has not yet approved a new blocker form, field set or section placement.
 
-- Do not offer creation of recurring availability rules in the saved-profile advanced settings.
-- Previously saved availability rules remain visible and active until the user deliberately removes them; do not silently discard them on opening a profile, upgrading, exporting, importing or restoring.
-- A conditional previously-saved-rules area can expose those rules and their removal without bringing back Add availability for ordinary profiles. This is migration UX, not a new default section.
-- Meeting-specific availability needs an explicit positive choice, separate from blocking/inconvenient periods, with an explicit timezone and clearly bounded dates/weekdays/window or exact start. Retain its accepted authorization semantics and keep it with the existing per-person Options for this meeting controls.
-- Review the concrete meeting-scope form and legacy-rule presentation before implementation; do not silently reinterpret old rules as a person's working schedule.
+Previously saved positive availability rules must remain visible and effective until deliberately removed or explicitly migrated. Do not silently erase them, reinterpret them as negative blockers, or lose them through upgrade, export/import or restore. Existing temporary meeting/person time rules remain available; the new positive meeting-only form is under reconsideration.
 
 ## Holiday exceptions — calendar-backed selection
 
@@ -120,8 +116,8 @@ Legacy flexible/movable/leave overrides need an explicit preservation/migration 
 
 ## Remaining owner review and implementation checks
 
-Settled by the owner's answers: explicit Protect/flights win over allowed overlaps; new detection defaults off and existing behavior is preserved; recurring saved availability is removed while meeting-specific availability and deliberately retained legacy rules remain.
+Settled by the owner's answers: explicit Protect/flights win over allowed overlaps; new detection defaults off and existing behavior is preserved; the standalone timezone-clue section is removed; factual Existing meetings overlap labels remain even for ignored overlaps. Preserve previously saved availability until deliberately removed; the proposed new availability UI is reopened around recurring profile blockers.
 
-Still open: travel and flight UX/logic (required in 0.9.5), confirming removal of the standalone timezone-clue section, the concrete calendar-backed holiday/meeting browser and migration details, and final review/authorization. Do not treat this record as owner approval of every proposed detail.
+Still open: travel and flight UX/logic and helper text (required in 0.9.5), recurring profile blocker design, the concrete calendar-backed holiday/meeting browser and recurrence/migration details, non-flight detection field wording, and final review/authorization. Do not treat this record as owner approval of every proposed detail.
 
 When implementation is authorized, cover each Ignore combination, required/optional/own participants, shared event copies, protection versus ignored overlaps, detection on/off with defaults/custom/empty lists, source failures, partial leave exceptions, recurring occurrence identity, legacy overrides/availability, import/export/full restore, live-save/window conflicts, keyboard focus and narrow/wide layouts. New settings and scoped overrides must remain portable under the existing backup/profile-file contract. Recheck that no profile operation calls a Calendar create/PATCH/delete/move transport. Wider UX readiness remains the owner's decision.

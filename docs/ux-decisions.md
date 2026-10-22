@@ -1,5 +1,9 @@
 # SlotDesk UX decision register
 
+## 22 October — timezone helper removal and factual overlap labels
+
+The owner confirmed removal of the standalone Timezone clues to confirm section. Keep the searchable timezone selector and review travel-specific clues with flights. Factual Overlapping labels remain in Existing meetings even when a profile default or meeting override ignores those overlaps; scheduling warnings/ranking/follow-ups retain the accepted ignore semantics. The owner questioned the new positive meeting-specific availability form and proposed recurring saved-profile blockers instead; [that design is reopened](advanced-profile-review-0.9.5.md#availability-and-recurring-profile-blockers--direction-reopened). Preserve existing saved rules; no new availability UI is declared approved. Documentation only; 0.9.5 remains under owner review.
+
 ## 22 October — profile category help and overlap placement
 
 The owner approved category information icons and the [tooltip wording](advanced-profile-review-0.9.5.md#category-information-icons--owner-approved-wording), with Travel & flights wording explicitly still requiring its wider flight review. Rename Meeting rules to Notices and buffers and move the saved general overlap setting into Manage meetings, above individual Default / Ignore / Protect choices. Preserve sentence case, independent rule semantics and the existing per-meeting override. Planning only; runtime and release remain 0.9.4.6.

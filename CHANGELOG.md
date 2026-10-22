@@ -1,5 +1,10 @@
 # Repository changelog
 
+## 2026-10-22 — Further profile-review decisions
+
+- Confirm removal of the standalone timezone-clue helper and retention of factual Existing meetings overlap labels even for ignored overlaps.
+- Reopen the proposed positive meeting-specific availability UI around the owner's recurring-profile-blocker direction, while preserving existing saved rules. Holiday-exception browser details remain a proposal. Documentation only; runtime/packages remain unchanged.
+
 ## 2026-10-22 — Advanced-profile category help approved
 
 - Record approved category information-icon text, rename Meeting rules to Notices and buffers and move the general overlap control to Manage meetings.
