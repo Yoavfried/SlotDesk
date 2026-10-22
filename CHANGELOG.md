@@ -1,5 +1,11 @@
 # Repository changelog
 
+## 2026-10-22 — Blockers and consolidated leave review
+
+- Record Blockers as the third advanced category, recurring/one-off removable-entry UX and identifiable recurring-series meeting treatment.
+- Remove the planned Leave exceptions section in favor of Ignore within Manage meetings. Preserve legacy settings during migration.
+- Draft clearer Event detection fields, keyword bubbles/defaults and matching precedence for owner review. Documentation only; runtime/packages remain unchanged.
+
 ## 2026-10-22 — Leave-exception browsing approved
 
 - Rename the section Leave exceptions; record accepted search, three-entry pagination, whole/partial occurrence exceptions and restoration.
