@@ -1,5 +1,9 @@
 # SlotDesk UX decision register
 
+## 22 October — cloud storage remains an unconfirmed future feature
+
+The owner explicitly accepts the current browser-based saved workspace; it is not a blocker for continuing development or the pilot. Cross-browser/device cloud accounts and settings sync, including compact versioned encoding, are possible future work only. The proposed provider-neutral Google/Microsoft account model and cost-saving design are unconfirmed, with no implementation authorization or release assignment. Retain local backup/import behavior and resume the existing work. See [roadmap proposal DF11](roadmap.md#cloud-accounts-and-settings-sync--unconfirmed-future-feature).
+
 ## 21 October — onboarding order and restart policy
 
 The owner explicitly confirmed: workspace calendars → own profile → optional familiar people. If any step remains unfinished when the app restarts/reopens, start again at calendars; saved entries may prefill, but all steps require confirmation. Do not resume directly at the unfinished step. Completed onboarding remains complete. The calendar exclusion note sits below the list. Suggest the own-profile name from matching Calendar organizer/attendee metadata when available, without overwriting typing or adding Google permissions.

@@ -1,6 +1,6 @@
 # SlotDesk roadmap
 
-Updated 20 October 2026. Status reflects agreed scope, not a promise of public availability. The broader website remains on hold.
+Updated 22 October 2026. Status reflects agreed scope, not a promise of public availability. The broader website remains on hold.
 
 ## Current release
 
@@ -55,6 +55,16 @@ Owner direction, 21 October: review explanations, next actions and presentation 
 
 [Ask about times](time-inquiries.md) is parked after reviewing Gmail AMP's compatibility and sender/service requirements. It is not part of the next update. The owner is considering it only for users supplying an LLM API key, with model-assisted inquiry writing and reply interpretation. Both the BYOK-only restriction and final reply protocol are unconfirmed. No external response page is approved; a model does not solve inline controls in unsupported email clients. An inquiry response does not itself authorize booking.
 
+## Cloud accounts and settings sync — unconfirmed future feature
+
+Owner decision, 22 October: saving the workspace in the browser remains acceptable and is **not a development, pilot or release blocker**. Cloud storage is a possible future feature, not authorized implementation, a scheduled milestone or a requirement for Outlook support. Existing local backup/restore and selected-profile import/export remain the available portability features.
+
+The proposal would let a user retrieve their saved SlotDesk setup across browsers and computers. Possible saved data includes their own and other person profiles, profile rules, travel/flights, preferences and calendar-selection/assignment references. Calendar references would not grant access; meetings can continue to be fetched from the provider rather than archived in the settings service. A provider-neutral SlotDesk account with Google and later Microsoft sign-in/calendar connections was discussed as a recommendation, not a finalized login or account-linking design. Registration leads remain separate from workspace data.
+
+Explore compact, versioned storage: retain settings that differ from the version's defaults, use template codes or shared dictionaries where useful, and consider compression. A hash cannot reconstruct settings; it could detect unchanged data and avoid redundant writes. Keep existing export/import compatibility separate from any internal sync encoding. The synthetic size comparison demonstrates possible savings for default-heavy data, not a measured average account or billed database size. The 1 MB/account and monthly hosting figures discussed were budgeting examples, not capacity limits, minimum costs or commitments.
+
+Before any future implementation, settle account/linking UX, the data scope, local-to-cloud migration, offline and simultaneous edits, treatment of meeting drafts and pending calendar writes, access control, recovery/deletion and provider pricing. Compare storage **and** active synchronization/hosting costs; reducing payload size alone does not remove processing or fixed plan charges. No hosting vendor, format, price or implementation date is selected by this decision.
+
 ## Optional LLM assistance — future direction
 
 The owner wants [bring-your-own-key LLM assistance](llm-assistance.md), with prepared prompts and the cheapest model that performs each task reliably. Intended tasks include reading scheduling emails and appointment text, drafting availability inquiries, interpreting replies, explaining rule-aware choices and eventually creating optimized appointments directly in an explicitly authorized automation mode. Provider/model, cost controls, key/data handling, email permissions and direct-creation authorization remain open. No LLM feature or email access is implemented in 0.8.1; these ideas remain deferred.
@@ -100,6 +110,7 @@ The user explicitly requested these as work **not to develop now**.
 | DF03 | Live flight updates | Possibly connect specific flights to an API for live updates. Provider, pricing and update policy are undecided. | Deferred; exploratory |
 | DF06 | Search meetings by written content | Possible search by meeting name, participants, location or any written appointment information. No search/indexing UI now. | Deferred; explicitly requested 13 October |
 | DF07 | Availability inquiry emails | Ask one/many people about one/many times; potentially BYOK-only, with LLM drafting and reply interpretation. Original inline form design remains recorded. | Unconfirmed future feature; parked, not a current milestone |
+| DF11 | Cloud accounts and settings sync | Possible cross-browser/device access to saved profiles and settings, with compact versioned encoding/defaults/compression and a separately planned Google/Microsoft account model. See the cloud-accounts proposal above. | Unconfirmed and deferred; browser-based storage remains acceptable and non-blocking |
 | DF10 | Region-based holiday suggestions | Optionally suggest relevant holidays from a separately confirmed country/region, with date/person exceptions. A timezone alone does not establish a person’s holiday jurisdiction or availability. No automatic regional holiday feed or election-day knowledge is implemented. | Deferred; source, coverage and UX need planning |
 | DF09 | Developer issue reporting | Consider reporting repeatedly unconfirmed calendar writes to the developers, with a separately agreed data/consent design. No reporting is sent now. | Deferred |
 | DF08 | LLM-driven direct appointment creation | Create an optimized appointment with factual reasoning, subject to the full validated rule set and an explicitly enabled automation policy. | Future request; authorization/operating limits unsettled |

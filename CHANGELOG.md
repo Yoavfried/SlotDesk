@@ -1,5 +1,10 @@
 # Repository changelog
 
+## 2026-10-22 — Deferred cloud account storage proposal
+
+- Record cross-browser/device workspace sync and compact versioned settings storage as unconfirmed future feature DF11, including unresolved account/provider, migration, synchronization and cost decisions.
+- Confirm that browser-based storage remains acceptable and non-blocking. Documentation only; no runtime, hosting, release version or package changes.
+
 ## 2026-10-21 — 0.9.4.6 onboarding hotfix
 
 - Implement the owner-confirmed calendar → own-profile → familiar-people flow, below-list notice and interrupted-onboarding restart policy. Saved entries remain available to prefill; completion still requires the third-step action.
