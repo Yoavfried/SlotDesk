@@ -36,7 +36,7 @@ This release may apply the agreed scheduling semantics to existing saved default
 
 ## 0.9.5 — advanced profile settings
 
-Reserved only for a complete owner-led **wording, UX and logic review of Edit profile's advanced settings**, including every More settings section, followed by the specified fixes. Do not begin that review-driven cleanup or release 0.9.5 until the owner performs the review and gives directions; release also requires their approval. Codex must not infer readiness or substitute source/tests for the owner's review.
+The owner began the complete **wording, UX and logic review of Edit profile's advanced settings** on 22 October. The [advanced-profile review record](advanced-profile-review-0.9.5.md) distinguishes accepted directions from proposed UI details: working/convenience sections first, fully ignored corresponding rules and nonprotected overlaps, calendar-backed holiday exceptions, opt-in event detection for new profiles, a three-choice local meeting manager and removal of new saved recurring-availability rules while retaining meeting-specific availability. **Travel and flight review/fixes are explicitly required in this update and remain unfinished.** Timezone-clue removal and detailed migration/browser UX still need review. Do not implement/release 0.9.5 or declare the review complete without the owner's authorization; source/tests do not replace their UX approval.
 
 ## Browser compatibility — 0.9.4.6 implemented foundation
 

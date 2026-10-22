@@ -1,5 +1,10 @@
 # Repository changelog
 
+## 2026-10-22 — 0.9.5 advanced-profile review started
+
+- Record the owner's advanced-profile wording/UX/logic directions and three confirmed policy choices. Distinguish accepted changes from the proposed timezone-clue removal and detailed calendar-browser/migration UX.
+- Require travel/flight review and fixes in 0.9.5; keep owner authorization and UX approval open. Documentation only: current runtime, packages and version remain 0.9.4.6.
+
 ## 2026-10-22 — 0.9.4.6 search selection and scroll hotfix
 
 - Implement the final owner direction: three time groups, earliest equally suitable starts, one representative/date for longer ranges, and up to two featured clear fallback cards before three nearest in-range compromises. Keep only one later-date choice across all batches.

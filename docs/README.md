@@ -9,6 +9,7 @@ Current release: **0.9.4.6**. [Scope](release-plan-0.9.4.6.md) · [Browser evide
 | Meeting management | [Editing details/guests](meeting-editing.md), [rescheduling, alerts and overlaps](rescheduling.md) |
 | Scheduling review | [19 October ranking rules, situations and result UX](scheduling-ranking-review.md) — ranking foundations and decision history |
 | 0.9.4.5 owner review | [Meeting options rows, factual statuses and warnings](meeting-options-review-0.9.4.5.md) — full 18-category source/wording/priority table accepted; final responsive/warning UX remains owner-led |
+| 0.9.5 owner review | [Advanced profile settings](advanced-profile-review-0.9.5.md) — accepted directions, remaining travel/flight review and explicit proposals; not implemented |
 | Release split | [0.9.4.5 scope and implementation checks](release-plan-0.9.4.5.md) — advanced-profile cleanup alone remains in 0.9.5 |
 | Search controls review | [Counts, more options, exclusions and fallback controls](search-options-review-0.9.4.5.md) — implemented 20 October policy and continuing owner review |
 | Planning email | [Plain-text options email request and proposed wording](planning-email.md) — implemented local preview/copy; separate from interactive inquiries |

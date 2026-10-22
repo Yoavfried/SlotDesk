@@ -1,5 +1,9 @@
 # SlotDesk UX decision register
 
+## 22 October — advanced-profile review started
+
+The owner reviewed More settings and confirmed the [0.9.5 directions](advanced-profile-review-0.9.5.md): working schedule first, Convenience hours second, full removal of ignored rules from ranking/warnings, ignored nonprotected overlaps with explicit Protect/flights retained, detection off for new profiles with existing behavior preserved, calendar-backed Holiday exceptions and a local Default/Ignore/Protect meeting browser. Remove new recurring availability from saved settings while preserving existing rules until deliberately removed and retaining meeting-specific availability. Travel/flight review and fixes are required in this update; that review remains open. Timezone-clue removal and concrete browser/migration details are proposals. Documentation only; no runtime/version/package change or final owner UX approval.
+
 ## 22 October — selection order and stable scrolling
 
 The owner revised [search selection](search-selection-2026-10-22.md), including the final clarification of three to five initial fallback cards: one later working-hours choice and one in-range outside-working-hours choice where available, or one combined choice only when both independent categories are absent, then three nearest in-range compromises. Short ranges use three groups/day; longer ranges use one representative/day. Good working-hours choices in range suppress later dates and hide compromises until Generate more. Earliest suitable starts replace the unused-margin tie-breaker. Sunday remains part of Sunday–Thursday workweeks. Remove forced focus scrolling and the doubled header margin while preserving keyboard focus, validation scrolling and append-only results. Implemented without changing Calendar writes or the 0.9.5 owner-review gate.
