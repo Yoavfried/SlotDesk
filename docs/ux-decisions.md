@@ -1,5 +1,9 @@
 # SlotDesk UX decision register
 
+## 22 October — profile category help and overlap placement
+
+The owner approved category information icons and the [tooltip wording](advanced-profile-review-0.9.5.md#category-information-icons--owner-approved-wording), with Travel & flights wording explicitly still requiring its wider flight review. Rename Meeting rules to Notices and buffers and move the saved general overlap setting into Manage meetings, above individual Default / Ignore / Protect choices. Preserve sentence case, independent rule semantics and the existing per-meeting override. Planning only; runtime and release remain 0.9.4.6.
+
 ## 22 October — advanced-profile review started
 
 The owner reviewed More settings and confirmed the [0.9.5 directions](advanced-profile-review-0.9.5.md): working schedule first, Convenience hours second, full removal of ignored rules from ranking/warnings, ignored nonprotected overlaps with explicit Protect/flights retained, detection off for new profiles with existing behavior preserved, calendar-backed Holiday exceptions and a local Default/Ignore/Protect meeting browser. Remove new recurring availability from saved settings while preserving existing rules until deliberately removed and retaining meeting-specific availability. Travel/flight review and fixes are required in this update; that review remains open. Timezone-clue removal and concrete browser/migration details are proposals. Documentation only; no runtime/version/package change or final owner UX approval.

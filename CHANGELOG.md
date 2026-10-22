@@ -1,5 +1,10 @@
 # Repository changelog
 
+## 2026-10-22 — Advanced-profile category help approved
+
+- Record approved category information-icon text, rename Meeting rules to Notices and buffers and move the general overlap control to Manage meetings.
+- Keep the Travel & flights tooltip in the pending flight review. Documentation only; no runtime, package, version or hosting change.
+
 ## 2026-10-22 — 0.9.5 advanced-profile review started
 
 - Record the owner's advanced-profile wording/UX/logic directions and three confirmed policy choices. Distinguish accepted changes from the proposed timezone-clue removal and detailed calendar-browser/migration UX.

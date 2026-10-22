@@ -8,13 +8,31 @@ Updated **22 October 2026**. This is an accepted-direction and remaining-review 
 | --- | --- | --- |
 | 1 | Working days and hours | Move before all other advanced categories. Preserve template/manual schedules. Ignore working days and hours removes that person's working schedule from eligibility, ranking, explanations and warnings. |
 | 2 | Convenience hours | Rename Preferred hours; use sentence case. Remove the ranking-only explanatory paragraph. Ignore usual convenience hours removes that person's usual-hour limits, penalties and warnings. Other independently enabled rules still apply. |
-| 3 | Meeting rules | Remove the paragraph beginning Overlaps are disclosed before sending. Keep the remaining notice and configured-radius controls. Revise overlap semantics as specified below. |
+| 3 | Notices and buffers | Rename Meeting rules. Remove the paragraph beginning Overlaps are disclosed before sending. Keep minimum notice and configured meeting buffers here; move the general Allow overlaps setting to Manage meetings. |
 | 4 | Travel & flights | Review and fix in this same update, together with other flight-related behavior. The owner has put this section aside temporarily; its review is not complete. |
 | 5 | Holiday exceptions | Replace Leave / holiday exceptions. Choose actual leave/holiday entries for this profile instead of creating free-standing manually entered date exceptions. |
 | 6 | Event detection | Replace Event treatment. Master checkbox: Detect special events in calendar. When off, show only the checkbox; when on, reveal clearer matching fields with their default values. |
-| 7 | Manage meetings | Replace How to treat individual meetings with a compact profile-specific calendar browser and Default / Ignore / Protect choices. |
+| 7 | Manage meetings | Include the saved general Allow overlaps setting, followed by the compact profile-specific calendar browser and Default / Ignore / Protect choices. |
 
 Remove the two exact explanatory paragraphs specified by the owner. Keep the existing live-saving model and separate basic Availability calendars / More settings expandables. Saved values remain available when an Ignore or detection checkbox is toggled back; disabling a rule must actually bypass it, not merely hide inputs.
+
+## Category information icons — owner-approved wording
+
+Place a small outlined information icon to the right of each advanced-section subheader. Show the same short explanation on hover, keyboard focus or tap; interacting with the icon must not accidentally toggle the section. Keep ordinary headings and tooltip text in sentence case.
+
+The owner accepted the earlier Working days and hours, Holiday exceptions and Manage meetings drafts. The following incorporates their revised text with minor grammar fixes (time range for radius; Use for User). These are category explanations, not replacements for individual control labels.
+
+| Category | Tooltip |
+| --- | --- |
+| Working days and hours | Set this person's usual work schedule and whether SlotDesk should consider it. |
+| Convenience hours | Set a time range when this person may not be working but could still consider attending meetings. |
+| Notices and buffers | Require enough advance notice for meetings and set buffers around them. |
+| Travel & flights | Wording remains unfinished; review and fix this tooltip with the rest of the travel/flight experience in 0.9.5. Do not treat the earlier draft as approved. |
+| Holiday exceptions | Choose which holidays or days off SlotDesk should disregard for this person. |
+| Event detection | Use keywords in calendar event titles to detect holidays, flexible meetings, flights and protected times. |
+| Manage meetings | Control how individual calendar meetings affect this person's availability. |
+
+The general overlap checkbox moves from Notices and buffers to Manage meetings. Its accepted full-ignore semantics and saved-default/per-meeting-override behavior remain unchanged. Place the general control above the individual-meeting browser so it is distinguished from each occurrence's Default / Ignore / Protect choice.
 
 ## Overlaps — accepted semantics
 
@@ -88,7 +106,7 @@ Remove Edit the starting rules or override any individual event below. Use comma
 
 ## Manage meetings — accepted choices and proposed browser
 
-The owner requires Default / Ignore / Protect. Proposed presentation follows Existing meetings within the profile dialog: one-row From/Through controls, linked-calendar selection, compact count and nearby Refresh, then date-ordered meeting rows with a treatment control. Keep the enclosing profile popup/fixed heading and width behavior stable. Browse only this person's linked selected calendars; changing a filter must not expose unrelated calendars. Reuse range/source caching and pagination/error handling rather than depending on the New meeting date range or dumping all previously loaded events.
+The saved general overlap checkbox belongs here, above the individual-meeting browser; it is removed from Notices and buffers. The owner requires Default / Ignore / Protect. Proposed presentation follows Existing meetings within the profile dialog: one-row From/Through controls, linked-calendar selection, compact count and nearby Refresh, then date-ordered meeting rows with a treatment control. Keep the enclosing profile popup/fixed heading and width behavior stable. Browse only this person's linked selected calendars; changing a filter must not expose unrelated calendars. Reuse range/source caching and pagination/error handling rather than depending on the New meeting date range or dumping all previously loaded events.
 
 | Choice | Scheduling behavior for this person |
 | --- | --- |
