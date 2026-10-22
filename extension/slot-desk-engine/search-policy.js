@@ -11,12 +11,25 @@
       return E.startOfDay(end,zone);
     }));
   }
-  const perfect=s=>!s.requiredConflictCount&&s.people.filter(p=>p.required).every(p=>p.band==='ok'&&!p.inconvenientMinutes);
-  function select(slots){
+  const good=s=>!s.requiredConflictCount&&s.people.filter(p=>p.required).every(p=>!['no','bad'].includes(p.band));
+  const working=s=>s.people.filter(p=>p.required).every(p=>!p.usualInconvenientMinutes);
+  const perfect=s=>good(s)&&working(s)&&s.people.filter(p=>p.required).every(p=>!p.explicitInconvenientMinutes);
+  const bandIndex=minute=>minute<720?0:minute<840?1:2;
+  const band=minute=>['morning','midday','afternoon'][bandIndex(minute)];
+  const rangeDays=req=>(Date.parse(req.range.to)-Date.parse(req.range.from))/86400000+1;
+  const key=(s,req)=>s.day+(req&&rangeDays(req)>3?'':'|'+band(s.anchorMinute));
+  const compare=(a,b)=>(a.alternativeRank||0)-(b.alternativeRank||0)||R.quality(a,b)||a.start-b.start||b.duration-a.duration;
+  function select(slots,req,occupied=[],usedGroups=[]){
     const unique=[...new Map(slots.map(s=>[s.start+'|'+s.end,s])).values()];
-    unique.sort((a,b)=>(a.alternativeRank||0)-(b.alternativeRank||0)||R.quality(a,b)||a.day.localeCompare(b.day)||R.compare(a,b));
-    const out=[],bands=new Set();for(const s of unique){const group=s.day+'|'+R.band(s.anchorMinute);if(bands.has(group)||out.some(x=>overlaps(x,s)))continue;out.push(s);bands.add(group);}
+    const diverse=!req||rangeDays(req)<=3;
+    unique.sort((a,b)=>a.day.localeCompare(b.day)||(diverse?bandIndex(a.anchorMinute)-bandIndex(b.anchorMinute):0)||compare(a,b));
+    const out=[],groups=new Set(usedGroups);
+    for(const s of unique){const group=key(s,req);if(groups.has(group)||[...occupied,...out].some(x=>overlaps(x,s)))continue;out.push(s);groups.add(group);}
     return out;
+  }
+  function best(slots,outside=false){
+    const distance=s=>{const p=s.people.filter(p=>p.required),values=p.map(p=>p.distance||0),minutes=p.map(p=>p.usualInconvenientMinutes||0);return [s.score?.explicitMax||0,s.score?.explicitTotal||0,Math.max(0,...minutes),minutes.reduce((a,b)=>a+b,0),Math.max(0,...values),values.reduce((a,b)=>a+b,0)];};
+    return [...slots].sort((a,b)=>(a.alternativeRank||0)-(b.alternativeRank||0)||a.day.localeCompare(b.day)||(outside?distance(a).reduce((v,n,i)=>v||n-distance(b)[i],0):R.quality(a,b))||a.start-b.start)[0];
   }
   function find(req,E){
     const fixed={...req,step:10,spacingMode:'automatic',perDayMode:'automatic',minDuration:30,extendDays:0,want:5},base=E.evaluate(fixed),empty={options:[],allOptions:[],open:[],openCount:0,clearCount:0,rejected:base.rejected,rejectionDetails:base.rejectionDetails,protectedConflicts:base.protectedConflicts,errors:base.errors,warnings:base.warnings};
@@ -43,18 +56,26 @@
       }
       return [...byStart.values()];
     }
-    let shorter=shortChoices(req.range,'shorter',1);const good=full.some(perfect)||shorter.some(perfect);
-    shorter=shorter.filter(s=>!s.requiredConflictCount||!good);
+    let shorter=shortChoices(req.range,'shorter',1);const hasGood=full.some(good)||shorter.some(good);
+    shorter=shorter.filter(s=>!s.requiredConflictCount||!hasGood);
     const replacements=new Map(shorter.map(s=>[s.start,s]));
     const originals=full.filter(s=>{const replacement=shorter.find(x=>!x.requiredConflictCount&&overlaps(x,s))||replacements.get(s.start);return !replacement||!s.requiredConflictCount||replacement.requiredConflictCount&&replacement.shortening.after.count>=replacement.shortening.before.count&&replacement.shortening.after.minutes>=replacement.shortening.before.minutes;});
-    const clear=full.filter(s=>!s.requiredConflictCount),later=[];
-    if(!clear.length){const deadline=horizon(req,E),from=E.addDaysYmd(req.range.to,1),to=E.partsIn(deadline-1,req.anchorTz||req.people[0].tz).ymd;
-      if(from<=to){const range={from,to},extended=E.evaluate({...fixed,range});for(const s of [...extended.open,...extended.taken])if(s.end<=deadline&&perfect(s))later.push(label(s,'extended',2));
-        if(!shorter.length)for(const s of shortChoices(range,'extended-shorter',3))if(s.end<=deadline&&perfect(s))later.push(s);
-      }
+    const requested=[...originals,...shorter],clear=requested.filter(good),normal=select(clear.filter(working),req).sort((a,b)=>(a.alternativeRank||0)-(b.alternativeRank||0)||a.day.localeCompare(b.day)||a.start-b.start),deadline=horizon(req,E);
+    if(normal.length){
+      const bad=select(requested.filter(s=>!good(s)),req,normal,normal.map(s=>key(s,req))),allOptions=[...normal,...bad];
+      return {...empty,options:normal.slice(0,5),allOptions,open:normal,openCount:base.open.length,clearCount:normal.length,deadline};
     }
-    const allOptions=select([...originals,...shorter,...later]),clearCount=select(clear).length,initial=clearCount?Math.min(5,clearCount):3;
-    return {...empty,options:allOptions.slice(0,initial),allOptions,open:select(clear),openCount:base.open.length,clearCount,deadline:horizon(req,E)};
+    const later=[];
+    const from=E.addDaysYmd(req.range.to,1),to=E.partsIn(deadline-1,req.anchorTz||req.people[0].tz).ymd;
+    if(from<=to){const range={from,to},extended=E.evaluate({...fixed,range});
+      for(const s of [...extended.open,...extended.taken])if(s.end<=deadline&&good(s))later.push(label(s,'extended',2));
+      if(!later.some(working)&&!shorter.some(good))for(const s of shortChoices(range,'extended-shorter',3))if(s.end<=deadline&&good(s))later.push(s);
+    }
+    const laterWorking=best(later.filter(working)),within=best(clear.filter(s=>!laterWorking||!overlaps(s,laterWorking)),true),featured=[laterWorking,within].filter(Boolean);
+    if(!featured.length){const combined=best(later,true);if(combined)featured.push(combined);}
+    for(const slot of featured){slot.featuredFallback=true;slot.outsideWorkingHours=!working(slot);}
+    const bad=select(requested.filter(s=>!good(s)),req,featured),allOptions=[...featured,...bad];
+    return {...empty,options:[...featured,...bad.slice(0,3)],allOptions,open:within?[within]:[],openCount:base.open.length,clearCount:within?1:0,deadline};
   }
-  return {durations,horizon,perfect,select,find};
+  return {durations,horizon,perfect,good,working,band,select,find};
 });

@@ -1,5 +1,7 @@
 # Search controls review for 0.9.4.5
 
+**22 October update:** the [current selection rules](search-selection-2026-10-22.md) supersede initial counts, five time groups, outside-working-hours/later-date ordering and perfect-fit qualification below. Use the final owner clarification: up to two featured clear alternatives, then three nearest-date/group compromises and append-three batches. Duration, hard-rule and workweek-horizon contracts remain unless explicitly superseded there.
+
 Owner feedback recorded 20 October 2026. Implemented after explicit owner authorization as 0.9.4.5; the policy below records the agreed contract. Originally part of the 0.9.5 review, this new-meeting work is now assigned to 0.9.4.5 by the owner. See the [release scope and remaining review](release-plan-0.9.4.5.md). The separate advanced-profile cleanup remains in 0.9.5 and does not block this update; the required scheduling interactions are settled below.
 
 ## Owner directions

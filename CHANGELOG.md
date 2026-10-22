@@ -1,5 +1,12 @@
 # Repository changelog
 
+## 2026-10-22 — 0.9.4.6 search selection and scroll hotfix
+
+- Implement the final owner direction: three time groups, earliest equally suitable starts, one representative/date for longer ranges, and up to two featured clear fallback cards before three nearest in-range compromises. Keep only one later-date choice across all batches.
+- Preserve Sunday–Thursday workweeks and add explicit Sunday/occupied-Sunday regressions. Keep duration limits, hard constraints, optional guests and reviewed Calendar writes.
+- Remove unconditional focus scrolling, the doubled sticky-header offset and timezone-list page scrolling; retain keyboard/error focus and append-only results.
+- Validate 2,176 application checks, 95 browser assertions and 20 accessibility scans without automated violations. Nine synthetic appointments remain unchanged with zero Calendar writes. Refresh the same-version packages and parent reference; no hosting change.
+
 ## 2026-10-22 — 0.9.4.6 new-meeting layout hotfix
 
 - Remove the duplicate selected-date caption; use the owner-requested Time Zone label and keep its field and Review & create aligned left at every width.

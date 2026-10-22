@@ -127,7 +127,7 @@ header.bar{padding-block:10px}
 .skip-link{position:fixed;left:12px;top:8px;z-index:2000;background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:8px;transform:translateY(-200%)}
 .skip-link:focus{transform:none}.workspace:focus{outline:none}
 html{scroll-padding-top:130px}dialog .dialog-body{scroll-padding-block:12px}
-button,input,select,textarea,summary,[tabindex]{scroll-margin-block:130px 20px}
+button,input,select,textarea,summary,[tabindex]{scroll-margin-block:12px 20px}
 dialog button,dialog input,dialog select,dialog textarea,dialog summary,dialog [tabindex]{scroll-margin-block:12px}
 input:not([type=checkbox]):not([type=hidden]),select,textarea{border-color:var(--ink-3);color:var(--ink)}
 input::placeholder,textarea::placeholder{color:var(--ink-3);opacity:1}

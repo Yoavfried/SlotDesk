@@ -1,7 +1,7 @@
 {
   "version": "0.9.4.6",
   "date": "2026-10-21",
-  "applicationChecks": 2118,
+  "applicationChecks": 2176,
   "newPlatformAuthChecks": 55,
   "backend": {
     "intakeTests": 6,
@@ -175,6 +175,32 @@
     "unsafeMethods": 0,
     "unchangedBaselineAppointments": 9,
     "schedulingPolicyChanged": false,
+    "realGoogleAccountUsed": false,
+    "hostingChanged": false
+  },
+  "searchSelectionHotfix": {
+    "date": "2026-10-22",
+    "engineRegressionChecks": 61,
+    "focusedBrowserAssertions": 31,
+    "existingNewMeetingBrowserAssertions": 28,
+    "accessibilityBrowserAssertions": 36,
+    "axeScreens": 20,
+    "axeAutomatedViolations": 0,
+    "manualAccessibilityComplete": false,
+    "timeGroups": [
+      "before 12:00",
+      "12:00-14:00",
+      "14:00 onward"
+    ],
+    "initialFallbackCards": "up to two clear featured choices, then three nearest in-range compromises",
+    "longRanges": "one representative per eligible date, append up to three",
+    "laterChoicesMaximum": 1,
+    "sundayWorkweekVerified": true,
+    "pointerAndKeyboardScrollStable": true,
+    "calendarPosts": 0,
+    "calendarPatches": 0,
+    "unsafeMethods": 0,
+    "unchangedBaselineAppointments": 9,
     "realGoogleAccountUsed": false,
     "hostingChanged": false
   }

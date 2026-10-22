@@ -1,5 +1,7 @@
 # Scheduling decision register
 
+The [22 October selection update](search-selection-2026-10-22.md) is the current authority for three time groups, initial counts, earliest equally suitable starts, short/long-range representatives and featured later/outside-working-hours alternatives. It supersedes conflicting selection/fallback descriptions below and in the earlier rule matrix. Existing hard protections, permissions, participant priorities and duration/workweek contracts remain unless explicitly updated there.
+
 The [0.9.4 rule matrix](scheduling-ranking-review.md), approved and implemented 19 October, is the current authority for guest/own priorities, precision, automatic/custom search controls and selected-result variety. It supersedes earlier ranking/fallback ordering below where they differ. Advanced-profile UX cleanup is planned for 0.9.5.
 
 

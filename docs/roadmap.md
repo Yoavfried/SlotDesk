@@ -4,6 +4,8 @@ Updated 22 October 2026. Status reflects agreed scope, not a promise of public a
 
 ## Current release
 
+The 22 October same-version hotfix implements the owner's [revised selection and fallback order](search-selection-2026-10-22.md): exactly three groups, earliest equally suitable starts, one representative per date for longer ranges, up to two featured clear fallbacks before three in-range compromises, and stable scrolling. Browser-based storage remains acceptable; cloud sync remains unconfirmed future feature DF11.
+
 Version **0.9.4.6** adds the [desktop compatibility implementation](release-plan-0.9.4.6.md), with [activation](browser-signin-setup.md), per-target evidence and [remaining store work](extension-stores.md) documented. The prior **0.9.4.5** implements the authorized [new-meeting update](release-plan-0.9.4.5.md): automatic alternatives and batching, compact factual rows, friendly zones, planning-email text and grouped overlap review. The existing onboarding, profile/calendar scope, live configuration, backup/import, connection recovery and reviewed calendar writes remain. The five-field onboarding leads service is deployed and configured for the private pilot. See [version history](changelog.md) and [validation](testing.md).
 
 The existing [implemented work](implemented.md), [accepted UX](ux-decisions.md), reviewed calendar writes, management, profiles and design language remain. No new real Google or email-delivery verification is claimed by this update.

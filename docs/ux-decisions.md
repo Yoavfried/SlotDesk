@@ -1,5 +1,9 @@
 # SlotDesk UX decision register
 
+## 22 October — selection order and stable scrolling
+
+The owner revised [search selection](search-selection-2026-10-22.md), including the final clarification of three to five initial fallback cards: one later working-hours choice and one in-range outside-working-hours choice where available, or one combined choice only when both independent categories are absent, then three nearest in-range compromises. Short ranges use three groups/day; longer ranges use one representative/day. Good working-hours choices in range suppress later dates and hide compromises until Generate more. Earliest suitable starts replace the unused-margin tie-breaker. Sunday remains part of Sunday–Thursday workweeks. Remove forced focus scrolling and the doubled header margin while preserving keyboard focus, validation scrolling and append-only results. Implemented without changing Calendar writes or the 0.9.5 owner-review gate.
+
 ## 22 October — new-meeting layout and concise warnings
 
 Implemented as a same-version 0.9.4.6 hotfix: omit the caption repeating the selected From/Through dates. Use the owner's explicit Time Zone label and keep the field left-aligned as the window widens. Review & create also stays left-aligned. Group each participant's calendar icon directly after their name, ahead of the location/timezone and local-time cells.

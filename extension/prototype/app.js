@@ -349,7 +349,7 @@
     container.querySelectorAll('.result-calendar').forEach(details=>{const summary=details.querySelector('summary');details.onpointerenter=()=>details.open=true;details.onpointerleave=()=>{if(!details.dataset.pinned&&!details.contains(document.activeElement))details.open=false;};summary.onclick=event=>{event.preventDefault();details.dataset.pinned=details.dataset.pinned?'':'true';details.open=!!details.dataset.pinned;};details.onfocusin=()=>details.open=true;details.onfocusout=event=>{if(!details.contains(event.relatedTarget)&&!details.dataset.pinned)details.open=false;};details.onkeydown=event=>{if(event.key==='Escape'){event.preventDefault();details.open=false;delete details.dataset.pinned;}};});
     container.querySelectorAll('[data-review]').forEach(el=>el.onclick=()=>reviewProposal(slots[+el.dataset.review],replacement));
   }
-  function optionLabel(slot){return [slot.alternativeType?.includes('shorter')?slot.duration+' minutes instead of '+state.settings.duration:'',slot.alternativeType?.includes('extended')?'Later than your chosen dates':''].filter(Boolean).join(' · ');}
+  function optionLabel(slot){return [slot.alternativeType?.includes('shorter')?slot.duration+' minutes instead of '+state.settings.duration:'',slot.alternativeType?.includes('extended')?'Later than your chosen dates':'',slot.outsideWorkingHours?'Outside working hours':''].filter(Boolean).join(' · ');}
   function renderResults(result,count=result.options?.length||0){
     slots=[];if(result.errors.length){$('results').innerHTML='<p class="error" role="alert">'+esc(result.errors.join(' · '))+'</p>';return;}
     const pool=result.allOptions||result.options||result.open,options=pool.slice(0,count),clear=result.clearCount||0;

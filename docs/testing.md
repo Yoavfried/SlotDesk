@@ -1,5 +1,13 @@
 # SlotDesk validation record
 
+## 22 October — search selection and scroll stability
+
+All **2,176 application checks** pass, including 61 new selection regressions and the revised historical automatic-search expectations. Coverage includes normal/one/two/combined clear fallbacks, one-versus-many good choices, three groups, short/long ranges, nearest-date order, Sunday versus occupied-Sunday/Monday, required/optional/unknown availability, shortening, hard exclusions/flights and non-overlapping batches.
+
+The [focused browser journey](../scripts/accessibility/search-selection.js) passes **31 assertions**: a synthetic November reproduction shows the single clear Monday 09:00 option ahead of three Tuesday conflicts, no extra evening/later choices, stable clicks on participant/calendar/warning elements, list-only timezone keyboard scrolling, ten eligible dates through append-three batches, retained DOM/order/expanded warnings and no horizontal overflow at 320/514/1280px. The existing new-meeting journey passes 28 assertions, including privacy-safe planning email and exhausted-batch behavior. The general accessibility journey passes 36 keyboard/dialog/reflow assertions and 20 axe scans without automated violations; incomplete checks/manual assessment remain open. Total browser assertions: **95**. The reproduction screenshot was inspected. All nine synthetic baseline appointments remain unchanged with zero create/update/delete/move requests and no runtime errors.
+
+A separate read-only local audit used the owner's previously supplied export to check Sunday occupancy; that is historical snapshot evidence, not a fresh live Google read. No calendar contents are committed. The runtime remains 0.9.4.6, the historical release tag is retained, and no hosted service or Calendar writer changes.
+
 ## 22 October — new-meeting layout hotfix
 
 All **2,118 application checks** pass. The existing new-meeting browser journey passes 28 assertions. A focused synthetic check passes 39 more: removed date caption, exact Time Zone label, left alignment at 320/390/514/680/1280px, adjacent name/calendar icon, contained hover details with short/long names, individual overlap headings, clipped overlap intervals, heading-only non-overlap reasons, matching final-review presentation and 12-hour formatting. Narrow/wide proposal screenshots were inspected. All nine baseline appointments remain unchanged, with zero create/update/delete/move requests. The version remains 0.9.4.6; scheduling logic is unchanged. No live Google Calendar read or real invitation is claimed for these checks.
