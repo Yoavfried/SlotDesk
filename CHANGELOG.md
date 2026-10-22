@@ -1,5 +1,9 @@
 # Repository changelog
 
+## 2026-10-22 — SlotDesk 0.9.4.7
+
+Implement the owner's agreed non-flight advanced-profile update, with local rule persistence, portable files, recurring scope and synthetic validation. Keep the separate flight review open. See the [product release](docs/release-plan-0.9.4.7.md).
+
 ## 2026-10-22 — Final non-flight profile decisions accepted
 
 - Record accepted blocker form/fields/helper, profile timezone, immediate removal without Undo and reuse of Existing meetings UI.

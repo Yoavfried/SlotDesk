@@ -1,5 +1,11 @@
 # SlotDesk API and semantics
 
+## 0.9.4.7 profile-rule semantics
+
+`profile-rules.js` centralizes literal keyword detection, blocker intervals and ordered event treatment. Profiles add `blockers`, `eventTreatments`, `eventDetectionEnabled`, `keywordMatchingVersion` and `keywordCategories`. A blocker uses `{id,label,recurring,allDay,from,to,s,e,days}` in the profile timezone. A treatment uses `{scope,key,value,seriesKey}`; value is `auto`, `ignore`, `protected` or `leave`. Rules are applied in list order, most recent first during lookup. Series identity uses iCalUID when available, otherwise calendar/series ID; occurrence identity includes original start time so rescheduling does not change the target. Arrays remain ordered during backup/import and shared-window conflict handling.
+
+`allowOverlap` now excludes the person's nonprotected busy entries from conflict facts, ranking and follow-ups. Explicit Protect/Assign leave and saved flights remain active. Ignore-working and Ignore-convenience are independent; ignoring convenience does not erase working-hour penalties. Legacy positive availability, partial leave exceptions and custom detection expressions remain supported even though their old standalone controls are removed.
+
 ## 0.9.4.5 automatic policy
 
 The browser's creation and rescheduling requests set `automaticAlternatives:true`. This selects `search-policy.js`: automatic ten-/eligible-five-minute starts, qualifying 15-minute shortening, required-participant next-workweek horizon and globally distinct/non-overlapping suggestions. See the full [policy contract](search-options-review-0.9.4.5.md). Initial `options` contains 1–5 meaningful choices according to `clearCount`, or up to three permitted alternatives when no original opening exists. `allOptions` is the frozen eligible list for append-three batches. `extended-shorter` is an additional alternative type. `openCount` remains a raw evaluation count, not a displayed count.

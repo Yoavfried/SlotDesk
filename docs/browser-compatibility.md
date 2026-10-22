@@ -1,6 +1,6 @@
 # Browser and desktop compatibility
 
-**0.9.4.6 · 21 October 2026.** The owner authorized implementation after approving the compatibility plan. Shared runtime adapters, independent Google consent, safe launch fallback and per-browser packaging are implemented. Hosting activation completed on 21 October; public status is verified `ready:true` for 0.9.4.6. Real Google consent and some target validation remain. This matrix describes evidence, not blanket certification of every browser/version.
+**Compatibility baseline: 0.9.4.6 · 21 October 2026.** 0.9.4.7 retains these platform boundaries and adds local profile rules; it does not establish new browser/provider certification. The owner authorized implementation after approving the compatibility plan. Shared runtime adapters, independent Google consent, safe launch fallback and per-browser packaging are implemented. Hosting activation completed on 21 October; public status is verified `ready:true` for 0.9.4.6. Real Google consent and some target validation remain. This matrix describes evidence, not blanket certification of every browser/version.
 
 | Target | Delivered | Evidence and remaining boundary |
 | --- | --- | --- |
@@ -27,9 +27,9 @@ Help → Connection details reports safe capability/build/return-address informa
 
 `npm run package:slotdesk` deterministically builds three artifacts plus `SHA256SUMS.txt` and `package-targets.json`. All share one scheduling/calendar/profile/UI core. `scripts/browser-targets.mjs` defines their small manifest differences and stable identities. Tests/fixtures are excluded. Development folders are `dist/chromium`, `dist/firefox` and `dist/safari-source`.
 
-- `SlotDesk-0.9.4.6.zip`: manually loaded Chromium desktop beta.
-- `SlotDesk-0.9.4.6-Firefox-unsigned.xpi`: unsigned Firefox development port, not a normally installable signed release.
-- `SlotDesk-0.9.4.6-Safari-source.zip`: source preparation only.
+- `SlotDesk-0.9.4.7.zip`: manually loaded Chromium desktop beta.
+- `SlotDesk-0.9.4.7-Firefox-unsigned.xpi`: unsigned Firefox development port, not a normally installable signed release.
+- `SlotDesk-0.9.4.7-Safari-source.zip`: source preparation only.
 
 Chrome ID remains `blpliafbiiidhcffegochddjhagkhhip`. Firefox ID is `{39c56104-958b-43a6-bcfe-5e9db811c74b}`. Store signing can change target identities; register/retest exact generated return addresses before release. Keep the original installed Chromium folder/identity for in-place updates. See [installation](install.md) and [store readiness](extension-stores.md).
 
@@ -39,6 +39,6 @@ See [validation](testing.md) and the [release scope](release-plan-0.9.4.6.md). S
 
 The original malformed UTF-8 summary separator is corrected and extension text now receives strict UTF-8 validation. Reviewed create/reschedule/detail-update transports remain unchanged. Lost-confirmation recovery, account checks and shared-window locks remain required on all platforms.
 
-Next: load/reload the 0.9.4.6 extension and check real consent in the owner's normal browser; verify Brave/Opera and Firefox; finish per-store policy/assets/signing work; implement/test Safari's separate auth bridge. Mobile and the parent website remain outside this release. Advanced profile settings still require the owner's 0.9.5 review and directions.
+Next: load/reload the current extension and check real consent in the owner's normal browser; verify Brave/Opera and Firefox; finish per-store policy/assets/signing work; implement/test Safari's separate auth bridge. Mobile and the parent website remain outside this release. The agreed non-flight advanced-profile settings are implemented in 0.9.4.7; flight review remains open.
 
 Primary capability sources checked 21 October 2026: [Chrome identity](https://developer.chrome.com/docs/extensions/reference/api/identity), [Edge API support](https://learn.microsoft.com/en-us/microsoft-edge/extensions/developer-guide/api-support), [Vivaldi side panels](https://vivaldi.com/blog/vivaldi-on-desktop-6-6/), [Firefox background differences](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/background), [Firefox identity](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/identity), [Firefox built-in consent](https://extensionworkshop.com/documentation/develop/firefox-builtin-data-consent/), [Safari identity support data](https://raw.githubusercontent.com/mdn/browser-compat-data/main/webextensions/api/identity.json), [Apple packaging](https://developer.apple.com/documentation/safariservices/packaging-and-distributing-safari-web-extensions-with-app-store-connect).

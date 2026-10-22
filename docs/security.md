@@ -1,5 +1,9 @@
 # SlotDesk security and privacy
 
+## 0.9.4.7 local profile rules
+
+Blockers, detection keywords and per-event/series treatment update local account configuration only. The profile meeting browser uses selected linked sources and the existing account/scope-guarded reader; changing its calendar filter does not send extra reads. Disconnect/scope/configuration replacement clears its memory cache. These features have no create/update/delete/move transport. Explicit protection and saved flights remain hard constraints when ordinary overlaps are ignored. Shared events retain separate per-person treatment. Backup/profile files contain rules and identifiers, not fetched event bodies or access tokens. The synthetic validation record does not establish exhaustive security or real-provider correctness.
+
 ## 0.9.4.6 authentication and platform boundary
 
 The independent OAuth service receives Google authorization codes/tokens transiently for exchange and refresh. Server-only Web client/encryption secrets remain in hosting. Purpose-bound AES-256-GCM envelopes bind exact approved return URI, originating extension and PKCE challenge; sensitive exchanges/refreshes require the verifier. The callback returns only code/state. Tokens and the encrypted refresh envelope/verifier remain in background memory or `storage.session`, never workspace localStorage, backups, logs or Neon. Session storage clears at browser exit; provider/envelope expiry is at most seven days in this beta. The older Chrome fallback remains browser-managed while the service is inactive.

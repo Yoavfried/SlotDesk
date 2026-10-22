@@ -23,7 +23,7 @@
       if(t.kind==='flight-buffer'&&!conflicts.some(c=>c.kind==='flight'))add(13,'flight-buffer','Inconvenient · Near a flight',{period:t});
       if(t.kind==='manual-inconvenience')add(14,'manual-inconvenience','Inconvenient · Marked time'+(t.label?': '+t.label:''),{period:t});
       if(t.kind==='meeting-radius'&&!out.some(r=>r.kind==='blocked-radius'&&r.period?.from===t.from))add(15,'meeting-radius','Inconvenient · '+(t.label||'Time around an appointment'),{period:t});
-      if(t.kind==='working-hours'&&!person.ignoreConvenience)add(16,'working-hours','Inconvenient · Outside working hours');
+      if(t.kind==='working-hours'&&!person.ignoreWorkingHours)add(16,'working-hours','Inconvenient · Outside working hours');
     }
     if(person.confirmed!==true)add(17,'unknown','Availability unconfirmed');
     if(!out.length)add(18,'available','Available');

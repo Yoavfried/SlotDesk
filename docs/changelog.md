@@ -1,5 +1,11 @@
 # SlotDesk changelog
 
+## 0.9.4.7 — 22 October 2026
+
+Implement the agreed non-flight advanced profile settings: ordered categories and information icons; independent working/convenience ignoring; full nonprotected-overlap ignoring; one-off/recurring blockers; opt-in whole-word keyword detection; and a cached local meeting browser with Default, Ignore, Protect and Assign leave for an occurrence or identifiable series. Last action wins. Preserve old availability, partial leave exceptions and custom matching; persist and export all new fields. Remove redundant timezone-clue and separate leave-exception controls.
+
+Validation: **2,267 application checks**, **71 backend checks**, **22 calendar-comparison checks**, **136 browser assertions** and **24 axe scans** without automated violations. Manual/incomplete accessibility checks remain open. Nine synthetic calendar appointments remain unchanged with zero create/update/delete/move requests. No real Google account used. Flight entry, scheduling, detection, settings and helper redesign remain pending owner review. No Calendar writer, OAuth scope or hosting changes. [Scope](release-plan-0.9.4.7.md) · [Evidence](validation-0.9.4.7.json).
+
 ## 0.9.4.6 — 21 October 2026
 
 Same-version search/scroll hotfix — 22 October 2026: implement the owner's [final selection rules](search-selection-2026-10-22.md), including three groups, nearest-date representatives, earlier equally suitable starts and one/two/combined clear alternatives before in-range compromises. Only one later-date choice appears across all batches. Fix focus/page jumps caused by forced focus scrolling, doubled header offsets and timezone-list scrolling. Sunday workweeks, hard rules, duration policy and Calendar write transports remain intact. Validation: 2,176 application checks; 95 browser assertions; 20 accessibility scans without automated violations, with incomplete/manual items still open. Nine baseline appointments remain unchanged and no real account, live Google read or Calendar write is used. Refresh the same-version downloads; original release tag remains historical.

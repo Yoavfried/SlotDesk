@@ -1,5 +1,13 @@
 # SlotDesk validation record
 
+## 22 October — 0.9.4.7 advanced profiles
+
+All **2,267 application checks**, **71 backend checks** (six intake cases and 65 authentication-broker checks) and **22 calendar-comparison checks** pass. The 87 advanced-profile checks cover default-off versus legacy detection, literal whole-word/phrase and empty keywords, independent Ignore combinations, protected/assigned leave/flights, one-off/recurring/overnight/all-day/DST blockers, per-person shared-event conflicts, occurrence/series last-action order, portable fields, local storage and the first migrated save without false cross-window conflicts. Real conflicting blocker edits still require review.
+
+The [focused profile journey](../scripts/accessibility/profile-0947.js) passes 41 assertions; existing accessibility, new-meeting and search-selection journeys add 95, totaling **136 browser assertions**. The focused and general journeys run **24 axe scans** without automated violations. Incomplete automatic findings, screen-reader checks and owner UX assessment remain open. Narrow profile/meeting controls fit at 320/514/1280px; the sidebar screenshot was inspected. Keyboard help, form errors, Save/Discard, keyword bubbles, detection defaults, cache filtering, recurrence scope and persistence are exercised through the UI.
+
+All nine synthetic baseline appointments remain unchanged with **zero create, update, delete or move requests**. No real Google login, live-provider behavior or invitation delivery is claimed. Existing browser/store limits remain. [Machine-readable release evidence](validation-0.9.4.7.json).
+
 ## 22 October — search selection and scroll stability
 
 All **2,176 application checks** pass, including 61 new selection regressions and the revised historical automatic-search expectations. Coverage includes normal/one/two/combined clear fallbacks, one-versus-many good choices, three groups, short/long ranges, nearest-date order, Sunday versus occupied-Sunday/Monday, required/optional/unknown availability, shortening, hard exclusions/flights and non-overlapping batches.

@@ -1,12 +1,16 @@
 # Onboarding, profiles and calendar scope — 0.8.0
 
+## 0.9.4.7 advanced settings
+
+The [release contract](release-plan-0.9.4.7.md) supersedes historical flexibility and advanced-editor descriptions below. Allow overlaps now fully ignores nonprotected clashes for that person, including hidden busy periods and title guesses; explicit Protect, Assign leave, saved flights and independent profile constraints remain active. Working and convenience Ignore controls each bypass only their own rule. Manage meetings saves local treatment of an occurrence or series and does not edit the provider appointment. Blockers and detection changes save through the same account-scoped configuration and backup/import flow. Travel/flight redesign remains open.
+
 ## 0.9.4.6 onboarding hotfix — 21 October
 
 Owner direction: calendars first, profile second, familiar people third; move the source-selection notice below calendars. Until all three steps finish, any new app session starts at step one while keeping saved entries available to prefill. Only the final Start using SlotDesk / I'll add people later action completes onboarding. This overrides the older profile-first flow.
 
 An optional own-name hint checks at most three selected calendars, one bounded 100-event metadata page each across a 60-day window. It accepts organizer/attendee display names only when their normalized email exactly matches the connected account, ignores cancelled events/email-like values, skips busy-only sources and never requests meeting descriptions/titles for this hint. This is not Google account-profile access and adds no permission. Missing/failed hints leave a new profile name empty; a late hint never replaces typing. Name hints are not availability evidence. The user confirms the final field when continuing.
 
-0.9.3.5 update: profile calendar editing now has separate Availability calendars and More settings expandables, fixed linked-calendar rows, explicit Add actions and no-access hiding. New profiles require explicit creation; saved invalid emails revert with a bell notice and own-profile email is locked. Explicitly deselecting calendars in Settings removes their profile links. The [validation inventory](profile-validation.md) supersedes earlier UI/save descriptions below where they differ. Individual advanced-section cleanup remains for 0.9.5.
+0.9.3.5 update: profile calendar editing now has separate Availability calendars and More settings expandables, fixed linked-calendar rows, explicit Add actions and no-access hiding. New profiles require explicit creation; saved invalid emails revert with a bell notice and own-profile email is locked. Explicitly deselecting calendars in Settings removes their profile links. The [validation inventory](profile-validation.md) supersedes earlier UI/save descriptions below where they differ. Non-flight advanced-section cleanup is implemented in 0.9.4.7; flight review remains.
 
 Implemented 14 October 2026. This release covers accessible travel, main profile calendar assignments, searchable timezones, mapping-based automatic attendance, email-first guests, usual-hour convenience ignoring, participant-specific ordinary-overlap permission and workspace calendar selection. Larger settings redesign and optional LLM features remain future work.
 
@@ -42,11 +46,11 @@ Existing-meeting editing also adds emails without forcing profile creation. Its 
 | --- | --- |
 | Ignore working days and hours | Keeps saved schedules but disables their day/hour enforcement; usual convenience still ranks options unless separately ignored. |
 | Ignore usual convenience hours | Omits usual time-of-day comfort penalties/ties. Working-day/hour limits remain their own control; flight buffers, configured meeting radii and manual inconvenient periods still count. |
-| Allow overlaps with ordinary meetings | Permits disclosed, finite-cost ordinary conflicts for that person in main proposals. Hidden busy time is not automatically assumed ordinary. Protected events, flights and explicit blocks remain protected. |
+| Allow overlaps with ordinary meetings | Ignores nonprotected meeting conflicts for that person completely. Explicit Protect, Assign leave, saved flights and independently configured constraints remain active. |
 
 Profile defaults are saved separately from Options for this meeting/search. An override affects that draft/search, not the saved person. Required/Optional attendance remains an independent choice. Existing profiles start with the two new preferences Off unless explicitly changed.
 
-Compare effective required-person inconvenience and distance first. Among equally suitable permitted options, prefer fewer distinct affected appointments and lower disruption, then remaining comfort/attendance/time ties. A permitted daytime clash can beat a free 23:00 call when the executive still values usual convenience. Permission to overlap never implies permission to ignore late hours. All overlaps remain in warnings and final review, and affected appointments stay in place until separately rescheduled.
+Compare effective required-person inconvenience and distance first. Among equally suitable permitted options, prefer fewer distinct affected appointments and lower disruption, then remaining comfort/attendance/time ties. A permitted daytime clash can beat a free 23:00 call when the executive still values usual convenience. Permission to overlap never implies permission to ignore late hours. Ignored overlaps do not produce scheduling warnings/follow-ups. Actionable conflicts for other people remain visible; all appointments stay in place unless separately changed after review.
 
 ## Validation and scope
 

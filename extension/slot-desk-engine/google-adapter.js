@@ -1,6 +1,6 @@
 (function(root,factory){
-  if(typeof module==='object'&&module.exports)module.exports=factory(require('./slotdesk-engine.js'));else root.SlotGoogle=factory(root.SlotEngine);
-})(typeof self!=='undefined'?self:this,function(E){
+  if(typeof module==='object'&&module.exports)module.exports=factory(require('./slotdesk-engine.js'),require('./profile-rules.js'));else root.SlotGoogle=factory(root.SlotEngine,root.SlotProfileRules);
+})(typeof self!=='undefined'?self:this,function(E,ProfileRules){
   'use strict';
   const domain=e=>(e||'').toLowerCase().split('@')[1]||'',isRoom=e=>/resource\.calendar\.google\.com$|group\.calendar\.google\.com$/.test(e||'');
   const enumKey=v=>(v||'').replace(/_/g,'').toLowerCase();
@@ -13,7 +13,7 @@
     return Number.isFinite(t)?new Date(t+(+match[4]||0)*1000).toISOString():null;
   }
   function fromGoogle(list,ownerEmail,options={}){
-    const role=list.accessRole||options.accessRole||'reader',calendarId=options.calendarId||list.id||'',tz=options.timeZone||list.timeZone;
+    const role=list.accessRole||options.accessRole||'reader',calendarId=options.calendarId||list.calendarId||list.id||'',tz=options.timeZone||list.timeZone;
     const out={calendar:role==='freeBusyReader'?'busy':'detail',busy:[],markers:[],clues:[],skipped:{},warnings:[],complete:true};
     const skip=why=>{out.skipped[why]=(out.skipped[why]||0)+1;};
     const home=domain(ownerEmail),rules=options.eventRules||{},leaveRE=new RegExp(rules.leave===undefined?E.RULES.leave:rules.leave,'i');
@@ -28,15 +28,15 @@
       const rawOriginal=ev.originalStartTime?.dateTime||ev.originalStartTime?.date?.slice(0,10)||ev.start?.dateTime||ev.start?.date?.slice(0,10);
       const original=rawOriginal?.includes('T')?instant(rawOriginal,ev.originalStartTime?.timeZone||ev.start?.timeZone||tz):rawOriginal;
       const identity=ev.iCalUID?`${ev.iCalUID}|${original}`:ev.id?`${calendarId}|${ev.id}`:undefined;
-      const override=options.eventOverrides?.[identity]||options.eventOverrides?.[ev.id];
+      const override=ProfileRules.override({...ev,identity,calendarId},options);
       if(override==='ignore'){skip('ignored by EA');continue;}
       if((kind==='workinglocation'||kind==='birthday')&&!override){skip('not a meeting');continue;}
-      const marker={from:ev.start?.date?.slice(0,10),to:ev.end?.date?.slice(0,10),title,free:false,id:ev.id,identity,calendarId,tz};
+      const marker={from:ev.start?.date?.slice(0,10),to:ev.end?.date?.slice(0,10),title,free:false,id:ev.id,identity,calendarId,tz,recurringEventId:ev.recurringEventId,iCalUID:ev.iCalUID,originalStart:original};
       if(!override&&(enumKey(ev.transparency)==='transparent'||enumKey(ev.availability)==='availabilityfree')){
         if(allDay)out.markers.push({...marker,free:true});skip('marked free');continue;
       }
       leaveRE.lastIndex=0;
-      const leave=kind==='outofoffice'||override==='leave'||(allDay&&(options.leaveCalendar||leaveRE.test(title)));
+      const leave=kind==='outofoffice'||override==='leave'||(allDay&&(options.leaveCalendar||ProfileRules.detects(options,'leave',title,E.RULES.leave)));
       if(allDay&&!leave&&override!=='protected'&&override!=='movable'&&override!=='soft'){
         out.markers.push({...marker,review:true});skip('all-day marker (review)');continue;
       }
@@ -62,7 +62,7 @@
     return {calendar:sources.some(s=>s.calendar==='detail')?'detail':sources.length?'busy':'none',busy:[...busy.values()],markers:[...markers.values()],coverages,calendarError:errors.join('; ')};
   }
   function profileFromCalendar(calendar){
-    return {id:`profile:${calendar.id}`,name:calendar.summaryOverride||calendar.summary||calendar.id,email:calendar.id.includes('@')&&!isRoom(calendar.id)?calendar.id:'',tz:calendar.timeZone||'',tzConfirmed:false,required:true,enabled:true,calendarIds:[calendar.id],days:E.WEEK_MON_FRI(),limit:{...E.DEFAULTS.ok},radius:{minutes:0,mode:'inconvenient'},notice:0,availability:[],travel:[],flights:[],holidayExclusions:[],eventRules:{...E.RULES},eventOverrides:{}};
+    return {id:`profile:${calendar.id}`,name:calendar.summaryOverride||calendar.summary||calendar.id,email:calendar.id.includes('@')&&!isRoom(calendar.id)?calendar.id:'',tz:calendar.timeZone||'',tzConfirmed:false,required:true,enabled:true,calendarIds:[calendar.id],days:E.WEEK_MON_FRI(),limit:{...E.DEFAULTS.ok},radius:{minutes:0,mode:'inconvenient'},notice:0,availability:[],travel:[],flights:[],holidayExclusions:[],eventRules:{...E.RULES},eventOverrides:{},eventDetectionEnabled:false,keywordMatchingVersion:1,ruleTerms:{...ProfileRules.defaults},blockers:[],eventTreatments:[],keywordCategories:[]};
   }
   function timezoneSuggestions(text,calendar){
     const suggestions=[];

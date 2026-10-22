@@ -1,8 +1,8 @@
 /* Dependency-free scheduling engine. Calendar creation lives in google-writer.js.
  * API and scheduling semantics: docs/products/slotdesk/engine-api.md at repo root. */
 (function(root, factory) {
-  if (typeof module === 'object' && module.exports) module.exports = factory(require('./scheduling-ranking.js'),require('./search-policy.js')); else root.SlotEngine = factory(root.SlotRanking,root.SlotSearchPolicy);
-})(typeof self !== 'undefined' ? self : this, function(Ranking,Policy) {
+  if (typeof module === 'object' && module.exports) module.exports = factory(require('./scheduling-ranking.js'),require('./search-policy.js'),require('./profile-rules.js')); else root.SlotEngine = factory(root.SlotRanking,root.SlotSearchPolicy,root.SlotProfileRules);
+})(typeof self !== 'undefined' ? self : this, function(Ranking,Policy,ProfileRules) {
   'use strict';
   const MIN = 60000, DAY3 = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], formats = new Map(), instants = new Map();
   const DEFAULTS = { work: {s:'09:00',e:'18:00'}, ok: {s:'07:00',e:'20:00'}, radius:0, notice:0 };
@@ -76,7 +76,7 @@
     });
   }
   function eventKey(ev) {return ev.identity||(ev.iCalUID?`${ev.iCalUID}|${ev.originalStart||ev.start}`:ev.id?`${ev.calendarId||''}|${ev.id}`:ev);}
-  const eventOverride=(ev,p)=>(p.eventOverrides||{})[ev.identity]||(p.eventOverrides||{})[ev.id]||ev.override;
+  const eventOverride=(ev,p)=>ProfileRules.override(ev,p);
   function classify(ev,p,words) {
     const override=eventOverride(ev,p),title=`“${(ev.title||'untitled').trim()}”`;
     if(override==='ignore')return {cost:0,category:'ignored',label:`${title} ignored by EA`};
@@ -86,9 +86,9 @@
     if(ev.type==='ooo'||ev.type==='leave'||ev.allDay)return {cost:Infinity,category:'leave',label:`${title}: leave / protected all-day time`};
     if(p.calendar!=='detail'||ev.detailsVisible===false)return {cost:4,category:'hidden',label:`busy, details hidden — ask ${p.name}`};
     const rules=p.eventRules||words||{},n=ev.attendees||1;
-    if(matches(pattern(rules.protect,RULES.protect),ev.title))return p.isOwnProfile&&ev.calendarId?{cost:8,category:'own-inferred',label:`${title} matches a title-based protection rule in your calendar — review before overlapping`}:{cost:Infinity,category:'protected',label:`${title} matches a protected rule`};
+    if(ProfileRules.detects(p,'protect',ev.title,rules.protect??RULES.protect))return p.isOwnProfile&&ev.calendarId?{cost:8,category:'own-inferred',label:`${title} matches a title-based protection rule in your calendar — review before overlapping`}:{cost:Infinity,category:'protected',label:`${title} matches a protected rule`};
     if(ev.external)return {cost:6+(n>=5?1:0),category:'external',label:`${title} has external guests — avoid`};
-    if(ev.status==='tentative'||ev.type==='focus'||matches(pattern(rules.soft,RULES.soft),ev.title))return {cost:1,category:'soft',label:`${title} is a hold or tentative event`};
+    if(ev.status==='tentative'||ev.type==='focus'||ProfileRules.detects(p,'soft',ev.title,rules.soft??RULES.soft))return {cost:1,category:'soft',label:`${title} is a hold or tentative event`};
     if(n>1&&ev.recurring)return {cost:2+(n>=5?1:0),category:'recurring',label:`${title} is a recurring internal meeting (${n} people)`};
     return {cost:3+(n>=5?1:0),category:'internal',label:`${title} is ${n>1?'a one-off internal meeting':'a solo event; check its purpose'}`};
   }
@@ -102,7 +102,7 @@
   function conflictsFor(p,start,end) {
     const out=[],seen=new Set();
     for(const ev of eventsFor(p)) {
-      if(eventOverride(ev,p)==='ignore')continue;
+      if(eventOverride(ev,p)==='ignore'||p.allowOverlap&&!['protected','leave'].includes(eventOverride(ev,p))&&ev.type!=='flight')continue;
       const key=eventKey(ev);if(seen.has(key))continue;seen.add(key);
       // Hard radii are separate profile constraints, not extra meeting minutes.
       if(eventIntervals(ev,p).some(([s,e])=>overlap(start,end,s,e)))out.push(ev);
@@ -114,6 +114,7 @@
     const no=(why,kind='protected',detail={})=>{const issue={kind,detail};res.issues.push(issue);if(!res.issue){res.issue=issue;res.why=why;}res.band='no';res.margin=0;return res;};
     if(start<now)no('already in the past','past');
     if(start<now+(p.notice||0)*3600000)no(`less than ${p.notice}h notice for ${p.name}`,'notice',{hours:p.notice});
+    const blocker=ProfileRules.blocked(p,start,end,{partsIn,addDaysYmd,startOfDay,zonedToInstant});if(blocker)no('blocked: '+blocker.label+' ('+p.name+')','protected',blocker);
     const positive=(p.availability||[]).length>0;
     if(!availabilityFits(p,start,end))no(`outside stated availability for ${p.name}`,'availability');
     const usual=[],explicit=[],cache=options.cache;
@@ -121,19 +122,19 @@
     for(let s=start;s<end;) {
       const home=partsIn(s,p.tz).ymd,boundary=startOfDay(addDaysYmd(home,1),p.tz),e=Math.min(end,boundary),tz=tzFor(p,s).tz,days=p.days||WEEK_MON_FRI();
       const work=localWindows(s,e,tz,wd=>days[wd]?.on?[days[wd]]:[],cache&&cache.work);
-      const acceptable=localWindows(s,e,tz,wd=>{const r=days[wd];if(!p.ignoreWorkingHours&&(!r||!r.on))return [];const lim=p.limit||DEFAULTS.ok;return [{s:hhmm(p.ignoreWorkingHours?toMin(lim.s):Math.min(toMin(r.s),toMin(lim.s))),e:hhmm(p.ignoreWorkingHours?toMin(lim.e):Math.max(toMin(r.e),toMin(lim.e)))}];},cache&&cache.ok);
+      const acceptable=localWindows(s,e,tz,wd=>{const r=days[wd];if(!p.ignoreWorkingHours&&(!r||!r.on))return [];if(p.ignoreConvenience)return [{s:'00:00',e:'24:00'}];const lim=p.limit||DEFAULTS.ok;return [{s:hhmm(p.ignoreWorkingHours?toMin(lim.s):Math.min(toMin(r.s),toMin(lim.s))),e:hhmm(p.ignoreWorkingHours?toMin(lim.e):Math.max(toMin(r.e),toMin(lim.e)))}];},cache&&cache.ok);
       if(!positive){
         if(!p.ignoreWorkingHours){const workDay=localWindows(s,e,tz,wd=>days[wd]?.on?[{s:'00:00',e:'24:00'}]:[],cache&&cache.day);if(!covered(workDay,s,e))no(`not a working day for ${p.name}`,'nonworking-day');}
         if(!covered(acceptable,s,e)){if(!options.allowBadHours&&!p.ignoreConvenience)no(`bad hour for ${p.name} (outside acceptable hours)`,'acceptable-hours');if(!p.ignoreConvenience&&res.band!=='no')res.band='bad';if(!p.ignoreConvenience)res.notes.push(`${p.name}: explicitly enabled hours outside acceptable range`);}
-        const comfort=p.ignoreWorkingHours?acceptable:work;
-        if(!p.ignoreConvenience)usual.push(...subtract([[s,e]],comfort));
+        const comfort=p.ignoreWorkingHours?acceptable:work,considerHours=!p.ignoreWorkingHours||!p.ignoreConvenience;
+        if(considerHours)usual.push(...subtract([[s,e]],comfort));
         const inside=comfort.find(w=>w[0]<=s&&w[1]>=e);res.margin=Math.min(res.margin,inside?Math.min(s-inside[0],inside[1]-e)/MIN:0);
-        if(!p.ignoreConvenience){const distance=comfort.length?Math.min(...comfort.map(([a,b])=>e<=a?(a-e)/MIN:s>=b?(s-b)/MIN:0)):0;res.distance=Math.max(res.distance,distance);}
+        if(considerHours){const distance=comfort.length?Math.min(...comfort.map(([a,b])=>e<=a?(a-e)/MIN:s>=b?(s-b)/MIN:0)):0;res.distance=Math.max(res.distance,distance);}
       }
       if(localWindows(s,e,tz,wd=>(p.blocks||[]).filter(b=>b.day===wd)).some(b=>overlap(s,e,...b)))no(`runs into protected time for ${p.name}`,'protected',{label:'Blocked time'});
       if(!(e>s))throw new Error('Unable to resolve local date boundary');s=e;
     }
-    if(p.ignoreConvenience){res.margin=60;res.distance=0;}
+    if(p.ignoreConvenience&&p.ignoreWorkingHours){res.margin=60;res.distance=0;}
     for(const c of options.constraints||[]){if(c.who&&c.who!=='all'&&c.who!==p.id)continue;if(!overlap(start,end,ms(c.from),ms(c.to)))continue;if(c.kind==='inconvenient')addExplicit(ms(c.from),ms(c.to),'manual-inconvenience',c.label||'Marked inconvenient time');else no(`blocked: ${c.label||'manual constraint'} (${p.name})`,'protected',{label:c.label,from:c.from,to:c.to});}
     const radius=p.radius?.minutes??p.buffer??0,blocked=p.radius?p.radius.mode==='blocked':!!p.buffer;
     if(radius)for(const ev of eventsFor(p))if(eventOverride(ev,p)!=='ignore'&&!ev.allDay&&!['ooo','leave','flight'].includes(ev.type))for(const [a,b]of eventIntervals(ev,p)){
@@ -168,6 +169,8 @@
     const ids=new Set();
     for(const p of people) {
       for(const flag of ['ignoreWorkingHours','ignoreConvenience','allowOverlap'])if(p[flag]!==undefined&&typeof p[flag]!=='boolean')err(`Invalid ${flag} setting for ${p.name}`);
+      if(p.blockers!==undefined){if(!Array.isArray(p.blockers))err(`Invalid blockers for ${p.name}`);else for(const blocker of p.blockers)try{ProfileRules.validateBlocker(blocker);}catch(_){err(`Invalid blocker for ${p.name}`);}}
+      if(p.eventTreatments!==undefined&&(!Array.isArray(p.eventTreatments)||p.eventTreatments.some(r=>!r||!['occurrence','series'].includes(r.scope)||!['auto','ignore','protected','leave'].includes(r.value)||typeof r.key!=='string'||!r.key||typeof r.seriesKey!=='string')))err(`Invalid meeting rules for ${p.name}`);
       if(!p.id||ids.has(p.id))err('Each participant needs a unique ID');ids.add(p.id);
       if(!zoneValid(p.tz))err(`Enter a valid timezone for ${p.name||p.id}`);
       if(!Number.isFinite(p.notice??0)||(p.notice??0)<0||(p.notice??0)>720)err(`Invalid notice for ${p.name}`);
@@ -215,7 +218,7 @@
         people.forEach((p,i)=>{
           const f=fits[i],conflicts=conflictsFor(p,start,end),available=f.band!=='no'&&!conflicts.length,confirmed=coverageKnown(p,start,end,now);
           const facts=conflicts.map(ev=>conflictFact(ev,p,classify(ev,p,req.words)));
-          slot.people.push({slotStart:start,slotEnd:end,id:p.id,name:p.name,email:p.email,required:p.required!==false,local:f.local,localEnd:f.localEnd,date:f.date,endDate:f.endDate,tz:f.tz,endTz:f.endTz,band:f.band,available,confirmed,inconvenientMinutes:f.outside,usualInconvenientMinutes:f.usualOutside,explicitInconvenientMinutes:f.explicitOutside,distance:f.distance,timing:f.timing,fitIssue:f.issue,issues:f.issues,statusPolicy:req.automaticAlternatives===true,notice:p.notice,availabilityReason:f.band==='no'?f.why:null,hasCalendarConflict:!!conflicts.length,calendarConflictCount:conflicts.length,conflicts:facts,ignoreConvenience:p.ignoreConvenience===true,allowOverlap:p.allowOverlap===true});slot.notes.push(...f.notes);
+          slot.people.push({slotStart:start,slotEnd:end,id:p.id,name:p.name,email:p.email,required:p.required!==false,local:f.local,localEnd:f.localEnd,date:f.date,endDate:f.endDate,tz:f.tz,endTz:f.endTz,band:f.band,available,confirmed,inconvenientMinutes:f.outside,usualInconvenientMinutes:f.usualOutside,explicitInconvenientMinutes:f.explicitOutside,distance:f.distance,timing:f.timing,fitIssue:f.issue,issues:f.issues,statusPolicy:req.automaticAlternatives===true,notice:p.notice,availabilityReason:f.band==='no'?f.why:null,hasCalendarConflict:!!conflicts.length,calendarConflictCount:conflicts.length,conflicts:facts,ignoreConvenience:p.ignoreConvenience===true,ignoreWorkingHours:p.ignoreWorkingHours===true,allowOverlap:p.allowOverlap===true});slot.notes.push(...f.notes);
           if(!confirmed){if(p.required!==false)slot.confirmed=false;slot.notes.push(`cannot see ${p.name}'s complete calendar — availability unconfirmed${p.calendarError?': '+p.calendarError:''}`);}
           if(p.required===false){if(available)slot.optionalAttendance++;else slot.notes.push(`optional guest ${p.name} cannot attend: ${f.why||'busy'}`);}
           else for(const ev of conflicts){const c=classify(ev,p,req.words);if(c.category==='ignored')continue;const key=eventKey(ev),old=clashes.get(key);if(old){if(c.cost>old.cost){old.cost=c.cost;old.label=c.label;old.category=c.category;}old.participants.push(p.id);old.who+=', '+p.name;}else clashes.set(key,{who:p.name,participants:[p.id],required:true,cost:c.cost,category:c.category,label:c.label,event:ev,organizer:ev.organizer||null,ask:ev.organizer?`Coordinate with ${ev.organizer}`:`Ask ${p.name}`,action:c.category==='own-leave'?'Review this time off before sending':'Find a replacement time immediately'});}

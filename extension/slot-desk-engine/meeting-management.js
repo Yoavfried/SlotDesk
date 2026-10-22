@@ -1,4 +1,4 @@
-(function(root,factory){if(typeof module==='object'&&module.exports)module.exports=factory(require('./calendar-view'),require('./workspace-model'));else root.SlotMeetingManagement=factory(root.SlotCalendarView,root.SlotWorkspace);})(typeof self!=='undefined'?self:this,function(V,U){
+(function(root,factory){if(typeof module==='object'&&module.exports)module.exports=factory(require('./calendar-view'),require('./workspace-model'),require('./profile-rules'));else root.SlotMeetingManagement=factory(root.SlotCalendarView,root.SlotWorkspace,root.SlotProfileRules);})(typeof self!=='undefined'?self:this,function(V,U,PR){
   'use strict';
   const copy=v=>JSON.parse(JSON.stringify(v)),stamp=time=>time?.date|| (time?.dateTime?String(Date.parse(time.dateTime)):'');
   function identity(event,calendarId){return JSON.stringify(event.iCalUID?[event.iCalUID,event.recurringEventId?stamp(event.originalStartTime):'']:[calendarId,event.id]);}
@@ -72,6 +72,8 @@
       const padding=Math.max(0,...profiles.filter(profile=>profile.calendarIds?.includes(item.calendarId)).map(profile=>profile.radius?.mode==='blocked'?profile.radius.minutes||0:profile.buffer||0))*60000;
       const record=find(item.calendarId,item.eventId),event=record?.source.items.find(event=>event.id===item.eventId),interval=event&&V.interval(event,record.source.timeZone||record.cal.timeZone||'UTC');
       if(event&&(event.status==='cancelled'||event.transparency==='transparent'))return [];
+      const mapped=profiles.filter(profile=>profile.calendarIds?.includes(item.calendarId));
+      if(event&&mapped.length&&mapped.every(profile=>{const rule=PR.override({...event,calendarId:item.calendarId},profile);return rule==='ignore'||profile.allowOverlap&&!['protected','leave'].includes(rule);}))return [];
       const times=(item.protectedTimes||[item.protectedTime].filter(Boolean)).flatMap(time=>{
         let next=time;
         if(time.origin){const source=find(time.origin.calendarId,time.origin.eventId),origin=source?.source.items.find(event=>event.id===time.origin.eventId);

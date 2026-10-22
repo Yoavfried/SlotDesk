@@ -1,6 +1,8 @@
 # SlotDesk product overview
 
-**Current version: 0.9.4.6 · Google Calendar first · private desktop-extension beta**
+0.9.4.7 adds the [agreed advanced profile settings](release-plan-0.9.4.7.md). Travel/flight redesign remains pending owner review; existing browser/store limits still apply.
+
+**Current version: 0.9.4.7 · Google Calendar first · private desktop-extension beta**
 
 SlotDesk helps executive assistants find, compare and book meeting times across calendars and timezones. Profiles represent people by email. Calendars provide availability sources and a writable organizing calendar; they are not the profile identity.
 

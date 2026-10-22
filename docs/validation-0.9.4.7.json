@@ -1,0 +1,492 @@
+{
+  "version": "0.9.4.7",
+  "date": "2026-10-22",
+  "scope": "Agreed non-flight advanced profile settings",
+  "applicationChecks": 2267,
+  "backendChecks": 71,
+  "calendarComparisonChecks": 22,
+  "browserAssertions": 136,
+  "automatedAccessibilityScans": 24,
+  "automatedAccessibilityViolations": 0,
+  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+  "journeys": {
+    "profile": {
+      "checks": [
+        "Approved section order and helper icons",
+        "Removed redundant clues, leave exceptions and new positive-rule controls",
+        "Help icon does not expand its category",
+        "Help text is available on tap",
+        "Blocker form requires Save or Discard",
+        "Escape retains unsaved blocker entries",
+        "Invalid blocker times are rejected without silent defaults",
+        "Invalid form creates no saved blocker",
+        "One-off blocker saves to the profile",
+        "Editing replaces the chosen blocker",
+        "X removes a blocker immediately",
+        "Overnight recurrence is clearly identified",
+        "Discard leaves saved blockers unchanged",
+        "Detection can be switched off",
+        "Off hides detection fields",
+        "Edited category uses whole-word keyword matching",
+        "Keyword additions save live",
+        "Keyword X saves removal",
+        "Turning off hides fields and preserves terms",
+        "Ignored convenience fields are disabled",
+        "Convenience values survive ignoring",
+        "Only linked selected calendars are offered",
+        "Recurring scope defaults to this occurrence",
+        "Treatment saves without an extra confirmation",
+        "Entire series replaces earlier occurrence treatment",
+        "Assign leave supports entire series",
+        "Later occurrence Default overrides series only for that occurrence",
+        "Shared meeting details opens above the profile",
+        "Closing details returns to profile",
+        "General overlap preference lives in Manage meetings",
+        "Calendar filter changes use cached events",
+        "Profile popup has no horizontal overflow at 320",
+        "Meeting controls fit at 320",
+        "Profile popup has no horizontal overflow at 514",
+        "Meeting controls fit at 514",
+        "Profile popup has no horizontal overflow at 1280",
+        "Meeting controls fit at 1280",
+        "Blockers survive closing and reopening",
+        "New profiles start with event detection off",
+        "New-profile detection fields stay hidden",
+        "Profile changes never write to or change calendar appointments"
+      ],
+      "scans": [
+        {
+          "name": "blocker-form-light",
+          "violations": [],
+          "incomplete": []
+        },
+        {
+          "name": "event-detection-light",
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "aria-valid-attr-value",
+              "count": 1
+            },
+            {
+              "id": "label-content-name-mismatch",
+              "count": 17
+            }
+          ]
+        },
+        {
+          "name": "profile-meetings-light",
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "aria-valid-attr-value",
+              "count": 2
+            },
+            {
+              "id": "label-content-name-mismatch",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "name": "profile-reopened-light",
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "aria-valid-attr-value",
+              "count": 1
+            },
+            {
+              "id": "label-content-name-mismatch",
+              "count": 2
+            }
+          ]
+        }
+      ],
+      "stats": {
+        "posts": 0,
+        "patches": 0,
+        "altered": 0,
+        "unsafeMethods": 0
+      }
+    },
+    "accessibility": {
+      "axeVersion": "4.14.0",
+      "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+      "checks": [
+        "Profile opens with context heading focused",
+        "Return departure timezone has contextual label",
+        "Timezone announces active result",
+        "Escape cannot discard flight",
+        "Required flight fields show associated errors",
+        "Corrected required field clears obsolete error",
+        "Nested form returns focus to Add flight",
+        "Profile arrows retain search focus",
+        "Profile choice is announced",
+        "Enter adds profile and closes suggestions",
+        "Suggestion Escape retains meeting editor",
+        "Forced colors retains focus outline",
+        "No horizontal overflow at 320",
+        "No horizontal overflow at 390",
+        "No horizontal overflow at 1280",
+        "Accessibility checks never changed appointments",
+        "Flight keyboard focus contained 0",
+        "Flight keyboard focus contained 1",
+        "Flight keyboard focus contained 2",
+        "Flight keyboard focus contained 3",
+        "Flight keyboard focus contained 4",
+        "Flight keyboard focus contained 5",
+        "Flight keyboard focus contained 6",
+        "Flight keyboard focus contained 7",
+        "Flight keyboard focus contained 8",
+        "Flight keyboard focus contained 9",
+        "Flight keyboard focus contained 10",
+        "Flight keyboard focus contained 11",
+        "Flight keyboard focus contained 12",
+        "Flight keyboard focus contained 13",
+        "Enter in booking field does not confirm",
+        "Typing Enter never sends invitation",
+        "Nested profile takes focus despite DOM order",
+        "Nested profile returns focus to reschedule",
+        "2x zoom reflows at 640px viewport",
+        "All original appointments unchanged"
+      ],
+      "scans": [
+        {
+          "name": "settings-light",
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "label-content-name-mismatch",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "name": "calendars-light",
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "label-content-name-mismatch",
+              "count": 5
+            }
+          ]
+        },
+        {
+          "name": "profiles-light",
+          "violations": [],
+          "incomplete": []
+        },
+        {
+          "name": "profile-export-light",
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "label-content-name-mismatch",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "name": "advanced-light",
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "aria-valid-attr-value",
+              "count": 2
+            },
+            {
+              "id": "label-content-name-mismatch",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "name": "flight-light",
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "aria-valid-attr-value",
+              "count": 4
+            }
+          ]
+        },
+        {
+          "name": "participant-list-light",
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "aria-valid-attr-value",
+              "count": 2
+            },
+            {
+              "id": "color-contrast",
+              "count": 11
+            },
+            {
+              "id": "label-content-name-mismatch",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "name": "new-meeting-light",
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "aria-valid-attr-value",
+              "count": 2
+            },
+            {
+              "id": "label-content-name-mismatch",
+              "count": 2
+            }
+          ]
+        },
+        {
+          "name": "meetings-light",
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "aria-valid-attr-value",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "name": "meeting-details-light",
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "color-contrast",
+              "count": 1
+            },
+            {
+              "id": "label-content-name-mismatch",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "name": "meeting-edit-light",
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "aria-valid-attr-value",
+              "count": 1
+            },
+            {
+              "id": "label-content-name-mismatch",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "name": "settings-dark",
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "color-contrast",
+              "count": 1
+            },
+            {
+              "id": "label-content-name-mismatch",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "name": "meetings-dark",
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "aria-valid-attr-value",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "name": "profiles-dark",
+          "violations": [],
+          "incomplete": []
+        },
+        {
+          "name": "advanced-dark",
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "aria-valid-attr-value",
+              "count": 2
+            },
+            {
+              "id": "label-content-name-mismatch",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "name": "flight-dark",
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "aria-valid-attr-value",
+              "count": 4
+            }
+          ]
+        },
+        {
+          "name": "new-meeting-dark",
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "aria-valid-attr-value",
+              "count": 2
+            },
+            {
+              "id": "label-content-name-mismatch",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "name": "booking-dark",
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "aria-valid-attr-value",
+              "count": 1
+            },
+            {
+              "id": "label-content-name-mismatch",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "name": "alerts-dark",
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "label-content-name-mismatch",
+              "count": 1
+            }
+          ]
+        },
+        {
+          "name": "reschedule-dark",
+          "violations": [],
+          "incomplete": [
+            {
+              "id": "aria-valid-attr-value",
+              "count": 2
+            },
+            {
+              "id": "label-content-name-mismatch",
+              "count": 1
+            }
+          ]
+        }
+      ]
+    },
+    "new-meeting": {
+      "checks": [
+        "Removed advanced controls are absent",
+        "Five initial useful options when at least five exist",
+        "No individual Copy option action",
+        "No card-level coverage badge",
+        "Excluded candidate diagnostics removed",
+        "Full coverage and no conflict produce Available",
+        "More options appends up to three remaining choices",
+        "Existing card order preserved",
+        "Appending uses current calendar snapshot",
+        "Planning email includes every visible option",
+        "Shared planning email contains no internal caveats or IANA paths",
+        "Email preview is editable",
+        "No horizontal overflow at 320",
+        "Participant identity/icon/timezone/time stay in one row at 320",
+        "No horizontal overflow at 390",
+        "Participant identity/icon/timezone/time stay in one row at 390",
+        "No horizontal overflow at 514",
+        "Participant identity/icon/timezone/time stay in one row at 514",
+        "No horizontal overflow at 680",
+        "Participant identity/icon/timezone/time stay in one row at 680",
+        "No horizontal overflow at 1280",
+        "Participant identity/icon/timezone/time stay in one row at 1280",
+        "Meeting-wide exclusion shown as removable interval",
+        "Per-person time rule action exists",
+        "Per-person rule offers blocked/inconvenient types",
+        "Chosen city persists in participant label",
+        "UI/search/preview operations leave all nine appointments unchanged",
+        "No runtime page errors"
+      ],
+      "errors": [],
+      "stats": {
+        "posts": 0,
+        "patches": 0,
+        "unchanged": 9,
+        "unsafeMethods": 0
+      }
+    },
+    "search": {
+      "checks": [
+        "One clear later choice plus three in-range compromises",
+        "Monday starts at 09:00 rather than 10:00",
+        "Three compromises stay on the requested date",
+        "Only morning, midday and afternoon groups",
+        "Featured later option has no known conflict",
+        "No additional later-date choices after the single featured choice",
+        "Clicking .result-person-name does not jump the page",
+        "Clicking .result-person-zone does not jump the page",
+        "Clicking .result-person-time does not jump the page",
+        "Clicking .result-calendar summary does not jump the page",
+        "Clicking .proposal-warnings summary does not jump the page",
+        "Timezone keyboard choices scroll their list rather than the page",
+        "Keyboard timezone results remain visible",
+        "Escape returns focus to timezone button",
+        "No horizontal overflow at 320",
+        "No horizontal overflow at 514",
+        "No horizontal overflow at 1280",
+        "Long all-conflict search starts with three dates",
+        "Generate more appends the next three dates or the remainder",
+        "Appending options preserves scroll position",
+        "Generate more appends the next three dates or the remainder",
+        "Appending options preserves scroll position",
+        "Generate more appends the next three dates or the remainder",
+        "Appending options preserves scroll position",
+        "All ten eligible dates become available",
+        "Existing cards are not recreated",
+        "Expanded warnings stay expanded",
+        "Existing options keep their order",
+        "Long ranges have one card per date",
+        "No Calendar writes; all nine baseline appointments unchanged",
+        "No browser runtime errors"
+      ],
+      "headings": [
+        "Tue, 3 Nov, 09:00 - 09:15",
+        "Wed, 4 Nov, 09:00 - 09:15",
+        "Thu, 5 Nov, 09:00 - 09:15",
+        "Fri, 6 Nov, 09:00 - 09:15",
+        "Sat, 7 Nov, 09:00 - 09:15",
+        "Sun, 8 Nov, 09:00 - 09:15",
+        "Mon, 9 Nov, 09:00 - 09:15",
+        "Tue, 10 Nov, 09:00 - 09:15",
+        "Wed, 11 Nov, 09:00 - 09:15",
+        "Thu, 12 Nov, 09:00 - 09:15"
+      ]
+    }
+  },
+  "calendarSafety": {
+    "syntheticBaselineEvents": 9,
+    "unchanged": 9,
+    "creates": 0,
+    "updates": 0,
+    "deletesOrMoves": 0
+  },
+  "limitations": [
+    "Synthetic provider and local browser only; no real Google sign-in or invitation used.",
+    "Accessibility incomplete checks and manual/screen-reader assessment remain open.",
+    "Travel/flight redesign remains pending owner review.",
+    "Wider UX readiness remains the owner's decision.",
+    "Existing per-browser/store limits remain unchanged."
+  ]
+}

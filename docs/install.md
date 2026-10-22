@@ -1,8 +1,8 @@
 # Install the SlotDesk pilot
 
-## 0.9.4.6 packages
+## 0.9.4.7 packages
 
-Use `SlotDesk-0.9.4.6.zip` for the manually loaded Chromium desktop beta: `chrome://extensions` (Chrome), `edge://extensions` (Edge), `vivaldi://extensions` (Vivaldi), or the browser's Extensions manager → Developer mode → Load unpacked. Extract the entire ZIP first. Retain the same installed folder/identity and use Reload when updating. Native panel availability varies; the full workspace tab is a supported fallback. Current [browser evidence and limits](browser-compatibility.md) apply.
+Use `SlotDesk-0.9.4.7.zip` for the manually loaded Chromium desktop beta: `chrome://extensions` (Chrome), `edge://extensions` (Edge), `vivaldi://extensions` (Vivaldi), or the browser's Extensions manager → Developer mode → Load unpacked. Extract the entire ZIP first. Retain the same installed folder/identity and use Reload when updating. Native panel availability varies; the full workspace tab is a supported fallback. Current [browser evidence and limits](browser-compatibility.md) apply.
 
 The owner completed [one-time Google/Vercel activation](browser-signin-setup.md) on 21 October. Public readiness is true for 0.9.4.6. Update/reload the extension to use the independent connection; testers do not create Cloud projects. Actual new-flow Google consent is the next check.
 
@@ -10,7 +10,7 @@ The Firefox artifact is an **unsigned development XPI**. For temporary source te
 
 Same Gmail on a new browser/computer does not synchronize local profiles or drafts. Existing [backup/import](export-import.md) transfers configuration only, never tokens or unfinished calendar operations. See [store preparation](extension-stores.md) before a broader distribution route.
 
-Current release: **0.9.4.6**. Chromium manifest minimum is Chrome 116; this is a technical constraint, not verification of every later build. The configured build uses an existing owner-managed Google OAuth client; approved testers do not need to create a Google Cloud project.
+Current release: **0.9.4.7**. Chromium manifest minimum is Chrome 116; this is a technical constraint, not verification of every later build. The configured build uses an existing owner-managed Google OAuth client; approved testers do not need to create a Google Cloud project.
 
 ## Prepare the package
 
@@ -20,7 +20,7 @@ From the repository root, using Node.js 18+:
 npm run package:slotdesk
 ```
 
-Give the tester `dist/SlotDesk-0.9.4.6.zip`. It includes the extension, local fonts, handoff guide, general Help and the privacy notice. Source tests and repository documentation are excluded. Do not include credentials or calendar exports.
+Give the tester `dist/SlotDesk-0.9.4.7.zip`. It includes the extension, local fonts, handoff guide, general Help and the privacy notice. Source tests and repository documentation are excluded. Do not include credentials or calendar exports.
 
 ## Tester setup
 
@@ -39,10 +39,10 @@ Help is available from the question-mark icon before and after connection. The a
 
 ## Updating
 
-Replace the contents of the existing installed folder with the new package and click Reload on its browser extension card. Keep the installed path and pinned identity. Close and reopen older SlotDesk windows after reloading. Saved account-specific profiles remain in the browser. Upgrades from before 0.8.0 ask you to confirm calendar scope; an already confirmed selection is retained in 0.9.4.6 and does not reopen at each start. Do not uninstall the extension as an update step, because uninstalling can remove its local workspace. Loading a second separate copy is not the normal update route.
+Replace the contents of the existing installed folder with the new package and click Reload on its browser extension card. Keep the installed path and pinned identity. Close and reopen older SlotDesk windows after reloading. Saved account-specific profiles remain in the browser. Upgrades from before 0.8.0 ask you to confirm calendar scope; an already confirmed selection is retained in 0.9.4.7 and does not reopen at each start. Do not uninstall the extension as an update step, because uninstalling can remove its local workspace. Loading a second separate copy is not the normal update route.
 
 From source, load `extension/`, not the repository root. The pinned extension ID is `blpliafbiiidhcffegochddjhagkhhip`. Owner OAuth configuration and access limitations are described in [architecture](architecture.md).
 
-Version 0.9.4.6 includes the registration notice and optional updates choice introduced in the 0.9.0 preview. Its central endpoint is configured. Settings shows whether registration is saved or waiting; a failed submission stays queued locally. The private 0.9.4.6 pilot package includes this configured service. On update, Chrome may ask you to accept access to the exact registration-service host.
+Version 0.9.4.6 includes the registration notice and optional updates choice introduced in the 0.9.0 preview. Its central endpoint is configured. Settings shows whether registration is saved or waiting; a failed submission stays queued locally. The private 0.9.4.7 pilot package includes this configured service. On update, Chrome may ask you to accept access to the exact registration-service host.
 
 Version 0.9.4.6 adds `storage` permission for browser-memory credentials. The independent path clears sign-in at browser exit while retaining saved workspace settings. The existing registration endpoint remains configured; the new sign-in endpoint is deployed and activated. Its public readiness is verified; that is separate from completing a real Google sign-in.

@@ -2,7 +2,7 @@
 
 **0.9.4.6 · Google Calendar · private desktop-extension beta**
 
-Version **0.9.4.6** adds shared desktop-browser adapters, independent Google sign-in code, safe tab fallback, connection diagnostics and separate Chromium/Firefox/Safari-source packages. The new sign-in service was activated on 21 October; its public status reports `ready:true` for 0.9.4.6. The [owner setup guide](docs/browser-signin-setup.md) is retained for configuration reference. Actual new-flow Google sign-in still needs checking in the updated extension. See the [release scope](docs/release-plan-0.9.4.6.md), [actual compatibility matrix](docs/browser-compatibility.md), [store requirements](docs/extension-stores.md), [validation](docs/testing.md) and [version history](docs/changelog.md). Appointment logic and the wider UX remain under active owner review. Advanced profile-settings cleanup is reserved for the owner-led 0.9.5 review.
+Version **0.9.4.7** implements the agreed advanced profile settings: recurring/one-off blockers, independent working/convenience rules, fully ignored ordinary overlaps, opt-in keyword detection and local occurrence/series meeting treatments. [Release scope](docs/release-plan-0.9.4.7.md) · [Validation](docs/testing.md) · [Version history](docs/changelog.md). Travel/flight redesign remains under owner review. The existing browser-independent Google service remains active; [compatibility](docs/browser-compatibility.md) and [store requirements](docs/extension-stores.md) retain their documented limits. Appointment logic and the wider UX remain open to owner review.
 
 SlotDesk helps executive assistants find meeting times across people, calendars and timezones. Review a new invitation, browse existing meetings, edit its details and guests, or choose a new time for an appointment. Every calendar write requires an explicit review and confirmation.
 
@@ -13,7 +13,7 @@ Created and maintained by **[Yoavfried](https://github.com/Yoavfried)** and **[n
 - Follow three-step onboarding: selected workspace calendars, your profile and optional familiar people. Incomplete setup starts again at calendars after reopening; completed setup is retained.
 - Set up email-based profiles with searchable timezones, visible calendar mappings and direct Travel & flights access.
 - Add email guests with a meeting-only timezone; saving a profile is optional. Automatically include profiles mapped to the organizing calendar.
-- Use saved and per-meeting working/convenience/ordinary-overlap preferences, with protected rules and clear warnings.
+- Use independent working/convenience preferences, recurring blockers and saved or per-meeting overlap ignoring. Explicit protected time remains blocked.
 - Compare suitable times, with optional guests, comfort ranking and clear warnings when calendar coverage is incomplete.
 - Create reviewed Google Calendar invitations with an optional Google Meet link.
 - Browse multiple calendars and any date range, inspect guest responses and expand overlap details.
@@ -42,7 +42,7 @@ npm run check
 npm run package:slotdesk
 ```
 
-The preview at `http://127.0.0.1:8770/` shows the disconnected interface. Calendar connection needs the installed extension. The browser-independent service is activated; use the updated 0.9.4.6 extension to connect. The native Chrome pilot remains available as a fallback when that service is inactive. Target packages are generated in ignored `dist/`.
+The preview at `http://127.0.0.1:8770/` shows the disconnected interface. Calendar connection needs the installed extension. The browser-independent service is activated; use the updated extension to connect. The native Chrome pilot remains available as a fallback when that service is inactive. Target packages are generated in ignored `dist/`.
 
 ## Decisions, evidence and next work
 

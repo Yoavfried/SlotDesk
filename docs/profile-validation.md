@@ -1,5 +1,7 @@
 # Profile editing and validation — 0.9.3.5
 
+0.9.4.7 update: Blockers validates dates, times, recurrence weekdays and end-after-start rules before Save; invalid entries stay in the form. One-off past dates cannot be newly assigned. Manage meetings accepts only local Default/Ignore/Protect/Assign leave actions with valid occurrence/series identity. Keyword additions are literal words/phrases, not user regular expressions. New fields are validated in portable files and retained by local saving. See the [release contract](release-plan-0.9.4.7.md). The inventory below describes earlier controls where explicitly versioned.
+
 Updated 19 October 2026. This maps the current controls and validators; the individual advanced-setting UX remains for 0.9.5.
 
 ## Basic profile fields

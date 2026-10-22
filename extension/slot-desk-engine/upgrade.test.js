@@ -3,7 +3,7 @@
 const assert=require('node:assert/strict'),E=require('./slotdesk-engine'),U=require('./workspace-model'),V=require('./calendar-view'),G=require('./google-adapter'),S=require('./workspace-sync'),W=require('./workspace-store');
 let count=0;const eq=(a,b,m)=>{assert.deepEqual(a,b,m);count++;},ok=(a,m)=>{assert.ok(a,m);count++;},clone=S.clone;
 const D='2026-10-21',at=(h,m=0)=>Date.parse(`${D}T${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:00Z`),iso=(h,m=0)=>new Date(at(h,m)).toISOString();
-const p=(extra={})=>({...U.newProfile('guest@example.test','Guest','UTC'),tzConfirmed:true,days:E.WEEK_MON_FRI('08:00','17:00'),calendar:'detail',busy:[{id:'occupied',start:iso(8),end:iso(20),title:'DNS'}],...extra});
+const p=(extra={})=>({...U.newProfile('guest@example.test','Guest','UTC'),tzConfirmed:true,eventDetectionEnabled:true,keywordMatchingVersion:0,days:E.WEEK_MON_FRI('08:00','17:00'),calendar:'detail',busy:[{id:'occupied',start:iso(8),end:iso(20),title:'DNS'}],...extra});
 const req=(people=[p()],extra={})=>({people,duration:15,step:30,want:1,perDay:1,range:{from:D,to:D},anchorTz:'UTC',now:'2026-10-18T00:00:00Z',extendDays:0,...extra});
 async function main(){
   ok(S.equal({name:'Alex',tz:'UTC'},{tz:'UTC',name:'Alex'}),'stored key order is not a profile edit');ok(S.equal([{nested:{a:1,b:2}}],[{nested:{b:2,a:1}}]),'nested key order is ignored');ok(!S.equal({name:'Alex',tz:'UTC'},{tz:'UTC',name:'Dana'}),'actual profile change is still detected');ok(!S.equal(['a','b'],['b','a']),'array order remains meaningful');

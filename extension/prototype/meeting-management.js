@@ -11,6 +11,7 @@
     function sync(){
       editor.sync();
       const c=context();for(const [key,notice]of notices){if(!c.calendars.some(cal=>cal.id===notice.cal.id)){notices.delete(key);continue;}const tracking=c.state.settings.declineTracking?.[key];notice.guests=notice.guests.filter(g=>tracking?.responses?.[U.emailKey(g.email)]==='declined'&&!tracking.dismissed?.[U.emailKey(g.email)]);if(!notice.guests.length)notices.delete(key);}
+      const known=[...knownEvents.values()].filter(row=>c.calendars.some(cal=>cal.id===row.cal.id)).map(row=>({cal:row.cal,source:{items:[row.event]}})),followups=M.remainingFollowups(c.state.settings.rescheduleFollowups||[],known,c.state.profiles);if(!S.equal(followups,c.state.settings.rescheduleFollowups||[])){c.state.settings.rescheduleFollowups=followups;env.save();}
       renderPending();renderFollowups();if(session&&$('reschedule-send'))$('reschedule-send').disabled=!!c.busy||!!c.offline||!session.plan||!!session.reason&&!c.state.pendingReschedule;
     }
     function observe(records){

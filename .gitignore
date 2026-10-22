@@ -11,3 +11,6 @@ Thumbs.db
 output/playwright/
 
 .a11y-tools/
+
+# Local validation command output
+output/checks/

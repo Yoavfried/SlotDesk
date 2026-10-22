@@ -1,6 +1,6 @@
 # Advanced profile settings — 0.9.5 owner review
 
-Updated **22 October 2026**. This is an accepted-direction and remaining-review record, not a released implementation. Current runtime/downloads remain **0.9.4.6**. The owner has started the required advanced-profile review and answered the three questions below. Travel/flight review and the explicitly proposed details remain open. Do not declare 0.9.5 ready or publish it before the owner completes the review and authorizes implementation/release.
+Updated **22 October 2026**. The owner authorized the agreed non-flight work as **0.9.4.7**, superseding its earlier placement in 0.9.5. That work is implemented; see [release scope](release-plan-0.9.4.7.md) and [validation](testing.md). The sections below preserve the decision record, including historical planning language. Travel/flight entry, scheduling, detection, settings and helper review remain unfinished for the next owner-led review. Do not declare that remaining review or the wider UX complete.
 
 ## Section order and wording
 
@@ -20,7 +20,7 @@ Remove the two exact explanatory paragraphs specified by the owner. Keep the exi
 
 Place a small outlined information icon to the right of each advanced-section subheader. Show the same short explanation on hover, keyboard focus or tap; interacting with the icon must not accidentally toggle the section. Keep ordinary headings and tooltip text in sentence case.
 
-The owner accepted the earlier Working days and hours and Manage meetings drafts. The later decision removes the separate leave-exception section; its tooltip is therefore removed. Blockers is a new category whose tooltip is still proposed. The following incorporates their revised text with minor grammar fixes (time range for radius; Use for User). These are category explanations, not replacements for individual control labels.
+The owner accepted the earlier Working days and hours and Manage meetings drafts. The later decision removes the separate leave-exception section; its tooltip is therefore removed. The owner accepted the Blockers tooltip in the final non-flight batch. The following incorporates their revised text with minor grammar fixes (time range for radius; Use for User). These are category explanations, not replacements for individual control labels.
 
 | Category | Tooltip |
 | --- | --- |

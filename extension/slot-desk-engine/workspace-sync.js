@@ -34,7 +34,7 @@
   async function commit(store,account,base,local,locks,options={}){
     if(!locks?.request||!account)throw new Error('This browser cannot coordinate saved changes between windows. Copy your meeting details before continuing.');
     return locks.request('slotdesk-workspace:'+account,{mode:'exclusive'},()=>{
-      const remote=store.load(account,clone(base));
+      const loaded=store.load(account,clone(base)),remote=options.prepareRemote?options.prepareRemote(loaded):loaded;
       if(remote.settings?.configurationEpoch!==base.settings?.configurationEpoch){const error=new Error('The setup was replaced in another window. Reload its current settings before editing.');error.code='CONFIGURATION_REPLACED';throw error;}
       const result=mergeState(base,local,remote,options);
       options.validateRemote?.(remote);

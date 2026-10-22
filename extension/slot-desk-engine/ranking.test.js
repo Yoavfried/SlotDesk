@@ -12,7 +12,7 @@ const rankPair=(a,b)=>[a,b].sort(K.compare)[0];
 const owner=person('own',{isOwnProfile:true,tz:'Asia/Jerusalem',days:U.schedule('sun-thu'),allowOverlap:true}),la=person('LA',{tz:'America/Los_Angeles',calendar:'none',coverages:[]});
 const busyOwner={...owner,busy:[{id:'long',calendarId:'work',title:'Ordinary meeting',start:'2026-10-27T18:00:00+02:00',end:'2026-10-27T20:00:00+02:00'}]};
 let result=E.findSlots(req([busyOwner,la],{anchorTz:'Asia/Jerusalem',duration:15,minDuration:15}));
-eq(result.options[0].people.map(p=>p.local),['Tue 18:00','Tue 09:00']);ok(result.options[0].requiredConflictCount===1);eq(result.options[0].people[1].confirmed,false);eq(result.options[0].people[0].allowOverlap,true);
+eq(result.options[0].people.map(p=>p.local),['Tue 18:00','Tue 09:00']);eq(result.options[0].requiredConflictCount,0,'allowed overlaps are absent from ranking');eq(result.options[0].people[1].confirmed,false);eq(result.options[0].people[0].allowOverlap,true);
 ok(result.options.every(s=>s.score.guestMax===0),'do not worsen required guest hours just to fill a different time band');
 const noPermission=E.findSlots(req([{...busyOwner,allowOverlap:false},la],{anchorTz:'Asia/Jerusalem',duration:15,minDuration:15}));ok(!noPermission.options[0].requiredConflictCount,'without overlap permission an otherwise feasible clear time remains primary');
 
@@ -21,9 +21,9 @@ const own=person('own',{isOwnProfile:true,allowOverlap:true,busy:[event('morning
 const within=exact([own,guest],10),after=exact([own,guest],18);
 // Use an explicit longer guest window so both choices are equally suitable for that guest.
 const longGuest={...guest,days:E.WEEK_MON_FRI('09:00','20:00')};
-const clear=exact([own,longGuest],18),clash=exact([own,longGuest],10);eq(rankPair(clash,clear).start,clear.start,'avoid unnecessary own overlap before improving own office hours');
+const clear=exact([own,longGuest],18),clash=exact([own,longGuest],10);eq(rankPair(clash,clear).start,clash.start,'ignored overlap does not penalize the working-hours option');
 const onlyMorningAndEvening={...longGuest,availability:[{days:[2],s:'09:00',e:'11:00',tz:'UTC'},{days:[2],s:'18:00',e:'20:00',tz:'UTC'}]};
-result=E.findSlots(req([own,onlyMorningAndEvening]));ok(!result.options[0].requiredConflictCount);ok(result.options.some(s=>s.requiredConflictCount&&s.score.ownUsual===0),'also retain an optimized useful working-hours overlap');
+result=E.findSlots(req([own,onlyMorningAndEvening]));ok(!result.options[0].requiredConflictCount);ok(result.options.some(s=>s.score.ownUsual===0),'working-hours options remain available without ignored-conflict warnings');
 
 // Fairness is independent of guest order and optional guests never block.
 const a=person('a',{days:E.WEEK_MON_FRI('09:00','12:00')}),b=person('b',{days:E.WEEK_MON_FRI('14:00','18:00')});
@@ -59,13 +59,13 @@ const sunday='2026-11-01',sundayReq=req([person('weekday')],{range:{from:sunday,
 
 // Actual source/type and EA protection take precedence over title guesses.
 for(const title of ['Doctor','Personal','Flight to somewhere']){
-  const e=event('inferred',10,11,{title}),p=person('own',{isOwnProfile:true,allowOverlap:true,busy:[e]});ok(exact([p],10).overrides.some(c=>c.category==='own-inferred'));
-  eq(exact([{...p,isOwnProfile:false}],10),undefined);eq(exact([{...p,eventOverrides:{inferred:'protected'}}],10),undefined);
+  const e=event('inferred',10,11,{title}),p=person('own',{isOwnProfile:true,allowOverlap:true,busy:[e]});eq(exact([p],10).overrides,undefined,'title guesses produce no ignored-overlap warnings');
+  ok(exact([{...p,isOwnProfile:false}],10));eq(exact([{...p,eventOverrides:{inferred:'protected'}}],10),undefined);
 }
 const holiday={id:'holiday',calendarId:'work',title:'Holiday',type:'leave',allDay:true,start:day,end:'2026-10-28',tz:'UTC'};
 const mixed=exact([person('own',{isOwnProfile:true,allowOverlap:true,busy:[holiday,event('meeting',10,11)]})],10);
-eq(mixed.requiredConflictCount,2);eq(mixed.rescheduleCount,1);eq(U.participantFit(mixed.people[0]).label,'1 meeting overlap · Day off');eq(M.collisionTargets(mixed).map(t=>t.eventId),['meeting']);
-const warnings=U.proposalWarnings(mixed);ok(warnings.some(w=>w.title.endsWith('Day off')));ok(warnings.some(w=>w.detail.includes('Tue, 27 Oct, 10:00 - 11:00')));ok(!warnings.some(w=>w.detail.includes('2 overlapping meetings')));
+eq(mixed.requiredConflictCount,0);eq(mixed.rescheduleCount,undefined);eq(U.participantFit(mixed.people[0]).label,'Fits well');eq(M.collisionTargets(mixed),[]);
+const warnings=U.proposalWarnings(mixed);eq(warnings,[],'ignored overlaps produce no scheduling warnings');ok(!warnings.some(w=>w.detail.includes('2 overlapping meetings')));
 eq(exact([person('own',{isOwnProfile:true,allowOverlap:true,busy:[holiday],eventOverrides:{holiday:'leave'}})],10),undefined);
 eq(exact([person('own',{isOwnProfile:true,allowOverlap:true,flights:[{departure:iso(10),arrival:iso(11)}]})],10),undefined);
 

@@ -1,5 +1,9 @@
 # Implemented scheduling work
 
+## 0.9.4.7 — advanced profiles
+
+The [agreed non-flight profile update](release-plan-0.9.4.7.md) is implemented: ordered categories and accessible help, independent Ignore rules, full ordinary-overlap ignoring, recurring/one-off blockers, opt-in keyword bubbles and a local meeting browser with occurrence/series Default, Ignore, Protect and Assign leave. New fields persist, synchronize and export/import. Legacy rules are retained. No Calendar write transport changes. The prior descriptions below are historical where they differ; travel/flight redesign remains pending owner review.
+
 ## 0.9.4.6 — browser platform implementation
 
 Shared API/launcher/lock adapters, serialized background OAuth, hosted code/PKCE exchange and session-only refresh, authenticated registration relay, connection diagnostics, three target packages and store/activation documentation are implemented. [The compatibility matrix](browser-compatibility.md) distinguishes actual synthetic native-browser evidence from unverified Firefox/Apple/other-OS targets. Hosting activation completed on 21 October with public readiness verified true. Real Google consent remains the next check; store listings are not submitted.
@@ -78,7 +82,7 @@ See [meeting editing](meeting-editing.md) for scope and recovery. Stored object-
 | F22 | Automatic mapped participants | All mapped people/team members join new drafts; calendar switches preserve manual additions and explicit removals. Existing rosters stay explicit. | Implemented |
 | F23 | Email-first guests | Add email immediately; optional Create Profile and mandatory search-time timezone confirmation. Preserve temporary draft guests across reload; clear after completion/new draft. | Implemented |
 | F24 | Usual convenience ignoring | Saved and meeting/search-specific preference; omit usual-hour ranking penalties while retaining working limits and other inconvenience rules. | Implemented |
-| F25 | Participant-specific ordinary overlaps | Saved defaults/overrides; protected/unknown-busy boundaries, disclosed overlaps and comfort-first/fewer-affected-appointments ranking. | Implemented |
+| F25 | Participant-specific ordinary overlaps | Saved defaults/overrides ignore nonprotected conflicts entirely; explicit Protect/Assign leave, saved flights and other independently enabled rules remain. | Implemented |
 | F26 | Workspace calendar scope and onboarding | Own profile → explicit selected sources/default → optional people; scoped transport/pagination, source cleanup, existing-user confirmation and peer refresh. | Implemented |
 
 See [onboarding and profiles](onboarding-and-profiles.md). The larger UX68 settings redesign and LLM/email candidates remain future work.

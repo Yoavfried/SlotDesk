@@ -1,5 +1,7 @@
 # Local backup/restore and profile export/import
 
+0.9.4.7 adds portable `blockers`, `eventTreatments`, `eventDetectionEnabled`, `keywordMatchingVersion` and `keywordCategories` fields. Treatment identity/scope and list ordering are preserved. Older files lacking these optional columns receive warnings and retain legacy detection semantics. Imported past blockers stay in the file/configuration but are absent from the active list; restoring them never changes Google events.
+
 Owner clarification: 15 October 2026. This supersedes the combined backup/import proposal in the initial usability review. Implemented in 0.9.2, with local synthetic and browser verification. The two file operations below remain distinct.
 
 ## 1. Complete SlotDesk setup backup and restore

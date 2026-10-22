@@ -1,6 +1,6 @@
 # SlotDesk documentation
 
-Current release: **0.9.4.6**. [Scope](release-plan-0.9.4.6.md) · [Browser evidence](browser-compatibility.md) · [Owner sign-in activation](browser-signin-setup.md) · [Store requirements](extension-stores.md). Google/Vercel activation completed on 21 October, with public readiness verified true. Real new-flow Google consent remains to be checked; unsigned Firefox and Safari-source are not approved store releases.
+Current release: **0.9.4.7**. [Scope](release-plan-0.9.4.7.md) · [Browser evidence](browser-compatibility.md) · [Owner sign-in activation](browser-signin-setup.md) · [Store requirements](extension-stores.md). Google/Vercel activation completed on 21 October, with public readiness verified true. Real new-flow Google consent remains to be checked; unsigned Firefox and Safari-source are not approved store releases.
 
 | Area | Records |
 | --- | --- |
@@ -9,8 +9,8 @@ Current release: **0.9.4.6**. [Scope](release-plan-0.9.4.6.md) · [Browser evide
 | Meeting management | [Editing details/guests](meeting-editing.md), [rescheduling, alerts and overlaps](rescheduling.md) |
 | Scheduling review | [19 October ranking rules, situations and result UX](scheduling-ranking-review.md) — ranking foundations and decision history |
 | 0.9.4.5 owner review | [Meeting options rows, factual statuses and warnings](meeting-options-review-0.9.4.5.md) — full 18-category source/wording/priority table accepted; final responsive/warning UX remains owner-led |
-| 0.9.5 owner review | [Advanced profile settings](advanced-profile-review-0.9.5.md) — accepted directions, remaining travel/flight review and explicit proposals; not implemented |
-| Release split | [0.9.4.5 scope and implementation checks](release-plan-0.9.4.5.md) — advanced-profile cleanup alone remains in 0.9.5 |
+| 0.9.5 owner review | [Advanced profile settings](advanced-profile-review-0.9.5.md) — agreed non-flight work implemented in 0.9.4.7; travel/flight review remains |
+| Release split | [0.9.4.5 scope and implementation checks](release-plan-0.9.4.5.md) — non-flight advanced-profile cleanup moved to 0.9.4.7; flight work remains |
 | Search controls review | [Counts, more options, exclusions and fallback controls](search-options-review-0.9.4.5.md) — implemented 20 October policy and continuing owner review |
 | Planning email | [Plain-text options email request and proposed wording](planning-email.md) — implemented local preview/copy; separate from interactive inquiries |
 | Recovery | [Accepted connection, permission and recovery experience](recovery-experience.md), [system-wide error-reporting review](error-reporting-review.md), [Google connection and closed-beta direction](google-connection.md) |
