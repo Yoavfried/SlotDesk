@@ -1,8 +1,12 @@
 # SlotDesk UX decision register
 
+## 22 October — Blockers and Manage meetings planning settled
+
+The owner answered the [final eight decisions](advanced-profile-review-0.9.5.md#final-blockers-and-manage-meetings-decisions--accepted). Accept the add/edit Save/Discard form, blocker fields and helper. All these profile time settings use the profile timezone; do not add an independent blocker timezone mode. X removes without Undo. Reuse Existing meetings UI/UX rather than the separately proposed three-item/title-search design. Recurring treatments default to This occurrence and otherwise save like other entries. Last action wins: a newer series-wide treatment overrides all earlier individual choices; a later individual action changes that occurrence. Default restores automatic/profile behavior at the chosen scope. No product-planning gate remains for these two areas; travel/flight planning remains. Documentation only; runtime/packages are unchanged.
+
 ## 22 October — Assigned leave protection confirmed; final non-flight decision batch
 
-The owner confirmed that explicit Assign leave blocks even with Allow overlaps enabled; Ignore can disregard that calendar entry for this person. At the owner's request, the [remaining Blockers/Manage meetings decisions](advanced-profile-review-0.9.5.md#final-blockers-and-manage-meetings-decisions--proposed-batch) are listed together, with recommendations for entry completion/fields/timezones/removal/help text, meeting-list layout, live treatment scope and series/occurrence inheritance. Those eight recommendations are pending approval; do not mark them accepted yet. Travel/flight planning remains unfinished. Documentation only; runtime and packages remain unchanged.
+The owner confirmed that explicit Assign leave blocks even with Allow overlaps enabled; Ignore can disregard that calendar entry for this person. At the owner's request, the [remaining Blockers/Manage meetings decisions](advanced-profile-review-0.9.5.md#final-blockers-and-manage-meetings-decisions--accepted) are listed together, with recommendations for entry completion/fields/timezones/removal/help text, meeting-list layout, live treatment scope and series/occurrence inheritance. Those eight recommendations are pending approval; do not mark them accepted yet. Travel/flight planning remains unfinished. Documentation only; runtime and packages remain unchanged.
 
 ## 22 October — Event detection approved
 

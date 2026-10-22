@@ -1,5 +1,11 @@
 # Repository changelog
 
+## 2026-10-22 — Final non-flight profile decisions accepted
+
+- Record accepted blocker form/fields/helper, profile timezone, immediate removal without Undo and reuse of Existing meetings UI.
+- Default recurring treatment to This occurrence; apply last-action-wins rules so series-wide changes replace earlier individual exceptions.
+- Close Blockers/Manage meetings planning and leave travel/flight review open. Documentation only; no application/package changes.
+
 ## 2026-10-22 — Assigned leave protection confirmed
 
 - Record that manual Assign leave blocks despite Allow overlaps.
