@@ -1,5 +1,11 @@
 # SlotDesk UX decision register
 
+## 22 October — new-meeting layout and concise warnings
+
+Implemented as a same-version 0.9.4.6 hotfix: omit the caption repeating the selected From/Through dates. Use the owner's explicit Time Zone label and keep the field left-aligned as the window widens. Review & create also stays left-aligned. Group each participant's calendar icon directly after their name, ahead of the location/timezone and local-time cells.
+
+Warnings show their orange headings without repetitive explanatory paragraphs. For each ordinary meeting overlap, include only Overlapping on HH:MM-HH:MM beneath its own event-specific heading. The interval is the actual intersection of the proposed and existing appointments, expressed in the search timezone, with the saved 12/24-hour preference; the full dated interval is available on hover. Other warning categories retain headings only. This presentation change does not change ranking, permissions or reviewed calendar writes. The separate owner-led 0.9.5 review remains open.
+
 ## 22 October — cloud storage remains an unconfirmed future feature
 
 The owner explicitly accepts the current browser-based saved workspace; it is not a blocker for continuing development or the pilot. Cross-browser/device cloud accounts and settings sync, including compact versioned encoding, are possible future work only. The proposed provider-neutral Google/Microsoft account model and cost-saving design are unconfirmed, with no implementation authorization or release assignment. Retain local backup/import behavior and resume the existing work. See [roadmap proposal DF11](roadmap.md#cloud-accounts-and-settings-sync--unconfirmed-future-feature).

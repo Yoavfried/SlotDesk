@@ -41,10 +41,11 @@
         let detail=source?.start?format(source.start,source.end,source.tz||p.tz,source.allDay):source?.from?format(source.from,source.to,p.tz):r.label;
         if(r.kind==='meeting')detail=(source.hidden?'Busy appointment':source.title||'Untitled appointment')+' · '+detail+'. Existing appointments remain in place.'+(p.required?' Review replacement times before booking.':'');
         else if(source)detail=(source.hidden?'Busy appointment':source.title||source.label||r.label)+' · '+detail;
-        groups.set(key,{names:[p.name],label:r.label,detail});
+        const label=r.kind==='meeting'?'Meeting overlap · '+(source.hidden?'Busy appointment':source.title||'Untitled appointment'):r.label;
+        groups.set(key,{names:[p.name],label,detail,...(r.kind==='meeting'?{overlap:{start:source.start,end:source.end,tz:source.tz||p.tz,allDay:!!source.allDay}}:{})});
       }
     }}
-    return [...groups.values()].map(g=>({title:g.names.join(', ')+': '+g.label,detail:g.detail}));
+    return [...groups.values()].map(g=>({title:g.names.join(', ')+': '+g.label,detail:g.detail,...(g.overlap?{overlap:g.overlap}:{})}));
   }
   return {reasons,primary,warnings};
 });

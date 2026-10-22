@@ -2,6 +2,8 @@
 
 ## 0.9.4.6 — 21 October 2026
 
+Same-version new-meeting hotfix — 22 October 2026: remove the redundant date-range caption, use Time Zone and keep its field and Review & create left-aligned. Group each calendar icon immediately after the participant's name, with contained hover details. Warnings retain concise headings; only meeting overlaps have a second line, Overlapping on HH:MM-HH:MM, showing the actual intersection in the search timezone and respecting the clock preference. Distinct overlapping appointments have distinct headings. All 2,118 application checks and 67 synthetic browser assertions pass; nine baseline appointments remain unchanged with no Calendar writes. Scheduling/ranking policy is unchanged. Refresh the downloadable packages while retaining the original release tag.
+
 Same-version onboarding hotfix — 21 October 2026: put workspace calendars before own profile, place the exclusion notice below the calendar list and suggest the own-profile name from exact-email organizer/attendee metadata with existing permissions. Incomplete onboarding restarts at calendar selection in every new app session, retaining saved values for prefill; completed users skip setup. All 2,118 application checks and 24 focused synthetic-browser assertions pass. No Calendar writes, new Google scopes or hosting changes. Current downloadable packages are refreshed; retain the original release tag and record the exact hotfix source/hash separately.
 
 Activation update — 21 October 2026: the owner completed Google/Vercel configuration and redeployed. Public readiness is independently verified true for 0.9.4.6. Runtime/package files and checksums are unchanged; real new-flow Google consent is the next check. See the [activation record](browser-signin-setup.md).

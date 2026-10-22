@@ -1,5 +1,9 @@
 # SlotDesk validation record
 
+## 22 October — new-meeting layout hotfix
+
+All **2,118 application checks** pass. The existing new-meeting browser journey passes 28 assertions. A focused synthetic check passes 39 more: removed date caption, exact Time Zone label, left alignment at 320/390/514/680/1280px, adjacent name/calendar icon, contained hover details with short/long names, individual overlap headings, clipped overlap intervals, heading-only non-overlap reasons, matching final-review presentation and 12-hour formatting. Narrow/wide proposal screenshots were inspected. All nine baseline appointments remain unchanged, with zero create/update/delete/move requests. The version remains 0.9.4.6; scheduling logic is unchanged. No live Google Calendar read or real invitation is claimed for these checks.
+
 ## 21 October — onboarding hotfix
 
 All **2,118 application checks** pass, including 19 new calendar-first state and name-hint checks. These cover incomplete/completed/restore states, exact email matching, cancelled/other-person/email-only metadata, bounded selected-source reads, busy-only skipping, abort and non-blocking failure.

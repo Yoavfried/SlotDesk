@@ -1,5 +1,12 @@
 # Repository changelog
 
+## 2026-10-22 — 0.9.4.6 new-meeting layout hotfix
+
+- Remove the duplicate selected-date caption; use the owner-requested Time Zone label and keep its field and Review & create aligned left at every width.
+- Group the calendar-coverage icon directly with the participant name. Keep narrow-window hover details inside the viewport.
+- Show warning headings with only a concise actual-overlap interval underneath meeting overlaps. Separate overlapping appointments retain their own headings; other warning paragraphs are removed. Scheduling policy and calendar writers are unchanged.
+- Validate 2,118 application checks and 67 synthetic browser assertions with all nine baseline appointments unchanged and zero calendar writes. Refresh the same-version packages; retain the historical release tag.
+
 ## 2026-10-22 — Deferred cloud account storage proposal
 
 - Record cross-browser/device workspace sync and compact versioned settings storage as unconfirmed future feature DF11, including unresolved account/provider, migration, synchronization and cost decisions.

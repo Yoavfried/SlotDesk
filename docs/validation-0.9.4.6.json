@@ -153,5 +153,29 @@
     "unchangedBaselineAppointments": 9,
     "realGoogleAccountUsed": false,
     "hostingChanged": false
+  },
+  "newMeetingLayoutHotfix": {
+    "date": "2026-10-22",
+    "applicationChecks": 2118,
+    "existingNewMeetingBrowserAssertions": 28,
+    "focusedBrowserAssertions": 39,
+    "widths": [
+      320,
+      390,
+      514,
+      680,
+      1280
+    ],
+    "dateCaptionRemoved": true,
+    "timezoneAndReviewLeftAligned": true,
+    "calendarIconAdjacentToName": true,
+    "warnings": "headings only; meeting overlaps show clipped interval in the search timezone with clock preference",
+    "calendarPosts": 0,
+    "calendarPatches": 0,
+    "unsafeMethods": 0,
+    "unchangedBaselineAppointments": 9,
+    "schedulingPolicyChanged": false,
+    "realGoogleAccountUsed": false,
+    "hostingChanged": false
   }
 }
