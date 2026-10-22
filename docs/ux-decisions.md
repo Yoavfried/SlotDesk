@@ -1,5 +1,9 @@
 # SlotDesk UX decision register
 
+## 22 October — Assigned leave protection confirmed; final non-flight decision batch
+
+The owner confirmed that explicit Assign leave blocks even with Allow overlaps enabled; Ignore can disregard that calendar entry for this person. At the owner's request, the [remaining Blockers/Manage meetings decisions](advanced-profile-review-0.9.5.md#final-blockers-and-manage-meetings-decisions--proposed-batch) are listed together, with recommendations for entry completion/fields/timezones/removal/help text, meeting-list layout, live treatment scope and series/occurrence inheritance. Those eight recommendations are pending approval; do not mark them accepted yet. Travel/flight planning remains unfinished. Documentation only; runtime and packages remain unchanged.
+
 ## 22 October — Event detection approved
 
 The owner approved the [non-flight detection fields and wording](advanced-profile-review-0.9.5.md#event-detection--approved-controls-keywords-and-matching): Leave, Flexible meetings and Protected time with editable default keyword/phrase bubbles and concise helper text. Match case-insensitive whole words/phrases; an empty category is disabled. Non-flight classification priority is Leave, then Protected time, then Flexible meetings. Manual event choices and the accepted Allow overlaps handling override title guesses. Preserve existing custom keywords. Flight detection/defaults/helper text remain under the separate flight review. Planning approval only; runtime and packages remain unchanged.

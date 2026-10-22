@@ -1,5 +1,10 @@
 # Repository changelog
 
+## 2026-10-22 — Assigned leave protection confirmed
+
+- Record that manual Assign leave blocks despite Allow overlaps.
+- Consolidate the remaining Blockers/Manage meetings product decisions into one eight-item recommendation batch for owner review. Documentation only; no implementation or package change.
+
 ## 2026-10-22 — Non-flight Event detection approved
 
 - Record owner approval of category labels, default keyword/phrase bubbles, field helper text, whole-word matching, empty-list behavior and non-flight classification precedence.
