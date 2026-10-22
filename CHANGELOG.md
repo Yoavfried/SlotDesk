@@ -1,5 +1,10 @@
 # Repository changelog
 
+## 2026-10-22 — Non-flight Event detection approved
+
+- Record owner approval of category labels, default keyword/phrase bubbles, field helper text, whole-word matching, empty-list behavior and non-flight classification precedence.
+- Preserve custom terms, manual event treatment and accepted overlap semantics. Flight detection remains for the flight review. Documentation only; runtime/packages remain unchanged.
+
 ## 2026-10-22 — Blockers and consolidated leave review
 
 - Record Blockers as the third advanced category, recurring/one-off removable-entry UX and identifiable recurring-series meeting treatment.

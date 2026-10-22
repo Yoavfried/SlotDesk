@@ -1,8 +1,12 @@
 # SlotDesk UX decision register
 
+## 22 October — Event detection approved
+
+The owner approved the [non-flight detection fields and wording](advanced-profile-review-0.9.5.md#event-detection--approved-controls-keywords-and-matching): Leave, Flexible meetings and Protected time with editable default keyword/phrase bubbles and concise helper text. Match case-insensitive whole words/phrases; an empty category is disabled. Non-flight classification priority is Leave, then Protected time, then Flexible meetings. Manual event choices and the accepted Allow overlaps handling override title guesses. Preserve existing custom keywords. Flight detection/defaults/helper text remain under the separate flight review. Planning approval only; runtime and packages remain unchanged.
+
 ## 22 October — Blockers, recurring meeting rules and consolidated leave handling
 
-The owner chose Blockers as the third advanced section, supporting recurring and one-off entries through Add blocker and compact removable bubbles. One-off entries cannot be assigned to past dates and expire from the active list when their date has passed. This entry pattern may fit flights and other repeated settings, with those details still under review. Permit occurrence/series treatment when a meeting's recurrence is identifiable. Remove the separate Leave exceptions category: leave entries remain in Manage meetings and can be set to Ignore there; retain Assign leave for manual classification. These decisions supersede the previous separate leave picker. The new [Event detection proposal](advanced-profile-review-0.9.5.md#event-detection--accepted-control-and-proposed-clearer-fields) is for owner review. Documentation only; 0.9.5 is not implemented or declared ready.
+The owner chose Blockers as the third advanced section, supporting recurring and one-off entries through Add blocker and compact removable bubbles. One-off entries cannot be assigned to past dates and expire from the active list when their date has passed. This entry pattern may fit flights and other repeated settings, with those details still under review. Permit occurrence/series treatment when a meeting's recurrence is identifiable. Remove the separate Leave exceptions category: leave entries remain in Manage meetings and can be set to Ignore there; retain Assign leave for manual classification. These decisions supersede the previous separate leave picker. The new [Event detection proposal](advanced-profile-review-0.9.5.md#event-detection--approved-controls-keywords-and-matching) is for owner review. Documentation only; 0.9.5 is not implemented or declared ready.
 
 ## 22 October — Leave exceptions and manual leave assignment
 

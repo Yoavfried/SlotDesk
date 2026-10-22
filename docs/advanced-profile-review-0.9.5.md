@@ -86,24 +86,26 @@ Preserve actual event dates/times: assigning a timed event as leave must not sil
 
 The previous separate date-part exception plan is withdrawn with that category. Existing stored partial/date-based exceptions still require safe compatibility handling; removing a UI is not permission to lose existing rules on upgrade or unrelated live saves. Do not add a replacement partial-event editing workflow without reviewing it.
 
-## Event detection — accepted control and proposed clearer fields
+## Event detection — approved controls, keywords and matching
 
 Master checkbox: **Detect special events in calendar**. New profiles start **off**. Existing profiles retain their current effective behavior on upgrade; stored custom matching terms remain intact. Off hides all matching fields and bypasses title/airport-route guesses in both adaptation and scheduling. It must not merely hide the editor while default regexes continue to run.
 
-When enabled, show existing defaults/custom values. The following is a **new proposal for owner review**, not approved wording or a change to existing saved terms:
+The owner approved the following non-flight fields, starting keywords, helper text, keyword bubbles and matching rules on 22 October. This approval is for the 0.9.5 plan; runtime is unchanged. Preserve existing custom terms rather than replacing them with these new-profile defaults.
 
-| Field | Suggested starting keywords | Effect |
+| Field | Starting keywords | Helper text |
 | --- | --- | --- |
-| Leave | holiday; vacation; annual leave; sick leave; parental leave; OOO; out of office | Recognize matching all-day entries as leave. Structured provider metadata and Assign leave can also identify timed leave independently. |
-| Flexible meetings | hold; tentative; placeholder; TBC; TBD; focus; prep | Give matching ordinary meetings a lower disruption cost when comparing unavoidable conflicts. They remain real meetings. |
-| Protected time | do not schedule; do not book; do not move; doctor; dentist; medical; personal | Recognize title-based protection. Explicit Ignore/Protect and the already accepted Allow overlaps precedence still apply; a title guess does not silently become an explicit manual Protect. |
-| Flights | Deferred to the flight review | Keywords, airport routes, confirmation and the difference between inferred flights and saved flight entries remain to be reviewed together. |
+| Leave | holiday; vacation; annual leave; sick leave; parental leave; OOO; out of office | Matching all-day events are treated as leave. |
+| Flexible meetings | hold; tentative; placeholder; TBC; TBD; focus; prep | Matching meetings have lower priority when comparing conflicts. |
+| Protected time | do not schedule; do not book; do not move; doctor; dentist; medical; personal | Matching events are treated as protected time. |
+| Flights | Pending flight review | Pending flight review. |
 
-Proposed input UX: each keyword/phrase is a small removable bubble, with Add keyword and Enter support, reusing the saved-entry pattern. Prefill defaults on enable for a genuinely new profile; keep existing custom terms intact. Clearing all terms for a category disables its text matches and must not match every title or restore defaults secretly.
+Structured provider metadata and Assign leave can identify timed leave independently. Flexible meetings retain real conflict/attendance facts and receive a lower disruption cost when comparing unavoidable conflicts. Title-based protection does not silently become explicit manual Protect; the accepted Allow overlaps precedence still applies.
 
-Proposed matching: case-insensitive whole words/phrases; hold should not match shareholder. The current broad matching expressions are implementation history, not a requirement to keep false positives. Only actually accessible event titles are checked. Remove the old general comma-separated-words paragraph; use concise field-specific guidance, for example Matching meetings are easier to move for Flexible meetings and Matching entries are treated as leave for Leave. Final text and the proposed default lists require owner approval.
+Approved input UX: each keyword/phrase is a small removable bubble, with Add keyword and Enter support, reusing the saved-entry pattern. Prefill defaults on enable for a genuinely new profile; keep existing custom terms intact. Clearing all terms for a category disables its text matches and must not match every title or restore defaults secretly.
 
-Manual per-event choices win over title guesses. If non-flight keyword categories collide, propose Leave before Protected time before Flexible meetings; flight-category precedence remains part of the flight review. Disabling detection hides the fields and disables title/airport guesses in both adaptation and scheduling. Provider event metadata, explicit leave-calendar assignment, saved flights, manual blockers and individual meeting choices remain independent. The master defaults remain off for new profiles, with existing profiles' effective behavior preserved on upgrade.
+Approved matching: case-insensitive whole words/phrases; hold should not match shareholder. The current broad matching expressions are implementation history, not a requirement to keep false positives. Only actually accessible event titles are checked. Remove the old general comma-separated-words paragraph and use the approved field-specific helper text above. An empty list disables that category; keyword defaults remain editable.
+
+Manual per-event choices win over title guesses. If non-flight keyword categories collide, use Leave before Protected time before Flexible meetings; flight-category precedence remains part of the flight review. Disabling detection hides the fields and disables title/airport guesses in both adaptation and scheduling. Provider event metadata, explicit leave-calendar assignment, saved flights, manual blockers and individual meeting choices remain independent. The master defaults remain off for new profiles, with existing profiles' effective behavior preserved on upgrade.
 
 ## Manage meetings — accepted choices and proposed browser
 
@@ -124,6 +126,6 @@ Legacy flexible/movable overrides need an explicit preservation/migration treatm
 
 Settled by the owner's answers: explicit Protect/flights win over allowed overlaps; new detection defaults off and existing behavior is preserved; the standalone timezone-clue section is removed; factual Existing meetings overlap labels remain even for ignored overlaps. Preserve previously saved availability until deliberately removed; Blockers is now accepted as the third section, with recurring/one-off entry bubbles; Leave exceptions is removed and leave can be ignored in Manage meetings. Recurring-series treatment is accepted when identifiable.
 
-Still open: travel and flight UX/logic and helper text (required in 0.9.5), the new Event detection field/keyword/matching proposal, the Blockers helper text and detailed form wording, any remaining Manage meetings layout details, Assign leave versus Allow overlaps precedence, and final review/authorization. The category order, blocker pattern, leave-category removal and configurable occurrence/series scope are accepted. Migration/backup preservation and technical validation remain implementation responsibilities. Do not treat this record as owner approval of every proposed detail.
+Still open: travel and flight UX/logic and helper text (required in 0.9.5), flight-specific Event detection defaults/logic, the Blockers helper text and detailed form wording, any remaining Manage meetings layout details, Assign leave versus Allow overlaps precedence, and final review/authorization. The category order, blocker pattern, leave-category removal, configurable occurrence/series scope and non-flight Event detection fields/keywords/helpers/matching are accepted. Migration/backup preservation and technical validation remain implementation responsibilities. Do not treat this record as owner approval of every proposed detail.
 
 When implementation is authorized, cover each Ignore combination, required/optional/own participants, shared event copies, protection versus ignored overlaps, detection on/off with defaults/custom/empty lists, source failures, compatibility with legacy partial leave exceptions, recurring occurrence/series identity, legacy overrides/availability, import/export/full restore, live-save/window conflicts, keyboard focus and narrow/wide layouts. New settings and scoped overrides must remain portable under the existing backup/profile-file contract. Recheck that no profile operation calls a Calendar create/PATCH/delete/move transport. Wider UX readiness remains the owner's decision.
