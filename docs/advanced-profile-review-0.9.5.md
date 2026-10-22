@@ -10,9 +10,9 @@ Updated **22 October 2026**. This is an accepted-direction and remaining-review 
 | 2 | Convenience hours | Rename Preferred hours; use sentence case. Remove the ranking-only explanatory paragraph. Ignore usual convenience hours removes that person's usual-hour limits, penalties and warnings. Other independently enabled rules still apply. |
 | 3 | Notices and buffers | Rename Meeting rules. Remove the paragraph beginning Overlaps are disclosed before sending. Keep minimum notice and configured meeting buffers here; move the general Allow overlaps setting to Manage meetings. |
 | 4 | Travel & flights | Review and fix in this same update, together with other flight-related behavior. The owner has put this section aside temporarily; its review is not complete. |
-| 5 | Holiday exceptions | Replace Leave / holiday exceptions. Choose actual leave/holiday entries for this profile instead of creating free-standing manually entered date exceptions. |
+| 5 | Leave exceptions | Replace Leave / holiday exceptions and the earlier Holiday exceptions proposal. Show leave/holiday entries with search and three per page; choose existing entries/days to ignore. |
 | 6 | Event detection | Replace Event treatment. Master checkbox: Detect special events in calendar. When off, show only the checkbox; when on, reveal clearer matching fields with their default values. |
-| 7 | Manage meetings | Include the saved general Allow overlaps setting, followed by the compact profile-specific calendar browser and Default / Ignore / Protect choices. |
+| 7 | Manage meetings | Include the saved general Allow overlaps setting, followed by the compact profile-specific calendar browser and Default / Ignore / Protect / Assign leave choices. |
 
 Remove the two exact explanatory paragraphs specified by the owner. Keep the existing live-saving model and separate basic Availability calendars / More settings expandables. Saved values remain available when an Ignore or detection checkbox is toggled back; disabling a rule must actually bypass it, not merely hide inputs.
 
@@ -20,7 +20,7 @@ Remove the two exact explanatory paragraphs specified by the owner. Keep the exi
 
 Place a small outlined information icon to the right of each advanced-section subheader. Show the same short explanation on hover, keyboard focus or tap; interacting with the icon must not accidentally toggle the section. Keep ordinary headings and tooltip text in sentence case.
 
-The owner accepted the earlier Working days and hours, Holiday exceptions and Manage meetings drafts. The following incorporates their revised text with minor grammar fixes (time range for radius; Use for User). These are category explanations, not replacements for individual control labels.
+The owner accepted the earlier Working days and hours, leave/holiday exceptions and Manage meetings drafts; the exceptions section is now called Leave exceptions. The following incorporates their revised text with minor grammar fixes (time range for radius; Use for User). These are category explanations, not replacements for individual control labels.
 
 | Category | Tooltip |
 | --- | --- |
@@ -28,11 +28,11 @@ The owner accepted the earlier Working days and hours, Holiday exceptions and Ma
 | Convenience hours | Set a time range when this person may not be working but could still consider attending meetings. |
 | Notices and buffers | Require enough advance notice for meetings and set buffers around them. |
 | Travel & flights | Wording remains unfinished; review and fix this tooltip with the rest of the travel/flight experience in 0.9.5. Do not treat the earlier draft as approved. |
-| Holiday exceptions | Choose which holidays or days off SlotDesk should disregard for this person. |
+| Leave exceptions | Choose which holidays or days off SlotDesk should disregard for this person. |
 | Event detection | Use keywords in calendar event titles to detect holidays, flexible meetings, flights and protected times. |
 | Manage meetings | Control how individual calendar meetings affect this person's availability. |
 
-The general overlap checkbox moves from Notices and buffers to Manage meetings. Its accepted full-ignore semantics and saved-default/per-meeting-override behavior remain unchanged. Place the general control above the individual-meeting browser so it is distinguished from each occurrence's Default / Ignore / Protect choice.
+The general overlap checkbox moves from Notices and buffers to Manage meetings. Its accepted full-ignore semantics and saved-default/per-meeting-override behavior remain unchanged. Place the general control above the individual-meeting browser so it is distinguished from each occurrence's Default / Ignore / Protect / Assign leave choice.
 
 ## Overlaps — accepted semantics
 
@@ -71,19 +71,24 @@ The current direction to develop is recurring profile blocks, for example Every 
 
 Previously saved positive availability rules must remain visible and effective until deliberately removed or explicitly migrated. Do not silently erase them, reinterpret them as negative blockers, or lose them through upgrade, export/import or restore. Existing temporary meeting/person time rules remain available; the new positive meeting-only form is under reconsideration.
 
-## Holiday exceptions — calendar-backed selection
+## Leave exceptions — accepted calendar-backed list
 
-Accepted direction: show existing leave/holiday entries for the profile and let the user choose which to disregard. Read only the person's linked calendars that are selected for SlotDesk. Explain missing access or partial loading; a failed/empty read must not fabricate dates or imply that no leave exists.
+The owner approved the exception behavior and changed the proposed browser to a simple **searchable list with three entries per page**. The heading is **Leave exceptions**. Replace the proposed top-level date-range picker with search and previous/next page controls. Search filters the list before pagination; editing or ignoring an entry must not remove it from the list or lose the current context.
 
-Data can come from Google out-of-office entries, a linked calendar explicitly marked as leave/holidays, enabled leave-title detection, and supported existing per-event leave overrides. An ordinary all-day note is not automatically a day off. Detection being off must not erase explicit Google metadata or the user's leave-calendar assignment.
+Show actual leave/holiday entries belonging to this person, with their name, dates and calendar, and an **Ignore for this person** checkbox. Read only the person's linked calendars selected for SlotDesk. Loading, missing access, partial results and no matches must be represented accurately. Do not imply that an incomplete calendar read searched all leave history. Calendar-read coverage/caching is an implementation detail to expose clearly where needed, not a reason to restore the rejected date-range controls.
 
-Proposed compact flow, to refine with the owner:
+Data sources: Google out-of-office metadata, a linked calendar explicitly marked as leave/holidays, enabled leave-title detection and **Assign leave** in this profile's Manage meetings section. An ordinary all-day note is not automatically a day off. Detection being off does not remove explicit provider metadata, leave-calendar assignment or manual Assign leave.
 
-1. Choose a date range, load/refresh that person's leave entries, then show title, actual dates and calendar.
-2. Choose the leave/holiday to ignore; show existing exceptions in the same list so they can be restored.
-3. Preserve the earlier accepted per-day/part-of-leave use case by offering dates within the selected entry, defaulting to the whole entry. This replaces unrelated free-text date entry, not the ability to ignore only part of a long leave.
+Accepted behavior:
 
-Scope exceptions to the selected entry/occurrence and person so another event on the same dates remains effective. Deduplicate the same occurrence across calendars. Existing date-only exceptions need a deliberate migration/display rule; preserve them until resolved, without applying them to unrelated appointments. Explicit Protect and a saved flight do not become ignored merely because they share the chosen holiday date.
+- For a multi-day entry, offer **All days** or **Choose days** within that entry. Default to the full entry when the user chooses to ignore it.
+- Unchecking restores its normal effect on scheduling. Keep ignored entries visible and marked **Ignored**.
+- Scope an exception to this person and the selected entry/occurrence. Other events on those dates retain their own rules; explicit Protect and separately saved flights are not cleared by a leave exception.
+- Apply the exception to the selected occurrence of a recurring leave/holiday, not automatically every future recurrence.
+- Preserve partial-date exceptions and deduplicate copies of the same occurrence across sources. Existing date-only exceptions require a safe migration without erasing them or extending them to unrelated events.
+- Assign leave preserves the actual event interval. A timed two-hour entry must not turn into a full-day block merely because it is treated as leave. Day selection limits which portion of an existing leave entry is disregarded; it does not expand its times.
+
+These choices update local SlotDesk scheduling rules only. The approved list/exception design is no longer a pending owner decision.
 
 ## Event detection — accepted control and proposed clearer fields
 
@@ -102,22 +107,23 @@ Remove Edit the starting rules or override any individual event below. Use comma
 
 ## Manage meetings — accepted choices and proposed browser
 
-The saved general overlap checkbox belongs here, above the individual-meeting browser; it is removed from Notices and buffers. The owner requires Default / Ignore / Protect. Proposed presentation follows Existing meetings within the profile dialog: one-row From/Through controls, linked-calendar selection, compact count and nearby Refresh, then date-ordered meeting rows with a treatment control. Keep the enclosing profile popup/fixed heading and width behavior stable. Browse only this person's linked selected calendars; changing a filter must not expose unrelated calendars. Reuse range/source caching and pagination/error handling rather than depending on the New meeting date range or dumping all previously loaded events.
+The saved general overlap checkbox belongs here, above the individual-meeting browser; it is removed from Notices and buffers. The owner requires Default / Ignore / Protect and has added **Assign leave** as a fourth choice. Proposed presentation follows Existing meetings within the profile dialog: one-row From/Through controls, linked-calendar selection, compact count and nearby Refresh, then date-ordered meeting rows with a treatment control. Keep the enclosing profile popup/fixed heading and width behavior stable. Browse only this person's linked selected calendars; changing a filter must not expose unrelated calendars. Reuse range/source caching and pagination/error handling rather than depending on the New meeting date range or dumping all previously loaded events.
 
 | Choice | Scheduling behavior for this person |
 | --- | --- |
 | Default | Remove this person's override for this occurrence; apply active profile settings and detection. It is not an instruction to force the event to block. |
 | Ignore | Treat this calendar occurrence as absent for this person, including conflicts, title classification, its derived radius and warnings. Keep invitations and Google data unchanged. |
 | Protect | Block its exact event interval, like the flight interval, without automatically adding a buffer. It wins over Allow overlaps. Separately configured radius rules remain independently configured. |
+| Assign leave | Treat this occurrence as leave for this person and include it in Leave exceptions. Preserve its actual dates/times and Google event data. Keyword detection is not required for an explicit assignment. |
 
-Use stable per-occurrence identity, deduplicate shared copies, and show only one row per occurrence. Proposed initial scope is one occurrence, not an entire recurring series; the UI must make that clear. Do not expose inaccessible details or offer a fabricated event-specific choice from an anonymous merged free/busy interval. With no linked calendars, explain that meetings cannot be loaded for local treatment.
+The precedence of manually assigned leave versus the saved/per-meeting Allow overlaps preference remains to be settled; do not silently equate Assign leave with explicit Protect or ordinary meetings. Use stable per-occurrence identity, deduplicate shared copies, and show only one row per occurrence. Proposed initial scope is one occurrence, not an entire recurring series; the UI must make that clear. Do not expose inaccessible details or offer a fabricated event-specific choice from an anonymous merged free/busy interval. With no linked calendars, explain that meetings cannot be loaded for local treatment.
 
-Legacy flexible/movable/leave overrides need an explicit preservation/migration treatment before reducing the selector to three choices. Default must not silently erase a previous rule during an unrelated live save. These are SlotDesk settings; this browser does not edit appointment titles, guest lists or dates in Google.
+Legacy flexible/movable overrides need an explicit preservation/migration treatment before reducing the selector to four choices; existing leave overrides map to Assign leave. Default must not silently erase a previous rule during an unrelated live save. These are SlotDesk settings; this browser does not edit appointment titles, guest lists or dates in Google.
 
 ## Remaining owner review and implementation checks
 
 Settled by the owner's answers: explicit Protect/flights win over allowed overlaps; new detection defaults off and existing behavior is preserved; the standalone timezone-clue section is removed; factual Existing meetings overlap labels remain even for ignored overlaps. Preserve previously saved availability until deliberately removed; the proposed new availability UI is reopened around recurring profile blockers.
 
-Still open: travel and flight UX/logic and helper text (required in 0.9.5), recurring profile blocker design, the concrete calendar-backed holiday/meeting browser and recurrence/migration details, non-flight detection field wording, and final review/authorization. Do not treat this record as owner approval of every proposed detail.
+Still open: travel and flight UX/logic and helper text (required in 0.9.5), recurring profile blocker design, the Manage meetings browser and recurring-event scope, Assign leave versus Allow overlaps precedence, non-flight detection field wording, and final review/authorization. Leave-exception search/three-per-page browsing and whole/partial occurrence behavior are accepted. Migration/backup preservation and technical validation remain implementation responsibilities. Do not treat this record as owner approval of every proposed detail.
 
 When implementation is authorized, cover each Ignore combination, required/optional/own participants, shared event copies, protection versus ignored overlaps, detection on/off with defaults/custom/empty lists, source failures, partial leave exceptions, recurring occurrence identity, legacy overrides/availability, import/export/full restore, live-save/window conflicts, keyboard focus and narrow/wide layouts. New settings and scoped overrides must remain portable under the existing backup/profile-file contract. Recheck that no profile operation calls a Calendar create/PATCH/delete/move transport. Wider UX readiness remains the owner's decision.

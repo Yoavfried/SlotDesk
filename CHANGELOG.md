@@ -1,5 +1,10 @@
 # Repository changelog
 
+## 2026-10-22 — Leave-exception browsing approved
+
+- Rename the section Leave exceptions; record accepted search, three-entry pagination, whole/partial occurrence exceptions and restoration.
+- Add Assign leave to the planned local meeting-treatment choices and include assigned entries in the exception list. Keep the new leave/overlap precedence question explicit. Documentation only; no runtime or package change.
+
 ## 2026-10-22 — Further profile-review decisions
 
 - Confirm removal of the standalone timezone-clue helper and retention of factual Existing meetings overlap labels even for ignored overlaps.

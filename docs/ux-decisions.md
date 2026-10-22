@@ -1,5 +1,9 @@
 # SlotDesk UX decision register
 
+## 22 October — Leave exceptions and manual leave assignment
+
+The owner approved the leave-exception behavior, with a searchable list of three entries per page instead of a date-range picker, and renamed the category **Leave exceptions**. Show actual entry dates/calendar, Ignore for this person, whole-entry or selected-day exceptions, visible ignored entries with restoration and occurrence-specific recurrence scope. Add **Assign leave** to Manage meetings alongside Default, Ignore and Protect so ordinary calendar entries can be classified manually without keyword detection. Preserve their actual intervals and include them in Leave exceptions. The new Assign leave/Allow overlaps interaction and the remaining meeting-browser design still need review. Documentation only; runtime/packages remain unchanged.
+
 ## 22 October — timezone helper removal and factual overlap labels
 
 The owner confirmed removal of the standalone Timezone clues to confirm section. Keep the searchable timezone selector and review travel-specific clues with flights. Factual Overlapping labels remain in Existing meetings even when a profile default or meeting override ignores those overlaps; scheduling warnings/ranking/follow-ups retain the accepted ignore semantics. The owner questioned the new positive meeting-specific availability form and proposed recurring saved-profile blockers instead; [that design is reopened](advanced-profile-review-0.9.5.md#availability-and-recurring-profile-blockers--direction-reopened). Preserve existing saved rules; no new availability UI is declared approved. Documentation only; 0.9.5 remains under owner review.
