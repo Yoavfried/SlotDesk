@@ -1,5 +1,10 @@
 # Repository changelog
 
+## 2026-10-26 — refine icon proposals and trip decisions
+
+- Prepare slimmer SD and bracketed SD vector/raster proposals, keeping originals for comparison; icon selection and installation remain pending.
+- Record 0.9.5 connection margins, confirmation of changed calendar flight details and trip/profile timezone precedence. No application or package version change.
+
 ## 2026-10-26 — plan trip-based travel for 0.9.5
 
 - Record the owner’s trip list, sequential flights/timezones, calendar-assisted entry, Flight back/open-ended behavior and separate manager/icon direction.

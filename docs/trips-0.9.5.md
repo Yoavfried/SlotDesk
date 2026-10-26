@@ -12,9 +12,11 @@ A **trip is an ordered series of flights and timed timezone changes for one save
 | New trip | Add trip opens a flight-sequence editor. Add flight starts with the departure date only, then searches calendars even when automatic event detection is unavailable/off. Ask only for missing details if no matching event supplies them; estimate an editable arrival from the confirmed route and departure time. |
 | Calendar clues | No LLM. Use information exposed in accessible calendar events to prefill values when identifiable; the user can edit them. Do not require a calendar match to enter a flight manually. |
 | Arrival and matching | Switch to the destination timezone on arrival. Auto-link one clear calendar match; require confirmation for uncertain or multiple matches. Calendar classification stays local to SlotDesk. |
-| Connections | Add further flights to represent a journey with connections or additional destinations. Every saved flight contributes its own blocker interval and destination-timezone transition. |
+| Connections | Add further flights to represent a journey with connections or additional destinations. Every saved flight contributes its own blocker interval and destination-timezone transition. At a connection, block 30 minutes after arrival and 30 minutes before the next departure. The remaining layover gap can be used for meetings under the other profile rules; do not block the whole layover. |
 | Flight back | Offer Flight back to finish the trip. Its destination timezone is already known, so the user should not need to select it again. Exact home/origin semantics below are a recommendation, not an extra owner decision. |
-| No return flight | Saving is allowed. Warn that after the last entered flight the profile will continue using its destination timezone; the user must add a return flight or change the timezone manually in Edit profile if needed. |
+| No return flight | Saving is allowed. At the last flight’s arrival, change the profile timezone to that destination. Warn that it stays there until manually changed or changed by later travel. Flight timezone changes during the trip do not change the timezone field shown in Edit profile. |
+| Active-trip profile notice | While a trip is active before its final arrival, explain near the profile timezone that changes there will not override the active trip. Remove that notice after the last flight, whether the trip returns home or stays open-ended. Manual changes after the last arrival take priority. |
+| Linked flight changes | If refreshing calendars finds changed flight details, alert the user and ask for confirmation before updating the saved trip. Keep confirmed/manual values until reviewed. |
 | Saved trips | List saved trips, let the user revisit/edit them, and always allow deletion of a trip. Deletion must concern SlotDesk’s trip settings, never the underlying calendar appointment. |
 | New meeting actions | For a saved participant, replace Edit profile’s text button with a cog icon and add a flight icon alongside it to open that person’s trip manager. |
 | Manage profiles actions | Add a cog to Edit and a flight icon to the travel/trip action. Keep words beside icons where they fit; show icons alone in a very narrow panel, with accessible names and full labels on hover/focus. Retain the existing stacked action order unless revised. |
@@ -48,6 +50,9 @@ Jerusalem → London → New York → Jerusalem:
 | F95-01 | Require departure **and arrival** dates/times as initial manual fields? | No. Start with departure date only and try calendar identification first. If details remain missing, ask only for departure time and departure/destination cities or airports, then offer an editable estimated arrival. Do not require the user to type a known arrival manually. | Accepted, including the researched fallback follow-up |
 | F95-02 | At what moment does the destination timezone take effect? | On arrival. The departure-to-arrival interval is blocked; the destination timezone applies from the instant of arrival. An estimated arrival remains identified as estimated. | Accepted |
 | F95-03 | When can a manually entered flight be linked to a calendar event automatically? | Automatically link one clear match; ask the user to choose/confirm multiple or weak candidates. Classification is local to SlotDesk, never a Google event edit. | Accepted |
+| F95-04 | Should connecting layovers be blocked in full? | No. Block 30 minutes after arrival and 30 minutes before the next departure; the remaining gap can be used for meetings if the other rules allow. | Accepted |
+| F95-05 | Should changed linked calendar flight details update a trip automatically? | No. Alert and confirm before changing saved trip details. | Accepted |
+| F95-06 | How do manual profile timezone changes interact with trips? | Active trip transitions take priority until the last arrival. Flight changes do not change the profile timezone field during the trip. A final non-return arrival changes that profile field; a return trip does not change it automatically. Manual changes after the last flight take priority. Show the active-trip notice only before the final arrival. | Accepted; remaining persistence/deletion edge cases listed below |
 
 ## Duration fallback research and proposed implementation
 
@@ -87,15 +92,25 @@ Do not treat the calendar’s default timezone or `fromGmail` alone as destinati
 
 ## Effective timezone and manual correction
 
-Saving future travel must not immediately change the timezone used for today. Use a chronological timezone history/timeline for scheduling, not a timer that rewrites the permanent profile field whenever SlotDesk happens to be open. The same instant must yield the same effective timezone after a restart or in another SlotDesk window.
+Saving future travel must not immediately change the timezone used for today. Use a chronological timezone timeline for scheduling, with an active trip running from the first departure through the final arrival. The same instant must yield the same effective timezone after a restart or in another SlotDesk window.
 
-Important edge case: changing the profile timezone manually after an open-ended trip must actually work. Merely changing a base timezone while an indefinite trip continues to override it would violate the owner’s request. Recommendation: record a deliberate timezone change effective from that edit, ending the previous open-ended destination effect while retaining its flight history. Decide how that manual change interacts with later already-saved legs and return destinations before implementation.
+Accepted precedence and profile display:
 
-The origin/home timezone should be recorded for the trip, with its friendly location label. Do not silently reinterpret saved flight instants if a profile’s usual timezone later changes. Calendar/display timezone and destination timezone are separate concepts.
+- During an active trip, saved flight transitions control the effective scheduling timezone. Editing the ordinary profile timezone does not override the trip before its final arrival.
+- Flight-driven timezone changes are not reflected in the profile timezone field during the trip. Show a short notice beside that field only while the trip is active: proposed wording, “An active trip controls this person’s timezone until [date and time]. Changes here won’t apply during the trip.” Final wording remains for review.
+- On a round trip, flights do not automatically change the saved profile timezone. Flight back retains its recorded destination; the original trip origin must not be rewritten by a later profile edit.
+- On the last arrival of a trip without Flight back, update the saved profile timezone to that destination. The active-trip notice then disappears. This is the only flight-driven change to that field.
+- A manual timezone change made after the final arrival takes priority, whether the trip had a return or not. A finished trip must not reassert its destination over that newer manual edit. A later trip still has its own timed transitions.
+
+Implement the final non-return update using its effective arrival timestamp, not the time the browser next happens to open. Reconcile overdue changes deterministically when reading/saving state; do not require SlotDesk to have been open at landing. Do not overwrite a later manual change when reconciling, importing or synchronizing windows. This is an implementation approach, not a new requirement for a continuously running background timer.
+
+Still settle whether a manual base-timezone edit saved during a round trip becomes the ordinary profile value after the trip finishes, and how edits/deletion of a completed one-way trip interact with an already-applied final profile change. The accepted rule is that such an edit cannot take priority over active flight transitions.
+
+Record the trip origin/home timezone and its friendly location label. Do not silently reinterpret saved flight instants if a profile’s usual timezone later changes. Calendar/display timezone and destination timezone are separate concepts.
 
 Recommended open-ended notice, with actual dates/place filled in:
 
-> No return flight added. After [date and time], [name] will use [destination timezone]. Add a return flight or change their timezone in Edit profile if needed.
+> No return flight added. After [date and time], [name]’s profile timezone will change to [destination timezone]. Add a return flight or change their timezone in Edit profile if needed.
 
 Wording is proposed for review; “after” will use the timing decision above.
 
@@ -115,13 +130,13 @@ Use the existing drawn SVG icon language, sentence case, minimum usable button t
 
 ## Remaining behavior to settle before implementation
 
-The three primary decisions and the missing-details fallback above are accepted. Additional details are not silently approved:
+The timing/matching decisions, missing-details fallback, connection margins, calendar-change review and active-trip timezone precedence above are accepted. Additional details are not silently approved:
 
-- **Flight buffers:** retain/revise the existing two-hour inconvenience radius around departure/arrival, its configuration location and helper text. Flights stay independent of Ignore convenience/ordinary-overlap permissions.
-- **Connections and stopovers:** whether layover gaps themselves are blocked or only flight intervals plus configured buffers; how an overnight/long stopover differs from a connection. Do not quietly block an entire multi-day destination stay.
-- **Manual timezone correction:** exact interaction between an open-ended trip, a later Edit profile change, another trip and an already planned return.
+- **Flight buffers:** connections have accepted 30-minute hard margins. Settle how the existing two-hour inconvenience radius applies at trip departure/final arrival and whether it applies within connections, its configuration location and helper text. Flights stay independent of Ignore convenience/ordinary-overlap permissions.
+- **Connection entry and stopovers:** finalize how the form identifies a connection versus a destination stay. The gap is not blocked in full. For arrival at 12:00 and next departure at 16:00, connection margins leave 12:30–15:30 available subject to the other rules. An insufficient gap leaves no meeting opening. Do not quietly block a multi-day stay.
+- **Manual timezone persistence:** resolve base edits made during a round trip and completed-trip edits/deletion as described above; preserve the accepted trip-before-final/manual-after-final precedence and profile display rules.
 - **Trip edits and deletion:** recompute only that trip’s derived blockers/timezone changes, preserve independent blockers and calendar events, and specify which prior manual/detected event classifications are restored. No Undo feature is implied.
-- **Matched calendar changes:** whether changed/cancelled/deleted/inaccessible linked events update the trip after confirmation or produce a review notice while retaining the user’s saved values. Do not silently move a manually confirmed flight.
+- **Matched calendar changes:** changed flight details require an alert and confirmation before updating the saved trip. Finalize the review screen and cancelled/deleted/inaccessible-event cases while retaining saved values until review. Do not silently move a manually confirmed flight.
 - **Matched flight display:** show that a calendar entry belongs to a saved flight/trip and avoid counting it twice. Preserve the existing boundary: ignoring a calendar copy does not erase the independently saved trip flight. The exact dropdown label and route back to Edit trip need review.
 - **Automatic flight discovery:** matching an entered flight is approved direction; rules for discovering unentered flights, detection controls/defaults and how these become trips still need review.
 - **Validation and estimation:** DST missing/repeated local times, date-line crossings, overlapping legs/trips, duplicate shared copies, missing arrival/destination information, incomplete calendar matches and unsupported routes. Chronology compares actual instants, not local clock order. Calibrate the local duration model and agree concise estimated-arrival wording; never imply actual schedule accuracy.
