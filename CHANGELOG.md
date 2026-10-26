@@ -1,5 +1,10 @@
 # Repository changelog
 
+## 2026-10-26 — nine-option icon matrix
+
+- Present all three layouts at original, middle and slim stroke weights, with SVGs, raster size exports and stable A1–C3 selection labels.
+- Keep icon selection pending for 0.9.5; no runtime/package change.
+
 ## 2026-10-26 — add 0.9.5 live clocks and icon scope
 
 - Plan minute-by-minute participant local-time updates without rerendering the screen or requesting calendars.

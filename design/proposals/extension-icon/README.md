@@ -1,6 +1,20 @@
 # Extension icon proposals
 
-Prepared 26 October 2026 for owner selection. **Neither option is installed.**
+Prepared 26 October 2026 for owner selection. **No proposal is installed.**
+
+## Current review: nine designs
+
+The owner requested all three layouts at all three stroke weights: original, halfway between, and slim. The [live comparison](compare.html) and [matrix image](comparison-matrix.png) show all nine with stable cell IDs. Final selection is by cell, such as C2; no layout or weight is selected yet.
+
+| Layout | 1 · Original | 2 · Middle | 3 · Slim |
+| --- | --- | --- | --- |
+| A · SD | [A1](matrix/a-original.svg) | [A2](matrix/a-middle.svg) | [A3](matrix/a-slim.svg) |
+| B · [SD] | [B1](matrix/b-original.svg) | [B2](matrix/b-middle.svg) | [B3](matrix/b-slim.svg) |
+| C · Compact [SD] | [C1](matrix/c-original.svg) | [C2](matrix/c-middle.svg) | [C3](matrix/c-slim.svg) |
+
+Within a row, layout, scale, spacing and colors are identical. Only stroke thickness changes: original uses the native outlines, middle applies a 1-glyph-unit background stroke, and slim applies a 2-unit stroke. This makes the main approximately 8.32-unit stem respectively 8.32, 7.32 and 6.32 units wide. These are geometric outline refinements, not three separate font files or CSS font weights. All nine have PNG exports at 16, 32, 128 and 1024 pixels under `matrix/`.
+
+## Earlier comparisons
 
 - [Revised A: slimmer SD](sd-slim.svg), using the larger central letters on a square header-lime background.
 - [Revised B: slimmer bracketed SD](bracket-sd-slim.svg), with the logo’s bracket opacity.
@@ -13,6 +27,6 @@ All three start from the outlined VT323 glyphs in the existing [brand banner](..
 
 Original [SD](sd.svg), [bracketed SD](bracket-sd.svg) and [comparison](comparison.png) remain for reference. Revised PNG exports are provided at 16, 32, 48, 128 and 1024 pixels. Inspect both the browser-rendered native-size samples and raster exports before choosing an option; small-size legibility remains part of owner review.
 
-**0.9.5 scope:** the owner requested shipping the selected icon in 0.9.5. Final selection remains pending after the request for C. Prepare/inspect the needed PNG sizes and wire toolbar, extension-manager and extension-page/favicon references in that release; store publication is not a prerequisite. Keep listing artwork and store-specific requirements as a separate distribution task. No manifest or installed icon is changed by these proposals.
+**0.9.5 scope:** the owner requested shipping the selected icon in 0.9.5. Final selection remains pending from the nine-cell matrix. Prepare/inspect the needed PNG sizes and wire toolbar, extension-manager and extension-page/favicon references in that release; store publication is not a prerequisite. Keep listing artwork and store-specific requirements as a separate distribution task. No manifest or installed icon is changed by these proposals.
 
 C retains the same slimmer glyph contours, colors and bracket opacity. Its letter scale lies between A and B; only its brackets have a narrower horizontal proportion. C has PNG exports at 16, 24, 32, 48, 128 and 1024 pixels.

@@ -227,7 +227,7 @@ Prepare both SD and bracketed SD in actual VT323 on a square lime field. **Selec
 
 The owner requested slimmer icon lettering after comparing it with the extension wordmark. Revised native-vector proposals retain the VT323 shapes, lime/ink colors and bracket opacity while thinning their outlines; the comparison includes previous/revised samples and toolbar sizes. This does not select or install an icon.
 
-The owner then requested shipping the icon with 0.9.5 and a third option between A and B. C uses intermediate-sized SD letters and narrower brackets, keeping the colors and slimmer contours. Final selection remains pending. Store publication is not required for a bundled toolbar, extension-list or page icon.
+The owner then requested shipping the icon with 0.9.5 and a third layout between A and B. C uses intermediate-sized SD letters and narrower brackets. The final review request is all three layouts at three stroke weights: original, middle and slim, yielding nine options A1–C3 in the [matrix](../design/proposals/extension-icon/compare.html). Keep layout/colors fixed across each row and change only stroke thickness. Final selection remains pending. Store publication is not required for a bundled toolbar, extension-list or page icon.
 
 ## 26 October — profile calendar lists and meeting-state dropdown
 
