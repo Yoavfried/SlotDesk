@@ -4,6 +4,10 @@
 
 SlotDesk
 
+## License
+
+MIT. Copyright (c) 2026 Speedy, Nina Banai and Yoav Fried. Bundled third-party fonts and data retain their own notices.
+
 ## Short description
 
 Find meeting times across timezones, check calendar conflicts, and review invitations and changes before sending.
@@ -34,7 +38,7 @@ Support: support@buildwithspeedy.com
 
 ## Source-code destination
 
-Use `https://github.com/Yoavfried/SlotDesk` once the owner has approved public visibility and the license. Do not promise an open-source license until adopted. Add live store links to the repository only after they exist.
+Use `https://github.com/Yoavfried/SlotDesk` once the owner has approved public visibility. SlotDesk uses the MIT license, adopted on 26 October 2026. Add live store links to the repository only after they exist.
 
 ## Fields pending owner setup
 

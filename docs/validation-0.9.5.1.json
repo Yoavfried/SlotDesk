@@ -50,11 +50,14 @@
   "storeListingsLive": false,
   "googleProductionApprovalVerified": false,
   "publicSupportContactSet": true,
-  "projectLicenseAdopted": false,
+  "projectLicenseAdopted": true,
   "repositoryMadePublic": false,
   "ownerUxApprovalComplete": false,
   "outlook": "after 1.0.0",
   "supportEmail": "support@buildwithspeedy.com",
   "website": "https://buildwithspeedy.com",
-  "contactDetailsSource": "Owner supplied on 2026-10-26; delivery/domain verification not asserted"
+  "contactDetailsSource": "Owner supplied on 2026-10-26; delivery/domain verification not asserted",
+  "license": "MIT",
+  "licenseAdoptedOn": "2026-10-26",
+  "websiteWork": "Owner-managed separately; existing SlotDesk page reported"
 }

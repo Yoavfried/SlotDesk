@@ -81,4 +81,4 @@ scripts/         Preview, validation, synthetic fixtures and ZIP packaging
 .github/         Automated checks and contributor templates
 ```
 
-The project remains private. A public software license has not been selected. Preserve the supplied font licenses and consult the [publication checklist](docs/publication.md) before wider distribution. Calendar exports, credentials and private workplace information do not belong in this repository.
+The project remains private. SlotDesk uses the [MIT license](LICENSE), copyright 2026 Speedy, Nina Banai and Yoav Fried. Bundled third-party fonts and data retain their own licenses/notices. Consult the [publication checklist](docs/publication.md) before wider distribution. Calendar exports, credentials and private workplace information do not belong in this repository.

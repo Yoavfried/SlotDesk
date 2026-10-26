@@ -1,5 +1,11 @@
 # Repository changelog
 
+## 2026-10-26 — adopt MIT
+
+- Adopt MIT with owner approval, crediting Speedy, Nina Banai and Yoav Fried. Add root and bundled license copies, retain third-party notices and update package/contributor/store records.
+- Record that the SlotDesk website page exists and website/repository work is handled separately by the owner. Keep this workstream focused on the extension and publication preparation.
+- Keep repository visibility and existing release archives unchanged; licensing is no longer an open decision.
+
 ## 2026-10-26 — approved Speedy website and support contact
 
 - Link https://buildwithspeedy.com and support@buildwithspeedy.com in project credits, support/privacy pages and extension-platform preparation materials.

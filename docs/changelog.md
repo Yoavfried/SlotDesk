@@ -1,5 +1,10 @@
 # SlotDesk changelog
 
+## 26 October 2026 — MIT license adopted
+
+- Adopt MIT for SlotDesk with copyright credit to Speedy, Nina Banai and Yoav Fried. Include the license in future extension packages and preserve third-party font/data notices.
+- Licensing metadata/documentation update only; no scheduling behavior or product-version change. Existing release archives are unchanged.
+
 ## 26 October 2026 — support and website metadata
 
 - Record the owner-supplied support address, support@buildwithspeedy.com, and website, https://buildwithspeedy.com.

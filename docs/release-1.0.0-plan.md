@@ -21,16 +21,16 @@ Before making the repository public, review tracked files **and Git history** fo
 
 The required security/privacy review must cover both extension and hosted services, authentication/token lifecycle, selected-calendar scope, account/window isolation, imports, logs, registration/consent, stored data and reviewed calendar writes. Fix findings and record evidence and limitations. No finite review can establish an absolute guarantee that software has no vulnerabilities; do not advertise one.
 
-## License decision before publication
+## Adopted license
 
-**Recommendation: MIT**, not adopted yet. It permits people to use, modify, distribute and sell the source, including in larger proprietary products, while retaining the copyright/license notice. A later larger Speedy product may use more restrictive terms for its own code. Already distributed MIT-covered code remains usable under MIT; publishing it is not something later licensing can revoke for recipients following those terms. Contributions and third-party licenses must be reviewed before relicensing code the team does not own. Software licensing does not itself grant rights to the Speedy/SlotDesk names or branding.
+**MIT was approved by the owner and adopted on 26 October 2026**, copyright Speedy, Nina Banai and Yoav Fried. It permits people to use, modify, distribute and sell the source, including in larger proprietary products, while retaining the copyright/license notice. A later larger Speedy product may use more restrictive terms for its own code. Already distributed MIT-covered code remains usable under MIT; publishing it is not something later licensing can revoke for recipients following those terms. Contributions and third-party licenses must be reviewed before relicensing code the team does not own. Software licensing does not itself grant rights to the Speedy/SlotDesk names or branding.
 
-The owner must approve the actual license and copyright holders before adding a project-wide LICENSE. [MIT text](https://opensource.org/license/mit) · [MIT permissions and conditions](https://choosealicense.com/licenses/mit/). No project-wide public software license is installed by this planning record.
+The [root LICENSE](../LICENSE) and bundled `extension/LICENSE.txt` contain the adopted text. Preserve third-party font/data notices. [MIT text](https://opensource.org/license/mit) · [MIT permissions and conditions](https://choosealicense.com/licenses/mit/). Public repository visibility still requires final approval.
 
 ## Distribution gates
 
 - Use [the store checklist](extension-stores.md) for real publisher accounts, platform identities, signing, listing assets, data declarations, reviewer access, provider approvals and actual install/update tests.
-- Match the published privacy notice and optional-updates wording to the implemented data flow. Use support@buildwithspeedy.com for support/privacy contact and buildwithspeedy.com as the website. The public privacy-page URL still needs confirmation.
+- Match the published privacy notice and optional-updates wording to the implemented data flow. Use support@buildwithspeedy.com for support/privacy contact and buildwithspeedy.com as the website. The owner reports the SlotDesk page already exists; website pages and their repository are managed separately and are outside this workstream. Use the existing product/privacy URLs when completing the submission forms.
 - Review Google scopes and production consent/verification requirements at submission time. Closed-beta OAuth setup is not production approval.
 - Validate the intended browser/OS combinations. Keep unsigned Firefox and Safari source limitations explicit until signing/authentication/runtime requirements are met.
 - Verify clean install, update with retained settings, backup/import migration, browser restart, account changes, connection loss and recovery; preserve calendar integrity.

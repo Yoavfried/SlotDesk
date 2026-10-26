@@ -20,4 +20,4 @@ The supplied SlotDesk design kit uses VT323 and IBM Plex Mono. Keep their origin
 
 The README banner uses vector outlines from the supplied fonts so the actual wordmark renders on GitHub without an installed font. Brackets use the design's 55% opacity and the full banner uses the lime field `#D8E84A`.
 
-No project-wide public software license has been chosen. Public visibility and licensing remain separate recorded publication decisions.
+SlotDesk is licensed under [MIT](LICENSE), copyright 2026 Speedy, Nina Banai and Yoav Fried, adopted with owner approval on 26 October 2026. Third-party fonts and data retain the licenses/notices linked above. Repository public visibility remains a separate approval.

@@ -21,4 +21,4 @@ Keep focused changes, meaningful validation and accurate documentation/changelog
 
 Follow the [design guide](design/README.md): keep the VT323 wordmark without a separate background tile and let lime fill the header. Distinguish implemented, planned and deferred decisions. Product releases belong in [the product changelog](docs/changelog.md); repository-only changes belong in [the repository changelog](CHANGELOG.md). Do not add appointment deletion, calendar moves or automatic changes to other meetings without a new accepted scope and validation. Mocked results do not establish real invitation delivery, provider recurrence behavior or work-account readiness; record controlled live evidence separately.
 
-A project-wide public software/contribution license has not been adopted yet. Public contribution terms must be settled with the license before accepting outside code for the open-source release.
+SlotDesk uses the [MIT license](LICENSE). Contributions are provided under that license. Retain existing authorship and third-party notices; identify the license of any new third-party material. No contributor copyright assignment is required by this document.

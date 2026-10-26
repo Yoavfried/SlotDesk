@@ -1,6 +1,7 @@
 {
   "name": "slotdesk",
   "private": true,
+  "license": "MIT",
   "description": "Reviewed meeting scheduling and rescheduling across calendars and timezones.",
   "engines": {
     "node": ">=18"

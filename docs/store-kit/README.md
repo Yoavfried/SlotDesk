@@ -6,7 +6,7 @@ Prepared 26 October 2026 for Chrome Web Store, Microsoft Edge Add-ons and Firefo
 - [Permissions and data declarations](declarations.md)
 - [Reviewer instructions](reviewer-instructions.md)
 - [Owner publication steps](owner-steps.md)
-- [License proposal](license-proposal.md)
+- [Adopted MIT license](license-proposal.md)
 
 Use the approved C2 icon in [the icon assets](../../design/assets/icons/README.md), the real wordmark and synthetic-data screenshots. Never upload private calendars or screenshots showing real personal data. Store screenshots must match the submitted build. Use [buildwithspeedy.com](https://buildwithspeedy.com) as the approved website. Do not invent listing URLs.
 
