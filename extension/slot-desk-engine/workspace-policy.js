@@ -4,10 +4,11 @@
   const signature=context=>JSON.stringify([context.account,context.settings?.calendarScopeConfirmed===true,context.generation||0,ids(context.settings).sort()]);
   const included=(settings,id)=>settings?.calendarScopeConfirmed===true&&ids(settings).includes(id);
   const calendars=(settings,list)=>list.filter(calendar=>included(settings,calendar.id));
+  const hasCalendars=(settings,list)=>settings?.calendarScopeConfirmed===true&&ids(settings).some(id=>!Array.isArray(list)||list.some(calendar=>calendar.id===id));
   // Incomplete onboarding restarts at calendars in each new app session. Saved
   // entries prefill the steps; only the final action completes onboarding.
-  function onboardingStage(state,phase='calendars') {
-    const own=state.profiles.find(person=>person.id===state.settings.ownProfileId),scope=state.settings.calendarScopeConfirmed===true;
+  function onboardingStage(state,phase='calendars',availableCalendars) {
+    const own=state.profiles.find(person=>person.id===state.settings.ownProfileId),scope=hasCalendars(state.settings,availableCalendars);
     if(!scope)return 'calendars';
     if(state.settings.onboardingComplete===true)return own?.tzConfirmed?'complete':'profile';
     if(phase==='people'&&own?.tzConfirmed)return 'people';
@@ -54,5 +55,5 @@
     if(pending&&!chosen.includes(pending))throw new Error('Keep the calendar of the unfinished change selected until that change is resolved.');
     return {workspaceCalendarIds:chosen,calendarScopeConfirmed:true,scopeRevision:(state.settings.scopeRevision||0)+1,defaultCalendar:defaultId,defaultCalendarSelected:!!defaultId};
   }
-  return {ids,included,calendars,signature,suggestions,assertAccess,scopedFetch,scopeChange,removeCalendarAssignments,onboardingStage};
+  return {ids,included,calendars,hasCalendars,signature,suggestions,assertAccess,scopedFetch,scopeChange,removeCalendarAssignments,onboardingStage};
 });

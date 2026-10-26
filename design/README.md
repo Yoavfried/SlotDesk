@@ -6,6 +6,8 @@ The [0.9.4 styling plan](../docs/styling-0.9.4.md) proposes working-interface ty
 
 ## Wordmark and lime header
 
+The Travel & flights action uses the locally bundled [Lucide plane SVG](../extension/icons/plane.svg), adapted only to the interface stroke width. Keep its [ISC license notice](../extension/icons/LICENSE-Lucide.txt) in packages. [Official icon source](https://github.com/lucide-icons/lucide/blob/main/icons/plane.svg).
+
 Use the actual bundled **VT323 regular 400** font for `[SLOT DESK]`, with brackets at 55% opacity and ink `#15160A`. The wordmark has no separate background box. The whole application header uses lime `#D8E84A`, including in the dark theme.
 
 ![Actual SlotDesk wordmark in a full lime field](assets/slotdesk-banner.svg)

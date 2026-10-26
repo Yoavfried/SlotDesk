@@ -7,11 +7,16 @@ const api=(id,event='')=>'https://www.googleapis.com/calendar/v3/calendars/'+enc
 async function main(){
   const flow={profiles:[],settings:{onboardingComplete:false,calendarScopeConfirmed:false}};
   eq(P.onboardingStage(flow),'calendars','calendar selection is always first');
-  flow.settings.calendarScopeConfirmed=true;eq(P.onboardingStage(flow,'profile'),'profile');
+  flow.settings.calendarScopeConfirmed=true;eq(P.onboardingStage(flow,'profile'),'calendars','a confirmation flag without selected calendars cannot finish onboarding');
+  flow.settings.workspaceCalendarIds=['ea@example.test'];eq(P.onboardingStage(flow,'profile'),'profile');
+  eq(P.onboardingStage(flow,'profile',[]),'calendars','no accessible calendar keeps onboarding at calendar selection');
+  eq(P.onboardingStage(flow,'profile',[calendars[0]]),'profile','one accessible selected calendar permits profile setup');
   flow.profiles=[{id:'me',tzConfirmed:true}];flow.settings.ownProfileId='me';
   eq(P.onboardingStage(flow,'people'),'people');eq(P.onboardingStage(flow),'calendars','new sessions restart all incomplete steps even when entries are saved');
   eq(P.onboardingStage(flow,'profile'),'profile','saved own profile still requires confirmation in an incomplete session');
   flow.settings.onboardingComplete=true;eq(P.onboardingStage(flow),'complete','completed users never repeat setup');
+  eq(P.onboardingStage(flow,'people',[]),'calendars','completed flag does not bypass lost calendar access');
+  flow.settings.defaultCalendar='';eq(P.onboardingStage(flow,'people',[calendars[0]]),'complete','a default calendar is optional after setup');
   flow.settings.calendarScopeConfirmed=false;eq(P.onboardingStage(flow),'calendars','lost scope still needs selection for completed users');
   flow.settings.calendarScopeConfirmed=true;flow.profiles=[];eq(P.onboardingStage(flow),'profile','restore without own profile still requires setup');
   const nameCalls=[],nameReader=R.createReader({getToken:async()=>'fixture',now:()=>Date.parse('2026-10-21T00:00:00Z'),fetchImpl:async(url,options)=>{nameCalls.push({url,options});return {ok:true,status:200,json:async()=>({items:[{organizer:{email:'someone-else@example.test',displayName:'Wrong person'}},{organizer:{email:'EA@example.test',displayName:'Eva Assistant'}},{attendees:[{email:'ea@example.test',displayName:'Eva Assistant'}]},{status:'cancelled',organizer:{email:'ea@example.test',displayName:'Cancelled name'}}]})};}});

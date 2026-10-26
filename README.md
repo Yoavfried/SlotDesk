@@ -1,6 +1,6 @@
 ![SlotDesk — make room for what matters](design/assets/slotdesk-banner.svg)
 
-**0.9.5.1 · Google Calendar · private release-preparation build**
+**0.9.5.2 · Google Calendar · private release-preparation build**
 
 This preparation build adds Firefox-only optional registration sharing and addresses three security findings in imported profiles/trips and sign-in admission. It is not the public 1.0.0 release. [Review evidence](docs/release-readiness-review.md) · [Store submission kit](docs/store-kit/README.md).
 

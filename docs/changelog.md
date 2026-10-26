@@ -1,5 +1,13 @@
 # SlotDesk changelog
 
+## 0.9.5.2 — 26 October 2026
+
+- Keep the default invitation calendar optional. New and unfinished meetings open directly; choose a writable organizing calendar before searching or sending. Settings can clear a saved default.
+- Require at least one selected accessible calendar before onboarding can finish, including a fresh account/calendar check at the final step.
+- Render email-only guests immediately while their timezone is unconfirmed. Keep the timezone picker, per-meeting options and Create profile action; confirming a timezone does not create a saved profile. Preserve the guest through invitation review and promotion.
+- Replace the custom airplane drawing with Lucide's ISC-licensed plane SVG, bundled locally with its copyright/license notice.
+- This hotfix does not complete the separate security-report finalization, native browser/provider validation or store-publication gates.
+
 ## 26 October 2026 — MIT license adopted
 
 - Adopt MIT for SlotDesk with copyright credit to Speedy, Nina Banai and Yoav Fried. Include the license in future extension packages and preserve third-party font/data notices.

@@ -1,0 +1,29 @@
+{
+  "version": "0.9.5.2",
+  "date": "2026-10-26",
+  "status": "private-hotfix",
+  "sourceBaseRevision": "0ba149be40418949754ac0db2ba898e1a13e9c75",
+  "applicationChecks": 2445,
+  "onboardingChecksIncluded": 95,
+  "focusedBrowserAssertions": 30,
+  "browserEnvironment": "Isolated Microsoft Edge with current extension source, synthetic Google identity/calendar fixture and no real sign-in",
+  "macChromeTestedByThisValidation": false,
+  "layoutWidths": [320, 514, 1280],
+  "runtimeExceptions": 0,
+  "syntheticCalendarWrites": 0,
+  "unchangedBaselineAppointments": 9,
+  "verifiedFlows": [
+    "Onboarding requires at least one selected accessible calendar",
+    "Onboarding completes without a default calendar",
+    "New and unfinished meetings open without forcing Settings",
+    "A writable organizing calendar is required for searching and invitation creation",
+    "The saved default calendar can be cleared",
+    "Email-only guests render before timezone confirmation",
+    "Email-only guests require a timezone before searching",
+    "Email-only guests participate in suggestions and invitation review without becoming profiles",
+    "Create profile retains the guest email and timezone without duplicating the participant",
+    "Travel actions use the bundled Lucide plane icon"
+  ],
+  "regressionScript": "scripts/accessibility/meeting-hotfix.js",
+  "releaseLimitations": "This focused hotfix does not certify real Google sign-in, native Mac installation, signed store installation/update, or completion of the separate 1.0.0 security review."
+}

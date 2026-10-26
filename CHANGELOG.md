@@ -1,5 +1,12 @@
 # Repository changelog
 
+## 2026-10-26 — SlotDesk 0.9.5.2 meeting/onboarding hotfix
+
+- Fix email-only guest rendering before timezone confirmation and preserve the existing quick Create profile flow.
+- Make defaults optional while requiring an organizing calendar for the meeting and accessible selected calendars for onboarding.
+- Bundle the free Lucide plane icon and notice; retain existing credits and design language.
+- Keep the ongoing 1.0.0 technical review and publication status separate from this product hotfix.
+
 ## 2026-10-26 — owner review and publisher setup complete
 
 - Record owner acceptance of the product UX and approval to proceed with 1.0.0 preparation.
