@@ -10,7 +10,7 @@ Current release: **0.9.4.9**. [Scope](release-plan-0.9.4.9.md) · [Browser evide
 | Scheduling review | [19 October ranking rules, situations and result UX](scheduling-ranking-review.md) — ranking foundations and decision history |
 | 0.9.4.5 owner review | [Meeting options rows, factual statuses and warnings](meeting-options-review-0.9.4.5.md) — full 18-category source/wording/priority table accepted; final responsive/warning UX remains owner-led |
 | Advanced-profile decision record | [Advanced profile settings](advanced-profile-review-0.9.5.md) — agreed non-flight work implemented in 0.9.4.7; remaining flight work planned for 0.9.5 |
-| 0.9.5 trip planning | [Trips, flights, timed timezone changes and icon entry points](trips-0.9.5.md) — date-first entry, arrival transitions and matching accepted; remaining trip rules under review |
+| 0.9.5 implementation plan | [Trips, flights, timezone changes and Alerts entry points](trips-0.9.5.md) — product planning complete; live clocks and selected icon included; ready for implementation |
 | Release split | [0.9.4.5 scope and implementation checks](release-plan-0.9.4.5.md) — non-flight advanced-profile cleanup moved to 0.9.4.7; flight work remains |
 | Search controls review | [Counts, more options, exclusions and fallback controls](search-options-review-0.9.4.5.md) — implemented 20 October policy and continuing owner review |
 | Planning email | [Plain-text options email request and proposed wording](planning-email.md) — implemented local preview/copy; separate from interactive inquiries |

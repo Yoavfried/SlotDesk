@@ -4,6 +4,8 @@
 
 Owner direction recorded on 26 October: standalone per-profile trip list/Add trip, sequential flights/timezone changes, non-LLM calendar matching with editable prefills, final Flight back or warned open-ended destination, and cog/flight actions. Accepted date-first entry, missing-details/local arrival estimates, arrival-based timezone changes and clear/uncertain match policy; remaining edge cases and estimation research are documented in the [trip plan](trips-0.9.5.md). This entry is planning only; current application/packages remain 0.9.4.9.
 
+Product planning is now complete. The owner accepted the final buffer, flight-discovery, timezone-persistence, deletion and missing-source rules. Possible flights prompt flight addition through Alerts; changed/cancelled/deleted/inaccessible linked events prompt review there while preserving the saved flight. Implementation and verification remain; final UX/release readiness is owner-led.
+
 The same release scope now includes live local clocks in New meeting participant cards without screen refresh, plus the selected toolbar/extension-list/page icon: **C2 with bold brackets only**, preserving the middle-weight SD lettering. Vector and PNG sizes are prepared; integration remains planned for 0.9.5. [Scope](roadmap.md#live-participant-clocks-and-extension-icon).
 
 

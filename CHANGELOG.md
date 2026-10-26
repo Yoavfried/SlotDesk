@@ -1,5 +1,11 @@
 # Repository changelog
 
+## 2026-10-26 — complete 0.9.5 product planning
+
+- Record acceptance of the final five flight decisions: outer/connection buffers, detected-flight confirmation, round-trip profile timezone edits, deletion without timezone rewind, and missing-source review.
+- Require Alerts to start detected-flight addition and review linked-flight changes/problems. Mark product planning complete while retaining implementation, verification and owner UX/release review.
+- Documentation only; current runtime/packages remain 0.9.4.9.
+
 ## 2026-10-26 — select C2 with bold brackets
 
 - Record the owner's final icon choice: C2 middle-weight SD lettering with original/bold brackets, unchanged layout/colors/opacity.
