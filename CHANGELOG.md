@@ -1,5 +1,11 @@
 # Repository changelog
 
+## 2026-10-26 — SlotDesk 0.9.5.3 fresh-profile repair
+
+- Fix the blank initial timezone history created when confirming a new suggested or manual profile. Validate the final assembled profile before saving.
+- Recover the specific already-saved defect on reload and portable import without clearing profiles, trips or other settings. Preserve rejection of other invalid/unsupported trip data.
+- Review onboarding/profile/search persistence paths, add fresh-profile Chrome/Edge regressions, and align restore/help wording with optional calendar defaults. See the [review record](docs/profile-lifecycle-review-0.9.5.3.md).
+
 ## 2026-10-26 — SlotDesk 0.9.5.2 meeting/onboarding hotfix
 
 - Fix email-only guest rendering before timezone confirmation and preserve the existing quick Create profile flow.

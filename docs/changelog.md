@@ -1,5 +1,12 @@
 # SlotDesk changelog
 
+## 0.9.5.3 — 26 October 2026
+
+- Fix meeting search failing with Invalid trip timezone history after a new person’s first timezone confirmation. Initialize valid timezone history and validate the complete profile before saving it.
+- Automatically repair the known saved blank-origin defect when reopening SlotDesk or importing affected profile/backup files. Keep the chosen timezones, history, trips, blockers and other rules.
+- Reject unsupported trip-file versions without silently converting them. Keep optional default calendars optional after restoring a backup and update current Help instructions.
+- Add complete fresh-onboarding/suggested-profile, manual-profile, guest-promotion, search and reload-recovery browser checks. Record scope and native-platform limits in the [review](profile-lifecycle-review-0.9.5.3.md).
+
 ## 0.9.5.2 — 26 October 2026
 
 - Keep the default invitation calendar optional. New and unfinished meetings open directly; choose a writable organizing calendar before searching or sending. Settings can clear a saved default.

@@ -1,0 +1,21 @@
+{
+  "version": "0.9.5.3",
+  "date": "2026-10-26",
+  "status": "private-hotfix",
+  "sourceBaseRevision": "77f7fdf88c09235c677afada1faa16d9ec2e2549",
+  "applicationChecks": 2467,
+  "focusedBrowserAssertions": {
+    "chromeProfileLifecycle": 32,
+    "edgeProfileLifecycle": 32,
+    "chromePreviousHotfix": 30
+  },
+  "browsers": ["Installed Chrome 155 on Windows", "Installed Edge 156 on Windows"],
+  "providerEnvironment": "Local synthetic Google identity/calendar fixture; no real sign-in",
+  "nativeMacTested": false,
+  "syntheticCalendarWrites": 0,
+  "unchangedBaselineAppointments": 9,
+  "runtimeExceptions": 0,
+  "recovery": "Known blank initial timezone origin repaired on reload/import while preserving valid history and profile rules",
+  "review": "docs/profile-lifecycle-review-0.9.5.3.md",
+  "separateReleaseReadinessReviewComplete": false
+}

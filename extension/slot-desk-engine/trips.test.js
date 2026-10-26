@@ -24,6 +24,23 @@ p.trips=[];T.reconcile(p,at('2027-01-14'));eq(p.tz,'Europe/Paris','Deleting a co
 p=person();p.trips[0].flights=[copy(leg1)];T.reconcile(p,at('2027-01-11'));p.trips=[];T.reconcile(p,at('2027-01-12'));eq(p.tz,'Europe/London','Deleting a completed one-way trip does not revert its destination');
 p=person();p.travel=[{from:'2027-02-01',to:'2027-02-02',tz:'Asia/Tokyo'}];T.reconcile(p,at('2026-10-26'));eq(E.tzFor(p,at('2027-02-01T12:00Z')).tz,'Asia/Tokyo','Legacy whole-day travel still works outside new trips');
 const overdue=person();overdue.trips[0].flights=[{...copy(leg1),departure:'2020-01-10T08:00:00Z',arrival:'2020-01-10T12:00:00Z'}];const reopened=U.migrate({profiles:[overdue],constraints:[],settings:{}},'person@example.test').profiles[0];eq(reopened.tz,'Europe/London','Reading a workspace reconciles arrivals missed while closed');eq(reopened.tripTimezoneState.history.length,1,'Overdue arrival is recorded once');
+// First-time timezone confirmation must never retain a blank trip origin.
+const unconfigured=U.newProfile('new@example.test','New person','');
+const configured={...copy(unconfigured),tz:'Asia/Jerusalem',tzConfirmed:true,tripTimezoneState:T.manual(unconfigured,'Asia/Jerusalem',null,at('2026-10-26'))};
+C.checkProfile(configured);checks++;T.reconcile(configured,at('2026-10-27'));eq(configured.tz,'Asia/Jerusalem','First timezone confirmation produces a valid saved profile');
+const initialChange={kind:'manual',key:'manual:initial',at:'2026-10-26T12:00:00.000Z',tz:'Asia/Jerusalem',location:null};
+const affected={...copy(configured),tripTimezoneState:{baseZone:'',baseLocation:null,history:[copy(initialChange)]},blockers:[{id:'keep',recurring:false,allDay:false,from:'2027-03-01',to:'2027-03-01',s:'08:00',e:'09:00',label:'Keep this rule'}]};
+// The persisted state from 0.9.5–0.9.5.2 is repaired narrowly, without dropping history or other data.
+const repaired=U.migrate({profiles:[copy(affected)],constraints:[],settings:{}},'someone@example.test').profiles[0];
+eq(repaired.tripTimezoneState.baseZone,'Asia/Jerusalem','Existing blank initial origin is recovered from the first confirmed timezone');eq(repaired.tripTimezoneState.history,affected.tripTimezoneState.history,'Timezone history is retained');eq(repaired.blockers,affected.blockers,'Recovery preserves saved blockers');C.checkProfile(repaired);checks++;
+const repairedAgain=copy(repaired);T.migrate(repairedAgain);eq(repairedAgain,repaired,'Recovery is idempotent');
+const withTrip={...copy(affected),trips:[trip()]};T.migrate(withTrip);eq(withTrip.trips,[trip()],'Recovery never removes saved trips or flights');T.validateProfile(withTrip);checks++;
+const manualChange={...copy(initialChange),key:'manual:later',at:'2026-10-27T12:00:00.000Z',tz:'Europe/Paris'};
+const changedLater={...copy(affected),tripTimezoneState:{baseZone:'',baseLocation:null,history:[copy(initialChange),manualChange]}};T.migrate(changedLater);T.reconcile(changedLater,at('2026-10-28'));eq(changedLater.tz,'Europe/Paris','Recovery preserves a later deliberate timezone change');
+for(const state of [{baseZone:'Invalid/Zone',history:[copy(initialChange)]},{baseZone:'',history:[]},{baseZone:'',history:[{...initialChange,at:'invalid'}]},{baseZone:'',history:[{...initialChange,kind:'arrival'}]}]){const invalid={...copy(configured),tripTimezoneState:state};T.migrate(invalid);bad(()=>T.validateProfile(invalid),/Invalid trip timezone/);}
+const unsupported={...copy(configured),tripSchemaVersion:7};T.migrate(unsupported);bad(()=>T.validateProfile(unsupported),/Unsupported trip settings/);
+for(const full of [false,true]){const source={version:2,revision:0,profiles:[{...copy(affected),blockers:[]}],constraints:[],settings:{}},file=F.exportFile(source,{theme:'light',clock:'24',dateFormat:'dmy'},full?null:[affected.id]);const imported=F.readProfiles(file,[0]).profiles[0];eq(imported.tripTimezoneState.baseZone,'Asia/Jerusalem','Known first-time defect is repaired in '+(full?'backup':'profile')+' files');C.checkProfile(imported);checks++;}
+const futureTripFile=F.exportFile({profiles:[unsupported],constraints:[],settings:{}},{theme:'light',clock:'24',dateFormat:'dmy'},[unsupported.id]);bad(()=>F.readProfiles(futureTripFile,[0]),/Unsupported trip settings/);
 const fit=(start,end)=>E.fitPerson(p,at(start),at(end),0);
 eq(fit('2027-01-10T12:30Z','2027-01-10T15:30Z').band,'ok','Long connection leaves the middle available');
 for(const [a,b]of [['2027-01-10T11:00Z','2027-01-10T11:15Z'],['2027-01-10T12:15Z','2027-01-10T12:30Z'],['2027-01-10T15:30Z','2027-01-10T15:45Z']])ok(E.conflictsFor(p,at(a),at(b)).some(i=>i.type==='flight'),'Flights and connection margins block even with Ignore flags');

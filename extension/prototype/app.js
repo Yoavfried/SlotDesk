@@ -469,7 +469,9 @@
       const before=clone(state),existing=state.profiles.find(p=>p.id===id),base=clone(queuedSnapshot),basePerson=base.profiles.find(p=>p.id===id),saved=existing?clone(existing):clone(candidate);
       for(const key of changes){if(candidate[key]===undefined)delete saved[key];else saved[key]=clone(candidate[key]);if(basePerson){if(profileBase[key]===undefined)delete basePerson[key];else basePerson[key]=clone(profileBase[key]);}}
       if(changes.some(key=>key==='tz'||key==='tzLocation'))saved.tripTimezoneState=Trips.manual(existing||profileBase,candidate.tz,candidate.tzLocation);
-      if(profileIntent==='own'){saved.enabled=false;state.settings.ownProfileId=id;state.settings.ownProfileSetupRequired=false;state.settings.anchor=saved.tz;}
+      if(profileIntent==='own')saved.enabled=false;
+      C.checkProfile(saved);
+      if(profileIntent==='own'){state.settings.ownProfileId=id;state.settings.ownProfileSetupRequired=false;state.settings.anchor=saved.tz;}
       U.promoteGuest(state,saved);const at=state.profiles.findIndex(p=>p.id===id);if(at>=0)state.profiles[at]=saved;else state.profiles.push(saved);
       if(!await save({base})){if(!syncConflict)state=before;profileFeedback('Could not save. Your entries are still here. Try again.',true);return false;}
       if(context!==account||generation!==connectionGeneration||draft?.id!==id)return false;profileBase=clone(state.profiles.find(p=>p.id===id));profileFormBase=clone(candidate);advancedUI.sync();if(view==='new'&&!state.pendingBooking&&!state.pendingReschedule){U.switchOrganizingCalendar(state,state.settings.organizingCalendar||state.settings.defaultCalendar,scopedCalendars().map(c=>c.id));await save();}profileFeedback();renderProfileManager();renderPeople();renderContacts();invalidate();updateMode();return true;

@@ -3,6 +3,7 @@
   const MIN=60000,copy=v=>v===undefined?undefined:JSON.parse(JSON.stringify(v));
   const instant=v=>typeof v==='string'&&/T.*(?:Z|[+-]\d\d:\d\d)$/.test(v)&&Number.isFinite(Date.parse(v));
   const zone=v=>{try{return typeof v==='string'&&!!v&&!!new Intl.DateTimeFormat('en',{timeZone:v});}catch(_){return false;}};
+  const timezoneChange=h=>h&&instant(h.at)&&zone(h.tz)&&['manual','arrival'].includes(h.kind)&&typeof h.key==='string';
   const end=trip=>Date.parse(trip.flights.at(-1).arrival),start=trip=>Date.parse(trip.flights[0].departure);
   const live=p=>(p.trips||[]).filter(t=>!t.legacy&&t.flights?.length);
   const flightFields=['id','departure','arrival','departureZone','arrivalZone','label','departureLocation','arrivalLocation','departureZoneLocation','arrivalZoneLocation','from','to','connection','returnFlight','estimated','link','legacyIndex'];
@@ -29,12 +30,20 @@
     if(p.trips!==undefined&&(!Array.isArray(p.trips)||p.trips.length>2000))throw new Error('Invalid saved trips.');
     const ids=new Set();for(const t of p.trips||[]){validate(t);if(ids.has(t.id))throw new Error('Two trips have the same identity.');ids.add(t.id);}
     const ordered=live(p).slice().sort((a,b)=>start(a)-start(b));if(ordered.some((t,i)=>i&&start(t)<end(ordered[i-1])))throw new Error('These trips overlap. Combine their flights or correct the dates.');
-    if(p.tripTimezoneState){const s=p.tripTimezoneState;if(!zone(s.baseZone)||!Array.isArray(s.history)||s.history.length>10000)throw new Error('Invalid trip timezone history.');for(const h of s.history)if(!instant(h.at)||!zone(h.tz)||!['manual','arrival'].includes(h.kind)||typeof h.key!=='string')throw new Error('Invalid trip timezone change.');}
+    if(p.tripTimezoneState){const s=p.tripTimezoneState;if(!zone(s.baseZone)||!Array.isArray(s.history)||s.history.length>10000)throw new Error('Invalid trip timezone history.');for(const h of s.history)if(!timezoneChange(h))throw new Error('Invalid trip timezone change.');}
     if(p.flightTerms!==undefined&&(typeof p.flightTerms!=='string'||p.flightTerms.length>2000))throw new Error('Flight keywords are too long.');
     if(p.flightDismissals!==undefined&&(!Array.isArray(p.flightDismissals)||p.flightDismissals.length>2000||p.flightDismissals.some(x=>typeof x!=='string')))throw new Error('Invalid flight alert settings.');
     return p;
   }
   function migrate(p){
+    if(p.tripSchemaVersion!==undefined&&![0,1].includes(p.tripSchemaVersion))return p;
+    // 0.9.5–0.9.5.2 could record the blank pre-setup timezone before the
+    // first confirmation. Recover only that signature; preserve all history.
+    const state=p.tripTimezoneState;
+    if(state?.baseZone===''&&Array.isArray(state.history)&&state.history.length&&state.history.length<=10000&&state.history.every(timezoneChange)){
+      const first=state.history.reduce((a,b)=>Date.parse(a.at)<=Date.parse(b.at)?a:b);
+      if(first.kind==='manual'){state.baseZone=first.tz;state.baseLocation=copy(first.location)||null;}
+    }
     if(p.tripSchemaVersion===1)return p;
     p.trips=p.trips||[];p.flightTerms=p.flightTerms??'flight, flights, ✈';p.flightDismissals=p.flightDismissals||[];
     for(const [i,f]of(p.flights||[]).entries()){
@@ -53,6 +62,8 @@
     let result={tz:trip.originZone,location:trip.originZoneLocation||null};for(const f of trip.flights)if(Date.parse(f.arrival)<=t)result={tz:f.arrivalZone,location:f.arrivalZoneLocation||null};return {...result,trip};
   }
   function manual(p,tz,location,now=Date.now()){
+    if(!zone(tz))throw new Error('Choose a valid timezone.');
+    if(!p.tripTimezoneState&&!zone(p.tz)&&!live(p).length)return {baseZone:tz,baseLocation:copy(location)||null,history:[]};
     const s=origin(p),at=new Date(now).toISOString();s.history.push({kind:'manual',key:'manual:'+at+':'+tz,at,tz,location:copy(location)||null});return s;
   }
   function reconcile(p,now=Date.now()){
