@@ -1,6 +1,20 @@
 # Registration service activation
 
-Original activation: 15 October 2026 for the private 0.9.0 preview. The table and evidence below describe that activation. Current release is 0.9.4.6. The owner completed [Google/Vercel activation](browser-signin-setup.md); production redeployment `dpl_8Ln2uogLSpikGfw9qRqi1vzXdUUe` is READY. A public check on 21 October returned HTTP 200 with `ready:true`, version 0.9.4.6 and flow authorization-code. This confirms configuration readiness, not a completed Google sign-in. The earlier initial broker deployment was `dpl_32tLxkfrtKXPmetpJiuMCRvqeHzQ`, before these values were configured. Invalid intake input still returns 400; no lead was inserted during the 21 October checks.
+## Current update — 26 October 2026, 0.9.4.8
+
+The existing SlotDesk service was updated to **one lead per completed onboarding**, with a bounded browser label and retry UUID. Migration 002 is applied to the production `slotdesk.public.leads` table. Its original fields and row count were unchanged across migration; historical browser values are Unknown. The intake account retains INSERT and has no SELECT/UPDATE/DELETE.
+
+- Production deployment: `dpl_5WaFGZxjQxxTRxkFW9deZkJrUxjX`, READY at the existing `slotdesk-leads.vercel.app` alias.
+- Backend source: `421265be36e4c6a22a133925db53ab967e8a9321`, eight explicit runtime/lock/config files, no local credentials.
+- Expiring test branch: `onboarding-browser-migration-2026-10-26`, expiry 27 October 2026, 09:30 UTC. Original five values survived migration; insert-only-role tests stored two separate onboardings for one synthetic email and preserved both after a retry.
+- Public checks: status 200/ready:true, allowed preflight 204, reads 405, invalid current-format payload 400, unrelated origin 403. No valid contact was submitted to production for verification.
+- The unchanged Google broker still reports its component version 0.9.4.6; the intake contract/app release is 0.9.4.8. Existing Google secrets, callback, approved audience and OAuth scopes are unchanged.
+
+Older five-field clients remain supported. This supersedes the original email-unique behavior described in the historical activation evidence below. [Current fields and rules](leads-table.md).
+
+## Original activation evidence
+
+Original activation: 15 October 2026 for the private 0.9.0 preview. The table and evidence below describe that activation. The release at that stage was 0.9.4.6. The owner completed [Google/Vercel activation](browser-signin-setup.md); production redeployment `dpl_8Ln2uogLSpikGfw9qRqi1vzXdUUe` is READY. A public check on 21 October returned HTTP 200 with `ready:true`, version 0.9.4.6 and flow authorization-code. This confirms configuration readiness, not a completed Google sign-in. The earlier initial broker deployment was `dpl_32tLxkfrtKXPmetpJiuMCRvqeHzQ`, before these values were configured. Invalid intake input still returns 400; no lead was inserted during the 21 October checks.
 
 | Component | Configuration |
 | --- | --- |

@@ -29,7 +29,8 @@
     "retryDoesNotReplaceOrDuplicate": true,
     "insertOnlyRoleConfirmed": true,
     "syntheticProductionRowsInserted": false,
-    "productionMigrationApplied": true
+    "productionMigrationApplied": true,
+    "productionOriginalFieldsAndCountPreserved": true
   },
   "iconCandidates": {
     "font": "Exact outlined VT323 from existing brand banner",
@@ -51,5 +52,20 @@
     "Browser branding can be hidden or spoofed; Chromium/Unknown remain valid labels.",
     "Existing registrations cannot be retroactively assigned a browser.",
     "Wider UX and flight redesign remain under owner review."
-  ]
+  ],
+  "deployment": {
+    "id": "dpl_5WaFGZxjQxxTRxkFW9deZkJrUxjX",
+    "state": "READY",
+    "alias": "slotdesk-leads.vercel.app",
+    "backendSource": "421265be36e4c6a22a133925db53ab967e8a9321",
+    "publicChecks": {
+      "status": 200,
+      "ready": true,
+      "preflight": 204,
+      "read": 405,
+      "invalidPayload": 400,
+      "unrelatedOrigin": 403
+    },
+    "googleBrokerChanged": false
+  }
 }

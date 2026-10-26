@@ -222,3 +222,9 @@ Synthetic Google transport only: valid profile text/checkbox changes saved live;
 ## 0.9.3 accessibility evidence
 
 The [accessibility record](accessibility.md) and [structured report](accessibility-results.json) document 20 zero-violation automated screen scans and 36 browser journey assertions. All 1,684 application checks are retained. This technical result does not certify complete accessibility or close the owner’s overall UX review.
+
+## 0.9.4.8 — onboarding leads and timezone overlays
+
+2,280 application checks, 73 backend checks and 22 calendar-comparison checks pass. The focused timezone journey covers 17 contexts, including narrow new profiles, flight return legs, reschedule guests and final invitation review: 121 assertions. The existing keyboard/accessibility journey adds 36 assertions and 20 scans; the open-overlay scan adds one more. No automated axe violations; incomplete/manual items remain. All nine synthetic appointments remain unchanged with zero calendar writes.
+
+Database migration testing on an expiring branch verifies preserved historical fields, same-email separate onboarding, retry preservation and the actual insert-only role. Production migration preserves the original fields/count. Public checks deliberately reject input; they create no leads. [Evidence](validation-0.9.4.8.json) · [Service activation](registration-deployment.md). Actual browser branding may be hidden or spoofed; native Vivaldi/Firefox/Safari certification is not implied by local Chromium checks.

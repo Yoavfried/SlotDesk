@@ -26,3 +26,7 @@ Current release: **0.9.4.7**. [Scope](release-plan-0.9.4.7.md) · [Browser evide
 Implemented means present in source. Pending validation means a stated live account/environment check remains. Planned means accepted but unfinished. Deferred means intentionally outside current development. Proposed candidates are not implementation promises.
 
 Private parent-website planning remains in its own repository. This product's placeholder parent credit is **[Website name TBD]**.
+
+## 0.9.4.8
+
+[Release scope](release-plan-0.9.4.8.md) · [Evidence](validation-0.9.4.8.json) · [Lead/browser rules](leads-table.md) · [Icon proposals awaiting selection](../design/proposals/extension-icon/README.md).
