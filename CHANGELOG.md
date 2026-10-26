@@ -1,5 +1,13 @@
 # Repository changelog
 
+## 2026-10-26 — 1.0.0 preparation / 0.9.5.1
+
+- Target Chrome, Edge and Firefox for 1.0.0; defer Outlook until afterward.
+- Prepare store copy/declarations, reviewer guidance, synthetic screenshots, license proposal and consolidated owner steps.
+- Implement Firefox-only optional lead sharing and source fixes for three confirmed security findings; preserve the existing hosted-service configuration.
+- Add the security reporting guidance, correct token/backend and recovery-export disclosures, and remove operational deployment IDs from current documentation. Keep useful original history intact.
+- Record partial audit coverage, native Firefox/provider review, lint dispositions, backend redeployment, support contact, licensing and public publication as remaining gates. Neither repository visibility nor production hosting is changed.
+
 ## 2026-10-26 — release 0.9.5
 
 - Implement the accepted trip/flight, Alerts, live-clock and selected-icon scope; preserve legacy and portable settings.
