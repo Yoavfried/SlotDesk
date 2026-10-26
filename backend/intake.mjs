@@ -1,9 +1,15 @@
-const keys=['email','name','timezone','onboarded_at','updates_opt_in'];
+import {createHash} from 'node:crypto';
+const keys=['email','name','timezone','onboarded_at','updates_opt_in'],optional=['onboarding_id','browser'];
+const browsers=new Set(['Chrome','Chromium','Edge','Vivaldi','Brave','Opera','Firefox','Safari','Unknown']);
+export function legacyId(email,at){const hex=createHash('md5').update(email+'\n'+at).digest('hex');return [hex.slice(0,8),hex.slice(8,12),hex.slice(12,16),hex.slice(16,20),hex.slice(20)].join('-');}
 export function validate(value){
-  if(!value||Array.isArray(value)||Object.keys(value).length!==5||Object.keys(value).some(key=>!keys.includes(key)))throw new Error('Invalid fields');
+  if(!value||Array.isArray(value)||keys.some(key=>!Object.hasOwn(value,key))||Object.keys(value).some(key=>!keys.includes(key)&&!optional.includes(key)))throw new Error('Invalid fields');
   const {email,name,timezone,onboarded_at,updates_opt_in}=value;
   if(typeof email!=='string'||email.length>320||email!==email.trim().toLowerCase()||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)||typeof name!=='string'||name!==name.trim()||!name||name.length>200||/[\u0000-\u001f\u007f]/.test(name)||typeof timezone!=='string'||!timezone||timezone.length>100||typeof updates_opt_in!=='boolean'||typeof onboarded_at!=='string'||!/^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{3}Z$/.test(onboarded_at)||!Number.isFinite(Date.parse(onboarded_at)))throw new Error('Invalid registration');
-  new Intl.DateTimeFormat('en',{timeZone:timezone});return {email,name,timezone,onboarded_at,updates_opt_in};
+  new Intl.DateTimeFormat('en',{timeZone:timezone});
+  const onboarding_id=Object.hasOwn(value,'onboarding_id')?value.onboarding_id:legacyId(email,onboarded_at),browser=Object.hasOwn(value,'browser')?value.browser:'Unknown';
+  if(typeof onboarding_id!=='string'||!(/^[\da-f]{8}-(?:[\da-f]{4}-){3}[\da-f]{12}$/i).test(onboarding_id)||!browsers.has(browser))throw new Error('Invalid registration metadata');
+  return {email,name,timezone,onboarded_at,updates_opt_in,onboarding_id:onboarding_id.toLowerCase(),browser};
 }
 export function createIntake({insert,origin,now=Date.now}){
   // This is coarse per-instance throttling, not identity verification. No IPs or

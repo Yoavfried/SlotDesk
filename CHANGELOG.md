@@ -1,5 +1,12 @@
 # Repository changelog
 
+## 2026-10-26 — SlotDesk 0.9.4.8
+
+- Add per-onboarding leads with browser labels and retry idempotency, preserving existing data.
+- Fix timezone dropdown overlays across the interface.
+- Prepare two branded icon proposals for owner selection, without installing icons.
+
+
 ## 2026-10-26 — SlotDesk sidebar hotfix
 
 - Fix the reserved right-hand header strip and narrow-panel logo/control collisions; improve narrow home-card flow and workspace scrolling.

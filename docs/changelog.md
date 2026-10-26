@@ -1,5 +1,13 @@
 # SlotDesk changelog
 
+## 0.9.4.8 — 26 October 2026
+
+- Record every completed onboarding as a separate lead, even with an existing email. Save a reported browser label and an internal onboarding UUID; retry the same submission without adding another row. Preserve historical leads and older queued registrations. Update the onboarding/privacy notice.
+- Make the shared timezone search an overlay. Opening it does not enlarge profile, flight, reschedule or other dialogs; click-away, focus departure and Escape close it. Keep lists within the viewport, including narrow sidebars.
+- Prepare exact VT323 **SD** and **[SD]** icon alternatives with the actual lime/ink/bracket colors. These are proposals only: no toolbar, favicon, manifest or store icon is installed.
+
+Validation: 2,280 application checks, 73 backend checks, 22 calendar-comparison checks and 157 synthetic browser assertions, including 17 timezone contexts. 21 axe scans found no automated violations; manual/incomplete checks remain. All nine synthetic appointments stay unchanged with zero Calendar writes. [Evidence](validation-0.9.4.8.json). Flight redesign and owner UX approval remain open. [Lead rules](leads-table.md) · [Icon proposals](../design/proposals/extension-icon/README.md).
+
 ## 0.9.4.7 — 22 October 2026
 
 Same-version sidebar hotfix — 26 October 2026: move workspace scrolling and its stable gutter below the full-width lime header. Keep the fixed-size wordmark clear of actions at narrow widths; use compact home-card rows with full-width descriptions. Reset/verify the workspace scroll area during navigation and search interactions. Clarify that new-browser onboarding does not duplicate or overwrite an existing email-keyed lead; registration behavior is unchanged. All 2,267 application checks and 178 synthetic browser assertions pass, with 22 axe scans without automated violations; incomplete/manual findings remain. Nine synthetic appointments remain unchanged with zero Calendar writes. Refresh the three target packages and checksums without moving the historical release tag. [Evidence](validation-sidebar-2026-10-26.json).

@@ -37,3 +37,7 @@ DM Sans is bundled from the [official Google Fonts source](https://github.com/go
 ## Compact meeting-option rows — 0.9.4.5
 
 Use DM Sans 14px for the participant identity/status row: name at 600, city/time at 400, one 20px drawn calendar icon, and a separate factual reason. Keep the logo, IBM Plex Mono eyebrow and established headline roles unchanged. In narrow windows, truncate name/city with full focusable labels and keep compact time text visible. A different local date appears beside the time; full dates, years and zone transitions are available in accessible detail. The shared one-row contract is checked at 320–1280px in 24-/12-hour modes, including future dates. Owner visual approval remains separate.
+
+## Extension icon proposals — awaiting selection
+
+[SD and bracketed SD](proposals/extension-icon/README.md) use the actual outlined VT323 glyphs, full lime square, dark ink and 55% brackets. Size exports are prepared; toolbar/favicon/store wiring remains unimplemented pending owner selection.

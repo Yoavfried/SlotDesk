@@ -1,6 +1,6 @@
 (function(root,factory){if(typeof module==='object'&&module.exports)module.exports=factory(require('./workspace-model'),require('./profile-configuration'));else root.SlotConfigurationFiles=factory(root.SlotWorkspace,root.SlotProfileConfiguration);})(typeof self!=='undefined'?self:this,function(U,C){
   'use strict';
-  const clone=C.clone,version='0.9.4.7',columns=C.fields.map(k=>k==='tz'?'timezone':k).concat('constraints');
+  const clone=C.clone,version='0.9.4.8',columns=C.fields.map(k=>k==='tz'?'timezone':k).concat('constraints');
   const settingKeys=['from','to','anchor','anchorLocation','duration','step','spacingMode','want','perDay','perDayMode','minDuration','extendDays','dateChoice','defaultCalendar','defaultCalendarSelected','calendarScopeConfirmed','workspaceCalendarIds','meetingsCalendars','meetingsCalendarLabels','meetingsFrom','meetingsTo','meetingsTimezone','meetingsTimezoneLocation','dismissSuggestions'];
   const defaults=p=>({...U.newProfile(p.email,p.name,p.tz),calendarLabels:{},eventRules:{},ruleTerms:{},airportRule:true});
   function safe(value){if(value&&typeof value==='object')for(const key of Object.keys(value)){if(['__proto__','constructor','prototype'].includes(key))throw new Error('The file contains an unsupported field.');safe(value[key]);}return value;}

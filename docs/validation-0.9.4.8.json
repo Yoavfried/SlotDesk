@@ -1,0 +1,55 @@
+{
+  "release": "0.9.4.8",
+  "date": "2026-10-26",
+  "automated": {
+    "applicationChecks": 2280,
+    "backendChecks": 73,
+    "calendarComparisonChecks": 22,
+    "browserAssertions": 157,
+    "timezonePickerContexts": 17,
+    "axeScans": 21,
+    "axeViolations": 0,
+    "manualAccessibilityReviewRemaining": true
+  },
+  "calendarSafety": {
+    "syntheticAppointments": 9,
+    "unchanged": 9,
+    "creates": 0,
+    "patches": 0,
+    "deletes": 0,
+    "moves": 0,
+    "realGoogleAccountUsed": false
+  },
+  "database": {
+    "migration": "backend/migrations/002-onboarding-browser.sql",
+    "verificationBranch": "onboarding-browser-migration-2026-10-26",
+    "branchExpiresAt": "2026-10-27T09:30:00Z",
+    "existingFiveFieldsPreserved": true,
+    "sameEmailDistinctOnboardings": true,
+    "retryDoesNotReplaceOrDuplicate": true,
+    "insertOnlyRoleConfirmed": true,
+    "syntheticProductionRowsInserted": false,
+    "productionMigrationApplied": true
+  },
+  "iconCandidates": {
+    "font": "Exact outlined VT323 from existing brand banner",
+    "lime": "#D8E84A",
+    "ink": "#15160A",
+    "bracketOpacity": 0.55,
+    "rasterSizes": [
+      16,
+      32,
+      48,
+      128,
+      1024
+    ],
+    "installed": false,
+    "ownerChoicePending": true
+  },
+  "limits": [
+    "Local Chromium fixture validation is not Vivaldi/Firefox/Safari certification.",
+    "Browser branding can be hidden or spoofed; Chromium/Unknown remain valid labels.",
+    "Existing registrations cannot be retroactively assigned a browser.",
+    "Wider UX and flight redesign remain under owner review."
+  ]
+}

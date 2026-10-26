@@ -1,0 +1,1 @@
+export const insertLead=sql=>({email,name,timezone,onboarded_at,updates_opt_in,onboarding_id,browser})=>sql`INSERT INTO public.leads (email,name,timezone,onboarded_at,updates_opt_in,onboarding_id,browser) VALUES (${email},${name},${timezone},${onboarded_at},${updates_opt_in},${onboarding_id},${browser}) ON CONFLICT DO NOTHING`;

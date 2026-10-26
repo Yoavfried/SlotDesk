@@ -1,8 +1,8 @@
 ![SlotDesk — make room for what matters](design/assets/slotdesk-banner.svg)
 
-**0.9.4.6 · Google Calendar · private desktop-extension beta**
+**0.9.4.8 · Google Calendar · private desktop-extension beta**
 
-Version **0.9.4.7** implements the agreed advanced profile settings: recurring/one-off blockers, independent working/convenience rules, fully ignored ordinary overlaps, opt-in keyword detection and local occurrence/series meeting treatments. [Release scope](docs/release-plan-0.9.4.7.md) · [Validation](docs/testing.md) · [Version history](docs/changelog.md). Travel/flight redesign remains under owner review. The existing browser-independent Google service remains active; [compatibility](docs/browser-compatibility.md) and [store requirements](docs/extension-stores.md) retain their documented limits. Appointment logic and the wider UX remain open to owner review.
+Version **0.9.4.8** records separate onboardings with reported browser labels and makes timezone searches float over the form without resizing dialogs. The existing advanced profile, blocker and meeting-treatment features remain available. [Release scope](docs/release-plan-0.9.4.8.md) · [Validation](docs/testing.md) · [Version history](docs/changelog.md). Travel/flight redesign remains under owner review. The existing browser-independent Google service remains active; [compatibility](docs/browser-compatibility.md) and [store requirements](docs/extension-stores.md) retain their documented limits. Appointment logic and the wider UX remain open to owner review.
 
 SlotDesk helps executive assistants find meeting times across people, calendars and timezones. Review a new invitation, browse existing meetings, edit its details and guests, or choose a new time for an appointment. Every calendar write requires an explicit review and confirmation.
 

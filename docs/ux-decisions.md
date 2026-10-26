@@ -218,3 +218,9 @@ Profile edits preserve the current meeting participant order, including people a
 Own-profile automatically detected calendar time off may be proposed as a clearly warned overlap when ordinary options are unavailable. It stays in the calendar and does not create an instruction to reschedule a holiday. Saved overlap permission can include it among normal proposals, still with warnings. Explicit protections, manual blocks and saved flights remain blocking; other people’s time off remains protected. Missing calendar access is disclosed and does not itself exclude times. If hard protection leaves no options, identify the actual blocking entries and link to the relevant saved profile.
 
 Timezone selection remains a closed list, searched through local city/country names, common timezone terms and spelling variants. Typing does not confirm a change. See the [dataset provenance and rebuild instructions](timezone-search.md). Regional holiday suggestions remain deferred in the roadmap.
+
+## 26 October — onboarding records, floating timezones and icon proposals
+
+The owner chose one lead for every completed onboarding, including repeats of the same email, with a browser column. Retries of the same completion stay idempotent; old rows stay intact. Browser labels use only exposed branding, without a full UA/version or fingerprint. [Current contract](leads-table.md). Timezone suggestions overlay following controls and never enlarge their parent popup; dismiss on leaving the picker. Apply the shared component to every timezone control.
+
+Prepare both SD and bracketed SD in actual VT323 on a square lime field. **Selection and implementation remain pending**; do not wire favicon/toolbar/store icons yet. [Proposal comparison](../design/proposals/extension-icon/compare.html).
