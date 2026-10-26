@@ -9,8 +9,9 @@ A **trip is an ordered series of flights and timed timezone changes for one save
 | Area | Owner direction |
 | --- | --- |
 | Manager | Travel & flights opens a separate profile-specific popup containing a list of Trips and an Add trip action. Remove Travel & flights from Edit profile’s advanced settings. This is a standalone manager, not another main-workspace tile. |
-| New trip | Add trip opens a flight-sequence editor. Add flight starts with date/time, then the destination timezone. Try to find a matching calendar event in the background even when automatic event detection is unavailable/off. |
+| New trip | Add trip opens a flight-sequence editor. Add flight starts with the departure date only, then searches calendars even when automatic event detection is unavailable/off. Ask only for missing details if no matching event supplies them; estimate an editable arrival from the confirmed route and departure time. |
 | Calendar clues | No LLM. Use information exposed in accessible calendar events to prefill values when identifiable; the user can edit them. Do not require a calendar match to enter a flight manually. |
+| Arrival and matching | Switch to the destination timezone on arrival. Auto-link one clear calendar match; require confirmation for uncertain or multiple matches. Calendar classification stays local to SlotDesk. |
 | Connections | Add further flights to represent a journey with connections or additional destinations. Every saved flight contributes its own blocker interval and destination-timezone transition. |
 | Flight back | Offer Flight back to finish the trip. Its destination timezone is already known, so the user should not need to select it again. Exact home/origin semantics below are a recommendation, not an extra owner decision. |
 | No return flight | Saving is allowed. Warn that after the last entered flight the profile will continue using its destination timezone; the user must add a return flight or change the timezone manually in Edit profile if needed. |
@@ -22,31 +23,51 @@ A **trip is an ordered series of flights and timed timezone changes for one save
 
 1. Open **Trips · [person]** from the person’s flight action. Show saved trip summaries and **Add trip**.
 2. Add trip opens a focused form, with an optional trip name and its first flight.
-3. Enter departure date/time. Prefill its timezone from the profile’s effective timezone at that point, or from the previous leg for a connection.
-4. Search only that profile’s linked workspace calendars around the entered time. Show a bounded matching/loading result inline; an unavailable calendar does not erase the manually entered flight.
-5. Prefill matching arrival/date/time and a destination timezone only when the available information supports them. Keep every inferred field editable. Show where a prefill came from.
+3. Enter the departure date only. Search using the departure location’s local date, with the profile’s effective timezone or previous leg as the editable origin suggestion; do not assume the connected assistant’s timezone.
+4. Search only that profile’s linked workspace calendars within a bounded window around that local date. Auto-link one clear flight match; ask the user to choose/confirm uncertain or multiple matches. An unavailable calendar does not erase entered information.
+5. Prefill departure/arrival times, route and destination timezone only when the event supports them. For missing information, ask only for the departure time and departure/destination cities or airports that are still needed; prefill origin from the profile/previous leg for confirmation. Offer an editable estimated arrival. Show whether a value came from the calendar, was entered by the user or is an estimate. Never invent an exact departure time from the date alone.
 6. Confirm the leg, then choose **Add flight** for another leg, **Flight back** for the final leg home, or finish without a return.
 7. **Save** commits the complete trip. **Discard** abandons that trip edit. Follow the established rule: no persistent/resumable flight or trip form draft; exiting an incomplete add/edit form requires Save or Discard. Previously saved trips and unrelated live-saved profile settings remain intact.
 8. Return to the trip list after saving/discarding. Show each saved trip’s route/date summary, return/open-ended status and edit/delete actions.
 
-Recommended Flight back behavior: prefill the trip’s recorded origin timezone as its destination; departure comes from the previous destination. The user still supplies departure/arrival dates and times. A return with connections can use Add flight for its intermediate legs, then Flight back for the final home leg. Do not assume home is Asia/Jerusalem or the connected assistant’s timezone.
+Recommended Flight back behavior: prefill the trip’s recorded origin timezone/location as its destination; departure comes from the previous destination. Use the same date-first calendar matching and missing-details/estimated-arrival flow. A return with connections can use Add flight for its intermediate legs, then Flight back for the final home leg. Do not assume home is Asia/Jerusalem or the connected assistant’s timezone.
 
 ### Example
 
 Jerusalem → London → New York → Jerusalem:
 
-- Add flight to London; arrival changes the effective timezone to London if arrival-based transitions are approved.
+- Add flight to London; arrival changes the effective timezone to London.
 - Add flight to New York; arrival changes it again.
 - Flight back preselects Jerusalem as the final destination.
 - Without the last leg, New York remains effective after the final arrival until a later deliberate timezone change or trip transition.
 
-## Three timing/matching decisions currently asked
+## Accepted timing and matching decisions — 26 October
 
-| ID | Question | Recommendation | Status |
+| ID | Question | Owner decision | Status |
 | --- | --- | --- | --- |
-| F98-01 | Require departure **and arrival** dates/times per leg, prefilling from a calendar match when available? | Yes. A start alone cannot establish the blocker’s end or a reliable destination transition. Require both increasing real instants before saving. | Awaiting owner answer |
-| F98-02 | At what moment does the destination timezone take effect? | On arrival. The departure-to-arrival interval is blocked; the destination timezone applies from the instant of arrival. | Awaiting owner answer |
-| F98-03 | When can a manually entered flight be linked to a calendar event automatically? | Automatically link one clear match; ask the user to choose for multiple/weak candidates. Classification is local to SlotDesk, never a Google event edit. | Awaiting owner answer |
+| F98-01 | Require departure **and arrival** dates/times as initial manual fields? | No. Start with departure date only and try calendar identification first. If details remain missing, ask only for departure time and departure/destination cities or airports, then offer an editable estimated arrival. Do not require the user to type a known arrival manually. | Accepted, including the researched fallback follow-up |
+| F98-02 | At what moment does the destination timezone take effect? | On arrival. The departure-to-arrival interval is blocked; the destination timezone applies from the instant of arrival. An estimated arrival remains identified as estimated. | Accepted |
+| F98-03 | When can a manually entered flight be linked to a calendar event automatically? | Automatically link one clear match; ask the user to choose/confirm multiple or weak candidates. Classification is local to SlotDesk, never a Google event edit. | Accepted |
+
+## Duration fallback research and proposed implementation
+
+The owner approved asking only for missing departure time and route details, then estimating an editable arrival. **Timezone differences cannot determine flight duration.** A timezone covers many locations; it supplies clock-conversion rules, not a flight route. A date alone also cannot establish the flight’s starting instant. Do not silently choose a departure time, an airport or a representative city for a timezone.
+
+Research checked on 26 October 2026:
+
+| Source | Useful material | Limits and planned use |
+| --- | --- | --- |
+| [mwgg/Airports](https://github.com/mwgg/Airports) and its [MIT license](https://github.com/mwgg/Airports/blob/master/LICENSE) | Searchable airport codes/names/cities, coordinates and IANA timezone identifiers in a public JSON dataset. | Candidate for a bundled lookup with required attribution and a pinned dataset revision. It does not supply flight schedules or durations. Review data/update provenance before vendoring. |
+| [OurAirports open data](https://ourairports.com/data/) | Public-domain airport coordinates and identifiers. | Alternative/reference source for route lookup. It does not provide a flight timetable or IANA timezone field in its airport CSV. |
+| [geolib distance calculation](https://github.com/manuelbieh/geolib/blob/master/src/getDistance.ts) and [MIT license](https://github.com/manuelbieh/geolib/blob/master/LICENSE) | Great-circle distance from two coordinate pairs. | A reusable geographic building block, not a flight-duration prediction model. No library has been added by this planning update. |
+| [American Airlines Flight-Engine](https://github.com/AmericanAirlines/Flight-Engine) and its [generator](https://github.com/AmericanAirlines/Flight-Engine/blob/main/src/Generator.ts) | Demonstrates converting route distance and aircraft speed into duration, then calculating destination-local arrival. | Explicitly generates mock flights, including randomness. It is not a source of real schedules or validated estimates; do not copy its random-duration behavior into SlotDesk. |
+| [Cirium/FlightStats schedules API](https://developer.flightstats.com/api-docs/scheduledflights/v1) | Actual scheduled departure/arrival lookup by carrier, flight number and date. | Separate service integration requiring credentials/terms/coverage review. Not selected for 0.9.8 and not necessary for the local fallback. |
+
+Recommended first implementation: bundle the route lookup and compute a deterministic direct-leg estimate locally from geographic distance, an explicit cruising-speed assumption and a takeoff/landing/ground allowance. No paid service or per-lookup API request is required for this approach. The formula parameters, rounding and representative short/medium/long route checks still need engineering calibration; research does not establish an accuracy guarantee. Winds, aircraft, route changes and delays remain unknown. Each connection is a separate leg, not part of a single guessed direct duration.
+
+When calendar times are complete, retain them instead of replacing them with a geographic estimate. A date-only/all-day event is not complete flight timing. For missing values, obtain or confirm the actual route endpoints; city-level input may support a coarser estimate, while bare UTC/offset/IANA-zone input is insufficient. Allow the user to edit duration or arrival instead of accepting the estimate. Preserve the source of each saved value and recompute dependent estimates when its inputs change, without overwriting user-entered values after a delayed lookup.
+
+Compute arrival as departure instant plus estimated elapsed duration, then display it in the destination timezone with the applicable DST/date-line conversion. An estimate may end on another date. The accepted arrival transition uses this saved estimated instant when the user accepts the estimate; it must not be described as an observed actual landing. Complete resolved departure/arrival instants are still necessary internally before saving the trip, although the user does not have to enter both.
 
 ## Calendar matching and timezone evidence
 
@@ -94,7 +115,7 @@ Use the existing drawn SVG icon language, sentence case, minimum usable button t
 
 ## Remaining behavior to settle before implementation
 
-The three primary decisions above are pending. Additional details are not silently approved:
+The three primary decisions and the missing-details fallback above are accepted. Additional details are not silently approved:
 
 - **Flight buffers:** retain/revise the existing two-hour inconvenience radius around departure/arrival, its configuration location and helper text. Flights stay independent of Ignore convenience/ordinary-overlap permissions.
 - **Connections and stopovers:** whether layover gaps themselves are blocked or only flight intervals plus configured buffers; how an overnight/long stopover differs from a connection. Do not quietly block an entire multi-day destination stay.
@@ -103,7 +124,7 @@ The three primary decisions above are pending. Additional details are not silent
 - **Matched calendar changes:** whether changed/cancelled/deleted/inaccessible linked events update the trip after confirmation or produce a review notice while retaining the user’s saved values. Do not silently move a manually confirmed flight.
 - **Matched flight display:** show that a calendar entry belongs to a saved flight/trip and avoid counting it twice. Preserve the existing boundary: ignoring a calendar copy does not erase the independently saved trip flight. The exact dropdown label and route back to Edit trip need review.
 - **Automatic flight discovery:** matching an entered flight is approved direction; rules for discovering unentered flights, detection controls/defaults and how these become trips still need review.
-- **Validation:** DST missing/repeated local times, date-line crossings, overlapping legs/trips, duplicate shared copies and missing arrival/destination information. Chronology compares actual instants, not local clock order.
+- **Validation and estimation:** DST missing/repeated local times, date-line crossings, overlapping legs/trips, duplicate shared copies, missing arrival/destination information, incomplete calendar matches and unsupported routes. Chronology compares actual instants, not local clock order. Calibrate the local duration model and agree concise estimated-arrival wording; never imply actual schedule accuracy.
 - **Migration/portable files:** preserve existing flat flights and date-based travel entries. Do not invent exact arrival times from whole-day legacy travel. Carry all new trip/timezone-link settings in full backups and selected-profile exports, preserving unavailable-calendar warnings and the existing import identity rules.
 - **Settings/helper wording:** finish the independent manager’s notices, matching feedback, buffers, detection, timezone explanations and empty/error states with the owner.
 
