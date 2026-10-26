@@ -20,9 +20,10 @@
     function position(){
       const box=trigger.getBoundingClientRect(),gap=6,edge=8,viewport=window.visualViewport;
       const leftEdge=viewport?.offsetLeft||0,topEdge=viewport?.offsetTop||0,width=viewport?.width||innerWidth,height=viewport?.height||innerHeight;
-      const below=Math.max(0,topEdge+height-edge-box.bottom-gap),above=Math.max(0,box.top-topEdge-edge-gap),up=below<180&&above>below;
+      const body=trigger.closest('.dialog-body')?.getBoundingClientRect(),bottom=Math.min(topEdge+height,body?.bottom??Infinity),top=Math.max(topEdge,body?.top??0);
+      const below=Math.max(0,bottom-edge-box.bottom-gap),above=Math.max(0,box.top-top-edge-gap),up=below<180&&above>below;
       const maxHeight=Math.min(330,up?above:below),panelWidth=Math.min(Math.max(box.width,240),width-2*edge);
-      Object.assign(panel.style,{width:panelWidth+'px',maxHeight:maxHeight+'px',left:Math.max(leftEdge+edge,Math.min(box.left,leftEdge+width-edge-panelWidth))+'px',top:(up?box.top-gap-Math.min(panel.scrollHeight,maxHeight):box.bottom+gap)+'px'});
+      Object.assign(panel.style,{width:panelWidth+'px',maxHeight:maxHeight+'px',left:Math.max(leftEdge+edge,Math.min(box.left,leftEdge+width-edge-panelWidth))+'px',top:Math.max(top+edge,Math.min(up?box.top-gap-Math.min(panel.scrollHeight,maxHeight):box.bottom+gap,bottom-edge-maxHeight))+'px'});
     }
     function open(){if(select.disabled)return;document.querySelectorAll('.timezone-panel').forEach(p=>{if(p!==panel)p.parentElement.querySelector('.timezone-trigger')._close?.();});panel.hidden=false;trigger.setAttribute('aria-expanded','true');search.setAttribute('aria-expanded','true');search.value='';active=0;render();position();if(typeof panel.showPopover==='function')panel.showPopover();position();search.focus({preventScroll:true});}
     trigger._close=close;trigger.onclick=event=>{event.preventDefault();panel.hidden?open():close();};search.oninput=()=>{active=0;render();position();};

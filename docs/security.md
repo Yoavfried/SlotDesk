@@ -1,5 +1,15 @@
 # SlotDesk security and privacy
 
+## 0.9.5 trips and review
+
+Trip forms write account-scoped local configuration only. They do not call the Calendar writer, rescheduler or detail editor. The existing explicit review, account/permission, ETag, locking and uncertain-write recovery boundaries remain unchanged; no deletion/move operation, OAuth scope or host permission is added.
+
+Flight discovery reads selected, linked sources. Raw source records stay in memory and clear on disconnect, scope changes or configuration replacement. Leaving a source out stops its discovery suggestions; an independently saved trip remains until edited/deleted. A missing/inaccessible linked source produces review information rather than silently cancelling a flight. A changed raw appointment still blocks at its actual calendar interval until reviewed, while the saved flight retains its confirmed interval.
+
+Profile/calendar/airport text uses escaped HTML or textContent; a synthetic calendar title containing HTML was checked through matching and Alerts. Airport data and icons are bundled, pinned and licensed; no remote script or paid/live flight service is used. Portable files include user-confirmed trip settings and source identifiers, not fetched event bodies, OAuth tokens or resumable flight drafts. Imported trip/history values are validated before replacement.
+
+The [0.9.5 validation](validation-0.9.5.json) covers these new boundaries and existing operations with synthetic providers. This focused code/flow review is not an exhaustive audit of Git history or proof that the whole system is vulnerability-free. The broader hosted-service/privacy/history review remains a [1.0.0 publication gate](release-1.0.0-plan.md).
+
 ## 0.9.4.7 local profile rules
 
 Blockers, detection keywords and per-event/series treatment update local account configuration only. The profile meeting browser uses selected linked sources and the existing account/scope-guarded reader; changing its calendar filter does not send extra reads. Disconnect/scope/configuration replacement clears its memory cache. These features have no create/update/delete/move transport. Explicit protection and saved flights remain hard constraints when ordinary overlaps are ignored. Shared events retain separate per-person treatment. Backup/profile files contain rules and identifiers, not fetched event bodies or access tokens. The synthetic validation record does not establish exhaustive security or real-provider correctness.

@@ -1,7 +1,7 @@
 (function(root,factory){if(typeof module==='object'&&module.exports)module.exports=factory(require('./workspace-model'),require('./slotdesk-engine'),require('./profile-rules'));else root.SlotProfileConfiguration=factory(root.SlotWorkspace,root.SlotEngine,root.SlotProfileRules);})(typeof self!=='undefined'?self:this,function(U,E,ProfileRules){
   'use strict';
   const clone=v=>JSON.parse(JSON.stringify(v));
-  const fields=['name','email','tz','tzLocation','tzConfirmed','required','enabled','calendarIds','calendarLabels','leaveCalendarIds','days','limit','radius','notice','availability','travel','flights','holidayExclusions','eventRules','eventOverrides','ruleTerms','airportRule','ignoreWorkingHours','ignoreConvenience','allowOverlap','workingMode','templateDays','templateHours','manualDays','eventDetectionEnabled','keywordMatchingVersion','blockers','eventTreatments','keywordCategories'];
+  const fields=['name','email','tz','tzLocation','tzConfirmed','required','enabled','calendarIds','calendarLabels','leaveCalendarIds','days','limit','radius','notice','availability','travel','flights','holidayExclusions','eventRules','eventOverrides','ruleTerms','airportRule','ignoreWorkingHours','ignoreConvenience','allowOverlap','workingMode','templateDays','templateHours','manualDays','eventDetectionEnabled','keywordMatchingVersion','blockers','eventTreatments','keywordCategories','trips','tripSchemaVersion','tripTimezoneState','flightTerms','flightDismissals'];
   const zone=v=>{try{return typeof v==='string'&&!!v&&!!new Intl.DateTimeFormat('en',{timeZone:v});}catch(_){return false;}};
   const date=v=>/^\d{4}-\d\d-\d\d$/.test(v||'')&&!Number.isNaN(Date.parse(v))&&new Date(v).toISOString().slice(0,10)===v;
   const instant=v=>typeof v==='string'&&/T.*(?:Z|[+-]\d\d:\d\d)$/.test(v)&&Number.isFinite(Date.parse(v));
@@ -32,6 +32,7 @@
     if(p.keywordMatchingVersion!==undefined&&![0,1].includes(p.keywordMatchingVersion))fail('eventRules','Invalid keyword matching mode.');
     if(p.blockers!==undefined){if(!Array.isArray(p.blockers)||p.blockers.length>10000)fail('blockers','Invalid blockers.');for(const b of p.blockers)try{ProfileRules.validateBlocker(b);}catch(e){fail('blockers',e.message);}}
     if(p.eventTreatments!==undefined&&(!Array.isArray(p.eventTreatments)||p.eventTreatments.length>20000||p.eventTreatments.some(r=>!object(r)||!['occurrence','series'].includes(r.scope)||!['auto','ignore','protected','leave'].includes(r.value)||typeof r.key!=='string'||!r.key||typeof r.seriesKey!=='string')))fail('eventTreatments','Invalid meeting rules.');
+    (typeof SlotTrips!=='undefined'?SlotTrips:require('./trips')).validateProfile(p);
     return p;
   }
   function emailEdit(existing,value,profiles,ownId){

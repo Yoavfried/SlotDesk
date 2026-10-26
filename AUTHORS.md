@@ -1,13 +1,11 @@
 # Project credits
 
-SlotDesk is a joint project by:
+SlotDesk is made by **Speedy**:
 
-- **[Yoavfried](https://github.com/Yoavfried)**
-- **[ninabanai-maker](https://github.com/ninabanai-maker)**
+- **[Nina Banai](https://github.com/ninabanai-maker)**
+- **[Yoav Fried](https://github.com/Yoavfried)**
 
-**Parent website credit: [Website name TBD].** Replace this placeholder with the agreed name and public URL when the parent website is named and available.
-
-These visible project credits complement individual Git commit attribution. The initial standalone snapshot carries the product's recorded release history; the original mixed repository history remains private.
+These project credits complement individual Git commit attribution.
 
 ## Typography and third-party materials
 
@@ -15,6 +13,8 @@ The supplied SlotDesk design kit uses VT323 and IBM Plex Mono. Keep their origin
 
 - [VT323 license](extension/fonts/LICENSE-VT323.txt)
 - [IBM Plex Mono license](extension/fonts/LICENSE-IBM-Plex-Mono.txt)
+- [DM Sans license](extension/fonts/LICENSE-DM-Sans.txt)
+- [Airport lookup data license](extension/data/LICENSE-Airports.txt) and [pinned source](design/airports-source.json)
 
 The README banner uses vector outlines from the supplied fonts so the actual wordmark renders on GitHub without an installed font. Brackets use the design's 55% opacity and the full banner uses the lime field `#D8E84A`.
 

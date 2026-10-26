@@ -1,5 +1,13 @@
 # Repository changelog
 
+## 2026-10-26 — release 0.9.5
+
+- Implement the accepted trip/flight, Alerts, live-clock and selected-icon scope; preserve legacy and portable settings.
+- Record local logic/browser/security-boundary review and fixes, including dropdown footers and calendar-scope cache isolation.
+- Credit Speedy, Nina Banai and Yoav Fried; remove website placeholders.
+- Record Outlook next, then 1.0.0 store/public-repository preparation and the pending license choice. No repository visibility or hosting change.
+
+
 ## 2026-10-26 — complete 0.9.5 product planning
 
 - Record acceptance of the final five flight decisions: outer/connection buffers, detected-flight confirmation, round-trip profile timezone edits, deletion without timezone rewind, and missing-source review.

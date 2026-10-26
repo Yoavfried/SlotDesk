@@ -1,13 +1,15 @@
 # SlotDesk changelog
 
-## Planned — 0.9.5 trips and flights
+## 0.9.5 — 26 October 2026
 
-Owner direction recorded on 26 October: standalone per-profile trip list/Add trip, sequential flights/timezone changes, non-LLM calendar matching with editable prefills, final Flight back or warned open-ended destination, and cog/flight actions. Accepted date-first entry, missing-details/local arrival estimates, arrival-based timezone changes and clear/uncertain match policy; remaining edge cases and estimation research are documented in the [trip plan](trips-0.9.5.md). This entry is planning only; current application/packages remain 0.9.4.9.
+- Add standalone Trips with ordered flights, connections, return trips, date-first calendar matching and editable local arrival estimates. Save or Discard owns the editor; no resumable flight draft is stored.
+- Apply arrival-based timezone changes, connection-only 30-minute hard margins and outer two-hour inconvenience buffers. Reconcile missed one-way arrivals while preserving later manual timezone changes and legacy settings.
+- Add Possible flight and linked-flight review Alerts. Preserve saved trips when calendar details change, disappear or cannot be checked; update only after review. Calendar appointments remain unchanged.
+- Include trip/link/history settings in portable backups and selected-profile files. Add cog/flight actions, live minute clocks and the selected C2 icon with bold brackets.
+- Fix airport-name search, dropdown/footer positioning, stale flight-review evidence and duplicate linked flight intervals found during review. Keep moved source appointments visible to scheduling until confirmed.
+- Credit Speedy, Nina Banai and Yoav Fried. Record Outlook followed by 1.0.0 publication work; remove the website placeholder. Licensing remains a later owner decision.
 
-Product planning is now complete. The owner accepted the final buffer, flight-discovery, timezone-persistence, deletion and missing-source rules. Possible flights prompt flight addition through Alerts; changed/cancelled/deleted/inaccessible linked events prompt review there while preserving the saved flight. Implementation and verification remain; final UX/release readiness is owner-led.
-
-The same release scope now includes live local clocks in New meeting participant cards without screen refresh, plus the selected toolbar/extension-list/page icon: **C2 with bold brackets only**, preserving the middle-weight SD lettering. Vector and PNG sizes are prepared; integration remains planned for 0.9.5. [Scope](roadmap.md#live-participant-clocks-and-extension-icon).
-
+[Scope and limits](release-plan-0.9.5.md) · [Validation](validation-0.9.5.json). Owner UX approval, real-provider/browser certification and extension-store publication remain separate.
 
 ## 0.9.4.9 — 26 October 2026
 

@@ -1,5 +1,10 @@
 # Implemented scheduling work
 
+## 0.9.5 — trips, flight review and minute clocks
+
+[Standalone Trips](release-plan-0.9.5.md), calendar matching/local estimates, connection blockers, arrival timezone changes, flight discovery/source-review Alerts, portable trip settings, live participant clocks and the selected extension icon are implemented. Trip actions change SlotDesk configuration, never calendar appointments. Final UX approval remains with the owner.
+
+
 ## 0.9.4.7 — advanced profiles
 
 The [agreed non-flight profile update](release-plan-0.9.4.7.md) is implemented: ordered categories and accessible help, independent Ignore rules, full ordinary-overlap ignoring, recurring/one-off blockers, opt-in keyword bubbles and a local meeting browser with occurrence/series Default, Ignore, Protect and Assign leave. New fields persist, synchronize and export/import. Legacy rules are retained. No Calendar write transport changes. The prior descriptions below are historical where they differ; travel/flight redesign remains pending owner review.

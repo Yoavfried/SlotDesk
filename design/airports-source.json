@@ -1,0 +1,18 @@
+{
+  "repository": "https://github.com/mwgg/Airports",
+  "commit": "a89e4e0dda9d9878337e2da190ebe1ef1d6af705",
+  "license": "MIT",
+  "buildDate": "2026-10-26",
+  "records": 7743,
+  "columns": [
+    "iata",
+    "name",
+    "city",
+    "state",
+    "country",
+    "timezone",
+    "latitude",
+    "longitude"
+  ],
+  "purpose": "Local route lookup and approximate duration; not a timetable"
+}

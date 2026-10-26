@@ -1,6 +1,6 @@
 # Trips and flights — 0.9.5 plan
 
-Owner direction: **26 October 2026**. Target implementation: **0.9.5**. This planning record expands the remaining flight/travel work for that release and does not change the current **0.9.4.9** application, packages or calendar data. Wider UX approval remains with the owner.
+Owner direction: **26 October 2026**. Target implementation: **0.9.5**. This record defines the accepted behavior implemented in [0.9.5](release-plan-0.9.5.md). Calendar appointments remain unchanged by trip operations. Wider UX approval remains with the owner.
 
 **Product planning complete:** the owner accepted the final five decisions on 26 October, adding Alerts as the entry point for possible-flight suggestions and linked-flight review. No further product-planning gate remains. Matching/calibration details, migration, concise helper wording, implementation and verification are agent-owned work; the owner reviews the resulting UX before release readiness is declared.
 

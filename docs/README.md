@@ -1,6 +1,6 @@
 # SlotDesk documentation
 
-Current release: **0.9.4.9**. [Scope](release-plan-0.9.4.9.md) · [Browser evidence](browser-compatibility.md) · [Owner sign-in activation](browser-signin-setup.md) · [Store requirements](extension-stores.md). Google/Vercel activation completed on 21 October, with public readiness verified true. Real new-flow Google consent remains to be checked; unsigned Firefox and Safari-source are not approved store releases.
+Current release: **0.9.5**. [Scope](release-plan-0.9.5.md) · [Browser evidence](browser-compatibility.md) · [Owner sign-in activation](browser-signin-setup.md) · [Store requirements](extension-stores.md). Google/Vercel activation completed on 21 October, with public readiness verified true. Real new-flow Google consent remains to be checked; unsigned Firefox and Safari-source are not approved store releases.
 
 | Area | Records |
 | --- | --- |
@@ -9,8 +9,8 @@ Current release: **0.9.4.9**. [Scope](release-plan-0.9.4.9.md) · [Browser evide
 | Meeting management | [Editing details/guests](meeting-editing.md), [rescheduling, alerts and overlaps](rescheduling.md) |
 | Scheduling review | [19 October ranking rules, situations and result UX](scheduling-ranking-review.md) — ranking foundations and decision history |
 | 0.9.4.5 owner review | [Meeting options rows, factual statuses and warnings](meeting-options-review-0.9.4.5.md) — full 18-category source/wording/priority table accepted; final responsive/warning UX remains owner-led |
-| Advanced-profile decision record | [Advanced profile settings](advanced-profile-review-0.9.5.md) — agreed non-flight work implemented in 0.9.4.7; remaining flight work planned for 0.9.5 |
-| 0.9.5 implementation plan | [Trips, flights, timezone changes and Alerts entry points](trips-0.9.5.md) — product planning complete; live clocks and selected icon included; ready for implementation |
+| Advanced-profile decision record | [Advanced profile settings](advanced-profile-review-0.9.5.md) — agreed non-flight work implemented in 0.9.4.7; trip work implemented in 0.9.5 |
+| 0.9.5 implementation plan | [Trips, flights, timezone changes and Alerts entry points](trips-0.9.5.md) — implemented; live clocks and selected icon included; owner UX review remains |
 | Release split | [0.9.4.5 scope and implementation checks](release-plan-0.9.4.5.md) — non-flight advanced-profile cleanup moved to 0.9.4.7; flight work remains |
 | Search controls review | [Counts, more options, exclusions and fallback controls](search-options-review-0.9.4.5.md) — implemented 20 October policy and continuing owner review |
 | Planning email | [Plain-text options email request and proposed wording](planning-email.md) — implemented local preview/copy; separate from interactive inquiries |
@@ -26,7 +26,7 @@ Current release: **0.9.4.9**. [Scope](release-plan-0.9.4.9.md) · [Browser evide
 
 Implemented means present in source. Pending validation means a stated live account/environment check remains. Planned means accepted but unfinished. Deferred means intentionally outside current development. Proposed candidates are not implementation promises.
 
-Private parent-website planning remains in its own repository. This product's placeholder parent credit is **[Website name TBD]**.
+Made by **Speedy — Nina Banai and Yoav Fried**. Next: Outlook, followed by [1.0.0 publication preparation](release-1.0.0-plan.md).
 
 ## 0.9.4.8
 

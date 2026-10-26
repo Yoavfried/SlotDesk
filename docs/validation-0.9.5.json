@@ -1,0 +1,111 @@
+{
+  "release": "0.9.5",
+  "date": "2026-10-26",
+  "applicationChecks": 2394,
+  "backendChecks": 73,
+  "calendarComparisonChecks": 22,
+  "browserAssertions": 153,
+  "axeScans": 28,
+  "axeAutomatedViolations": 0,
+  "manualAccessibilityReviewRemaining": true,
+  "testedViewportWidths": [
+    280,
+    320,
+    390,
+    514,
+    640,
+    1280
+  ],
+  "syntheticCalendarSafety": {
+    "originalAppointments": 9,
+    "unchanged": 9,
+    "creates": 0,
+    "patches": 0,
+    "deletes": 0,
+    "moves": 0,
+    "realGoogleAccountUsed": false
+  },
+  "covered": [
+    "Date-first manual and calendar-matched trip entry, Save/Discard, edit/delete, return and connections",
+    "Minute-aligned clocks and foreground catch-up without replacing participant cards",
+    "Arrival timezone precedence, delayed reconciliation, manual changes and deletion",
+    "Saved flight/connection hard blockers and outer inconvenience buffers",
+    "Pinned local airport/city search and labelled editable estimates",
+    "Changed/missing/cancelled/inaccessible flight review and candidate deduplication",
+    "HTML calendar titles rendered as text; no new script/host permissions",
+    "Legacy flights/travel, portable backups and selected-profile fields",
+    "Advanced profile rules, calendar filters and occurrence/series treatment",
+    "Core booking/edit/reschedule, keyboard focus, popup footers, zoom and light/dark reflow"
+  ],
+  "browserJourneys": [
+    {
+      "name": "journeys",
+      "assertions": 34,
+      "scans": [
+        "settings-light",
+        "calendars-light",
+        "profiles-light",
+        "profile-export-light",
+        "advanced-light",
+        "flight-light",
+        "participant-list-light",
+        "new-meeting-light",
+        "meetings-light",
+        "meeting-details-light",
+        "meeting-edit-light",
+        "settings-dark",
+        "meetings-dark",
+        "profiles-dark",
+        "advanced-dark",
+        "flight-dark",
+        "new-meeting-dark",
+        "booking-dark",
+        "alerts-dark",
+        "reschedule-dark"
+      ]
+    },
+    {
+      "name": "profile",
+      "assertions": 41,
+      "scans": [
+        "blocker-form-light",
+        "event-detection-light",
+        "profile-meetings-light",
+        "profile-reopened-light"
+      ]
+    },
+    {
+      "name": "controls",
+      "assertions": 41,
+      "scans": [
+        "profile meeting dropdowns"
+      ]
+    },
+    {
+      "name": "trips",
+      "assertions": 22,
+      "scans": [
+        "trip-editor-light",
+        "trip-editor-narrow"
+      ]
+    },
+    {
+      "name": "trip-alerts",
+      "assertions": 15,
+      "scans": [
+        "flight-alerts"
+      ]
+    }
+  ],
+  "limitations": [
+    "Local Chromium and synthetic providers do not establish live Google delivery or certification of every browser/OS.",
+    "Manual screen-reader/incomplete axe checks and owner UX approval remain open.",
+    "Arrival estimates are not flight schedules or live status.",
+    "The focused review does not replace the complete repository/history/hosted-service review required before 1.0.0.",
+    "Outlook, store publication and a public repository are subsequent work."
+  ],
+  "hostingChanged": false,
+  "googleScopesChanged": false,
+  "calendarWritersChanged": false,
+  "selectedIcon": "C2 middle-weight SD with bold brackets only"
+}

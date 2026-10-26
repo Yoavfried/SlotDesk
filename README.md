@@ -1,17 +1,20 @@
 ![SlotDesk — make room for what matters](design/assets/slotdesk-banner.svg)
 
-**0.9.4.9 · Google Calendar · private desktop-extension beta**
+**0.9.5 · Google Calendar · private desktop-extension beta**
 
-Version **0.9.4.9** automatically selects linked calendars in profile meeting management, keeps calendar choices in compact rows and replaces treatment buttons with a live dropdown showing automatic detection or manual overrides. Earlier onboarding/browser and timezone-overlay improvements remain available. [Release scope](docs/release-plan-0.9.4.9.md) · [Validation](docs/testing.md) · [Version history](docs/changelog.md). Product planning for the [0.9.5 trip-based travel redesign](docs/trips-0.9.5.md) is complete and ready for implementation, including Alerts entry points; live participant clocks and the selected extension icon are also in scope. The existing browser-independent Google service remains active; [compatibility](docs/browser-compatibility.md) and [store requirements](docs/extension-stores.md) retain their documented limits. Appointment logic and the wider UX remain open to owner review.
+Version **0.9.5** adds a separate Trips manager with date-first flight matching, editable arrival estimates, connections, return flights and timezone transitions. Flight discovery and source changes appear in Alerts for review. Participant clocks update each minute, and the selected SD icon is installed. [Release scope](docs/release-plan-0.9.5.md) · [Validation](docs/testing.md) · [Version history](docs/changelog.md).
+
+Next: **Outlook support**, followed by [1.0.0 publication preparation](docs/release-1.0.0-plan.md). Appointment logic and wider UX remain open to owner review. Current [browser compatibility](docs/browser-compatibility.md) and [store requirements](docs/extension-stores.md) retain their documented limits.
 
 SlotDesk helps executive assistants find meeting times across people, calendars and timezones. Review a new invitation, browse existing meetings, edit its details and guests, or choose a new time for an appointment. Every calendar write requires an explicit review and confirmation.
 
-Created and maintained by **[Yoavfried](https://github.com/Yoavfried)** and **[ninabanai-maker](https://github.com/ninabanai-maker)**. Part of **[Website name TBD]**. See [project credits](AUTHORS.md).
+Made by **Speedy — [Nina Banai](https://github.com/ninabanai-maker) and [Yoav Fried](https://github.com/Yoavfried)**. See [project credits](AUTHORS.md).
 
 ## What you can do
 
 - Follow three-step onboarding: selected workspace calendars, your profile and optional familiar people. Incomplete setup starts again at calendars after reopening; completed setup is retained.
 - Set up email-based profiles with searchable timezones, visible calendar mappings and direct Travel & flights access.
+- Plan multi-flight trips, connections and return flights; use effective arrival timezones and reviewed flight alerts.
 - Add email guests with a meeting-only timezone; saving a profile is optional. Automatically include profiles mapped to the organizing calendar.
 - Use independent working/convenience preferences, recurring blockers and saved or per-meeting overlap ignoring. Explicit protected time remains blocked.
 - Compare suitable times, with optional guests, comfort ranking and clear warnings when calendar coverage is incomplete.

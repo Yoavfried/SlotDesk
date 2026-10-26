@@ -1,8 +1,8 @@
 /* Dependency-free scheduling engine. Calendar creation lives in google-writer.js.
  * API and scheduling semantics: docs/products/slotdesk/engine-api.md at repo root. */
 (function(root, factory) {
-  if (typeof module === 'object' && module.exports) module.exports = factory(require('./scheduling-ranking.js'),require('./search-policy.js'),require('./profile-rules.js')); else root.SlotEngine = factory(root.SlotRanking,root.SlotSearchPolicy,root.SlotProfileRules);
-})(typeof self !== 'undefined' ? self : this, function(Ranking,Policy,ProfileRules) {
+  if (typeof module === 'object' && module.exports) module.exports = factory(require('./scheduling-ranking.js'),require('./search-policy.js'),require('./profile-rules.js'),require('./trips.js')); else root.SlotEngine = factory(root.SlotRanking,root.SlotSearchPolicy,root.SlotProfileRules,root.SlotTrips);
+})(typeof self !== 'undefined' ? self : this, function(Ranking,Policy,ProfileRules,Trips) {
   'use strict';
   const MIN = 60000, DAY3 = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], formats = new Map(), instants = new Map();
   const DEFAULTS = { work: {s:'09:00',e:'18:00'}, ok: {s:'07:00',e:'20:00'}, radius:0, notice:0 };
@@ -55,8 +55,9 @@
     return out;
   }
   function tzFor(p,t) {
-    const home=partsIn(t,p.tz).ymd,trip=(p.travel||[]).find(x=>home>=x.from&&home<=x.to);
-    return {tz:trip?trip.tz:p.tz,trip:trip||null};
+    const value=Trips.effective(p,t);if(value.trip)return value;
+    const home=partsIn(t,value.tz).ymd,trip=(p.travel||[]).find(x=>home>=x.from&&home<=x.to);
+    return trip?{tz:trip.tz,location:trip.tzLocation||null,trip}:value;
   }
   function localWindows(start,end,tz,getRules,cache) {
     const a=partsIn(start,tz).ymd,b=partsIn(end-1,tz).ymd,out=[];
@@ -98,7 +99,7 @@
     if(ev.type==='ooo'||ev.type==='leave'||eventOverride(ev,p)==='leave')intervals=subtract(intervals,(p.holidayExclusions||[]).map(x=>[startOfDay(x.from,tz),startOfDay(addDaysYmd(x.to||x.from,1),tz)]));
     return intervals;
   }
-  const eventsFor=p=>[...(p.busy||[]),...(p.flights||[]).map((f,i)=>({id:`flight-${p.id}-${f.id||i}`,start:f.departure,end:f.arrival,title:f.label||'Flight',override:'protected',type:'flight',arrivalLocation:f.arrivalLocation||'',detailsVisible:true}))];
+  const eventsFor=p=>[...(p.busy||[]).filter(ev=>!Trips.linked(p,ev,true)),...Trips.blocks(p).map((f,i)=>({id:`flight-${p.id}-${f.id||i}`,start:f.start,end:f.end,title:f.label||'Flight',override:'protected',type:'flight',arrivalLocation:f.arrivalLocation||'',detailsVisible:true}))];
   function conflictsFor(p,start,end) {
     const out=[],seen=new Set();
     for(const ev of eventsFor(p)) {
@@ -120,7 +121,7 @@
     const usual=[],explicit=[],cache=options.cache;
     const addExplicit=(s,e,kind,label)=>{if(overlap(start,end,s,e)){explicit.push([s,e]);res.timing.push({kind,label,from:new Date(s).toISOString(),to:new Date(e).toISOString(),minutes:overlap(start,end,s,e)/MIN});}};
     for(let s=start;s<end;) {
-      const home=partsIn(s,p.tz).ymd,boundary=startOfDay(addDaysYmd(home,1),p.tz),e=Math.min(end,boundary),tz=tzFor(p,s).tz,days=p.days||WEEK_MON_FRI();
+      const home=partsIn(s,p.tz).ymd,boundary=Trips.boundary(p,s,startOfDay(addDaysYmd(home,1),p.tz)),e=Math.min(end,boundary),tz=tzFor(p,s).tz,days=p.days||WEEK_MON_FRI();
       const work=localWindows(s,e,tz,wd=>days[wd]?.on?[days[wd]]:[],cache&&cache.work);
       const acceptable=localWindows(s,e,tz,wd=>{const r=days[wd];if(!p.ignoreWorkingHours&&(!r||!r.on))return [];if(p.ignoreConvenience)return [{s:'00:00',e:'24:00'}];const lim=p.limit||DEFAULTS.ok;return [{s:hhmm(p.ignoreWorkingHours?toMin(lim.s):Math.min(toMin(r.s),toMin(lim.s))),e:hhmm(p.ignoreWorkingHours?toMin(lim.e):Math.max(toMin(r.e),toMin(lim.e)))}];},cache&&cache.ok);
       if(!positive){
@@ -143,7 +144,7 @@
         if(!blocked)addExplicit(s,e,'meeting-radius',ev.detailsVisible===false?'Time around a busy appointment':'Time around '+(ev.title||'an appointment'));
       }
     }
-    for(const f of p.flights||[])for(const t of [ms(f.departure),ms(f.arrival)])addExplicit(t-120*MIN,t+120*MIN,'flight-buffer',f.label||'Flight buffer');
+    for(const b of Trips.buffers(p))addExplicit(b.from,b.to,'flight-buffer',b.label);
     for(const x of p.inconvenience||[])addExplicit(ms(x.from),ms(x.to),'manual-inconvenience',x.label||'Marked inconvenient time');
     const minutes=intervals=>merge(intervals).reduce((n,[a,b])=>n+overlap(start,end,a,b)/MIN,0);
     res.usualOutside=minutes(usual);res.explicitOutside=minutes(explicit);res.outside=minutes([...usual,...explicit]);
@@ -182,6 +183,7 @@
         if(a.tz&&!zoneValid(a.tz))err(`Invalid availability timezone for ${p.name}`);
         if((a.from&&!dateValid(a.from))||(a.to&&!dateValid(a.to))||(a.from&&a.to&&a.from>a.to)||(a.days&&(!a.days.length||a.days.some(d=>!Number.isInteger(d)||d<0||d>6))))err(`Invalid availability dates/weekdays for ${p.name}`);
       }
+      try{Trips.validateProfile(p);}catch(error){err(error.message+' ('+p.name+')');}
       for(const tr of p.travel||[])if(!dateValid(tr.from)||!dateValid(tr.to)||tr.from>tr.to||!zoneValid(tr.tz))err(`Invalid travel dates/timezone for ${p.name}`);
       const trips=[...(p.travel||[])].sort((a,b)=>a.from.localeCompare(b.from));if(trips.some((x,i)=>i&&x.from<=trips[i-1].to))err(`Travel ranges overlap for ${p.name}`);
       for(const x of p.holidayExclusions||[])if(!dateValid(x.from)||!dateValid(x.to||x.from)||x.from>(x.to||x.from))err(`Invalid leave exclusion for ${p.name}`);

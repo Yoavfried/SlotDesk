@@ -1,5 +1,7 @@
 # Distribution and publication decisions
 
+The [1.0.0 plan](release-1.0.0-plan.md) records the latest owner direction: finish 0.9.5, implement Outlook, then prepare store publication, the public repository and licensing.
+
 ## 0.9.4.6 store preparation
 
 See the [per-store readiness table](extension-stores.md) for Chrome, Edge, Firefox listed/unlisted, Safari and Opera. Generated packages are development/beta artifacts, not approved listings. [Browser evidence](browser-compatibility.md) and [Google activation](browser-signin-setup.md) are separate records. No public visibility change or publisher-account purchase is authorized by this release.
@@ -13,7 +15,7 @@ The repository is private and the product is an approved Google Calendar Chrome 
 - Complete applicable Google OAuth/distribution approval and target-organization requirements.
 - Review source, history, screenshots and downloadable artifacts for credentials or private data before public publication. Keep the intentionally public extension/OAuth identifiers distinct from secrets.
 - Choose and record the project-wide public software license. Preserve existing third-party/font license texts.
-- Replace **[Website name TBD]** with the agreed parent website credit and public URL when available.
+- Credit **Speedy**, **Nina Banai** and **Yoav Fried**, without a website link or placeholder. Add real extension-listing links once published.
 - Keep privacy/storage/data-retention statements accurate for the actual architecture. Any backend, email access, LLM or cloud backup requires updated decisions and disclosures.
 - Make the repository public only after an explicit owner decision.
 

@@ -1,5 +1,12 @@
 # SlotDesk validation record
 
+## 26 October — 0.9.5
+
+**2,394 application checks**, **73 backend checks** and **22 calendar-comparison checks** pass. The trip module adds 91 checks covering timezone precedence, delayed arrivals, connections and Ignore rules, legacy/portable settings, airport lookup, flight-source review and virtual-clock updates.
+
+Five local browser journeys pass **153 assertions** and **28 axe scans** without automated violations. They cover the trip lifecycle and Alerts, escaped calendar titles, live clocks, profile rules/meeting controls, core booking/edit/reschedule, popup footers, focus, light/dark modes and 280–1280px layouts. All nine synthetic baseline appointments remain unchanged, with zero Calendar writes. No real Google sign-in or invitation is used. Manual/incomplete accessibility checks and final owner UX assessment remain open. [Machine-readable evidence](validation-0.9.5.json) · [Release scope](release-plan-0.9.5.md).
+
+
 ## 26 October — sidebar layout hotfix
 
 The [focused sidebar journey](../scripts/accessibility/sidebar-layout.js) passes 83 assertions across 220/254/280/318/320/360/390/490/514/760/1280px: full-width header, fixed wordmark size, no control collisions, contained home-card content, scrollbar below the header and stable navigation/action positions. Narrow/wide dark screenshots were inspected. Existing general accessibility, new-meeting and updated search-scroll journeys pass another 95 assertions, totaling **178 browser assertions**. The search journey now tests the actual workspace scroll container, including result clicks, timezone keyboard navigation and append-only batches.

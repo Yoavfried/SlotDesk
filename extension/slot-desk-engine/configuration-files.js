@@ -1,6 +1,6 @@
 (function(root,factory){if(typeof module==='object'&&module.exports)module.exports=factory(require('./workspace-model'),require('./profile-configuration'));else root.SlotConfigurationFiles=factory(root.SlotWorkspace,root.SlotProfileConfiguration);})(typeof self!=='undefined'?self:this,function(U,C){
   'use strict';
-  const clone=C.clone,version='0.9.4.9',columns=C.fields.map(k=>k==='tz'?'timezone':k).concat('constraints');
+  const clone=C.clone,version='0.9.5',columns=C.fields.map(k=>k==='tz'?'timezone':k).concat('constraints');
   const settingKeys=['from','to','anchor','anchorLocation','duration','step','spacingMode','want','perDay','perDayMode','minDuration','extendDays','dateChoice','defaultCalendar','defaultCalendarSelected','calendarScopeConfirmed','workspaceCalendarIds','meetingsCalendars','meetingsCalendarLabels','meetingsFrom','meetingsTo','meetingsTimezone','meetingsTimezoneLocation','dismissSuggestions'];
   const defaults=p=>({...U.newProfile(p.email,p.name,p.tz),calendarLabels:{},eventRules:{},ruleTerms:{},airportRule:true});
   function safe(value){if(value&&typeof value==='object')for(const key of Object.keys(value)){if(['__proto__','constructor','prototype'].includes(key))throw new Error('The file contains an unsupported field.');safe(value[key]);}return value;}
@@ -20,11 +20,12 @@
     if(file.rows.some(row=>!Array.isArray(row)||row.length!==file.columns.length))throw new Error('Each profile row must have a value for every column.');
     return {file,people:file.rows.map((row,index)=>{const get=k=>row[file.columns.indexOf(k)];return {index,email:String(get('email')||''),name:String(get('name')||get('email')||'Unnamed profile')};})};
   }
+  const requireTrips=()=>typeof SlotTrips!=='undefined'?SlotTrips:require('./trips');
   function readProfiles(file,selected){
     const missing=columns.filter(k=>!['email','timezone','name'].includes(k)&&!file.columns.includes(k)),warnings=missing.length?['Missing settings use this version’s defaults: '+missing.join(', ')+'.']:[],seen=new Set(),profiles=[],rules=[];
     for(const index of selected){const row=file.rows[index];if(!row)throw new Error('Choose valid profile rows.');const values=Object.fromEntries(file.columns.map((k,i)=>[k,row[i]])),email=U.emailKey(values.email),name=typeof values.name==='string'&&values.name.trim()?values.name.trim():email,p=defaults({email,name,tz:values.timezone});
       if(seen.has(email))throw new Error('The selected file rows contain more than one profile for '+email+'.');seen.add(email);
-      for(const key of C.fields){const publicKey=key==='tz'?'timezone':key;if(file.columns.includes(publicKey)){if(key!=='tzLocation'||values[publicKey]!==null)p[key]=clone(values[publicKey]);}}if(!file.columns.includes('eventDetectionEnabled'))p.eventDetectionEnabled=true;if(!file.columns.includes('keywordMatchingVersion'))p.keywordMatchingVersion=0;p.email=email;p.name=name;p.id='person:'+email;
+      for(const key of C.fields){const publicKey=key==='tz'?'timezone':key;if(file.columns.includes(publicKey)){if(key!=='tzLocation'||values[publicKey]!==null)p[key]=clone(values[publicKey]);}}if(!file.columns.includes('eventDetectionEnabled'))p.eventDetectionEnabled=true;if(!file.columns.includes('keywordMatchingVersion'))p.keywordMatchingVersion=0;p.email=email;p.name=name;p.id='person:'+email;if(!file.columns.includes('tripSchemaVersion')){p.tripSchemaVersion=0;requireTrips().migrate(p);}
       try{C.checkProfile(p);}catch(error){throw new Error((name||email)+': '+error.message);}
       const items=file.columns.includes('constraints')?values.constraints:[];if(!Array.isArray(items))throw new Error(name+': time rules must be a list.');rules.push(...items.map(c=>({...constraint(c),who:p.id})));profiles.push(p);
     }return {profiles,rules,warnings};
