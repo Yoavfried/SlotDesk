@@ -40,8 +40,8 @@ The backend admission fix is source-complete but has not been redeployed. The ex
 
 - Complete the focused main-controller/rendering security review after these fixes and verify the final package/source snapshot.
 - Verify production secrets/log redaction, actual insert-only database privileges, retention/removal process and distributed abuse controls.
-- Review the exact name-prefill/registration/update data flow against public Google and store policies; publish a matching privacy notice and real support contact.
-- Approve a software license, prepare publisher accounts/identities, register exact callbacks, complete Google verification, and test native install/update/sign-in on all three browsers.
+- Review the exact name-prefill/registration/update data flow against public Google and store policies; publish a matching privacy notice. The owner supplied support@buildwithspeedy.com and https://buildwithspeedy.com; the public privacy URL and domain/mail delivery verification remain separate.
+- Approve a software license, prepare publisher accounts/identities, register exact callbacks, complete Google verification, and test native install/update/sign-in on all three browsers. The support email and website have been supplied by the owner.
 - Obtain final owner UX/publication approval. Add actual store links and mark 1.0.0 only when all selected listings are live.
 
 [Submission kit and owner steps](store-kit/README.md) · [Release plan](release-1.0.0-plan.md).

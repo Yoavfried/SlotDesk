@@ -28,10 +28,14 @@ Chrome and Edge record the confirmed onboarding name, email, timezone, browser a
 
 Made by Speedy, Nina Banai and Yoav Fried.
 
+Website: https://buildwithspeedy.com
+
+Support: support@buildwithspeedy.com
+
 ## Source-code destination
 
 Use `https://github.com/Yoavfried/SlotDesk` once the owner has approved public visibility and the license. Do not promise an open-source license until adopted. Add live store links to the repository only after they exist.
 
 ## Fields pending owner setup
 
-Public support address and privacy-policy URL are required preparation items. Complete publisher identity/contact fields with real details in each dashboard. Do not submit this draft with missing fields.
+Use support@buildwithspeedy.com in support/contact email fields and https://buildwithspeedy.com in website/homepage fields for Chrome, Edge and Firefox. The privacy-policy URL still needs confirmation; do not substitute the homepage unless it actually hosts the notice. Complete publisher identity/contact fields with real details in each dashboard. Do not submit this draft with missing fields.

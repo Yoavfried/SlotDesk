@@ -1,5 +1,10 @@
 # Repository changelog
 
+## 2026-10-26 — approved Speedy website and support contact
+
+- Link https://buildwithspeedy.com and support@buildwithspeedy.com in project credits, support/privacy pages and extension-platform preparation materials.
+- Supersede the earlier no-website direction with the owner's supplied domain. Keep actual store listings and the public privacy-page URL pending; preserve existing prerelease assets and private visibility.
+
 ## 2026-10-26 — 1.0.0 preparation / 0.9.5.1
 
 - Target Chrome, Edge and Firefox for 1.0.0; defer Outlook until afterward.

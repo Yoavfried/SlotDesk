@@ -1,5 +1,11 @@
 # SlotDesk changelog
 
+## 26 October 2026 — support and website metadata
+
+- Record the owner-supplied support address, support@buildwithspeedy.com, and website, https://buildwithspeedy.com.
+- Add repository credits/contact links, extension Help/privacy contact routes and manifest homepage metadata; update Chrome, Edge and Firefox listing drafts.
+- Clear the pending support-address setup item. The exact public privacy URL remains open. No product-version bump or replacement of existing release assets is made; these source updates belong in the next packaged build.
+
 ## 0.9.5.1 — 26 October 2026
 
 - Prepare Chrome, Edge and Firefox for 1.0.0; defer Outlook until afterward. Public 1.0.0 still requires live listings and final approval.

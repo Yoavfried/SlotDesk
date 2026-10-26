@@ -15,7 +15,7 @@ The repository is private and the product is an approved Google Calendar Chrome 
 - Complete applicable Google OAuth/distribution approval and target-organization requirements.
 - Review source, history, screenshots and downloadable artifacts for credentials or private data before public publication. Keep the intentionally public extension/OAuth identifiers distinct from secrets.
 - Choose and record the project-wide public software license. Preserve existing third-party/font license texts.
-- Credit **Speedy**, **Nina Banai** and **Yoav Fried**, without a website link or placeholder. Add real extension-listing links once published.
+- Credit **Speedy**, **Nina Banai** and **Yoav Fried**, with [buildwithspeedy.com](https://buildwithspeedy.com) as the approved website and [support@buildwithspeedy.com](mailto:support@buildwithspeedy.com) as support. Add real extension-listing links once published.
 - Keep privacy/storage/data-retention statements accurate for the actual architecture. Any backend, email access, LLM or cloud backup requires updated decisions and disclosures.
 - Make the repository public only after an explicit owner decision.
 

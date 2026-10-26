@@ -10,7 +10,9 @@ Next: [1.0.0 publication preparation](docs/release-1.0.0-plan.md) for Chrome, Ed
 
 SlotDesk helps executive assistants find meeting times across people, calendars and timezones. Review a new invitation, browse existing meetings, edit its details and guests, or choose a new time for an appointment. Every calendar write requires an explicit review and confirmation.
 
-Made by **Speedy — [Nina Banai](https://github.com/ninabanai-maker) and [Yoav Fried](https://github.com/Yoavfried)**. See [project credits](AUTHORS.md).
+Made by **[Speedy](https://buildwithspeedy.com) — [Nina Banai](https://github.com/ninabanai-maker) and [Yoav Fried](https://github.com/Yoavfried)**. See [project credits](AUTHORS.md).
+
+[Website](https://buildwithspeedy.com) · [Support](mailto:support@buildwithspeedy.com).
 
 ## What you can do
 

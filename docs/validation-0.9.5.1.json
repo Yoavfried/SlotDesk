@@ -31,7 +31,10 @@
     "sourceRevision": "1496e64043d5db6abbaaf7c5e06de7578c0bb7e2",
     "coverage": "partial",
     "fullyAuditedPaths": 52,
-    "findings": {"medium": 1, "low": 2},
+    "findings": {
+      "medium": 1,
+      "low": 2
+    },
     "sourceFixesApplied": 3,
     "independentPostFixAuditComplete": false,
     "backendFixDeployed": false
@@ -46,9 +49,12 @@
   },
   "storeListingsLive": false,
   "googleProductionApprovalVerified": false,
-  "publicSupportContactSet": false,
+  "publicSupportContactSet": true,
   "projectLicenseAdopted": false,
   "repositoryMadePublic": false,
   "ownerUxApprovalComplete": false,
-  "outlook": "after 1.0.0"
+  "outlook": "after 1.0.0",
+  "supportEmail": "support@buildwithspeedy.com",
+  "website": "https://buildwithspeedy.com",
+  "contactDetailsSource": "Owner supplied on 2026-10-26; delivery/domain verification not asserted"
 }

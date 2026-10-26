@@ -1,9 +1,11 @@
 # Project credits
 
-SlotDesk is made by **Speedy**:
+SlotDesk is made by **[Speedy](https://buildwithspeedy.com)**:
 
 - **[Nina Banai](https://github.com/ninabanai-maker)**
 - **[Yoav Fried](https://github.com/Yoavfried)**
+
+Support: [support@buildwithspeedy.com](mailto:support@buildwithspeedy.com).
 
 These project credits complement individual Git commit attribution.
 

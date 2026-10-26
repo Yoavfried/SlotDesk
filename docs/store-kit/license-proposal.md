@@ -6,4 +6,4 @@ After owner approval and confirmation of ownership/contribution rights, install 
 
 MIT allows source use, modification, distribution and commercial/proprietary combinations while retaining its notice. A future larger product can apply different terms to code the team owns and has not already licensed that way. Recipients retain rights to already distributed MIT-covered versions; changing later versions does not retract those rights. MIT does not grant rights to project names, logos or other trademarks. [License permissions and conditions](https://choosealicense.com/licenses/mit/).
 
-The public README should state the adopted license plainly and link to LICENSE only once it exists. No website or invented platform links should be added.
+The public README should state the adopted license plainly and link to LICENSE only once it exists. Use https://buildwithspeedy.com as the approved website; do not invent platform links.

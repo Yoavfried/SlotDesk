@@ -8,9 +8,9 @@ Prepared 26 October 2026 for Chrome Web Store, Microsoft Edge Add-ons and Firefo
 - [Owner publication steps](owner-steps.md)
 - [License proposal](license-proposal.md)
 
-Use the approved C2 icon in [the icon assets](../../design/assets/icons/README.md), the real wordmark and synthetic-data screenshots. Never upload private calendars or screenshots showing real personal data. Store screenshots must match the submitted build. Do not insert invented listing URLs or a website link in the repository.
+Use the approved C2 icon in [the icon assets](../../design/assets/icons/README.md), the real wordmark and synthetic-data screenshots. Never upload private calendars or screenshots showing real personal data. Store screenshots must match the submitted build. Use [buildwithspeedy.com](https://buildwithspeedy.com) as the approved website. Do not invent listing URLs.
 
-The public support email, public privacy URL, publisher accounts/identities, Google public OAuth verification and signed/native-browser validation remain open. Final user-experience approval belongs to the owner. The partial security audit identified three issues addressed in this preparation build; it is not exhaustive security clearance. See [review evidence](../release-readiness-review.md).
+Support is [support@buildwithspeedy.com](mailto:support@buildwithspeedy.com), and the website is [buildwithspeedy.com](https://buildwithspeedy.com). The public privacy URL, publisher accounts/identities, Google public OAuth verification and signed/native-browser validation remain open. Final user-experience approval belongs to the owner. The partial security audit identified three issues addressed in this preparation build; it is not exhaustive security clearance. See [review evidence](../release-readiness-review.md).
 
 ## Media
 
