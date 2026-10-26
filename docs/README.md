@@ -30,3 +30,7 @@ Private parent-website planning remains in its own repository. This product's pl
 ## 0.9.4.8
 
 [Release scope](release-plan-0.9.4.8.md) · [Evidence](validation-0.9.4.8.json) · [Lead/browser rules](leads-table.md) · [Icon proposals awaiting selection](../design/proposals/extension-icon/README.md).
+
+## 0.9.4.9
+
+[Profile meeting controls](release-plan-0.9.4.9.md) · [Validation](validation-0.9.4.9.json).

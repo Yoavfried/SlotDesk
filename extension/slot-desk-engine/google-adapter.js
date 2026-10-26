@@ -52,6 +52,19 @@
         attendees:Math.max(1,others.length),external:!!home&&others.some(a=>domain(a.email)&&domain(a.email)!==home),recurring:!!ev.recurringEventId,recurringEventId:ev.recurringEventId});
     }return out;
   }
+  // Use the same normalization/classification as scheduling; automatic display
+  // must not turn a detected state into a saved manual override.
+  function eventTreatment(ev,p={},calendar={}){
+    const event={...ev,calendarId:calendar.id||ev.calendarId||''},manual=ProfileRules.treatment(event,p);
+    const labels={ignore:'Ignore',protected:'Protect',leave:'Assign leave',soft:'Flexible (saved rule)',movable:'Movable (saved rule)'};
+    if(manual.value!=='auto')return {value:manual.value,label:labels[manual.value]||'Default',automatic:false};
+    const source=fromGoogle({items:[ev],accessRole:calendar.accessRole||'reader',timeZone:calendar.timeZone||p.tz},p.email,{...p,calendarId:event.calendarId,timeZone:calendar.timeZone||p.tz,leaveCalendar:(p.leaveCalendarIds||[]).includes(event.calendarId)});
+    let kind='';
+    if(source.busy.length){const category=E.classify(source.busy[0],{...p,calendar:source.calendar}).category;kind=['leave','own-leave'].includes(category)?'leave':['protected','own-inferred'].includes(category)?'protected':category==='soft'?'flexible':'';}
+    else if(source.skipped['all-day marker (review)'])kind='all-day note';
+    else if(source.complete)kind='ignored';
+    return {value:'auto',label:'Default'+(kind?' — '+kind:''),automatic:true};
+  }
   function mergeCalendars(sources){
     const busy=new Map(),markers=new Map(),coverages=[],errors=[];
     for(const s of sources){
@@ -71,5 +84,5 @@
     for(const [re,tz,label] of [[/\bnew york\b|\bus eastern\b/i,'America/New_York','New York / US Eastern'],[/\blondon\b/i,'Europe/London','London'],[/\btokyo\b/i,'Asia/Tokyo','Tokyo'],[/\bjerusalem\b|\btel aviv\b/i,'Asia/Jerusalem','Jerusalem / Tel Aviv'],[/\bsingapore\b/i,'Asia/Singapore','Singapore'],[/\bsydney\b/i,'Australia/Sydney','Sydney']])if(re.test(text||''))suggestions.push({tz,source:`Recognized place/region: ${label}`});
     return [...new Map(suggestions.map(s=>[s.tz,s])).values()];
   }
-  return {fromGoogle,mergeCalendars,profileFromCalendar,timezoneSuggestions};
+  return {fromGoogle,eventTreatment,mergeCalendars,profileFromCalendar,timezoneSuggestions};
 });

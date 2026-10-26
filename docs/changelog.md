@@ -1,5 +1,14 @@
 # SlotDesk changelog
 
+## 0.9.4.9 — 26 October 2026
+
+- Profile Manage meetings starts with all linked calendars selected. Adding/removing a mapping updates the list immediately; reopening the section starts with all linked calendars. Refresh/date changes preserve deliberate filters, and selection changes reuse cached meetings.
+- Calendar checkboxes and names share a row in profile meeting management, Existing meetings and workspace selection. Long names truncate with ellipses and expose the full name on hover. Calendar dropdowns and timezone triggers also expose their complete selected labels.
+- Replace Default/Ignore/Protect/Assign leave buttons with one treatment dropdown. Automatic states display Default — leave/protected/flexible/ignored/all-day note as applicable, using the scheduling adapter/classifier. Detection and calendar all-day leave changes update it live without creating manual overrides. Explicit treatments, legacy rules and occurrence/series behavior remain intact.
+
+Validation: **2,299 application checks**, **73 backend checks**, **22 calendar-comparison checks**, **82 synthetic browser assertions** and **five axe scans** without automated violations. Manual/incomplete accessibility review remains open. Nine original synthetic appointments remain unchanged with zero calendar writes. No hosting or OAuth changes. [Scope](release-plan-0.9.4.9.md) · [Evidence](validation-0.9.4.9.json).
+
+
 ## 0.9.4.8 — 26 October 2026
 
 - Record every completed onboarding as a separate lead, even with an existing email. Save a reported browser label and an internal onboarding UUID; retry the same submission without adding another row. Preserve historical leads and older queued registrations. Update the onboarding/privacy notice.

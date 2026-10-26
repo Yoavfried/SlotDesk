@@ -22,6 +22,22 @@ for(const [ignoreWorkingHours,ignoreConvenience,usual,band]of [[false,false,15,'
 p=person({ignoreConvenience:true});eq(E.fitPerson(p,time('23:00'),time('23:15')).band,'stretch');eq(E.fitPerson({...p,ignoreWorkingHours:true},time('23:00'),time('23:15')).band,'ok');
 const raw={calendarId:'c',timeZone:'UTC',items:[{id:'e',summary:'holiday',start:{date:day},end:{date:'2026-11-04'}}]};eq(G.fromGoogle(raw,p.email,p).busy.length,0);eq(G.fromGoogle(raw,p.email,{...p,eventDetectionEnabled:true}).busy.length,1);
 p.eventTreatments=R.apply(p,{...raw.items[0],calendarId:'c'},'occurrence','leave');let normalized=G.fromGoogle(raw,p.email,p);eq(normalized.busy[0].type,'leave');eq(normalized.busy[0].override,'leave');p.eventTreatments=R.apply(p,{...raw.items[0],calendarId:'c'},'occurrence','ignore');eq(G.fromGoogle(raw,p.email,p).busy.length,0);
+// The meeting-treatment dropdown reports the effective automatic state without
+// writing an override; changes to detection/calendar rules stay live.
+const cal={id:'c',timeZone:'UTC',accessRole:'owner'},plain={id:'auto-event',summary:'Project review',start:{dateTime:day+'T09:00:00Z'},end:{dateTime:day+'T10:00:00Z'}},allDay={...plain,summary:'Office closed',start:{date:day},end:{date:'2026-11-04'}},detector=person({eventDetectionEnabled:true});
+eq(G.eventTreatment(plain,detector,cal),{value:'auto',label:'Default',automatic:true});
+eq(G.eventTreatment({...plain,summary:'Doctor'},detector,cal).label,'Default — protected');
+eq(G.eventTreatment({...plain,summary:'Doctor'},{...detector,eventDetectionEnabled:false},cal).label,'Default');
+eq(G.eventTreatment({...allDay,summary:'Annual leave'},detector,cal).label,'Default — leave');
+eq(G.eventTreatment(allDay,{...detector,eventDetectionEnabled:false},cal).label,'Default — all-day note');
+eq(G.eventTreatment(allDay,{...detector,eventDetectionEnabled:false,leaveCalendarIds:['c']},cal).label,'Default — leave');
+eq(G.eventTreatment({...plain,eventType:'outOfOffice'},person(),cal).label,'Default — leave');
+eq(G.eventTreatment({...plain,summary:'Tentative hold'},detector,cal).label,'Default — flexible');
+eq(G.eventTreatment({...plain,transparency:'transparent'},detector,cal).label,'Default — ignored');
+eq(G.eventTreatment({...plain,attendees:[{email:detector.email,responseStatus:'declined'}]},detector,cal).label,'Default — ignored');
+for(const value of ['ignore','protected','leave']){const manual={...detector,eventTreatments:R.apply(detector,{...allDay,calendarId:'c'},'occurrence',value)};eq(G.eventTreatment(allDay,manual,cal).value,value);eq(G.eventTreatment(allDay,{...manual,eventDetectionEnabled:false,leaveCalendarIds:['c']},cal).value,value);}
+const autoReset={...detector,eventTreatments:R.apply(detector,{...allDay,calendarId:'c'},'occurrence','auto'),leaveCalendarIds:['c']};eq(G.eventTreatment(allDay,autoReset,cal).label,'Default — leave');eq(autoReset.eventTreatments.at(-1).value,'auto','Displaying detected leave does not save a manual assignment');
+eq(G.eventTreatment(plain,{...detector,eventOverrides:{'c|auto-event':'soft'}},cal).value,'soft','Legacy saved flexibility remains visible');
 let old={profiles:[{...person(),eventDetectionEnabled:undefined,keywordMatchingVersion:undefined,ruleTerms:{protect:'sensitive'}}],settings:{}};U.migrate(old,'a@example.test');eq(old.profiles[0].eventDetectionEnabled,true);eq(old.profiles[0].keywordMatchingVersion,0);
 p=person({blockers:[one],eventTreatments:R.apply(person(),event,'series','leave'),keywordCategories:['soft']});C.checkProfile(p);checks++;const state={profiles:[p],constraints:[],settings:{ownProfileId:p.id}},file=F.exportFile(state,{theme:'light',clock:'24',dateFormat:'dmy'},[p.id]);const imported=F.prepare({file,selected:[0],current:{profiles:[],constraints:[],settings:{}},fresh:{profiles:[],constraints:[],settings:{}},epoch:'x'}).state.profiles[0];eq(imported.blockers,[one]);eq(imported.eventTreatments,p.eventTreatments);eq(imported.eventDetectionEnabled,false);eq(imported.keywordCategories,['soft']);throws(()=>C.checkProfile({...p,eventTreatments:[{scope:'series',key:'x',value:'delete',seriesKey:'x'}]}));
 const M=require('./meeting-management'),S=require('./participant-status');

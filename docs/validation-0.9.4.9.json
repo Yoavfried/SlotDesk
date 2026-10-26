@@ -1,0 +1,48 @@
+{
+  "release": "0.9.4.9",
+  "date": "2026-10-26",
+  "applicationChecks": 2299,
+  "backendChecks": 73,
+  "calendarComparisonChecks": 22,
+  "browserAssertions": 82,
+  "axeScans": 5,
+  "axeAutomatedViolations": 0,
+  "manualAccessibilityReviewRemaining": true,
+  "testedViewportWidths": [
+    280,
+    320,
+    390,
+    514,
+    1280
+  ],
+  "syntheticCalendarSafety": {
+    "originalAppointments": 9,
+    "unchanged": 9,
+    "creates": 0,
+    "patches": 0,
+    "deletes": 0,
+    "moves": 0,
+    "realGoogleAccountUsed": false
+  },
+  "covered": [
+    "All assigned calendars selected initially, after linking and on reentry",
+    "Manual calendar filter persists through refresh and uses cache",
+    "Unlinking updates available choices",
+    "Horizontal rows and full-name tooltips in profile/Existing meetings/workspace calendar lists",
+    "Native organizing-calendar hover label",
+    "Detection on/off updates automatic protection",
+    "Calendar all-day leave setting updates automatic leave",
+    "Manual overrides survive detection/calendar rule changes",
+    "Default restores current automatic classification",
+    "This occurrence and Entire series retain last-action-wins behavior",
+    "Legacy saved rules remain visible"
+  ],
+  "limitations": [
+    "Chromium fixture checks do not certify every browser.",
+    "Owner UX approval and flight redesign remain open.",
+    "Icon proposals remain uninstalled."
+  ],
+  "hostingChanged": false,
+  "googleScopesChanged": false,
+  "schedulingRulesChanged": false
+}

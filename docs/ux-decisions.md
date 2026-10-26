@@ -224,3 +224,9 @@ Timezone selection remains a closed list, searched through local city/country na
 The owner chose one lead for every completed onboarding, including repeats of the same email, with a browser column. Retries of the same completion stay idempotent; old rows stay intact. Browser labels use only exposed branding, without a full UA/version or fingerprint. [Current contract](leads-table.md). Timezone suggestions overlay following controls and never enlarge their parent popup; dismiss on leaving the picker. Apply the shared component to every timezone control.
 
 Prepare both SD and bracketed SD in actual VT323 on a square lime field. **Selection and implementation remain pending**; do not wire favicon/toolbar/store icons yet. [Proposal comparison](../design/proposals/extension-icon/compare.html).
+
+## 26 October — profile calendar lists and meeting-state dropdown
+
+Select every linked calendar when entering profile Manage meetings and after linked assignments change. Preserve active filtering through refresh/date changes; filters use cached events. Keep checkbox and calendar name on one row at every width, truncate long names and offer full names on hover across calendar lists and closed choices.
+
+Use one single-choice treatment dropdown instead of four buttons. Default shows its effective automatic category and updates with Event detection or linked-calendar all-day leave settings. Displaying detection does not create an explicit override. Manual Ignore/Protect/Assign leave and occurrence/series precedence retain their existing behavior. [Implemented scope](release-plan-0.9.4.9.md).

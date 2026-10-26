@@ -228,3 +228,7 @@ The [accessibility record](accessibility.md) and [structured report](accessibili
 2,280 application checks, 73 backend checks and 22 calendar-comparison checks pass. The focused timezone journey covers 17 contexts, including narrow new profiles, flight return legs, reschedule guests and final invitation review: 121 assertions. The existing keyboard/accessibility journey adds 36 assertions and 20 scans; the open-overlay scan adds one more. No automated axe violations; incomplete/manual items remain. All nine synthetic appointments remain unchanged with zero calendar writes.
 
 Database migration testing on an expiring branch verifies preserved historical fields, same-email separate onboarding, retry preservation and the actual insert-only role. Production migration preserves the original fields/count. Public checks deliberately reject input; they create no leads. [Evidence](validation-0.9.4.8.json) · [Service activation](registration-deployment.md). Actual browser branding may be hidden or spoofed; native Vivaldi/Firefox/Safari certification is not implied by local Chromium checks.
+
+## 0.9.4.9 — profile meeting controls
+
+2,299 app, 73 backend and 22 calendar-comparison checks pass. The existing profile/recurrence journey has 41 assertions and four axe scans; the new mapping/detection/row journey adds 41 assertions and one scan. No automated axe violations; manual/incomplete findings remain. All nine original synthetic appointments remain unchanged, with zero Calendar writes. [Evidence](validation-0.9.4.9.json).
