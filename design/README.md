@@ -38,6 +38,6 @@ DM Sans is bundled from the [official Google Fonts source](https://github.com/go
 
 Use DM Sans 14px for the participant identity/status row: name at 600, city/time at 400, one 20px drawn calendar icon, and a separate factual reason. Keep the logo, IBM Plex Mono eyebrow and established headline roles unchanged. In narrow windows, truncate name/city with full focusable labels and keep compact time text visible. A different local date appears beside the time; full dates, years and zone transitions are available in accessible detail. The shared one-row contract is checked at 320–1280px in 24-/12-hour modes, including future dates. Owner visual approval remains separate.
 
-## Extension icon proposals — awaiting selection
+## Selected extension icon — planned for 0.9.5
 
-[SD and bracketed SD](proposals/extension-icon/README.md) use the actual outlined VT323 glyphs, full lime square, dark ink and 55% brackets. Size exports are prepared; toolbar/favicon/store wiring remains unimplemented pending owner selection.
+The owner chose **C2 with bold brackets only** from the [nine-design matrix](proposals/extension-icon/README.md): compact bracketed SD, middle-weight letters and original/bold bracket contours. Preserve the full lime square, dark ink, 55% bracket opacity, dimensions and spacing. The [selected SVG](assets/slotdesk-icon.svg) and [raster sizes](assets/icons/README.md) are prepared. Toolbar, extension-list and favicon integration is planned for 0.9.5; store publication is a separate task.

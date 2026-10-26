@@ -223,11 +223,11 @@ Timezone selection remains a closed list, searched through local city/country na
 
 The owner chose one lead for every completed onboarding, including repeats of the same email, with a browser column. Retries of the same completion stay idempotent; old rows stay intact. Browser labels use only exposed branding, without a full UA/version or fingerprint. [Current contract](leads-table.md). Timezone suggestions overlay following controls and never enlarge their parent popup; dismiss on leaving the picker. Apply the shared component to every timezone control.
 
-Prepare both SD and bracketed SD in actual VT323 on a square lime field. **Selection and implementation remain pending**; do not wire favicon/toolbar/store icons yet. [Proposal comparison](../design/proposals/extension-icon/compare.html).
+The initial review prepared SD and bracketed SD in actual VT323 on a square lime field, without changing the installed icon. The expanded comparison and final choice are recorded below; integration targets 0.9.5. [Proposal comparison](../design/proposals/extension-icon/compare.html).
 
 The owner requested slimmer icon lettering after comparing it with the extension wordmark. Revised native-vector proposals retain the VT323 shapes, lime/ink colors and bracket opacity while thinning their outlines; the comparison includes previous/revised samples and toolbar sizes. This does not select or install an icon.
 
-The owner then requested shipping the icon with 0.9.5 and a third layout between A and B. C uses intermediate-sized SD letters and narrower brackets. The final review request is all three layouts at three stroke weights: original, middle and slim, yielding nine options A1–C3 in the [matrix](../design/proposals/extension-icon/compare.html). Keep layout/colors fixed across each row and change only stroke thickness. Final selection remains pending. Store publication is not required for a bundled toolbar, extension-list or page icon.
+The owner then requested shipping the icon with 0.9.5 and a third layout between A and B. C uses intermediate-sized SD letters and narrower brackets. The final review compared all three layouts at original, middle and slim stroke weights, yielding nine options A1–C3. The owner selected **C2, with only the brackets made bold**. Keep C2's middle-weight SD letters and compact geometry, use the original/bold bracket contours, and preserve colors and 55% bracket opacity. The [selected asset set](../design/assets/icons/README.md) is prepared; integration remains planned for 0.9.5. Store publication is not required for a bundled toolbar, extension-list or page icon.
 
 ## 26 October — profile calendar lists and meeting-state dropdown
 

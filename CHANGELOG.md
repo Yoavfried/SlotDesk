@@ -1,5 +1,10 @@
 # Repository changelog
 
+## 2026-10-26 — select C2 with bold brackets
+
+- Record the owner's final icon choice: C2 middle-weight SD lettering with original/bold brackets, unchanged layout/colors/opacity.
+- Prepare the canonical vector and nine PNG sizes for 0.9.5 integration. No current runtime/package change.
+
 ## 2026-10-26 — nine-option icon matrix
 
 - Present all three layouts at original, middle and slim stroke weights, with SVGs, raster size exports and stable A1–C3 selection labels.

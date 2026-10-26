@@ -2,9 +2,15 @@
 
 Prepared 26 October 2026 for owner selection. **No proposal is installed.**
 
-## Current review: nine designs
+## Selected: C2 lettering with bold brackets
 
-The owner requested all three layouts at all three stroke weights: original, halfway between, and slim. The [live comparison](compare.html) and [matrix image](comparison-matrix.png) show all nine with stable cell IDs. Final selection is by cell, such as C2; no layout or weight is selected yet.
+On 26 October the owner chose the bottom-middle matrix cell, C2, with **only the brackets made bold**. Keep the C2 middle-weight SD lettering, compact layout, dimensions, spacing, lime/ink colors and 55% bracket opacity. Use the original/bold bracket contours from C1 rather than the middle-weight bracket contours. This is a mixed-weight final icon, not an unmodified matrix cell.
+
+Canonical [selected vector](../../assets/slotdesk-icon.svg), [256px preview](../../assets/icons/slotdesk-256.png) and [raster export set](../../assets/icons/README.md). Selection is complete; integration remains planned for 0.9.5.
+
+## Reference: nine designs
+
+The owner requested all three layouts at all three stroke weights: original, halfway between, and slim. The [comparison](compare.html) and [matrix image](comparison-matrix.png) retain all nine with stable cell IDs. The final choice above supersedes the selection-pending status of those earlier previews.
 
 | Layout | 1 · Original | 2 · Middle | 3 · Slim |
 | --- | --- | --- | --- |
@@ -27,6 +33,6 @@ All three start from the outlined VT323 glyphs in the existing [brand banner](..
 
 Original [SD](sd.svg), [bracketed SD](bracket-sd.svg) and [comparison](comparison.png) remain for reference. Revised PNG exports are provided at 16, 32, 48, 128 and 1024 pixels. Inspect both the browser-rendered native-size samples and raster exports before choosing an option; small-size legibility remains part of owner review.
 
-**0.9.5 scope:** the owner requested shipping the selected icon in 0.9.5. Final selection remains pending from the nine-cell matrix. Prepare/inspect the needed PNG sizes and wire toolbar, extension-manager and extension-page/favicon references in that release; store publication is not a prerequisite. Keep listing artwork and store-specific requirements as a separate distribution task. No manifest or installed icon is changed by these proposals.
+**0.9.5 scope:** ship the chosen C2-lettering/bold-bracket icon. PNG exports are prepared; wire toolbar, extension-manager and extension-page/favicon references in that release. Store publication is not a prerequisite. Keep listing artwork and store-specific requirements as a separate distribution task. No manifest or installed icon is changed by this design selection.
 
 C retains the same slimmer glyph contours, colors and bracket opacity. Its letter scale lies between A and B; only its brackets have a narrower horizontal proportion. C has PNG exports at 16, 24, 32, 48, 128 and 1024 pixels.
