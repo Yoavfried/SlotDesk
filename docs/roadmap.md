@@ -1,14 +1,14 @@
 # SlotDesk roadmap
 
-Updated 22 October 2026. Status reflects agreed scope, not a promise of public availability. The broader website remains on hold.
+Updated 26 October 2026. Status reflects agreed scope, not a promise of public availability. The broader website remains on hold.
 
 ## Current release
 
-**0.9.4.7** implements the agreed non-flight [advanced profile update](release-plan-0.9.4.7.md). Travel/flight entry, logic, detection, settings and helper wording remain the next owner-led planning task. Broader UX readiness remains the owner's decision.
+**0.9.4.9** adds the [profile meeting controls](release-plan-0.9.4.9.md), following the 0.9.4.8 leads/browser and timezone-overlay update and 0.9.4.7 non-flight advanced-profile work. The owner targets the remaining trip/flight redesign for **0.9.8**; see [Trips and flights](trips-0.9.8.md). That plan is not implemented. Broader UX readiness remains the owner’s decision.
 
 The 22 October same-version hotfix implements the owner's [revised selection and fallback order](search-selection-2026-10-22.md): exactly three groups, earliest equally suitable starts, one representative per date for longer ranges, up to two featured clear fallbacks before three in-range compromises, and stable scrolling. Browser-based storage remains acceptable; cloud sync remains unconfirmed future feature DF11.
 
-Version **0.9.4.6** adds the [desktop compatibility implementation](release-plan-0.9.4.6.md), with [activation](browser-signin-setup.md), per-target evidence and [remaining store work](extension-stores.md) documented. The prior **0.9.4.5** implements the authorized [new-meeting update](release-plan-0.9.4.5.md): automatic alternatives and batching, compact factual rows, friendly zones, planning-email text and grouped overlap review. The existing onboarding, profile/calendar scope, live configuration, backup/import, connection recovery and reviewed calendar writes remain. The five-field onboarding leads service is deployed and configured for the private pilot. See [version history](changelog.md) and [validation](testing.md).
+Version **0.9.4.6** adds the [desktop compatibility implementation](release-plan-0.9.4.6.md), with [activation](browser-signin-setup.md), per-target evidence and [remaining store work](extension-stores.md) documented. The prior **0.9.4.5** implements the authorized [new-meeting update](release-plan-0.9.4.5.md): automatic alternatives and batching, compact factual rows, friendly zones, planning-email text and grouped overlap review. The existing onboarding, profile/calendar scope, live configuration, backup/import, connection recovery and reviewed calendar writes remain. The per-onboarding leads service, including browser labels and retry identifiers, is deployed and configured for the private pilot. See [version history](changelog.md) and [validation](testing.md).
 
 The existing [implemented work](implemented.md), [accepted UX](ux-decisions.md), reviewed calendar writes, management, profiles and design language remain. No new real Google or email-delivery verification is claimed by this update.
 
@@ -38,7 +38,11 @@ This release may apply the agreed scheduling semantics to existing saved default
 
 ## 0.9.5 — advanced profile settings
 
-The owner moved the agreed non-flight advanced-profile work into **0.9.4.7** and authorized implementation. That portion is complete; [the decision record](advanced-profile-review-0.9.5.md) retains the accepted details. **Travel and flight review/fixes remain unfinished**: entry process, meeting logic, detection, settings and helper wording. Do not implement the remaining flight redesign or declare the wider UX ready until the owner finishes that review and authorizes it.
+The owner moved the agreed non-flight advanced-profile work into **0.9.4.7** and authorized implementation. That portion is complete; [the decision record](advanced-profile-review-0.9.5.md) retains the accepted details. The owner moved the remaining **trip/flight redesign to 0.9.8** on 26 October. Entry process, meeting logic, detection, settings and helper wording are now tracked in the [trip plan](trips-0.9.8.md), with its pending timing/matching decisions. The historical 0.9.5 record is not a current flight milestone. Wider UX approval remains owner-led.
+
+## 0.9.8 — Trips and flights
+
+The owner’s [trip-based direction](trips-0.9.8.md) replaces standalone flight/travel rows with a separate manager for each profile: trip list, Add trip, sequential flight legs, non-LLM calendar matching and editable destination-prefill, final Flight back, and warned open-ended destination timezones. Remove travel from advanced profile settings and add cog/flight actions in profile management and New meeting. Exact flight intervals, transition timing and matching confirmation are being settled before implementation. No runtime/package change is made by this planning update.
 
 ## Browser compatibility — 0.9.4.6 implemented foundation
 

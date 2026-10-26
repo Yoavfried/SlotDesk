@@ -230,3 +230,9 @@ Prepare both SD and bracketed SD in actual VT323 on a square lime field. **Selec
 Select every linked calendar when entering profile Manage meetings and after linked assignments change. Preserve active filtering through refresh/date changes; filters use cached events. Keep checkbox and calendar name on one row at every width, truncate long names and offer full names on hover across calendar lists and closed choices.
 
 Use one single-choice treatment dropdown instead of four buttons. Default shows its effective automatic category and updates with Event detection or linked-calendar all-day leave settings. Displaying detection does not create an explicit override. Manual Ignore/Protect/Assign leave and occurrence/series precedence retain their existing behavior. [Implemented scope](release-plan-0.9.4.9.md).
+
+## 26 October — trip-based travel redesign targeted for 0.9.8
+
+The owner’s [trip plan](trips-0.9.8.md) uses a separate per-profile popup with trip list/Add trip; each trip is sequential flights plus timed timezone changes. Match entered flights against accessible linked calendars independently of general detection, using no LLM; inferred destination values stay editable. Support connections, a final Flight back with prefilled home timezone, and saving without return with a warning that destination timezone continues until manually corrected. Saved trips can be deleted locally. Remove Travel & flights from Edit profile’s advanced settings; use cog/flight actions in New meeting and icon-plus-text actions that become icon-only in narrow Manage profiles.
+
+Departure/arrival requirements, exact timezone transition timing and automatic/ambiguous matching policy are pending owner answers. Preserve Save/Discard forms without resumable flight/trip drafts. This documentation update does not implement 0.9.8, alter current packages or declare the flight/overall UX review complete.

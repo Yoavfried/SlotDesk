@@ -1,5 +1,12 @@
 # Repository changelog
 
+## 2026-10-26 — plan trip-based travel for 0.9.8
+
+- Record the owner’s trip list, sequential flights/timezones, calendar-assisted entry, Flight back/open-ended behavior and separate manager/icon direction.
+- Move remaining flight planning from the historical 0.9.5 record to 0.9.8. Audit profile entry points and list pending timing/matching/edge-case decisions.
+- Documentation only; runtime, versioned packages and calendar data remain unchanged.
+
+
 ## 2026-10-26 — SlotDesk 0.9.4.9
 
 - Select linked profile calendars automatically and synchronize changed mappings.
