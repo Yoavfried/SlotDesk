@@ -1,5 +1,10 @@
 # Repository changelog
 
+## 2026-10-26 — add 0.9.5 live clocks and icon scope
+
+- Plan minute-by-minute participant local-time updates without rerendering the screen or requesting calendars.
+- Include final icon integration in 0.9.5, before store publication; add the requested intermediate C proposal for owner selection. Runtime remains 0.9.4.9.
+
 ## 2026-10-26 — refine icon proposals and trip decisions
 
 - Prepare slimmer SD and bracketed SD vector/raster proposals, keeping originals for comparison; icon selection and installation remain pending.

@@ -227,6 +227,8 @@ Prepare both SD and bracketed SD in actual VT323 on a square lime field. **Selec
 
 The owner requested slimmer icon lettering after comparing it with the extension wordmark. Revised native-vector proposals retain the VT323 shapes, lime/ink colors and bracket opacity while thinning their outlines; the comparison includes previous/revised samples and toolbar sizes. This does not select or install an icon.
 
+The owner then requested shipping the icon with 0.9.5 and a third option between A and B. C uses intermediate-sized SD letters and narrower brackets, keeping the colors and slimmer contours. Final selection remains pending. Store publication is not required for a bundled toolbar, extension-list or page icon.
+
 ## 26 October — profile calendar lists and meeting-state dropdown
 
 Select every linked calendar when entering profile Manage meetings and after linked assignments change. Preserve active filtering through refresh/date changes; filters use cached events. Keep checkbox and calendar name on one row at every width, truncate long names and offer full names on hover across calendar lists and closed choices.
@@ -240,3 +242,7 @@ The owner’s [trip plan](trips-0.9.5.md) uses a separate per-profile popup with
 The owner accepted departure-date-first entry and calendar lookup. Ask only for missing departure time and departure/destination cities or airports, then offer an editable estimated arrival. Switch timezone on arrival; auto-link a clear calendar match and ask about uncertain/multiple ones. The [research and remaining decisions](trips-0.9.5.md) separate local geographic estimates from real schedules; timezone differences alone cannot determine duration. Preserve Save/Discard forms without resumable flight/trip drafts. This documentation update does not implement 0.9.5, alter current packages or declare the flight/overall UX review complete.
 
 For connections, block 30 minutes after arrival and 30 minutes before the next departure; the remaining layover can support meetings under the other rules. Changed calendar flight details require an alert and confirmation. During an active trip the flight timeline wins over manual profile timezone edits, without changing the displayed profile timezone field. After the final non-return arrival, change that field to the destination; a return trip does not automatically change it. Manual edits after the last arrival take priority. Show the active-trip notice near the profile timezone only until the final arrival. Persistence/deletion edge cases and buffer/helper details remain in the trip plan for review.
+
+## 26 October — live local time in New meeting, planned for 0.9.5
+
+The owner reported that participant cards freeze text such as “Accra, Ghana · 09:13 now.” Update those local clocks every minute without a screen refresh, and catch up when the workspace becomes visible again. Target only the clock/location text, preserve fields/focus/scroll/card order, use effective trip timezones and the chosen clock format, and do not trigger Google reads or rerun the meeting search. See the [0.9.5 scope](roadmap.md#live-participant-clocks-and-extension-icon). This behavior is planned, not implemented by the documentation change.
