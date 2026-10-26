@@ -1,5 +1,18 @@
 # SlotDesk changelog
 
+## 0.9.5.1 — 26 October 2026
+
+- Prepare Chrome, Edge and Firefox for 1.0.0; defer Outlook until afterward. Public 1.0.0 still requires live listings and final approval.
+- Make registration analysis sharing optional in Firefox only, with separate updates consent, native permission requests, saved opt-out and revocation checks. Chrome/Edge behavior remains.
+- Reject unsafe legacy imported matching expressions and guard already stored rules; retain supported generated patterns and keyword matching.
+- Strip transient trip-editor fields from imported/saved flights and escape the occurrence attribute.
+- Prevent invalid/varying origins from exhausting shared sign-in admission; preserve per-client limits.
+- Preserve the sign-in endpoint when reconfiguring lead intake. Correct stale backend/token and raw recovery-export disclosures.
+- Prepare listing/declaration/reviewer drafts, synthetic media, MIT proposal and consolidated owner publication steps. Support contact, license adoption, native-browser/provider checks and public publication remain open.
+
+[Review evidence and limits](release-readiness-review.md) · [Store kit](store-kit/README.md).
+
+
 ## 0.9.5 — 26 October 2026
 
 - Add standalone Trips with ordered flights, connections, return trips, date-first calendar matching and editable local arrival estimates. Save or Discard owns the editor; no resumable flight draft is stored.

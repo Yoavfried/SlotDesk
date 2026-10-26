@@ -1,6 +1,6 @@
 # Distribution and publication decisions
 
-The [1.0.0 plan](release-1.0.0-plan.md) records the latest owner direction: finish 0.9.5, implement Outlook, then prepare store publication, the public repository and licensing.
+The [1.0.0 plan](release-1.0.0-plan.md) records the latest owner direction: finish 0.9.5, prepare Chrome/Edge/Firefox publication, the public repository and licensing, then return to Outlook after 1.0.0.
 
 ## 0.9.4.6 store preparation
 

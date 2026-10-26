@@ -6,7 +6,7 @@ The same hosting project also provides `api/google.mjs`, backed by the testable 
 
 Run `npm run test:backend` at the repository root. Set up hosting through [the single owner guide](../docs/browser-signin-setup.md). `GET /api/google?op=status` returns `ready:false` until all required variables are configured. Never deploy `.env`, private OAuth secrets, test credentials or calendar exports. See [security](../docs/security.md) for boundaries and wider-rollout limits.
 
-This optional server component stores the [leads record](../docs/leads-table.md). It never receives Google tokens or calendar content. The Chrome app remains usable when submission is unavailable, keeping the original registration queued locally.
+The registration intake stores the [leads record](../docs/leads-table.md). The intake does not receive Calendar content or store Google tokens. A separate sign-in function on the same hosting project exchanges and refreshes Google credentials; tokens transit that function and are not stored in Neon. The Chrome app remains usable when submission is unavailable, keeping the original registration queued locally.
 
 ## Activation status
 

@@ -5,11 +5,14 @@
   const zone=v=>{try{return typeof v==='string'&&!!v&&!!new Intl.DateTimeFormat('en',{timeZone:v});}catch(_){return false;}};
   const end=trip=>Date.parse(trip.flights.at(-1).arrival),start=trip=>Date.parse(trip.flights[0].departure);
   const live=p=>(p.trips||[]).filter(t=>!t.legacy&&t.flights?.length);
+  const flightFields=['id','departure','arrival','departureZone','arrivalZone','label','departureLocation','arrivalLocation','departureZoneLocation','arrivalZoneLocation','from','to','connection','returnFlight','estimated','link','legacyIndex'];
+  function savedFlight(f){return Object.fromEntries(flightFields.filter(k=>f[k]!==undefined).map(k=>[k,copy(f[k])]));}
   function validate(trip){
     if(!trip||typeof trip!=='object'||typeof trip.id!=='string'||!trip.id||typeof trip.name!=='string'||trip.name.length>300||!Array.isArray(trip.flights)||!trip.flights.length||trip.flights.length>100)throw new Error('Add at least one flight to this trip.');
     if(!zone(trip.originZone)||typeof trip.originLocation!=='string')throw new Error('Choose the trip’s departure location and timezone.');
     const ids=new Set();let previous=null;
     for(const f of trip.flights){
+      for(const key of Object.keys(f||{}))if(!flightFields.includes(key))delete f[key];
       if(!f||typeof f.id!=='string'||!f.id||ids.has(f.id))throw new Error('Each flight must have its own identity.');ids.add(f.id);
       if(!instant(f.departure)||!instant(f.arrival)||Date.parse(f.arrival)<=Date.parse(f.departure)||!zone(f.departureZone)||!zone(f.arrivalZone))throw new Error('Check departure and arrival dates, times and timezones.');
       if(previous&&Date.parse(f.departure)<Date.parse(previous.arrival))throw new Error('The next flight must depart after the previous flight arrives.');
@@ -100,5 +103,5 @@
     }
     return alerts;
   }
-  return {MIN,validate,validateProfile,migrate,active,effective,manual,reconcile,flights,blocks,buffers,boundary,linked,hints,observe,signature,eventKey,copy,zone};
+  return {MIN,validate,validateProfile,savedFlight,migrate,active,effective,manual,reconcile,flights,blocks,buffers,boundary,linked,hints,observe,signature,eventKey,copy,zone};
 });

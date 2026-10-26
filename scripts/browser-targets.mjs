@@ -12,7 +12,7 @@ export function browserManifest(base,target) {
   if(target==='firefox') {
     manifest.sidebar_action={default_title:'SlotDesk',default_panel:'index.html'};
     manifest.browser_specific_settings={gecko:{id:FIREFOX_ID,strict_min_version:'140.0',
-      data_collection_permissions:{required:['authenticationInfo','personallyIdentifyingInfo','personalCommunications']}}};
+      data_collection_permissions:{required:['authenticationInfo','personallyIdentifyingInfo','personalCommunications'],optional:['technicalAndInteraction']}}};
   } else if(target==='safari-source') {
     manifest.permissions=manifest.permissions.filter(p=>p!=='identity');
     manifest.description='SlotDesk source preparation for Safari. Google authentication requires an Apple-platform integration.';

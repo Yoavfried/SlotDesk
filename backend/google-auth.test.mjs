@@ -43,4 +43,9 @@ const preflight=await ff.handler(new Request('https://slotdesk-leads.vercel.app/
 eq((await ff.handler(new Request(callbackUrl,{method:'DELETE',headers:{Origin:moz}}))).status,405);
 const oversized=await ff.handler(new Request('https://slotdesk-leads.vercel.app/api/google?op=start',{method:'POST',headers:{Origin:moz,'Content-Type':'application/json'},body:JSON.stringify({value:'x'.repeat(17000)})}));eq(oversized.status,413);
 const limited=fixture();for(let i=0;i<60;i++)await limited.request('start',{returnUri,challenge});eq((await limited.request('start',{returnUri,challenge})).status,429);
+const saturation=fixture();for(let i=0;i<300;i++)await saturation.request('start',{},'moz-extension://00000000-0000-4000-8000-'+i.toString(16).padStart(12,'0'));
+eq((await saturation.request('start',{returnUri,challenge})).status,200,'Invalid varying origins never exhaust unrelated sign-in admission');
+const rotating=fixture();for(let i=0;i<60;i++)await rotating.request('start',{returnUri,challenge},'moz-extension://00000000-0000-4000-8000-'+i.toString(16).padStart(12,'0'));
+eq((await rotating.request('start',{returnUri,challenge})).status,429,'Changing an Origin does not reset the same client budget');
+const diverse=fixture();for(let i=0;i<300;i++)assert.equal((await diverse.handler(new Request('https://slotdesk-leads.vercel.app/api/google?op=start',{method:'POST',headers:{Origin:origin,'Content-Type':'application/json','x-real-ip':'2001:db8::'+i.toString(16)},body:JSON.stringify({returnUri,challenge})}))).status,200,'New valid clients remain admitted after bounded eviction');checks++;
 console.log(checks+' Google OAuth broker checks passed; synthetic credentials and mocked provider only.');

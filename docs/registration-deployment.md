@@ -4,7 +4,7 @@
 
 The existing SlotDesk service was updated to **one lead per completed onboarding**, with a bounded browser label and retry UUID. Migration 002 is applied to the production `slotdesk.public.leads` table. Its original fields and row count were unchanged across migration; historical browser values are Unknown. The intake account retains INSERT and has no SELECT/UPDATE/DELETE.
 
-- Production deployment: `dpl_5WaFGZxjQxxTRxkFW9deZkJrUxjX`, READY at the existing `slotdesk-leads.vercel.app` alias.
+- Production deployment: READY at the existing `slotdesk-leads.vercel.app` alias.
 - Backend source: `421265be36e4c6a22a133925db53ab967e8a9321`, eight explicit runtime/lock/config files, no local credentials.
 - Expiring test branch: `onboarding-browser-migration-2026-10-26`, expiry 27 October 2026, 09:30 UTC. Original five values survived migration; insert-only-role tests stored two separate onboardings for one synthetic email and preserved both after a retry.
 - Public checks: status 200/ready:true, allowed preflight 204, reads 405, invalid current-format payload 400, unrelated origin 403. No valid contact was submitted to production for verification.
@@ -14,13 +14,13 @@ Older five-field clients remain supported. This supersedes the original email-un
 
 ## Original activation evidence
 
-Original activation: 15 October 2026 for the private 0.9.0 preview. The table and evidence below describe that activation. The release at that stage was 0.9.4.6. The owner completed [Google/Vercel activation](browser-signin-setup.md); production redeployment `dpl_8Ln2uogLSpikGfw9qRqi1vzXdUUe` is READY. A public check on 21 October returned HTTP 200 with `ready:true`, version 0.9.4.6 and flow authorization-code. This confirms configuration readiness, not a completed Google sign-in. The earlier initial broker deployment was `dpl_32tLxkfrtKXPmetpJiuMCRvqeHzQ`, before these values were configured. Invalid intake input still returns 400; no lead was inserted during the 21 October checks.
+Original activation: 15 October 2026 for the private 0.9.0 preview. The table and evidence below describe that activation. The release at that stage was 0.9.4.6. The owner completed [Google/Vercel activation](browser-signin-setup.md); production redeployment is recorded as READY. A public check on 21 October returned HTTP 200 with `ready:true`, version 0.9.4.6 and flow authorization-code. This confirms configuration readiness, not a completed Google sign-in. An earlier broker deployment preceded that configuration. Invalid intake input still returns 400; no lead was inserted during the 21 October checks.
 
 | Component | Configuration |
 | --- | --- |
 | Public intake | `https://slotdesk-leads.vercel.app/api/leads` |
 | Vercel project | `slotdesk-leads`, Yoavfried team, Node.js 24, Frankfurt |
-| Deployment | `dpl_936T22uVMazeuUBmU2NcjinFp2pH` |
+| Deployment | Historical production deployment, verified on the recorded date |
 | Reviewed backend source | `6f5a5c9a437827fce469814d50d63aaaf6ca38e5`, directory `backend/` |
 | Private database | SlotDesk Neon project, `main` branch, `slotdesk` database, `public.leads` |
 | Application login | `slotdesk_ingest`: INSERT only on the leads table |

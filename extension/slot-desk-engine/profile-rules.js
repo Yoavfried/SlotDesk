@@ -25,10 +25,28 @@
   const escape=v=>v.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
   const words=value=>String(value??'').split(',').map(v=>v.trim()).filter(Boolean);
   const pattern=value=>{const terms=words(value);return terms.length?'(?:^|[^\\p{L}\\p{N}_])(?:'+terms.map(v=>escape(v).replace(/\s+/g,'\\s+')).join('|')+')(?=$|[^\\p{L}\\p{N}_])':'(?!)';};
+  // Older exports contain generated regexes. Accept their finite literal
+  // alternatives and the exact historical helpers, never arbitrary programs.
+  function safeLegacy(value){
+    if(value instanceof RegExp)value=value.source;
+    if(typeof value!=='string'||value.length>10000||value.split('|').length>200)return false;
+    if(value==='(?!)')return true;
+    let rest=value.split('(?!)').join('NEVER').split('\\b[A-Z]{3}\\s*>\\s*[A-Z]{3}\\b').join('AIRPORT')
+      .split('do not (schedule|book|move)').join('DO NOT')
+      .split('pick ?up').join('PICK UP').split('catch ?up on').join('CATCH UP')
+      .split('^\\s*hold\\b').join('HOLD');
+    for(let i=0;i<rest.length;i++){
+      if(rest[i]==='\\'){const next=rest[++i];if(!next||!('bB\\.*+?^${}()|[]'.includes(next)))return false;}
+      else if('.*+?{}()[]'.includes(rest[i]))return false;
+    }
+    try{new RegExp(value,'i');return true;}catch(_){return false;}
+  }
   function detects(p,key,title,legacy){
     if(p.eventDetectionEnabled===false)return false;
     if(p.keywordMatchingVersion===1||(p.keywordCategories||[]).includes(key)){if(key==='protect'&&p.airportRule!==false&&/\b[A-Z]{3}\s*>\s*[A-Z]{3}\b/.test(title||''))return true;return new RegExp(pattern(p.ruleTerms?.[key]??defaults[key]),'iu').test(title||'');}
-    const value=p.eventRules?.[key]??legacy;if(value===undefined)return false;const regex=value instanceof RegExp?value:new RegExp(value,'i');regex.lastIndex=0;return regex.test(title||'');
+    const value=p.eventRules?.[key]??legacy;if(value===undefined)return false;
+    if(!safeLegacy(value))throw new Error('This profile has an unsupported older event rule. Update its Event detection keywords before searching.');
+    const regex=new RegExp(value instanceof RegExp?value.source:value,'i');return regex.test(String(title||'').slice(0,4096));
   }
   const date=v=>/^\d{4}-\d\d-\d\d$/.test(v||'')&&Number.isFinite(Date.parse(v))&&new Date(v).toISOString().slice(0,10)===v;
   const clock=v=>/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(v||'');
@@ -49,5 +67,5 @@
     }return null;
   }
   const active=(b,today)=>!b.to||(b.recurring&&!b.allDay&&b.e<b.s?new Date(Date.parse(b.to)+86400000).toISOString().slice(0,10):b.to)>=today;
-  return {defaults,words,pattern,detects,eventKey,seriesKey,override,treatment,apply,validateBlocker,blocked,active};
+  return {defaults,words,pattern,safeLegacy,detects,eventKey,seriesKey,override,treatment,apply,validateBlocker,blocked,active};
 });

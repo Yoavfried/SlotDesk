@@ -121,13 +121,16 @@ export function createGoogleBroker({clientId, clientSecret, secret, callbackUrl,
       }
       if(!allowedOrigin(origin))return json({error:'ORIGIN_NOT_ALLOWED'},403);
       if(request.method!=='POST')return json({error:'METHOD_NOT_ALLOWED'},405);
-      const bucket=createHash('sha256').update(origin+'|'+(request.headers.get('x-real-ip') || '')).digest('hex'),time=now();
+      const bucket=createHash('sha256').update(request.headers.get('x-real-ip') || 'unknown-client').digest('hex'),time=now();
       for(const [id,value]of budgets)if(value.until<=time)budgets.delete(id);
-      if(!budgets.has(bucket)){if(budgets.size>=256)throw fail('AUTH_RATE_LIMIT',429);budgets.set(bucket,{count:0,until:time+60000});}
-      if(++budgets.get(bucket).count>60)throw fail('AUTH_RATE_LIMIT',429);
+      function admit(){
+        if(!budgets.has(bucket)){if(budgets.size>=256)budgets.delete(budgets.keys().next().value);budgets.set(bucket,{count:0,until:time+60000});}
+        if(++budgets.get(bucket).count>60)throw fail('AUTH_RATE_LIMIT',429);
+      }
       const body=await boundedJson(request);
       if(op==='start') {
         fields(body,['returnUri','challenge']);if(!validReturn(body.returnUri) || !CHALLENGE.test(body.challenge || ''))throw fail('AUTH_RETURN_NOT_ALLOWED');
+        admit();
         const state=seal({v:1,returnUri:body.returnUri,challenge:body.challenge,origin,expires:time+TRANSACTION_MS},'ticket');
         const launch=new URL(callback.href);launch.searchParams.set('op','authorize');launch.searchParams.set('state',state);launch.searchParams.set('redirect_uri',body.returnUri);
         return json({state,launchUrl:launch.href});
@@ -135,12 +138,14 @@ export function createGoogleBroker({clientId, clientSecret, secret, callbackUrl,
       if(op==='exchange') {
         fields(body,['state','code','verifier']);const ticket=open(body.state,'ticket');verify(ticket,body.verifier,origin);
         if(typeof body.code!=='string' || !body.code || body.code.length>4096 || /\s/.test(body.code))throw fail('INVALID_REQUEST');
+        admit();
         const data=await google({code:body.code,code_verifier:body.verifier,redirect_uri:callback.href,grant_type:'authorization_code'});
         return json(credentials(data,{...ticket,expires:time+SESSION_MS}));
       }
       if(op==='refresh' || op==='registration') {
         fields(body,op==='refresh'?['session','verifier']:['session','verifier','record']);
         const session=open(body.session,'session');verify(session,body.verifier,origin);
+        admit();
         if(op==='registration') {
           if(typeof register!=='function')throw fail('REGISTRATION_UNAVAILABLE',503);
           const result=await register(body.record);return result instanceof Response?new Response(result.body,{status:result.status,headers:{...headers,'Content-Type':'application/json'}}):json({accepted:true},202);

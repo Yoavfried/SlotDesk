@@ -1,0 +1,54 @@
+{
+  "version": "0.9.5.1",
+  "date": "2026-10-26",
+  "status": "private-release-preparation",
+  "applicationChecks": 2440,
+  "backendChecks": 76,
+  "calendarComparisonChecks": 22,
+  "endpointConfigurationChecks": 5,
+  "browserAssertions": 44,
+  "automatedAccessibilityScans": 3,
+  "automatedAccessibilityViolations": 0,
+  "syntheticCalendarWrites": 0,
+  "unchangedBaselineAppointments": 9,
+  "firefoxConsent": {
+    "optionalSharing": true,
+    "separateUpdatesChoice": true,
+    "firstOnboarding": true,
+    "permissionDenialAndRevocation": true,
+    "queuedRecordPermissionCheck": true,
+    "apiEnvironment": "Firefox permission APIs mocked in Chromium",
+    "nativeFirefoxTested": false
+  },
+  "firefoxLint": {
+    "errors": 0,
+    "warnings": 77,
+    "dynamicHtmlReviewWarnings": 76,
+    "androidMinimumVersionWarnings": 1,
+    "androidSupportClaimed": false
+  },
+  "securityReview": {
+    "sourceRevision": "1496e64043d5db6abbaaf7c5e06de7578c0bb7e2",
+    "coverage": "partial",
+    "fullyAuditedPaths": 52,
+    "findings": {"medium": 1, "low": 2},
+    "sourceFixesApplied": 3,
+    "independentPostFixAuditComplete": false,
+    "backendFixDeployed": false
+  },
+  "historyHygiene": {
+    "commits": 83,
+    "textBlobs": 1135,
+    "method": "common credential patterns and external email domain search",
+    "actualCredentialEstablished": false,
+    "exhaustive": false,
+    "historyRewritten": false
+  },
+  "storeListingsLive": false,
+  "googleProductionApprovalVerified": false,
+  "publicSupportContactSet": false,
+  "projectLicenseAdopted": false,
+  "repositoryMadePublic": false,
+  "ownerUxApprovalComplete": false,
+  "outlook": "after 1.0.0"
+}

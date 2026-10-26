@@ -1,22 +1,24 @@
 # Contributing to SlotDesk
 
-Use Node.js 18 or later. The application and development scripts require no third-party npm packages.
+SlotDesk is made by Speedy, Nina Banai and Yoav Fried. See [credits](AUTHORS.md).
 
-## Before submitting a change
+Before proposing a feature, read the [roadmap](docs/roadmap.md), [UX decisions](docs/ux-decisions.md) and [scheduling decisions](docs/scheduling-decisions.md). Discuss changes to scheduling semantics or user-facing flows before implementing them. Final UX acceptance belongs to the product owners.
+
+Use Node 22 for the checks run by CI:
 
 ```sh
 npm test
+npm run test:backend
 npm run test:calendar-kit
+npm run test:release
 npm run check
 npm run package:slotdesk
 ```
 
-Record user-visible behavior in [UX decisions](docs/ux-decisions.md) or [scheduling decisions](docs/scheduling-decisions.md). Distinguish implemented, pending live validation, planned and deliberately deferred work. Update [product versions](docs/changelog.md) only for a product release; use the [repository changelog](CHANGELOG.md) for repository-only changes.
+The extension has no dependency-install or frontend build step. The hosted registration function has its own dependencies in `backend/`. Use synthetic fixtures for development. Never commit credentials, real calendar exports or personal screenshots. Existing appointment changes must retain explicit review, account/target/version validation and duplicate-safe recovery.
 
-Follow the [design guide](design/README.md). Use the bundled VT323 wordmark without a separate background tile; lime fills the whole header. Preserve font licenses.
+Keep focused changes, meaningful validation and accurate documentation/changelog entries. Preserve the approved design assets and font/data licenses. Report vulnerabilities through [the security guidance](SECURITY.md).
 
-Calendar writes must remain explicit and reviewed. Creation and time-only rescheduling have separate allowlisted writers. Preserve account, role, event identity, recurrence, version, concurrency and same-operation recovery checks. Do not add deletion, calendar moves or automatic changes to other meetings without a new accepted scope and validation.
+Follow the [design guide](design/README.md): keep the VT323 wordmark without a separate background tile and let lime fill the header. Distinguish implemented, planned and deferred decisions. Product releases belong in [the product changelog](docs/changelog.md); repository-only changes belong in [the repository changelog](CHANGELOG.md). Do not add appointment deletion, calendar moves or automatic changes to other meetings without a new accepted scope and validation. Mocked results do not establish real invitation delivery, provider recurrence behavior or work-account readiness; record controlled live evidence separately.
 
-Use synthetic data in tests and screenshots. Do not commit exports, access tokens, OAuth client secrets, private keys or workplace event details. The pinned Chrome extension key and OAuth client ID are public identifiers, not secrets.
-
-Mocked checks do not establish real Google invitation delivery, recurrence behavior or work-account readiness. Record controlled live results separately in [testing](docs/testing.md). Public distribution and a project-wide license remain pending decisions.
+A project-wide public software/contribution license has not been adopted yet. Public contribution terms must be settled with the license before accepting outside code for the open-source release.

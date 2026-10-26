@@ -77,7 +77,7 @@ The sealed scan report remains a local audit artifact. This product record summa
 
 The owner reports working basic creation, No-response alerts, sensible replacement proposals, a successful actual reschedule and correct overlap details. Automated/source evidence remains separate from those reports. Unperformed live edge cases are not described as passed.
 
-Work-account access depends on the organization allowing the extension and requested Google scopes/data handling. The current product has no backend or cloud settings database. A protected browser/device remains necessary for locally stored workplace information.
+Work-account access depends on the organization allowing the extension and requested Google scopes/data handling. The product uses hosted sign-in and registration functions, with Neon storing lead records. It has no cloud settings database. Calendar operations go directly to Google; OAuth credentials transit the sign-in function. A protected browser/device remains necessary for locally stored workplace information.
 
 The earlier dense-calendar creation/export comparison preserved all 1,013 original event components and added exactly one reviewed event. No new export was provided after the reported reschedule, so this record does not claim independently verified post-reschedule preservation of every existing event. Raw evidence remains outside Git.
 

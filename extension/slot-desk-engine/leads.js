@@ -18,9 +18,20 @@
     value.browser=browser;return value;
   }
   function prepare(state,profile,updates,at){if(state.settings.leadRegistration)return state.settings.leadRegistration;const value=record(profile,updates,at);state.settings.leadRegistration={record:value,status:'pending'};return state.settings.leadRegistration;}
+  function sharing(api){
+    let manifest={};try{manifest=api?.runtime?.getManifest?.()||{};}catch(_){}
+    const optional=!!manifest.browser_specific_settings?.gecko?.data_collection_permissions?.optional?.includes('technicalAndInteraction');
+    const permission={data_collection:['technicalAndInteraction']};
+    return {optional,
+      allowed:async()=>{if(!optional)return true;try{return (await api.permissions.getAll()).data_collection?.includes('technicalAndInteraction')===true;}catch(_){return false;}},
+      request:async()=>{if(!optional)return true;try{return await api.permissions.request(permission)===true;}catch(_){return false;}},
+      revoke:async()=>{if(optional)try{await api.permissions.remove(permission);}catch(_){}},
+      changed:callback=>{if(optional)api?.permissions?.onRemoved?.addListener(value=>{if(value.data_collection?.includes('technicalAndInteraction'))callback();});}
+    };
+  }
   function createClient({endpoint,fetchImpl=globalThis.fetch,timeoutMs=10000}){
     const inFlight=new Map();async function submit(value){if(!endpoint)throw new Error('Registration is waiting for a connection.');const url=new URL(endpoint);if(url.protocol!=='https:'&&!['127.0.0.1','localhost'].includes(url.hostname))throw new Error('Registration needs a secure connection.');const payload=record({email:value.email,name:value.name,tz:value.timezone},value.updates_opt_in,value.onboarded_at,{onboarding_id:value.onboarding_id||false,browser:value.browser||'Unknown'});if(!('browser' in value))delete payload.browser;const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),timeoutMs);try{const response=await fetchImpl(url.href,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),signal:controller.signal,credentials:'omit',redirect:'error',referrerPolicy:'no-referrer',cache:'no-store'});if(!response.ok)throw new Error(response.status===429?'Registration will retry later; the service is temporarily busy.':'Registration could not be saved yet. Your setup is kept.');return true;}finally{clearTimeout(timer);}}
     return {submit:value=>{const key=JSON.stringify(value);if(inFlight.has(key))return inFlight.get(key);const task=submit(value).finally(()=>inFlight.delete(key));inFlight.set(key,task);return task;}};
   }
-  return {record,prepare,createClient,browserName};
+  return {record,prepare,sharing,createClient,browserName};
 });

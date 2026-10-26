@@ -18,7 +18,7 @@ If the hosted path is not configured, Chrome may retain its existing managed-tok
 
 ## Activation and approval
 
-The owner completed [Browser sign-in activation](browser-signin-setup.md). The new production deployment is `dpl_8Ln2uogLSpikGfw9qRqi1vzXdUUe`, READY, and its public readiness is true. The setup guide remains available for future configuration/recovery. No private client secret belongs in a chat, repository or extension ZIP. A real Google account/consent check remains unperformed for the new path; readiness and synthetic native-window checks do not establish Google approval or successful credential exchange.
+The owner completed [Browser sign-in activation](browser-signin-setup.md). The new production deployment is the recorded deployment, READY, and its public readiness is true. The setup guide remains available for future configuration/recovery. No private client secret belongs in a chat, repository or extension ZIP. A real Google account/consent check remains unperformed for the new path; readiness and synthetic native-window checks do not establish Google approval or successful credential exchange.
 
 Keep the existing Google project External / Testing and its listed test users. Current Google documentation allows up to 100 test users and gives Calendar test authorizations/refresh tokens a seven-day lifetime. Workplace administrators can separately block consent. A store listing is not required to test an unpacked extension; store review and Google OAuth production verification are separate later steps.
 

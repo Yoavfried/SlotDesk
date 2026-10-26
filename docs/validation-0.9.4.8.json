@@ -54,7 +54,6 @@
     "Wider UX and flight redesign remain under owner review."
   ],
   "deployment": {
-    "id": "dpl_5WaFGZxjQxxTRxkFW9deZkJrUxjX",
     "state": "READY",
     "alias": "slotdesk-leads.vercel.app",
     "backendSource": "421265be36e4c6a22a133925db53ab967e8a9321",

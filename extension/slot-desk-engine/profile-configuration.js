@@ -27,7 +27,7 @@
     for(const x of p.holidayExclusions)if(!date(x.from)||!date(x.to||x.from)||x.from>(x.to||x.from))fail('holidayExclusions','Choose valid increasing exception dates.');
     for(const key of ['calendarLabels','eventOverrides','eventRules','ruleTerms'])if(p[key]!==undefined&&(!object(p[key])||Object.values(p[key]).some(v=>typeof v!=='string')))fail(key,'Invalid '+key+' settings.');
     for(const value of Object.values(p.eventOverrides||{}))if(!['protected','soft','movable','leave','ignore','auto'].includes(value))fail('eventOverrides','Choose a supported event treatment.');
-    for(const value of Object.values(p.eventRules||{})){if(value.length>10000)fail('eventRules','Event-matching text is too long.');try{new RegExp(value);}catch(_){fail('eventRules','Check the event-matching expression.');}}
+    for(const value of Object.values(p.eventRules||{})){if(!ProfileRules.safeLegacy(value))fail('eventRules','This file contains an unsupported older event rule. Update its Event detection keywords in the original workspace and export it again.');}
     if(p.keywordCategories!==undefined&&(!Array.isArray(p.keywordCategories)||p.keywordCategories.some(key=>!['protect','soft','leave'].includes(key))))fail('eventRules','Invalid keyword categories.');
     if(p.keywordMatchingVersion!==undefined&&![0,1].includes(p.keywordMatchingVersion))fail('eventRules','Invalid keyword matching mode.');
     if(p.blockers!==undefined){if(!Array.isArray(p.blockers)||p.blockers.length>10000)fail('blockers','Invalid blockers.');for(const b of p.blockers)try{ProfileRules.validateBlocker(b);}catch(e){fail('blockers',e.message);}}

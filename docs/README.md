@@ -1,6 +1,6 @@
 # SlotDesk documentation
 
-Current release: **0.9.5**. [Scope](release-plan-0.9.5.md) · [Browser evidence](browser-compatibility.md) · [Owner sign-in activation](browser-signin-setup.md) · [Store requirements](extension-stores.md). Google/Vercel activation completed on 21 October, with public readiness verified true. Real new-flow Google consent remains to be checked; unsigned Firefox and Safari-source are not approved store releases.
+Current preparation build: **0.9.5.1**. [Release-readiness review](release-readiness-review.md) · [Store submission kit](store-kit/README.md). Last published beta: **0.9.5**. [Scope](release-plan-0.9.5.md) · [Browser evidence](browser-compatibility.md) · [Owner sign-in activation](browser-signin-setup.md) · [Store requirements](extension-stores.md). Google/Vercel activation completed on 21 October, with public readiness verified true. Real new-flow Google consent remains to be checked; unsigned Firefox and Safari-source are not approved store releases.
 
 | Area | Records |
 | --- | --- |
@@ -26,7 +26,7 @@ Current release: **0.9.5**. [Scope](release-plan-0.9.5.md) · [Browser evidence]
 
 Implemented means present in source. Pending validation means a stated live account/environment check remains. Planned means accepted but unfinished. Deferred means intentionally outside current development. Proposed candidates are not implementation promises.
 
-Made by **Speedy — Nina Banai and Yoav Fried**. Next: Outlook, followed by [1.0.0 publication preparation](release-1.0.0-plan.md).
+Made by **Speedy — Nina Banai and Yoav Fried**. Next: [1.0.0 publication preparation](release-1.0.0-plan.md) for Chrome, Edge and Firefox. Outlook is deferred until afterward.
 
 ## 0.9.4.8
 

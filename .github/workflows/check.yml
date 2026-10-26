@@ -18,5 +18,6 @@ jobs:
       - run: npm test
       - run: npm run test:backend
       - run: npm run test:calendar-kit
+      - run: npm run test:release
       - run: npm run check
       - run: npm run package:slotdesk

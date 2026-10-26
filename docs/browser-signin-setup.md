@@ -1,6 +1,6 @@
 # Activate browser-independent Google sign-in
 
-Owner configuration for **0.9.4.6**. Testers do not perform these steps. **Activation completed on 21 October 2026.** The owner reports completing these steps. Production redeployment `dpl_8Ln2uogLSpikGfw9qRqi1vzXdUUe` is READY, and an independent public check returned HTTP 200 with `ready:true`, version 0.9.4.6 and flow authorization-code. These instructions remain a configuration reference; completed steps do not need repeating. Next, load/reload the 0.9.4.6 extension and check real Google consent. The release preserves the existing Chrome pilot when the independent service is inactive. No Chrome Web Store listing is needed for this closed-beta setup.
+Owner configuration for **0.9.4.6**. Testers do not perform these steps. **Activation completed on 21 October 2026.** The owner reports completing these steps. Production redeployment is recorded as READY, and an independent public check returned HTTP 200 with `ready:true`, version 0.9.4.6 and flow authorization-code. These instructions remain a configuration reference; completed steps do not need repeating. Next, load/reload the 0.9.4.6 extension and check real Google consent. The release preserves the existing Chrome pilot when the independent service is inactive. No Chrome Web Store listing is needed for this closed-beta setup.
 
 ## 1. Add one Google Web application client
 

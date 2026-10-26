@@ -1,10 +1,12 @@
 ![SlotDesk — make room for what matters](design/assets/slotdesk-banner.svg)
 
-**0.9.5 · Google Calendar · private desktop-extension beta**
+**0.9.5.1 · Google Calendar · private release-preparation build**
+
+This preparation build adds Firefox-only optional registration sharing and addresses three security findings in imported profiles/trips and sign-in admission. It is not the public 1.0.0 release. [Review evidence](docs/release-readiness-review.md) · [Store submission kit](docs/store-kit/README.md).
 
 Version **0.9.5** adds a separate Trips manager with date-first flight matching, editable arrival estimates, connections, return flights and timezone transitions. Flight discovery and source changes appear in Alerts for review. Participant clocks update each minute, and the selected SD icon is installed. [Release scope](docs/release-plan-0.9.5.md) · [Validation](docs/testing.md) · [Version history](docs/changelog.md).
 
-Next: **Outlook support**, followed by [1.0.0 publication preparation](docs/release-1.0.0-plan.md). Appointment logic and wider UX remain open to owner review. Current [browser compatibility](docs/browser-compatibility.md) and [store requirements](docs/extension-stores.md) retain their documented limits.
+Next: [1.0.0 publication preparation](docs/release-1.0.0-plan.md) for Chrome, Edge and Firefox. **Outlook support follows after 1.0.0.** Appointment logic and wider UX remain open to owner review. Current [browser compatibility](docs/browser-compatibility.md) and [store requirements](docs/extension-stores.md) retain their documented limits.
 
 SlotDesk helps executive assistants find meeting times across people, calendars and timezones. Review a new invitation, browse existing meetings, edit its details and guests, or choose a new time for an appointment. Every calendar write requires an explicit review and confirmation.
 
@@ -41,6 +43,7 @@ npm run dev
 npm test
 npm run test:backend
 npm run test:calendar-kit
+npm run test:release
 npm run check
 npm run package:slotdesk
 ```

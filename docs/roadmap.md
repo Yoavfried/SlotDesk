@@ -4,7 +4,7 @@ Updated 26 October 2026. Status reflects agreed scope, not a promise of public a
 
 ## Current release
 
-**0.9.5** implements [trips, flight matching and review alerts](release-plan-0.9.5.md), minute participant clocks and the selected extension icon. Wider UX readiness remains the owner’s decision. Next comes Outlook support, then [1.0.0 publication preparation](release-1.0.0-plan.md); store availability and a public repository are not yet claimed.
+Preparation build **0.9.5.1** adds [Firefox consent and security fixes](release-readiness-review.md) while [store preparation](store-kit/README.md) remains in progress. **0.9.5** implements [trips, flight matching and review alerts](release-plan-0.9.5.md), minute participant clocks and the selected extension icon. Wider UX readiness remains the owner’s decision. Next comes [1.0.0 publication preparation](release-1.0.0-plan.md) for Chrome, Edge and Firefox; Outlook follows after 1.0.0. Store availability and a public repository are not yet claimed.
 
 The 22 October same-version hotfix implements the owner's [revised selection and fallback order](search-selection-2026-10-22.md): exactly three groups, earliest equally suitable starts, one representative per date for longer ranges, up to two featured clear fallbacks before three in-range compromises, and stable scrolling. Browser-based storage remains acceptable; cloud sync remains unconfirmed future feature DF11.
 
@@ -89,7 +89,7 @@ The owner wants [bring-your-own-key LLM assistance](llm-assistance.md), with pre
 | --- | --- | --- |
 | 1 | Refine profiles, calendar scope and meeting setup | Authorized scope implemented in 0.8.0; the accepted profile/travel/files refinement shipped in 0.9.2. |
 | 2 | Continue the Google Calendar pilot | Basic creation/export integrity passed. The owner reports working No alerts, sensible proposals, successful rescheduling and correct overlaps. Work-account access depends on organization permissions. |
-| 3 | Outlook / Microsoft 365 | Accepted next provider: OAuth, reading and reviewed writes, shared/delegated calendars, optional guests, recurrence, timezones and Teams links. Not needed for the Google pilot. |
+| 3 | Outlook / Microsoft 365 | Deferred until after 1.0.0: OAuth, reading and reviewed writes, shared/delegated calendars, optional guests, recurrence, timezones and Teams links. Account/connection UX remains undecided. |
 | 4 | Wider distribution | Supported installation/update route, applicable Google and organization requirements, accurate privacy/data-retention information and a public license/visibility decision. |
 
 Q01–Q24 scheduling policies are answered. The [parked UX feedback](pending-ux-review.md), rescheduling and decline alerts are implemented. The [validation record](testing.md) distinguishes automated coverage from actual user-reported behavior; unperformed live cases are not marked passed.

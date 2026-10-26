@@ -1,5 +1,11 @@
 # SlotDesk validation record
 
+## 26 October — 0.9.5.1 release preparation
+
+**2,440 application checks**, **76 backend checks**, **22 calendar comparisons** and **five endpoint-configuration checks** pass. Two focused browser journeys pass **44 assertions** and **three automated accessibility scans** without violations. All nine synthetic appointments remain unchanged, with zero Calendar writes. Firefox consent APIs are mocked in Chromium; native Firefox is not installed here. Firefox lint reports zero errors and 77 review warnings. [Machine-readable evidence](validation-0.9.5.1.json) · [Security/publication limits](release-readiness-review.md) · [Submission kit](store-kit/README.md).
+
+This is a private preparation build. Backend hardening is not yet deployed. No store listing, production Google approval, adopted software license, completed security clearance or final owner UX acceptance is claimed.
+
 ## 26 October — 0.9.5
 
 **2,394 application checks**, **73 backend checks** and **22 calendar-comparison checks** pass. The trip module adds 91 checks covering timezone precedence, delayed arrivals, connections and Ignore rules, legacy/portable settings, airport lookup, flight-source review and virtual-clock updates.
@@ -43,7 +49,7 @@ These changes refresh the 0.9.4.6 runtime download without changing Google scope
 
 ## 21 October — owner activation completed
 
-The owner reports completing the Google Web client, four production environment values and Vercel redeployment. Independently checked production deployment `dpl_8Ln2uogLSpikGfw9qRqi1vzXdUUe` is READY. The public status endpoint returns HTTP 200 with `ready:true`, version 0.9.4.6 and flow authorization-code. No secrets were read or recorded. This verifies configuration readiness only; real Google consent/token exchange and Calendar loading through that real connection remain to be checked after loading/reloading the updated extension.
+The owner reports completing the Google Web client, four production environment values and Vercel redeployment. Independently checked production deployment the recorded deployment is READY. The public status endpoint returns HTTP 200 with `ready:true`, version 0.9.4.6 and flow authorization-code. No secrets were read or recorded. This verifies configuration readiness only; real Google consent/token exchange and Calendar loading through that real connection remain to be checked after loading/reloading the updated extension.
 
 This is a hosting/documentation update. Runtime files, released ZIPs, hashes and the immutable 0.9.4.6 tag are unchanged. Existing installations should replace files in the same installed folder and Reload, retaining local profiles; uninstalling is not the update route.
 
