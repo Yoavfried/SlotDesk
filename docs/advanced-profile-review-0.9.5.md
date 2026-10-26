@@ -1,6 +1,6 @@
 # Advanced profile settings — 0.9.5 owner review
 
-**26 October scope update:** the remaining trip/flight redesign is now targeted for **0.9.8**, with a separate trip manager outside Edit profile. [Current trip plan](trips-0.9.8.md). Older references below to implementing flights in 0.9.5 are historical and superseded. The non-flight work is already implemented in 0.9.4.7 and refined in 0.9.4.9.
+**26 October scope update:** the remaining trip/flight redesign targets **0.9.5**, with a separate trip manager outside Edit profile. The [current trip plan](trips-0.9.5.md) supersedes earlier flight-flow details below while retaining that release target. The non-flight work is already implemented in 0.9.4.7 and refined in 0.9.4.9.
 
 
 Updated **22 October 2026**. The owner authorized the agreed non-flight work as **0.9.4.7**, superseding its earlier placement in 0.9.5. That work is implemented; see [release scope](release-plan-0.9.4.7.md) and [validation](testing.md). The sections below preserve the decision record, including historical planning language. Travel/flight entry, scheduling, detection, settings and helper review remain unfinished for the next owner-led review. Do not declare that remaining review or the wider UX complete.

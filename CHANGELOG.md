@@ -1,9 +1,9 @@
 # Repository changelog
 
-## 2026-10-26 — plan trip-based travel for 0.9.8
+## 2026-10-26 — plan trip-based travel for 0.9.5
 
 - Record the owner’s trip list, sequential flights/timezones, calendar-assisted entry, Flight back/open-ended behavior and separate manager/icon direction.
-- Move remaining flight planning from the historical 0.9.5 record to 0.9.8. Audit profile entry points and list pending timing/matching/edge-case decisions.
+- Expand remaining flight planning for 0.9.5. Audit profile entry points and list pending timing/matching/edge-case decisions.
 - Record accepted date-first entry, asking only for missing time/route information, editable estimated arrival, arrival-based timezone changes and clear/uncertain match policy. Research offline airport/distance data without presenting estimates as real schedules.
 - Documentation only; runtime, versioned packages and calendar data remain unchanged.
 

@@ -1,8 +1,8 @@
 # SlotDesk changelog
 
-## Planned — 0.9.8 trips and flights
+## Planned — 0.9.5 trips and flights
 
-Owner direction recorded on 26 October: standalone per-profile trip list/Add trip, sequential flights/timezone changes, non-LLM calendar matching with editable prefills, final Flight back or warned open-ended destination, and cog/flight actions. Accepted date-first entry, missing-details/local arrival estimates, arrival-based timezone changes and clear/uncertain match policy; remaining edge cases and estimation research are documented in the [trip plan](trips-0.9.8.md). This entry is planning only; current application/packages remain 0.9.4.9.
+Owner direction recorded on 26 October: standalone per-profile trip list/Add trip, sequential flights/timezone changes, non-LLM calendar matching with editable prefills, final Flight back or warned open-ended destination, and cog/flight actions. Accepted date-first entry, missing-details/local arrival estimates, arrival-based timezone changes and clear/uncertain match policy; remaining edge cases and estimation research are documented in the [trip plan](trips-0.9.5.md). This entry is planning only; current application/packages remain 0.9.4.9.
 
 
 ## 0.9.4.9 — 26 October 2026

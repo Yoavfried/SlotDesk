@@ -1,6 +1,6 @@
-# Trips and flights — 0.9.8 plan
+# Trips and flights — 0.9.5 plan
 
-Owner direction: **26 October 2026**. Target implementation: **0.9.8**. This planning record does not change the current **0.9.4.9** application, packages or calendar data. The owner moved the remaining flight/travel redesign out of the historical 0.9.5 plan. Wider UX approval remains with the owner.
+Owner direction: **26 October 2026**. Target implementation: **0.9.5**. This planning record expands the remaining flight/travel work for that release and does not change the current **0.9.4.9** application, packages or calendar data. Wider UX approval remains with the owner.
 
 A **trip is an ordered series of flights and timed timezone changes for one saved profile**. Flight intervals are meeting blockers. Destination stays determine the timezone used by scheduling. A trip can end with a flight back or stay open-ended.
 
@@ -45,9 +45,9 @@ Jerusalem → London → New York → Jerusalem:
 
 | ID | Question | Owner decision | Status |
 | --- | --- | --- | --- |
-| F98-01 | Require departure **and arrival** dates/times as initial manual fields? | No. Start with departure date only and try calendar identification first. If details remain missing, ask only for departure time and departure/destination cities or airports, then offer an editable estimated arrival. Do not require the user to type a known arrival manually. | Accepted, including the researched fallback follow-up |
-| F98-02 | At what moment does the destination timezone take effect? | On arrival. The departure-to-arrival interval is blocked; the destination timezone applies from the instant of arrival. An estimated arrival remains identified as estimated. | Accepted |
-| F98-03 | When can a manually entered flight be linked to a calendar event automatically? | Automatically link one clear match; ask the user to choose/confirm multiple or weak candidates. Classification is local to SlotDesk, never a Google event edit. | Accepted |
+| F95-01 | Require departure **and arrival** dates/times as initial manual fields? | No. Start with departure date only and try calendar identification first. If details remain missing, ask only for departure time and departure/destination cities or airports, then offer an editable estimated arrival. Do not require the user to type a known arrival manually. | Accepted, including the researched fallback follow-up |
+| F95-02 | At what moment does the destination timezone take effect? | On arrival. The departure-to-arrival interval is blocked; the destination timezone applies from the instant of arrival. An estimated arrival remains identified as estimated. | Accepted |
+| F95-03 | When can a manually entered flight be linked to a calendar event automatically? | Automatically link one clear match; ask the user to choose/confirm multiple or weak candidates. Classification is local to SlotDesk, never a Google event edit. | Accepted |
 
 ## Duration fallback research and proposed implementation
 
@@ -61,7 +61,7 @@ Research checked on 26 October 2026:
 | [OurAirports open data](https://ourairports.com/data/) | Public-domain airport coordinates and identifiers. | Alternative/reference source for route lookup. It does not provide a flight timetable or IANA timezone field in its airport CSV. |
 | [geolib distance calculation](https://github.com/manuelbieh/geolib/blob/master/src/getDistance.ts) and [MIT license](https://github.com/manuelbieh/geolib/blob/master/LICENSE) | Great-circle distance from two coordinate pairs. | A reusable geographic building block, not a flight-duration prediction model. No library has been added by this planning update. |
 | [American Airlines Flight-Engine](https://github.com/AmericanAirlines/Flight-Engine) and its [generator](https://github.com/AmericanAirlines/Flight-Engine/blob/main/src/Generator.ts) | Demonstrates converting route distance and aircraft speed into duration, then calculating destination-local arrival. | Explicitly generates mock flights, including randomness. It is not a source of real schedules or validated estimates; do not copy its random-duration behavior into SlotDesk. |
-| [Cirium/FlightStats schedules API](https://developer.flightstats.com/api-docs/scheduledflights/v1) | Actual scheduled departure/arrival lookup by carrier, flight number and date. | Separate service integration requiring credentials/terms/coverage review. Not selected for 0.9.8 and not necessary for the local fallback. |
+| [Cirium/FlightStats schedules API](https://developer.flightstats.com/api-docs/scheduledflights/v1) | Actual scheduled departure/arrival lookup by carrier, flight number and date. | Separate service integration requiring credentials/terms/coverage review. Not selected for 0.9.5 and not necessary for the local fallback. |
 
 Recommended first implementation: bundle the route lookup and compute a deterministic direct-leg estimate locally from geographic distance, an explicit cruising-speed assumption and a takeoff/landing/ground allowance. No paid service or per-lookup API request is required for this approach. The formula parameters, rounding and representative short/medium/long route checks still need engineering calibration; research does not establish an accuracy guarantee. Winds, aircraft, route changes and delays remain unknown. Each connection is a separate leg, not part of a single guessed direct duration.
 
@@ -101,7 +101,7 @@ Wording is proposed for review; “after” will use the timing decision above.
 
 ## Entry-point audit and icon behavior
 
-| Existing route | Proposed 0.9.8 treatment |
+| Existing route | Proposed 0.9.5 treatment |
 | --- | --- |
 | Manage profiles → Edit | Cog + Edit text; icon-only at narrow width. Opens the ordinary profile editor. |
 | Manage profiles → Travel & flights | Independent trip-list popup, rather than `openProfile(..., 'travel')`. Flight icon + action text, icon-only when narrow. |

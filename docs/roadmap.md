@@ -4,7 +4,7 @@ Updated 26 October 2026. Status reflects agreed scope, not a promise of public a
 
 ## Current release
 
-**0.9.4.9** adds the [profile meeting controls](release-plan-0.9.4.9.md), following the 0.9.4.8 leads/browser and timezone-overlay update and 0.9.4.7 non-flight advanced-profile work. The owner targets the remaining trip/flight redesign for **0.9.8**; see [Trips and flights](trips-0.9.8.md). That plan is not implemented. Broader UX readiness remains the owner’s decision.
+**0.9.4.9** adds the [profile meeting controls](release-plan-0.9.4.9.md), following the 0.9.4.8 leads/browser and timezone-overlay update and 0.9.4.7 non-flight advanced-profile work. The owner targets the remaining trip/flight redesign for **0.9.5**; see [Trips and flights](trips-0.9.5.md). That plan is not implemented. Broader UX readiness remains the owner’s decision.
 
 The 22 October same-version hotfix implements the owner's [revised selection and fallback order](search-selection-2026-10-22.md): exactly three groups, earliest equally suitable starts, one representative per date for longer ranges, up to two featured clear fallbacks before three in-range compromises, and stable scrolling. Browser-based storage remains acceptable; cloud sync remains unconfirmed future feature DF11.
 
@@ -36,13 +36,13 @@ The agreed overlap-alert screen also moves to 0.9.4.5: each connected group of a
 
 This release may apply the agreed scheduling semantics to existing saved defaults and per-meeting overrides without redesigning the advanced-profile editor. The separate profile review does not block 0.9.4.5. All targeted policy decisions were accepted and implementation was authorized. That new-meeting release was 0.9.4.5; current runtime/packages are 0.9.4.6. The owner expects to continue appointment-logic and issue review after this update; do not auto-start the advanced-profile review or infer final UX approval.
 
-## 0.9.5 — advanced profile settings
+## 0.9.5 — advanced profile settings and trips
 
-The owner moved the agreed non-flight advanced-profile work into **0.9.4.7** and authorized implementation. That portion is complete; [the decision record](advanced-profile-review-0.9.5.md) retains the accepted details. The owner moved the remaining **trip/flight redesign to 0.9.8** on 26 October. Entry process, meeting logic, detection, settings and helper wording are now tracked in the [trip plan](trips-0.9.8.md), with accepted date-first entry, arrival-based timezone changes and matching policy, plus remaining edge cases. The historical 0.9.5 record is not a current flight milestone. Wider UX approval remains owner-led.
+The owner moved the agreed non-flight advanced-profile work into **0.9.4.7** and authorized implementation. That portion is complete; [the decision record](advanced-profile-review-0.9.5.md) retains the accepted details. The remaining **trip/flight redesign targets 0.9.5**. Entry process, meeting logic, detection, settings and helper wording are tracked in the [trip plan](trips-0.9.5.md), with accepted date-first entry, arrival-based timezone changes and matching policy, plus remaining edge cases. Wider UX approval remains owner-led.
 
-## 0.9.8 — Trips and flights
+### Trips and flights
 
-The owner’s [trip-based direction](trips-0.9.8.md) replaces standalone flight/travel rows with a separate manager for each profile: trip list, Add trip, sequential flight legs, non-LLM calendar matching and editable destination-prefill, final Flight back, and warned open-ended destination timezones. Remove travel from advanced profile settings and add cog/flight actions in profile management and New meeting. Start with departure date and search calendars; ask only for missing time/route details and offer an editable estimated arrival. Timezone changes on arrival; clear matches link automatically and uncertain matches need confirmation. Local estimation research and remaining trip/connection/update rules are recorded before implementation. No runtime/package change is made by this planning update.
+The owner’s [trip-based direction](trips-0.9.5.md) replaces standalone flight/travel rows with a separate manager for each profile: trip list, Add trip, sequential flight legs, non-LLM calendar matching and editable destination-prefill, final Flight back, and warned open-ended destination timezones. Remove travel from advanced profile settings and add cog/flight actions in profile management and New meeting. Start with departure date and search calendars; ask only for missing time/route details and offer an editable estimated arrival. Timezone changes on arrival; clear matches link automatically and uncertain matches need confirmation. Local estimation research and remaining trip/connection/update rules are recorded before implementation. No runtime/package change is made by this planning update.
 
 ## Browser compatibility — 0.9.4.6 implemented foundation
 
