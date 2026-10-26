@@ -39,3 +39,27 @@ button:has(>.action-arrow),.button-link:has(>.action-arrow){display:inline-flex;
 
 /* Keep the search timezone, primary action and name/calendar identity aligned at every width. */
 .search-timezone{margin:18px 0}.search-timezone .zone-field{width:320px;max-width:100%}.result-person-identity{display:flex;align-items:center;gap:6px;min-width:0}.result-person-identity .result-person-name{flex:0 1 auto}.result-person-identity .result-calendar{flex:0 0 20px}.result-person-identity .coverage-popup{left:-12px}.slot-card .slot-actions{justify-content:flex-start}.warning-list .warning-overlap{font-size:12px;font-weight:400}.warning-list strong:only-child{margin-bottom:0}
+
+/* The workspace scrolls below the header; its reserved gutter never cuts the lime bar. */
+html:has(body.workspace-app){overflow:hidden;scrollbar-gutter:auto}
+body.workspace-app{height:100dvh;overflow:hidden;display:flex;flex-direction:column}
+.workspace-app>header.bar{position:relative;flex:none}
+.workspace-scroll{flex:1;min-height:0;overflow:auto;scrollbar-gutter:stable;overscroll-behavior:contain}
+.workspace-scroll>.workspace{width:100%;min-width:0}
+/* Keep the fixed-size wordmark intact when a sidebar cannot fit all header actions beside it. */
+@media(max-width:360px){
+  .workspace-app>header.bar{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:8px}
+  .workspace-app .header-top{display:contents}
+  .workspace-app .header-top .brand{grid-column:1 / -1;grid-row:1;justify-self:start}
+  .workspace-app .header-top .header-actions{grid-column:2;grid-row:2;gap:0}
+  .workspace-app .header-top .icon-button{width:28px;height:32px;padding:5px}
+  .workspace-app .header-connection{grid-column:1;grid-row:2;min-width:0}
+  .workspace-app .account-connection{gap:3px;max-width:100%}
+  .workspace-app .account-badge{padding-inline:8px;gap:5px}
+  .workspace-choice{display:grid!important;grid-template-columns:24px minmax(0,1fr) 18px;gap:8px 10px;padding:14px}
+  .workspace-choice>.menu-icon{grid-column:1;grid-row:1;width:24px}
+  .workspace-choice>span:nth-child(2){display:contents}
+  .workspace-choice strong{grid-column:2;grid-row:1;line-height:1.35}
+  .workspace-choice>.action-arrow{grid-column:3;grid-row:1}
+  .workspace-choice small{grid-column:1 / -1;grid-row:2;margin-top:0}
+}

@@ -35,16 +35,16 @@ async page=>{
     const card=page.locator('#results .slot-card').nth(1);
     for(const selector of ['.result-person-name','.result-person-zone','.result-person-time','.result-calendar summary','.proposal-warnings summary']){
       const target=card.locator(selector).first();
-      await target.evaluate(el=>window.scrollTo(0,window.scrollY+el.getBoundingClientRect().top-200));
-      const before=await page.evaluate(()=>scrollY);await target.click();await page.waitForTimeout(100);
-      check(Math.abs((await page.evaluate(()=>scrollY))-before)<2,'Clicking '+selector+' does not jump the page');
+      await target.evaluate(el=>document.getElementById('workspace-scroll').scrollTop+=el.getBoundingClientRect().top-200);
+      const before=await page.locator('#workspace-scroll').evaluate(el=>el.scrollTop);await target.click();await page.waitForTimeout(100);
+      check(Math.abs((await page.locator('#workspace-scroll').evaluate(el=>el.scrollTop))-before)<2,'Clicking '+selector+' does not jump the page');
       if(selector==='.result-calendar summary'){await target.press('Escape');await page.mouse.move(0,0);}
     }
-    await page.locator('.search-timezone .timezone-trigger').evaluate(el=>window.scrollTo(0,scrollY+el.getBoundingClientRect().top-200));
-    const beforeZone=await page.evaluate(()=>scrollY);await page.locator('.search-timezone .timezone-trigger').click();
+    await page.locator('.search-timezone .timezone-trigger').evaluate(el=>document.getElementById('workspace-scroll').scrollTop+=el.getBoundingClientRect().top-200);
+    const beforeZone=await page.locator('#workspace-scroll').evaluate(el=>el.scrollTop);await page.locator('.search-timezone .timezone-trigger').click();
     const search=page.locator('.search-timezone .timezone-panel input');
     for(let i=0;i<20;i++)await search.press('ArrowDown');
-    check(Math.abs((await page.evaluate(()=>scrollY))-beforeZone)<2,'Timezone keyboard choices scroll their list rather than the page');
+    check(Math.abs((await page.locator('#workspace-scroll').evaluate(el=>el.scrollTop))-beforeZone)<2,'Timezone keyboard choices scroll their list rather than the page');
     check(await page.locator('.search-timezone .timezone-options').evaluate(el=>el.scrollTop>0),'Keyboard timezone results remain visible');
     await search.press('Escape');check(await page.locator('.search-timezone .timezone-trigger').evaluate(el=>el===document.activeElement),'Escape returns focus to timezone button');
     for(const width of [320,514,1280]){await page.setViewportSize({width,height:900});check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'No horizontal overflow at '+width);}
@@ -56,11 +56,11 @@ async page=>{
     const initial=await page.locator('#results .slot-card h3').allTextContents();
     let count=3;
     while(await page.locator('#more-options').isVisible()){
-      await page.locator('#more-options').evaluate(el=>window.scrollTo(0,scrollY+el.getBoundingClientRect().top-200));
-      const previousScroll=await page.evaluate(()=>scrollY);await page.locator('#more-options').click();await page.waitForTimeout(100);
+      await page.locator('#more-options').evaluate(el=>document.getElementById('workspace-scroll').scrollTop+=el.getBoundingClientRect().top-200);
+      const previousScroll=await page.locator('#workspace-scroll').evaluate(el=>el.scrollTop);await page.locator('#more-options').click();await page.waitForTimeout(100);
       const next=await page.locator('#results .slot-card').count();
       check(next===Math.min(count+3,10),'Generate more appends the next three dates or the remainder');
-      check(Math.abs((await page.evaluate(()=>scrollY))-previousScroll)<2,'Appending options preserves scroll position');count=next;
+      check(Math.abs((await page.locator('#workspace-scroll').evaluate(el=>el.scrollTop))-previousScroll)<2,'Appending options preserves scroll position');count=next;
     }
     check(count===10,'All ten eligible dates become available');
     check(await first.evaluate(el=>el.isConnected),'Existing cards are not recreated');

@@ -1,0 +1,500 @@
+{
+  "date": "2026-10-26",
+  "version": "0.9.4.7",
+  "kind": "same-version sidebar layout hotfix",
+  "applicationChecks": 2267,
+  "browserAssertions": 178,
+  "automatedAccessibilityScans": 22,
+  "automatedAccessibilityViolations": 0,
+  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+  "checks": {
+    "sidebar": [
+      "Lime header reaches the viewport edge at 220",
+      "Logo and actions do not overlap at 220",
+      "Wordmark size remains fixed at 220",
+      "Workspace has no horizontal/root scrolling at 220",
+      "Workspace scrollbar starts below the header at 220",
+      "Home-card content stays inside its card at 220",
+      "Header stays in place while content scrolls at 220",
+      "Lime header reaches the viewport edge at 254",
+      "Logo and actions do not overlap at 254",
+      "Wordmark size remains fixed at 254",
+      "Workspace has no horizontal/root scrolling at 254",
+      "Workspace scrollbar starts below the header at 254",
+      "Home-card content stays inside its card at 254",
+      "Header stays in place while content scrolls at 254",
+      "Lime header reaches the viewport edge at 280",
+      "Logo and actions do not overlap at 280",
+      "Wordmark size remains fixed at 280",
+      "Workspace has no horizontal/root scrolling at 280",
+      "Workspace scrollbar starts below the header at 280",
+      "Home-card content stays inside its card at 280",
+      "Header stays in place while content scrolls at 280",
+      "Lime header reaches the viewport edge at 318",
+      "Logo and actions do not overlap at 318",
+      "Wordmark size remains fixed at 318",
+      "Workspace has no horizontal/root scrolling at 318",
+      "Workspace scrollbar starts below the header at 318",
+      "Home-card content stays inside its card at 318",
+      "Header stays in place while content scrolls at 318",
+      "Lime header reaches the viewport edge at 320",
+      "Logo and actions do not overlap at 320",
+      "Wordmark size remains fixed at 320",
+      "Workspace has no horizontal/root scrolling at 320",
+      "Workspace scrollbar starts below the header at 320",
+      "Home-card content stays inside its card at 320",
+      "Header stays in place while content scrolls at 320",
+      "Lime header reaches the viewport edge at 360",
+      "Logo and actions do not overlap at 360",
+      "Wordmark size remains fixed at 360",
+      "Workspace has no horizontal/root scrolling at 360",
+      "Workspace scrollbar starts below the header at 360",
+      "Home-card content stays inside its card at 360",
+      "Header stays in place while content scrolls at 360",
+      "Lime header reaches the viewport edge at 390",
+      "Logo and actions do not overlap at 390",
+      "Wordmark size remains fixed at 390",
+      "Workspace has no horizontal/root scrolling at 390",
+      "Workspace scrollbar starts below the header at 390",
+      "Home-card content stays inside its card at 390",
+      "Header stays in place while content scrolls at 390",
+      "Lime header reaches the viewport edge at 490",
+      "Logo and actions do not overlap at 490",
+      "Wordmark size remains fixed at 490",
+      "Workspace has no horizontal/root scrolling at 490",
+      "Workspace scrollbar starts below the header at 490",
+      "Home-card content stays inside its card at 490",
+      "Header stays in place while content scrolls at 490",
+      "Lime header reaches the viewport edge at 514",
+      "Logo and actions do not overlap at 514",
+      "Wordmark size remains fixed at 514",
+      "Workspace has no horizontal/root scrolling at 514",
+      "Workspace scrollbar starts below the header at 514",
+      "Home-card content stays inside its card at 514",
+      "Header stays in place while content scrolls at 514",
+      "Lime header reaches the viewport edge at 760",
+      "Logo and actions do not overlap at 760",
+      "Wordmark size remains fixed at 760",
+      "Workspace has no horizontal/root scrolling at 760",
+      "Workspace scrollbar starts below the header at 760",
+      "Home-card content stays inside its card at 760",
+      "Header stays in place while content scrolls at 760",
+      "Lime header reaches the viewport edge at 1280",
+      "Logo and actions do not overlap at 1280",
+      "Wordmark size remains fixed at 1280",
+      "Workspace has no horizontal/root scrolling at 1280",
+      "Workspace scrollbar starts below the header at 1280",
+      "Home-card content stays inside its card at 1280",
+      "Header stays in place while content scrolls at 1280",
+      "Header actions stay fixed between home and a scrolling page",
+      "Navigation resets the workspace scroll position",
+      "No automated home accessibility violations at 254",
+      "No automated home accessibility violations at 490",
+      "No calendar writes; nine baseline appointments unchanged",
+      "No browser runtime errors"
+    ],
+    "general": [
+      "Profile opens with context heading focused",
+      "Return departure timezone has contextual label",
+      "Timezone announces active result",
+      "Escape cannot discard flight",
+      "Required flight fields show associated errors",
+      "Corrected required field clears obsolete error",
+      "Nested form returns focus to Add flight",
+      "Profile arrows retain search focus",
+      "Profile choice is announced",
+      "Enter adds profile and closes suggestions",
+      "Suggestion Escape retains meeting editor",
+      "Forced colors retains focus outline",
+      "No horizontal overflow at 320",
+      "No horizontal overflow at 390",
+      "No horizontal overflow at 1280",
+      "Accessibility checks never changed appointments",
+      "Flight keyboard focus contained 0",
+      "Flight keyboard focus contained 1",
+      "Flight keyboard focus contained 2",
+      "Flight keyboard focus contained 3",
+      "Flight keyboard focus contained 4",
+      "Flight keyboard focus contained 5",
+      "Flight keyboard focus contained 6",
+      "Flight keyboard focus contained 7",
+      "Flight keyboard focus contained 8",
+      "Flight keyboard focus contained 9",
+      "Flight keyboard focus contained 10",
+      "Flight keyboard focus contained 11",
+      "Flight keyboard focus contained 12",
+      "Flight keyboard focus contained 13",
+      "Enter in booking field does not confirm",
+      "Typing Enter never sends invitation",
+      "Nested profile takes focus despite DOM order",
+      "Nested profile returns focus to reschedule",
+      "2x zoom reflows at 640px viewport",
+      "All original appointments unchanged"
+    ],
+    "newMeeting": [
+      "Removed advanced controls are absent",
+      "Five initial useful options when at least five exist",
+      "No individual Copy option action",
+      "No card-level coverage badge",
+      "Excluded candidate diagnostics removed",
+      "Full coverage and no conflict produce Available",
+      "More options appends up to three remaining choices",
+      "Existing card order preserved",
+      "Appending uses current calendar snapshot",
+      "Planning email includes every visible option",
+      "Shared planning email contains no internal caveats or IANA paths",
+      "Email preview is editable",
+      "No horizontal overflow at 320",
+      "Participant identity/icon/timezone/time stay in one row at 320",
+      "No horizontal overflow at 390",
+      "Participant identity/icon/timezone/time stay in one row at 390",
+      "No horizontal overflow at 514",
+      "Participant identity/icon/timezone/time stay in one row at 514",
+      "No horizontal overflow at 680",
+      "Participant identity/icon/timezone/time stay in one row at 680",
+      "No horizontal overflow at 1280",
+      "Participant identity/icon/timezone/time stay in one row at 1280",
+      "Meeting-wide exclusion shown as removable interval",
+      "Per-person time rule action exists",
+      "Per-person rule offers blocked/inconvenient types",
+      "Chosen city persists in participant label",
+      "UI/search/preview operations leave all nine appointments unchanged",
+      "No runtime page errors"
+    ],
+    "search": [
+      "One clear later choice plus three in-range compromises",
+      "Monday starts at 09:00 rather than 10:00",
+      "Three compromises stay on the requested date",
+      "Only morning, midday and afternoon groups",
+      "Featured later option has no known conflict",
+      "No additional later-date choices after the single featured choice",
+      "Clicking .result-person-name does not jump the page",
+      "Clicking .result-person-zone does not jump the page",
+      "Clicking .result-person-time does not jump the page",
+      "Clicking .result-calendar summary does not jump the page",
+      "Clicking .proposal-warnings summary does not jump the page",
+      "Timezone keyboard choices scroll their list rather than the page",
+      "Keyboard timezone results remain visible",
+      "Escape returns focus to timezone button",
+      "No horizontal overflow at 320",
+      "No horizontal overflow at 514",
+      "No horizontal overflow at 1280",
+      "Long all-conflict search starts with three dates",
+      "Generate more appends the next three dates or the remainder",
+      "Appending options preserves scroll position",
+      "Generate more appends the next three dates or the remainder",
+      "Appending options preserves scroll position",
+      "Generate more appends the next three dates or the remainder",
+      "Appending options preserves scroll position",
+      "All ten eligible dates become available",
+      "Existing cards are not recreated",
+      "Expanded warnings stay expanded",
+      "Existing options keep their order",
+      "Long ranges have one card per date",
+      "No Calendar writes; all nine baseline appointments unchanged",
+      "No browser runtime errors"
+    ]
+  },
+  "scans": {
+    "sidebar": [
+      {
+        "width": 254,
+        "violations": [],
+        "incomplete": []
+      },
+      {
+        "width": 490,
+        "violations": [],
+        "incomplete": []
+      }
+    ],
+    "general": [
+      {
+        "name": "settings-light",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "count": 2
+          },
+          {
+            "id": "label-content-name-mismatch",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "name": "calendars-light",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "count": 3
+          },
+          {
+            "id": "label-content-name-mismatch",
+            "count": 5
+          }
+        ]
+      },
+      {
+        "name": "profiles-light",
+        "violations": [],
+        "incomplete": []
+      },
+      {
+        "name": "profile-export-light",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "count": 2
+          },
+          {
+            "id": "label-content-name-mismatch",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "name": "advanced-light",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "aria-valid-attr-value",
+            "count": 2
+          },
+          {
+            "id": "color-contrast",
+            "count": 2
+          },
+          {
+            "id": "label-content-name-mismatch",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "name": "flight-light",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "aria-valid-attr-value",
+            "count": 4
+          },
+          {
+            "id": "color-contrast",
+            "count": 2
+          }
+        ]
+      },
+      {
+        "name": "participant-list-light",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "aria-valid-attr-value",
+            "count": 2
+          },
+          {
+            "id": "color-contrast",
+            "count": 10
+          },
+          {
+            "id": "label-content-name-mismatch",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "name": "new-meeting-light",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "aria-valid-attr-value",
+            "count": 2
+          },
+          {
+            "id": "label-content-name-mismatch",
+            "count": 2
+          }
+        ]
+      },
+      {
+        "name": "meetings-light",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "aria-valid-attr-value",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "name": "meeting-details-light",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "count": 2
+          },
+          {
+            "id": "label-content-name-mismatch",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "name": "meeting-edit-light",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "aria-valid-attr-value",
+            "count": 1
+          },
+          {
+            "id": "color-contrast",
+            "count": 2
+          },
+          {
+            "id": "label-content-name-mismatch",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "name": "settings-dark",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "count": 2
+          },
+          {
+            "id": "label-content-name-mismatch",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "name": "meetings-dark",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "aria-valid-attr-value",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "name": "profiles-dark",
+        "violations": [],
+        "incomplete": []
+      },
+      {
+        "name": "advanced-dark",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "aria-valid-attr-value",
+            "count": 2
+          },
+          {
+            "id": "color-contrast",
+            "count": 2
+          },
+          {
+            "id": "label-content-name-mismatch",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "name": "flight-dark",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "aria-valid-attr-value",
+            "count": 4
+          },
+          {
+            "id": "color-contrast",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "name": "new-meeting-dark",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "aria-valid-attr-value",
+            "count": 2
+          },
+          {
+            "id": "label-content-name-mismatch",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "name": "booking-dark",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "aria-valid-attr-value",
+            "count": 1
+          },
+          {
+            "id": "color-contrast",
+            "count": 3
+          },
+          {
+            "id": "label-content-name-mismatch",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "name": "alerts-dark",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "label-content-name-mismatch",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "name": "reschedule-dark",
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "aria-valid-attr-value",
+            "count": 2
+          },
+          {
+            "id": "color-contrast",
+            "count": 2
+          },
+          {
+            "id": "label-content-name-mismatch",
+            "count": 1
+          }
+        ]
+      }
+    ]
+  },
+  "calendarSafety": {
+    "unchangedSyntheticAppointments": 9,
+    "creates": 0,
+    "updates": 0,
+    "deletesOrMoves": 0
+  },
+  "boundaries": [
+    "Synthetic provider/local Chromium layout testing; no real Google account or invitation.",
+    "Native Vivaldi automation startup did not complete; no new native Vivaldi certification claimed.",
+    "Accessibility incomplete findings and manual assessment remain open.",
+    "Registration/database behavior is unchanged; unique email and first-successfully-saved-row preservation verified in source/migration."
+  ]
+}

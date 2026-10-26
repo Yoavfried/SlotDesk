@@ -1,5 +1,11 @@
 # SlotDesk validation record
 
+## 26 October — sidebar layout hotfix
+
+The [focused sidebar journey](../scripts/accessibility/sidebar-layout.js) passes 83 assertions across 220/254/280/318/320/360/390/490/514/760/1280px: full-width header, fixed wordmark size, no control collisions, contained home-card content, scrollbar below the header and stable navigation/action positions. Narrow/wide dark screenshots were inspected. Existing general accessibility, new-meeting and updated search-scroll journeys pass another 95 assertions, totaling **178 browser assertions**. The search journey now tests the actual workspace scroll container, including result clicks, timezone keyboard navigation and append-only batches.
+
+All **2,267 application checks** pass. **22 axe scans** report no automated violations; incomplete/manual findings remain open. All nine synthetic baseline appointments stay unchanged with zero Calendar create/update/delete/move requests. The test uses local Chromium and synthetic provider data, not real Google sign-in. An attempted isolated native Vivaldi automation startup did not complete; no new native Vivaldi certification is claimed. Backend/lead rules are unchanged and are described in the [lead record](leads-table.md#repeat-onboarding-in-another-browser). [Machine-readable evidence](validation-sidebar-2026-10-26.json).
+
 ## 22 October — 0.9.4.7 advanced profiles
 
 All **2,267 application checks**, **71 backend checks** (six intake cases and 65 authentication-broker checks) and **22 calendar-comparison checks** pass. The 87 advanced-profile checks cover default-off versus legacy detection, literal whole-word/phrase and empty keywords, independent Ignore combinations, protected/assigned leave/flights, one-off/recurring/overnight/all-day/DST blockers, per-person shared-event conflicts, occurrence/series last-action order, portable fields, local storage and the first migrated save without false cross-window conflicts. Real conflicting blocker edits still require review.

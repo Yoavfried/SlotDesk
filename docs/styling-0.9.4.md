@@ -117,3 +117,7 @@ After the owner settles the proposed choices, implementation should consolidate 
 
 - Review the remaining type roles, arrow/icon details, final menu description wording and exact page-header spacing together. The DM Sans family/scope, sentence case and provisional page-headline scale are settled above.
 - Visually evaluate the 24px/28px page headlines later; only the owner can approve their final appearance.
+
+## Sidebar scroll boundary — 26 October 2026
+
+The application header spans the full viewport. The workspace owns its vertical scrolling and stable scrollbar gutter below the header; Help and other standalone pages keep their own page scrolling. Navigation resets the workspace scroller, not the window. At widths up to 360px, preserve the fixed wordmark on its own top row and place account controls beside the action group below it. Home cards use icon/title/arrow above a full-width description to avoid narrow text columns. This applies design-kit tokens and retains the logo font/size.

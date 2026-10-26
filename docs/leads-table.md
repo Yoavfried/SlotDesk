@@ -14,6 +14,21 @@ Agreed 15 October 2026. **Implemented in the 0.9.0 preview; central submission i
 
 These are the five agreed columns. Create the lead regardless of whether the updates box is checked. The checkbox controls permission for future project updates, not whether the lead is recorded. Repeated app openings/retries should not duplicate the lead or replace the initial onboarding timestamp.
 
+## Repeat onboarding in another browser
+
+Workspace settings and onboarding completion are stored locally per installation/browser and connected account. A new browser therefore has its own onboarding. The central leads table is separate from this local workspace.
+
+The current server uses email as its primary key and `INSERT ... ON CONFLICT DO NOTHING`, through both direct intake and the Google sign-in relay:
+
+| Submission | Result |
+| --- | --- |
+| A previously unseen normalized email | Insert its five submitted fields. |
+| The same email again, even with a different name, timezone, date or checkbox choice | Keep the first successfully saved row entirely unchanged; return the same success response. |
+| A different email with the same name | Insert a separate row. Names are not unique identifiers. |
+| An ordinary later profile edit | Save locally; it does not update the central lead. |
+
+Thus repeat onboarding does not create duplicate emails and does not replace the first onboarding time or first stored updates choice. This documents the existing behavior; the 26 October layout hotfix does not change registration or database rules.
+
 ## Agreed onboarding UX
 
 Display a short notice with an accessible Privacy Notice link:

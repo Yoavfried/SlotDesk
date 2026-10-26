@@ -1,5 +1,11 @@
 # Repository changelog
 
+## 2026-10-26 — SlotDesk sidebar hotfix
+
+- Fix the reserved right-hand header strip and narrow-panel logo/control collisions; improve narrow home-card flow and workspace scrolling.
+- Record focused layout/accessibility/search checks and clarify existing email-keyed lead deduplication without changing registration behavior.
+- Refresh 0.9.4.7 packages/checksums; retain the historical release tag and flight-review scope.
+
 ## 2026-10-22 — SlotDesk 0.9.4.7
 
 Implement the owner's agreed non-flight advanced-profile update, with local rule persistence, portable files, recurring scope and synthetic validation. Keep the separate flight review open. See the [product release](docs/release-plan-0.9.4.7.md).
