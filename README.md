@@ -6,7 +6,7 @@ This preparation build adds Firefox-only optional registration sharing and addre
 
 Version **0.9.5** adds a separate Trips manager with date-first flight matching, editable arrival estimates, connections, return flights and timezone transitions. Flight discovery and source changes appear in Alerts for review. Participant clocks update each minute, and the selected SD icon is installed. [Release scope](docs/release-plan-0.9.5.md) · [Validation](docs/testing.md) · [Version history](docs/changelog.md).
 
-Next: [1.0.0 publication preparation](docs/release-1.0.0-plan.md) for Chrome, Edge and Firefox. **Outlook support follows after 1.0.0.** Appointment logic and wider UX remain open to owner review. Current [browser compatibility](docs/browser-compatibility.md) and [store requirements](docs/extension-stores.md) retain their documented limits.
+Next: [1.0.0 publication preparation](docs/release-1.0.0-plan.md) for Chrome, Edge and Firefox. **Outlook support follows after 1.0.0.** The owner completed the product UX review on 26 October 2026; technical release checks and store/provider approvals remain open. Current [browser compatibility](docs/browser-compatibility.md) and [store requirements](docs/extension-stores.md) retain their documented limits.
 
 SlotDesk helps executive assistants find meeting times across people, calendars and timezones. Review a new invitation, browse existing meetings, edit its details and guests, or choose a new time for an appointment. Every calendar write requires an explicit review and confirmation.
 

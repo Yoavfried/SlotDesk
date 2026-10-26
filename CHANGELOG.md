@@ -1,5 +1,11 @@
 # Repository changelog
 
+## 2026-10-26 — owner review and publisher setup complete
+
+- Record owner acceptance of the product UX and approval to proceed with 1.0.0 preparation.
+- Record owner-confirmed Chrome registration/payment, Edge enrollment and Mozilla readiness at the file-upload stage without publishing account credentials or payment details.
+- Keep incomplete security coverage, backend deployment, native install/update checks, Google approval and actual store submissions explicit. No runtime, package, hosting or repository-visibility change.
+
 ## 2026-10-26 — adopt MIT
 
 - Adopt MIT with owner approval, crediting Speedy, Nina Banai and Yoav Fried. Add root and bundled license copies, retain third-party notices and update package/contributor/store records.

@@ -15,6 +15,8 @@ Initial targets: **Chrome, Edge and Firefox**, confirmed by the owner. [The conc
 
 ## Repository and attribution
 
+Owner status, 26 October 2026: the product UX review is complete and the owner approved proceeding. Chrome registration/payment, Edge enrollment and Mozilla setup through the file-upload stage are confirmed. Store identities, submissions, technical release checks and public repository visibility remain separate from those completed steps.
+
 Credit **Speedy**, **Nina Banai** and **Yoav Fried**, with the two real GitHub profiles in [AUTHORS](../AUTHORS.md). The approved website is [buildwithspeedy.com](https://buildwithspeedy.com). Do not add placeholder URLs. Add extension-platform links only once real listings exist; use the repository as the source-code destination in listings where supported. Do not invent store URLs.
 
 Before making the repository public, review tracked files **and Git history** for credentials, private calendar/user data, internal access/configuration details that need not be published, obsolete artifacts and misleading claims. Remove unnecessary material and rotate any actual exposed credential; deleting a current file does not remove history. Keep useful source, installation/development instructions, decisions, changelogs, third-party notices and accurate support/privacy documentation. Public visibility remains a later owner action.
@@ -36,4 +38,4 @@ The [root LICENSE](../LICENSE) and bundled `extension/LICENSE.txt` contain the a
 - Verify clean install, update with retained settings, backup/import migration, browser restart, account changes, connection loss and recovery; preserve calendar integrity.
 - Link each live listing back to the source repository when the platform permits, and list the real install links in README/installation instructions.
 
-The owner controls final UX acceptance and publication. Planning completion or passing automated checks alone does not mean 1.0.0 is ready.
+The owner completed UX acceptance on 26 October 2026 and retains control of publication. Planning completion or passing automated checks alone does not mean 1.0.0 is ready.

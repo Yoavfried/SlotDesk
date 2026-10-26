@@ -10,7 +10,7 @@ Prepared 26 October 2026 for Chrome Web Store, Microsoft Edge Add-ons and Firefo
 
 Use the approved C2 icon in [the icon assets](../../design/assets/icons/README.md), the real wordmark and synthetic-data screenshots. Never upload private calendars or screenshots showing real personal data. Store screenshots must match the submitted build. Use [buildwithspeedy.com](https://buildwithspeedy.com) as the approved website. Do not invent listing URLs.
 
-Support is [support@buildwithspeedy.com](mailto:support@buildwithspeedy.com), and the website is [buildwithspeedy.com](https://buildwithspeedy.com). The public privacy URL, publisher accounts/identities, Google public OAuth verification and signed/native-browser validation remain open. Final user-experience approval belongs to the owner. The partial security audit identified three issues addressed in this preparation build; it is not exhaustive security clearance. See [review evidence](../release-readiness-review.md).
+Support is [support@buildwithspeedy.com](mailto:support@buildwithspeedy.com), and the website is [buildwithspeedy.com](https://buildwithspeedy.com). The owner confirmed all three publisher registrations and completed the product UX review on 26 October 2026. The exact public privacy URL, store-issued extension identities, Google public OAuth verification and signed/native-browser validation remain open. The partial security audit identified three issues addressed in this preparation build; it is not exhaustive security clearance. See [review evidence](../release-readiness-review.md).
 
 ## Media
 

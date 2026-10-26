@@ -52,7 +52,14 @@
   "publicSupportContactSet": true,
   "projectLicenseAdopted": true,
   "repositoryMadePublic": false,
-  "ownerUxApprovalComplete": false,
+  "ownerUxApprovalComplete": true,
+  "ownerUxApprovedOn": "2026-10-26",
+  "publisherRegistration": {
+    "source": "Owner confirmation on 2026-10-26; store review and submission not asserted",
+    "chrome": "Registered and paid",
+    "edge": "Enrollment complete",
+    "firefox": "Developer submission file-upload stage reached"
+  },
   "outlook": "after 1.0.0",
   "supportEmail": "support@buildwithspeedy.com",
   "website": "https://buildwithspeedy.com",
