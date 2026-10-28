@@ -1,6 +1,6 @@
 ![SlotDesk — make room for what matters](design/assets/slotdesk-banner.svg)
 
-SlotDesk helps executive assistants find meeting times across calendars and timezones. Compare suggestions, review invitations, and manage existing Google Calendar meetings from a browser side panel or full workspace tab.
+SlotDesk helps executive assistants find meeting times across Google calendars and timezones. Compare suggestions, review invitations, and manage existing meetings from a browser side panel or full workspace tab.
 
 Made by **[Speedy](https://buildwithspeedy.com) — [Nina Banai](https://github.com/ninabanai-maker) and [Yoav Fried](https://github.com/Yoavfried)**.
 

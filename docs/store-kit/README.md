@@ -3,6 +3,7 @@
 Prepared 26 October 2026 for Chrome Web Store, Microsoft Edge Add-ons and Firefox AMO. These are review drafts, not live listings. The installed beta remains Google-only; Outlook follows 1.0.0.
 
 - [Listing copy](listing.md)
+- [Shared product language](../product-language.md)
 - [Permissions and data declarations](declarations.md)
 - [Reviewer instructions](reviewer-instructions.md)
 - [Owner publication steps](owner-steps.md)

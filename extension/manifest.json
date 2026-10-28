@@ -4,7 +4,7 @@
   "homepage_url": "https://buildwithspeedy.com",
   "version": "0.9.5.9",
   "minimum_chrome_version": "116",
-  "description": "Find meeting times, review every detail, and send Google Calendar invitations.",
+  "description": "Find meeting times across timezones, check Google Calendar conflicts, and review invitations and changes before sending.",
   "permissions": [
     "sidePanel",
     "identity",

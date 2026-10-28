@@ -10,13 +10,15 @@ MIT. Copyright (c) 2026 Speedy, Nina Banai and Yoav Fried. Bundled third-party f
 
 ## Short description
 
-Find meeting times across timezones, check calendar conflicts, and review invitations and changes before sending.
+Find meeting times across timezones, check Google Calendar conflicts, and review invitations and changes before sending.
 
 ## Full description
 
 Good meetings start with a good time.
 
-SlotDesk helps executive assistants plan Google Calendar meetings across people, calendars and timezones. Save a profile for each person, link the calendars that describe their availability, and find useful meeting options with clear explanations when schedules clash.
+SlotDesk helps executive assistants find meeting times across Google calendars and timezones. Compare suggestions, review invitations, and manage existing meetings from a browser side panel or full workspace tab.
+
+Save a profile for each person, link the calendars that describe their availability, and find useful meeting options with clear explanations when schedules clash.
 
 - Compare suggested times in each participant’s local timezone.
 - Configure working days, convenience hours, blockers and individual meeting rules.
