@@ -1,6 +1,6 @@
 # Reviewer instructions — draft
 
-SlotDesk is a Google Calendar scheduling extension. All code/fonts/data needed for the interface are bundled. There is no build/transpile step and no remote executable code. `npm run package:slotdesk` produces the browser-specific artifacts; Node 22 is used in CI. Preserve pinned font/data license files.
+SlotDesk is a Google Calendar scheduling extension. All code/fonts/data needed for the interface are bundled. Application JavaScript is not transpiled, minified or combined by a module bundler, and there is no remote executable code. The packaging step generates browser-specific manifests and ZIP/XPI artifacts. Supply matching source and complete rebuild instructions for the submitted version. `npm run package:slotdesk` produces the browser-specific artifacts; Node 22 is used in CI. Preserve pinned font/data license files.
 
 The Google OAuth app is currently in Testing. A reviewer needs an approved Google test account and consent to the requested Calendar scopes. Arrange a provider-approved review route through the store’s private reviewer-notes field; do not commit account passwords or bypass the approved audience. This remains a submission blocker until real access is arranged.
 
