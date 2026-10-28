@@ -17,6 +17,6 @@ Support is [support@buildwithspeedy.com](mailto:support@buildwithspeedy.com), an
 
 ## Media
 
-`media/01-workspace.png`, `02-profiles.png` and `03-existing-meetings.png` are 1280×800 draft screenshots captured from the actual interface with synthetic calendars. `media/store-logo-128.png` and `store-logo-512.png` are unchanged copies of the approved icon. Screenshots show the preparation build and must be regenerated for the final submitted build.
+`media/01-workspace.png`, `02-profiles.png`, `03-existing-meetings.png` and `04-meeting-options.png` are 1280×800 RGB screenshots captured on 28 October 2026 from the actual 0.9.5.9 interface with example calendars and profiles. No real account connection or Calendar write was used. Suggested upload order: meeting options, workspace, profiles, existing meetings. `media/store-logo-128.png` and `store-logo-512.png` are unchanged copies of the approved icon. Refresh the screenshots when preparing the final 1.0.0 build.
 
 Chrome accepts 1–5 screenshots at 1280×800; Edge accepts up to six, including this size. Firefox listing images can reuse the captures where the resulting Firefox UI matches. [Chrome listing guidance](https://developer.chrome.com/docs/webstore/cws-dashboard-listing), [Edge listing guidance](https://learn.microsoft.com/en-us/microsoft-edge/extensions/publish/publish-extension).
