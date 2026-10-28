@@ -1,0 +1,22 @@
+{
+  "version": "0.9.5.4",
+  "date": "2026-10-28",
+  "status": "private-hotfix",
+  "sourceBaseRevision": "0006f21f7d7ee45bb87400ade95a6e7754cc7da3",
+  "applicationChecks": 2467,
+  "focusedBrowserAssertions": {
+    "chromeRelativeDates": 24,
+    "edgeRelativeDates": 24,
+    "chromeProfileLifecycle": 32,
+    "chromePreviousHotfix": 30
+  },
+  "reportedRegressionReproducedBeforeFix": true,
+  "browsers": ["Installed Chrome on Windows", "Installed Edge on Windows"],
+  "providerEnvironment": "Local synthetic Google identity/calendar fixture; no real sign-in",
+  "nativeMacTested": false,
+  "syntheticCalendarWrites": 0,
+  "unchangedBaselineAppointments": 9,
+  "runtimeExceptions": 0,
+  "review": "docs/relative-search-review-0.9.5.4.md",
+  "separateReleaseReadinessReviewComplete": false
+}

@@ -1,5 +1,11 @@
 # Repository changelog
 
+## 2026-10-28 — SlotDesk 0.9.5.4 relative-date search repair
+
+- Reproduce and fix results being replaced by Settings updated when reopening This week / Next week with older saved dates. Keep rendered relative dates separate from persisted synchronization baselines.
+- Resolve presets on submission, preserve custom dates and use the displayed date for exclusions. Keep real remote-edit invalidation intact.
+- Add the older-workspace/day-rollover regression and rerun preceding hotfix coverage. See the [review](docs/relative-search-review-0.9.5.4.md).
+
 ## 2026-10-26 — SlotDesk 0.9.5.3 fresh-profile repair
 
 - Fix the blank initial timezone history created when confirming a new suggested or manual profile. Validate the final assembled profile before saving.

@@ -1,5 +1,12 @@
 # SlotDesk changelog
 
+## 0.9.5.4 — 28 October 2026
+
+- Fix This week / Next week searches losing their results after reopening a workspace with older saved dates. Rendering no longer changes the saved date baseline behind the synchronization logic.
+- Refresh relative dates at submission, retain explicit custom dates on reopening and start exclusions on the displayed search date.
+- Replace the misleading Settings updated placeholder. Actual profile/search edits from another window still clear stale proposals.
+- Add Ghana / This week / 45-minute, older-workspace, day-change and background-save regressions; preserve previous profile, guest and calendar-default fixes. [Review and limits](relative-search-review-0.9.5.4.md).
+
 ## 0.9.5.3 — 26 October 2026
 
 - Fix meeting search failing with Invalid trip timezone history after a new person’s first timezone confirmation. Initialize valid timezone history and validate the complete profile before saving it.
