@@ -40,10 +40,12 @@ Support: support@buildwithspeedy.com
 
 Source code (MIT): https://github.com/Yoavfried/SlotDesk
 
+Privacy policy: https://buildwithspeedy.com/slotdesk/privacy
+
 ## Source-code destination
 
 The repository is public under MIT. The full description above includes its source-code link; also use that address in any dedicated source-code field. Keep the Speedy website as the product homepage. Add live store links to the repository only after they exist.
 
-## Fields pending owner setup
+## Store contact fields
 
-Use support@buildwithspeedy.com in support/contact email fields and https://buildwithspeedy.com in website/homepage fields for Chrome, Edge and Firefox. The privacy-policy URL still needs confirmation; do not substitute the homepage unless it actually hosts the notice. Complete publisher identity/contact fields with real details in each dashboard. Do not submit this draft with missing fields.
+Use support@buildwithspeedy.com in support/contact email fields and https://buildwithspeedy.com in website/homepage fields. Use https://buildwithspeedy.com/slotdesk/privacy in Chrome and Edge privacy-policy URL fields and Google OAuth configuration. Where Firefox asks for policy text, provide the full matching notice. The privacy page was verified live on 28 October 2026. Complete publisher identity/contact fields with real details in each dashboard. Final package and review gates remain in the [owner steps](owner-steps.md).

@@ -14,7 +14,7 @@ See the [per-store readiness table](extension-stores.md) for Chrome, Edge, Firef
 - Source, reachable history, screenshots and downloadable artifacts were reviewed before source publication. Continue reviewing new changes and artifacts for credentials or private data. Keep intentionally public extension/OAuth identifiers distinct from secrets. [Review evidence](release-readiness-review.md).
 - MIT was approved and adopted on 26 October 2026; retain the root LICENSE and bundled license copy. Preserve existing third-party/font/data license texts.
 - Credit **Speedy**, **Nina Banai** and **Yoav Fried**, with [buildwithspeedy.com](https://buildwithspeedy.com) as the approved website and [support@buildwithspeedy.com](mailto:support@buildwithspeedy.com) as support. Add real extension-listing links once published.
-- Keep privacy/storage/data-retention statements accurate for the actual architecture. Any backend, email access, LLM or cloud backup requires updated decisions and disclosures.
+- The [public privacy notice](https://buildwithspeedy.com/slotdesk/privacy) is live and was verified on 28 October 2026. Use that canonical URL in store/OAuth forms and keep its privacy/storage/data-retention statements aligned with the actual store build. New data handling, email access, LLM or cloud backup requires updated decisions and disclosures.
 - Link store descriptions to the public MIT source repository. Add real extension-listing links to the repository only once those listings exist.
 
 Outlook is accepted future provider work. Email/appointment LLM extraction, flight APIs and meeting-content search remain [deferred](roadmap.md).
