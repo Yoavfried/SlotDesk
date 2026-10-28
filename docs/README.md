@@ -1,6 +1,6 @@
 # SlotDesk documentation
 
-Current preparation build: **0.9.5.1**. [Release-readiness review](release-readiness-review.md) · [Store submission kit](store-kit/README.md). Last published beta: **0.9.5**. [Scope](release-plan-0.9.5.md) · [Browser evidence](browser-compatibility.md) · [Owner sign-in activation](browser-signin-setup.md) · [Store requirements](extension-stores.md). Google/Vercel activation completed on 21 October, with public readiness verified true. Real new-flow Google consent remains to be checked; unsigned Firefox and Safari-source are not approved store releases.
+Current preparation build: **0.9.5.5**. [Release notes](releases/README.md) · [Current New meeting rules](new-meeting-current-contract.md) · [New meeting review](new-meeting-review-0.9.5.5.md) · [Release-readiness review](release-readiness-review.md) · [Store submission kit](store-kit/README.md). Chrome, Edge and Firefox publication preparation continues. Unsigned Firefox and Safari-source packages are development artifacts, not approved store releases.
 
 | Area | Records |
 | --- | --- |

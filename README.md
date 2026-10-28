@@ -1,12 +1,12 @@
 ![SlotDesk — make room for what matters](design/assets/slotdesk-banner.svg)
 
-**0.9.5.4 · Google Calendar · private release-preparation build**
+**0.9.5.5 · Google Calendar · private release-preparation build**
 
-This preparation build adds Firefox-only optional registration sharing and addresses three security findings in imported profiles/trips and sign-in admission. It is not the public 1.0.0 release. [Review evidence](docs/release-readiness-review.md) · [Store submission kit](docs/store-kit/README.md).
+This update improves loading controls and planning-email layout, fixes invitation recovery and stale options after duration changes, and corrects later-date and after-work suggestions. [Release notes](docs/releases/v0.9.5.5.md) · [New meeting review](docs/new-meeting-review-0.9.5.5.md) · [Current scheduling rules](docs/new-meeting-current-contract.md).
 
-Version **0.9.5** adds a separate Trips manager with date-first flight matching, editable arrival estimates, connections, return flights and timezone transitions. Flight discovery and source changes appear in Alerts for review. Participant clocks update each minute, and the selected SD icon is installed. [Release scope](docs/release-plan-0.9.5.md) · [Validation](docs/testing.md) · [Version history](docs/changelog.md).
+The current release includes a separate Trips manager, reviewed flight alerts, live participant clocks and portable profile/settings backups. [Version history](docs/changelog.md) · [Store submission kit](docs/store-kit/README.md).
 
-Next: [1.0.0 publication preparation](docs/release-1.0.0-plan.md) for Chrome, Edge and Firefox. **Outlook support follows after 1.0.0.** The owner completed the product UX review on 26 October 2026; technical release checks and store/provider approvals remain open. Current [browser compatibility](docs/browser-compatibility.md) and [store requirements](docs/extension-stores.md) retain their documented limits.
+Next: [1.0.0 publication preparation](docs/release-1.0.0-plan.md) for Chrome, Edge and Firefox. **Outlook support follows after 1.0.0.** Store/provider approvals and the remaining technical release checks are tracked in the [release-readiness review](docs/release-readiness-review.md). [Browser compatibility](docs/browser-compatibility.md) and [store requirements](docs/extension-stores.md) describe platform limits.
 
 SlotDesk helps executive assistants find meeting times across people, calendars and timezones. Review a new invitation, browse existing meetings, edit its details and guests, or choose a new time for an appointment. Every calendar write requires an explicit review and confirmation.
 

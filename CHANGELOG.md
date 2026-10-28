@@ -1,364 +1,535 @@
-# Repository changelog
+# SlotDesk changelog
 
-## 2026-10-28 — SlotDesk 0.9.5.4 relative-date search repair
+Changes are grouped as Added, Improved and Fixed. Entries describe the behavior released in each version, including same-version hotfixes.
 
-- Reproduce and fix results being replaced by Settings updated when reopening This week / Next week with older saved dates. Keep rendered relative dates separate from persisted synchronization baselines.
-- Resolve presets on submission, preserve custom dates and use the displayed date for exclusions. Keep real remote-edit invalidation intact.
-- Add the older-workspace/day-rollover regression and rerun preceding hotfix coverage. See the [review](docs/relative-search-review-0.9.5.4.md).
+## 0.9.5.5 — 28 October 2026
 
-## 2026-10-26 — SlotDesk 0.9.5.3 fresh-profile repair
+### Improved
 
-- Fix the blank initial timezone history created when confirming a new suggested or manual profile. Validate the final assembled profile before saving.
-- Recover the specific already-saved defect on reload and portable import without clearing profiles, trips or other settings. Preserve rejection of other invalid/unsupported trip data.
-- Review onboarding/profile/search persistence paths, add fresh-profile Chrome/Edge regressions, and align restore/help wording with optional calendar defaults. See the [review record](docs/profile-lifecycle-review-0.9.5.3.md).
+- Cancel loading uses a fixed place in the meeting-options section and remains available inside invitation-review and rescheduling dialogs.
+- Planning-email copy buttons have consistent space below their fields.
+- Release history uses public descriptions grouped as Added, Improved and Fixed.
 
-## 2026-10-26 — SlotDesk 0.9.5.2 meeting/onboarding hotfix
+### Fixed
 
-- Fix email-only guest rendering before timezone confirmation and preserve the existing quick Create profile flow.
-- Make defaults optional while requiring an organizing calendar for the meeting and accessible selected calendars for onboarding.
-- Bundle the free Lucide plane icon and notice; retain existing credits and design language.
-- Keep the ongoing 1.0.0 technical review and publication status separate from this product hotfix.
+- Duration edits immediately save valid values and remove outdated meeting options.
+- Retrying an unfinished invitation preserves email-only guests and their confirmed timezones.
+- Changes to overlap details or optional guests’ conflicts require another review before sending.
+- Later-date suggestions follow the active working schedule and the timezone in effect at the workweek boundary.
+- Generate more options can include a clear after-work choice before overlapping alternatives.
+- Cancelling a search also stops the initial calendar-access check.
+- Calendar-selection warnings correctly explain when profile calendar links will be removed.
 
-## 2026-10-26 — owner review and publisher setup complete
+## 0.9.5.4 — 28 October 2026
 
-- Record owner acceptance of the product UX and approval to proceed with 1.0.0 preparation.
-- Record owner-confirmed Chrome registration/payment, Edge enrollment and Mozilla readiness at the file-upload stage without publishing account credentials or payment details.
-- Keep incomplete security coverage, backend deployment, native install/update checks, Google approval and actual store submissions explicit. No runtime, package, hosting or repository-visibility change.
+### Improved
 
-## 2026-10-26 — adopt MIT
+- This week and Next week resolve their dates when a search starts. Custom dates remain unchanged when reopening SlotDesk.
+- Excluded times start from the date currently shown in the search form.
 
-- Adopt MIT with owner approval, crediting Speedy, Nina Banai and Yoav Fried. Add root and bundled license copies, retain third-party notices and update package/contributor/store records.
-- Record that the SlotDesk website page exists and website/repository work is handled separately by the owner. Keep this workstream focused on the extension and publication preparation.
-- Keep repository visibility and existing release archives unchanged; licensing is no longer an open decision.
+### Fixed
 
-## 2026-10-26 — approved Speedy website and support contact
+- Meeting options no longer disappear after background saves when reopening a workspace with older relative dates.
+- Removed the misleading Settings updated result placeholder. Changes to participants or search settings in another window still invalidate outdated options.
 
-- Link https://buildwithspeedy.com and support@buildwithspeedy.com in project credits, support/privacy pages and extension-platform preparation materials.
-- Supersede the earlier no-website direction with the owner's supplied domain. Keep actual store listings and the public privacy-page URL pending; preserve existing prerelease assets and private visibility.
+## 0.9.5.3 — 26 October 2026
 
-## 2026-10-26 — 1.0.0 preparation / 0.9.5.1
+### Improved
 
-- Target Chrome, Edge and Firefox for 1.0.0; defer Outlook until afterward.
-- Prepare store copy/declarations, reviewer guidance, synthetic screenshots, license proposal and consolidated owner steps.
-- Implement Firefox-only optional lead sharing and source fixes for three confirmed security findings; preserve the existing hosted-service configuration.
-- Add the security reporting guidance, correct token/backend and recovery-export disclosures, and remove operational deployment IDs from current documentation. Keep useful original history intact.
-- Record partial audit coverage, native Firefox/provider review, lint dispositions, backend redeployment, support contact, licensing and public publication as remaining gates. Neither repository visibility nor production hosting is changed.
+- Unsupported trip-file versions are rejected instead of being converted silently.
+- Restoring a backup keeps the default invitation calendar optional.
 
-## 2026-10-26 — release 0.9.5
+### Fixed
 
-- Implement the accepted trip/flight, Alerts, live-clock and selected-icon scope; preserve legacy and portable settings.
-- Record local logic/browser/security-boundary review and fixes, including dropdown footers and calendar-scope cache isolation.
-- Credit Speedy, Nina Banai and Yoav Fried; remove website placeholders.
-- Record Outlook next, then 1.0.0 store/public-repository preparation and the pending license choice. No repository visibility or hosting change.
+- Fixed meeting searches failing with Invalid trip timezone history after a new profile’s first timezone confirmation.
+- Automatically repair affected saved profiles and imported backups while preserving their selected timezone, trips, blockers and other settings. No data reset is required.
 
+## 0.9.5.2 — 26 October 2026
 
-## 2026-10-26 — complete 0.9.5 product planning
+### Improved
 
-- Record acceptance of the final five flight decisions: outer/connection buffers, detected-flight confirmation, round-trip profile timezone edits, deletion without timezone rewind, and missing-source review.
-- Require Alerts to start detected-flight addition and review linked-flight changes/problems. Mark product planning complete while retaining implementation, verification and owner UX/release review.
-- Documentation only; current runtime/packages remain 0.9.4.9.
+- The default invitation calendar is optional. New and unfinished meetings open directly, and an existing default can be cleared in Settings.
+- Each meeting requires a writable organizing calendar before searching or sending. Onboarding requires at least one selected accessible calendar.
+- Replaced the airplane drawing with a locally bundled Lucide plane icon.
 
-## 2026-10-26 — select C2 with bold brackets
+### Fixed
 
-- Record the owner's final icon choice: C2 middle-weight SD lettering with original/bold brackets, unchanged layout/colors/opacity.
-- Prepare the canonical vector and nine PNG sizes for 0.9.5 integration. No current runtime/package change.
+- Email-only guests appear immediately as participant cards before timezone confirmation. They can join searches without a saved profile, and Create profile preserves their email and timezone without duplicating the participant.
 
-## 2026-10-26 — nine-option icon matrix
+## Project metadata — 26 October 2026
 
-- Present all three layouts at original, middle and slim stroke weights, with SVGs, raster size exports and stable A1–C3 selection labels.
-- Keep icon selection pending for 0.9.5; no runtime/package change.
+### Added
 
-## 2026-10-26 — add 0.9.5 live clocks and icon scope
+- MIT licensing, with credit to Speedy, Nina Banai and Yoav Fried.
+- Public support at support@buildwithspeedy.com and project information at https://buildwithspeedy.com.
 
-- Plan minute-by-minute participant local-time updates without rerendering the screen or requesting calendars.
-- Include final icon integration in 0.9.5, before store publication; add the requested intermediate C proposal for owner selection. Runtime remains 0.9.4.9.
+## 0.9.5.1 — 26 October 2026
 
-## 2026-10-26 — refine icon proposals and trip decisions
+### Added
 
-- Prepare slimmer SD and bracketed SD vector/raster proposals, keeping originals for comparison; icon selection and installation remain pending.
-- Record 0.9.5 connection margins, confirmation of changed calendar flight details and trip/profile timezone precedence. No application or package version change.
+- Optional registration-analysis sharing in Firefox, with a separate choice for project updates.
 
-## 2026-10-26 — plan trip-based travel for 0.9.5
+### Improved
 
-- Record the owner’s trip list, sequential flights/timezones, calendar-assisted entry, Flight back/open-ended behavior and separate manager/icon direction.
-- Expand remaining flight planning for 0.9.5. Audit profile entry points and list pending timing/matching/edge-case decisions.
-- Record accepted date-first entry, asking only for missing time/route information, editable estimated arrival, arrival-based timezone changes and clear/uncertain match policy. Research offline airport/distance data without presenting estimates as real schedules.
-- Documentation only; runtime, versioned packages and calendar data remain unchanged.
+- Firefox remembers registration-sharing preferences and respects permission revocation.
+- Clarified privacy information about authentication, local configuration and recovery exports.
 
+### Fixed
 
-## 2026-10-26 — SlotDesk 0.9.4.9
+- Reject unsafe imported legacy matching expressions while retaining supported keyword rules.
+- Remove temporary flight-editor fields from saved and imported trips, and safely render recurring-event identifiers.
+- Prevent invalid sign-in origins from consuming shared sign-in capacity.
+- Keep the Google sign-in endpoint when changing the registration endpoint.
 
-- Select linked profile calendars automatically and synchronize changed mappings.
-- Keep calendar choices horizontal with truncated/full-hover labels across the interface.
-- Show meeting treatment in a single live dropdown reflecting automatic detection and explicit overrides.
-- Record focused profile/recurrence/layout checks and unchanged calendars; keep flight redesign and icon selection pending.
+## 0.9.5 — 26 October 2026
 
+### Added
 
-## 2026-10-26 — SlotDesk 0.9.4.8
+- A separate Trips manager with ordered flights, connections and return flights.
+- Date-first flight entry with calendar matching, airport and city lookup, and editable arrival estimates when calendar details are unavailable.
+- Alerts for possible flights and changes to linked flight events, with review before updating a saved trip.
+- Participant local clocks that update every minute, plus SD icons for the browser toolbar, extension list and SlotDesk tab.
 
-- Add per-onboarding leads with browser labels and retry idempotency, preserving existing data.
-- Fix timezone dropdown overlays across the interface.
-- Prepare two branded icon proposals for owner selection, without installing icons.
+### Improved
 
+- Flights block their full interval. Connections protect 30 minutes after arrival and before departure while allowing meetings during longer layovers; outer trip boundaries retain two-hour inconvenience buffers.
+- Meeting timezone calculations follow flight arrivals. Round trips retain the saved profile timezone afterward; completed one-way trips update it to the destination while respecting later manual changes.
+- Full backups and selected-profile files include trip links and timezone history.
+- Trips remain saved when linked events change or become unavailable. Deleting a trip changes SlotDesk settings without deleting calendar events.
 
-## 2026-10-26 — SlotDesk sidebar hotfix
+### Fixed
 
-- Fix the reserved right-hand header strip and narrow-panel logo/control collisions; improve narrow home-card flow and workspace scrolling.
-- Record focused layout/accessibility/search checks and clarify existing email-keyed lead deduplication without changing registration behavior.
-- Refresh 0.9.4.7 packages/checksums; retain the historical release tag and flight-review scope.
+- Improved airport-name matching, dropdown positioning and flight-review freshness.
+- Avoid duplicate linked-flight intervals and keep moved source events visible to scheduling until the trip change is reviewed.
 
-## 2026-10-22 — SlotDesk 0.9.4.7
+## 0.9.4.9 — 26 October 2026
 
-Implement the owner's agreed non-flight advanced-profile update, with local rule persistence, portable files, recurring scope and synthetic validation. Keep the separate flight review open. See the [product release](docs/release-plan-0.9.4.7.md).
+### Improved
 
-## 2026-10-22 — Final non-flight profile decisions accepted
+- Manage meetings starts with all calendars linked to the profile selected. Changes to assignments update the list, while refreshes and date changes preserve chosen filters.
+- A single treatment dropdown replaces separate Default, Ignore, Protect and Assign leave buttons. Default shows the current detected classification and updates with event-detection or all-day leave settings.
 
-- Record accepted blocker form/fields/helper, profile timezone, immediate removal without Undo and reuse of Existing meetings UI.
-- Default recurring treatment to This occurrence; apply last-action-wins rules so series-wide changes replace earlier individual exceptions.
-- Close Blockers/Manage meetings planning and leave travel/flight review open. Documentation only; no application/package changes.
+### Fixed
 
-## 2026-10-22 — Assigned leave protection confirmed
+- Calendar checkboxes and names stay on the same row at narrow widths. Long calendar names truncate and reveal the full text on hover.
 
-- Record that manual Assign leave blocks despite Allow overlaps.
-- Consolidate the remaining Blockers/Manage meetings product decisions into one eight-item recommendation batch for owner review. Documentation only; no implementation or package change.
+## 0.9.4.8 — 26 October 2026
 
-## 2026-10-22 — Non-flight Event detection approved
+### Added
 
-- Record owner approval of category labels, default keyword/phrase bubbles, field helper text, whole-word matching, empty-list behavior and non-flight classification precedence.
-- Preserve custom terms, manual event treatment and accepted overlap semantics. Flight detection remains for the flight review. Documentation only; runtime/packages remain unchanged.
+- Registration records include the reported browser name. Each completed onboarding creates a separate record; retries of that completion do not create duplicates.
 
-## 2026-10-22 — Blockers and consolidated leave review
+### Improved
 
-- Record Blockers as the third advanced category, recurring/one-off removable-entry UX and identifiable recurring-series meeting treatment.
-- Remove the planned Leave exceptions section in favor of Ignore within Manage meetings. Preserve legacy settings during migration.
-- Draft clearer Event detection fields, keyword bubbles/defaults and matching precedence for owner review. Documentation only; runtime/packages remain unchanged.
+- Updated onboarding and privacy information to describe registration records.
 
-## 2026-10-22 — Leave-exception browsing approved
+### Fixed
 
-- Rename the section Leave exceptions; record accepted search, three-entry pagination, whole/partial occurrence exceptions and restoration.
-- Add Assign leave to the planned local meeting-treatment choices and include assigned entries in the exception list. Keep the new leave/overlap precedence question explicit. Documentation only; no runtime or package change.
+- Timezone search opens above nearby controls without enlarging its dialog. Click-away, focus departure and Escape close the list, and results stay within the viewport.
 
-## 2026-10-22 — Further profile-review decisions
+## 0.9.4.7 — 22 October 2026
 
-- Confirm removal of the standalone timezone-clue helper and retention of factual Existing meetings overlap labels even for ignored overlaps.
-- Reopen the proposed positive meeting-specific availability UI around the owner's recurring-profile-blocker direction, while preserving existing saved rules. Holiday-exception browser details remain a proposal. Documentation only; runtime/packages remain unchanged.
+### Added
 
-## 2026-10-22 — Advanced-profile category help approved
+- One-off and recurring profile blockers with date, weekday, all-day and timed controls.
+- Category help and opt-in keyword detection for leave, flexible meetings and protected time.
+- Profile-level Manage meetings with calendar and date filters, event details, and Default, Ignore, Protect or Assign leave treatment. Recurring entries support one occurrence or the entire series.
 
-- Record approved category information-icon text, rename Meeting rules to Notices and buffers and move the general overlap control to Manage meetings.
-- Keep the Travel & flights tooltip in the pending flight review. Documentation only; no runtime, package, version or hosting change.
+### Improved
 
-## 2026-10-22 — 0.9.5 advanced-profile review started
+- Organized advanced settings into Working days and hours, Convenience hours, Blockers, Notices and buffers, Travel & flights, Event detection and Manage meetings.
+- Ignore working time and Ignore convenience independently remove their corresponding rules. Allow overlaps ignores ordinary conflicts for that person while preserving explicit protection, leave, flights, blockers and configured buffers.
+- Later series-wide treatment replaces earlier occurrence exceptions; later occurrence changes affect only that instance.
+- Preserve legacy availability and leave rules in saved settings and portable files.
 
-- Record the owner's advanced-profile wording/UX/logic directions and three confirmed policy choices. Distinguish accepted changes from the proposed timezone-clue removal and detailed calendar-browser/migration UX.
-- Require travel/flight review and fixes in 0.9.5; keep owner authorization and UX approval open. Documentation only: current runtime, packages and version remain 0.9.4.6.
+### Fixed
 
-## 2026-10-22 — 0.9.4.6 search selection and scroll hotfix
+- The header spans the panel while workspace scrolling stays below it. Narrow panels keep the logo and controls separate and use compact home cards.
 
-- Implement the final owner direction: three time groups, earliest equally suitable starts, one representative/date for longer ranges, and up to two featured clear fallback cards before three nearest in-range compromises. Keep only one later-date choice across all batches.
-- Preserve Sunday–Thursday workweeks and add explicit Sunday/occupied-Sunday regressions. Keep duration limits, hard constraints, optional guests and reviewed Calendar writes.
-- Remove unconditional focus scrolling, the doubled sticky-header offset and timezone-list page scrolling; retain keyboard/error focus and append-only results.
-- Validate 2,176 application checks, 95 browser assertions and 20 accessibility scans without automated violations. Nine synthetic appointments remain unchanged with zero Calendar writes. Refresh the same-version packages and parent reference; no hosting change.
+## 0.9.4.6 — 21 October 2026
 
-## 2026-10-22 — 0.9.4.6 new-meeting layout hotfix
+### Added
 
-- Remove the duplicate selected-date caption; use the owner-requested Time Zone label and keep its field and Review & create aligned left at every width.
-- Group the calendar-coverage icon directly with the participant name. Keep narrow-window hover details inside the viewport.
-- Show warning headings with only a concise actual-overlap interval underneath meeting overlaps. Separate overlapping appointments retain their own headings; other warning paragraphs are removed. Scheduling policy and calendar writers are unchanged.
-- Validate 2,118 application checks and 67 synthetic browser assertions with all nine baseline appointments unchanged and zero calendar writes. Refresh the same-version packages; retain the historical release tag.
+- Google authorization that can work independently of browser-account sign-in, with session-only credentials and reconnect/disconnect handling.
+- Browser-aware sidebar or full-tab launch and separate Chromium, Firefox development and Safari source packages.
+- Safe connection diagnostics in Help.
 
-## 2026-10-22 — Deferred cloud account storage proposal
+### Improved
 
-- Record cross-browser/device workspace sync and compact versioned settings storage as unconfirmed future feature DF11, including unresolved account/provider, migration, synchronization and cost decisions.
-- Confirm that browser-based storage remains acceptable and non-blocking. Documentation only; no runtime, hosting, release version or package changes.
+- Onboarding starts with workspace calendars, followed by your profile and familiar people. Interrupted onboarding restarts at calendar selection with saved values available to prefill.
+- Suggest the profile name from exact-email matches in selected calendar metadata without replacing typed text.
+- Meeting options use three time-of-day groups and the earliest equally suitable start in each. Longer ranges show one compromise per eligible date.
+- When the selected range has no suitable option, feature a clear later-date option and a clear in-range outside-working-hours option when available, followed by the nearest in-range compromises. Generate more appends options without replacing existing cards.
+- Keep timezone and Review & create controls left-aligned; show concise warning headings and actual overlap intervals.
 
-## 2026-10-21 — 0.9.4.6 onboarding hotfix
+### Fixed
 
-- Implement the owner-confirmed calendar → own-profile → familiar-people flow, below-list notice and interrupted-onboarding restart policy. Saved entries remain available to prefill; completion still requires the third-step action.
-- Add a bounded exact-email name hint from selected calendar metadata without extra Google permission, blocking setup or overwriting typing. Validate 2,118 application checks and 24 synthetic browser assertions with nine unchanged appointments and zero writes.
-- Refresh the same-version beta packages and parent source/hash reference; keep hosting configuration and the original release tag intact.
+- Prevent unexpected page jumps from focus handling, header offsets and timezone-list scrolling.
+- Include Sunday correctly for Sunday–Thursday working weeks.
+- Keep the calendar-status icon beside each participant’s name and remove the duplicate selected-date caption.
 
-## 2026-10-21 — Google browser connection activated
+## 0.9.4.5 — 20 October 2026
 
-- Record the owner-completed Google/Vercel setup and READY production redeployment, independently verified as HTTP 200 / ready true / version 0.9.4.6. No secrets enter Git.
-- Keep real-provider consent separate from configuration readiness. Retain the exact released runtime/package hashes and document updating the existing installed folder plus Reload, preserving local data.
+### Added
 
-## 2026-10-21 — SlotDesk 0.9.4.6
+- An editable planning email covering all displayed options, with subject and message copy actions. Shared text omits internal calendar conflicts and includes known unavailable guests only when relevant.
+- Meeting-wide excluded times and grouped overlap review with individual rescheduling actions.
 
-- Implement the owner-authorized browser platform/authentication/package work with explicit per-target evidence and limits. Add hosted broker source and a single owner activation guide; no store publication or Google audience change.
-- Record session-only credential handling, unchanged calendar mutation boundaries and the remaining Firefox/Safari, browser/OS and store preparation work. Keep the parent website on hold and 0.9.5 advanced profiles owner-led.
+### Improved
 
-## 2026-10-21 — Browser compatibility planning
+- Automatically consider useful shorter meetings and qualifying later dates. Generate more options adds three further choices without overlapping existing suggestions.
+- Use compact participant rows with calendar icons, local times, one prioritized status and concise warnings.
+- Show readable city/country or US city/state timezone labels throughout the interface and copied text.
+- Simplify the search form by removing redundant advanced controls, diagnostic refresh, individual Copy option actions and excluded-candidate details.
+- Per-person Ignore usual convenience hours can permit outside-range suggestions while preserving other active rules.
 
-- Inventory authentication, native panel startup, manifests/backgrounds, locks/local storage, file/clipboard/UI and service-origin dependencies. Propose a shared platform layer and desktop Chromium → Firefox → Safari sequence with actual-package integration evidence.
-- Keep store rollout, mobile and a hosted no-install workspace as separate decisions. No runtime/browser port, package refresh or authentication deployment in this documentation change.
+### Fixed
 
-## 2026-10-21 — Sign-in error-reporting hotfix
+- Google connection failures now distinguish configuration, permission, browser-sign-in, network and canceled-consent problems with actionable messages and safe reference codes.
 
-- Classify Google sign-in failures with actionable messages and stable safe references, beginning with the reproduced Vivaldi browser-sign-in refusal. Keep the current OAuth flow and Calendar writes unchanged.
-- Record the required system-wide error-reporting review and explain independent Google consent, approved beta audiences and the separate store-publication process.
+## 0.9.4 — 19 October 2026
 
-## 2026-10-20 — SlotDesk 0.9.4.5
+### Added
 
-- Implement the authorized new-meeting policy, compact factual option cards, friendly selected-city labels, local planning-email preview and connected overlap review. Preserve narrow reviewed Calendar writes and existing OAuth identity/scopes.
-- Record accepted policy interactions, implementation boundaries, synthetic integrity evidence and the separate owner-led 0.9.5 advanced-profile review. Package 0.9.4.5 for the private pilot; appointment logic remains open for further owner feedback.
+- A unified Meeting options list with clearer conflict categories and actual result counts.
 
-## 2026-10-19 — SlotDesk 0.9.4
+### Improved
 
-- Same-version hotfix: separate old/new appointment rescheduling actions, verified source links and Last update in alerts. Record both mandatory owner reviews before 0.9.5; no autonomous review substitution.
+- Prefer ten-minute starts, using five-minute starts when they improve conflict avoidance or optional attendance. Suggestions never use finer units.
+- Treat required guests equally, prioritize guest working hours over permitted own-calendar overlaps, and prefer clash-free options over own working hours when guest fit is equal.
+- Prefer requested duration and dates before shorter and later alternatives. Vary equally suitable options by time of day on the earliest eligible dates.
+- Keep start spacing and options-per-day controls as advanced overrides.
+- Show rescheduling follow-ups in Existing meetings and Alerts, with explicit actions for the existing appointment or the SlotDesk appointment. Show the latest alert scan as Last update.
 
-- Same-version hotfix: put rescheduling follow-ups in Existing meetings and bell alerts, clearing them from the main menu.
-- Implement the confirmed ranking, precision, Advanced overrides, unified results and conflict explanations for new meetings and rescheduling. Record current semantics, compatibility and synthetic validation; preserve Google identity/permissions and reviewed writes.
-- Package 0.9.4 for the private pilot. Schedule the individual advanced-profile UX work for 0.9.5; overall owner UX approval remains separate.
+### Fixed
 
+- Remove rescheduling follow-ups from the main menu and retain them until dismissed or resolved.
 
-## 2026-10-19 — Scheduling rules review
+## 0.9.3.5 — 19 October 2026
 
-- Record confirmed 10-/5-minute precision, one result list, guest/own overlap priorities, equal required guests, original-request-first alternatives, own title-inference fallbacks and earliest-date time-band diversity.
-- Confirm a universal 5-minute minimum for suggested starts, optional-attendance improvements at 5 minutes, and retained Advanced spacing/per-day overrides with automatic defaults. Avoid redundant inferior overlaps in one time group; a same-band overlap exception is not approved.
-- Map situation families, flag interactions, honest calendar-confidence/conflict categories and confirmed comparison decisions. This is product planning; no ranking change or replacement package is shipped by this record.
+### Added
 
-## 2026-10-19 — SlotDesk 0.9.3.5
+- Locally bundled DM Sans for ordinary interface text and consistent typography, navigation icons and spacing.
+- Offline timezone search by city, country and common timezone name, including spelling tolerance.
 
-- Same-version search hotfix: keep edited attendees in place; add broad offline city/country/timezone lookup; show own automatically detected time off as reviewed overlap alternatives and explain remaining protected blockers. Keep explicit protections and calendar-write boundaries. Record regional holidays as future work.
+### Improved
 
-- Same-version loading/profile hotfix: recover cancelled meeting reads on return, move Refresh beside the count with actionable notices above it, and save profile changes quietly while retaining real errors.
-- Same-version hotfix: audit the whole shipped interface for capitalization, correct the remaining title-case labels and generated warnings, and remove ordinary-heading exceptions from the style guide.
-- Implement the approved styling and profile/calendar intermediate release, retain the supplied logo/robotic accents, and add a working style guide.
-- Guard saved email changes and new-profile creation; simplify calendar links, no-access behavior and explicit scope removal. Document validation and preserve reviewed Calendar-write boundaries.
-- Keep the individual advanced settings review for 0.9.4 and overall UX approval with the owner.
+- Use sentence case throughout ordinary interface text while preserving names, brands and robotic accents.
+- Separate Availability calendars and More settings. Add calendars from the selected workspace, show saved links as rows, and hide controls when no calendar access is selected.
+- Lock the own-profile email. Invalid or duplicate edits to other profile emails restore the saved address with an alert; new profiles require a valid email and timezone.
+- Own-calendar automatically detected time off can appear as a warned overlap alternative; explicit protection, flights and other participants’ leave remain blocking.
+- Place Refresh meetings beside the meeting count and show actionable loading warnings above it.
 
-## 2026-10-18 — SlotDesk 0.9.3 accessibility
+### Fixed
 
-- Further same-version card polish: place email with the name, replace availability captions with a timezone-row calendar icon and hover/focus explanation, move automatic inclusion guidance to linked-calendar profile settings, and shorten the per-meeting overlap copy.
-- Same-version UI follow-up: align the participant Add button, dismiss suggestions outside the picker/on page scroll, keep them below the header, and use Edit Profile as the editor heading. Record advanced profile settings cleanup/improvement as the next task.
+- Keep participants in their existing positions after profile edits.
+- Restart interrupted meeting loads when returning to Existing meetings, and prevent canceled responses from overwriting newer results.
+- Keep timezone chevrons at the right edge and remove routine Saved messages while preserving real validation or storage errors.
+- Removing a calendar from workspace selection removes its profile assignments; temporary read failures do not erase links.
 
-- Expand the open UX review and reserve readiness approval to the owner.
-- Implement and verify focused accessibility fixes; preserve scheduling rules, Google permissions and reviewed calendar-write boundaries.
-- Add a repeatable synthetic browser fixture/journey and record technical coverage without claiming full accessibility conformance.
+## 0.9.3 — 18 October 2026
 
-## 2026-10-18 — SlotDesk 0.9.2
+### Added
 
-- Implement the accepted live profile, independent flight/travel Save/Discard and portable configuration-file contracts.
-- Add profile/calendar-status, wording, keyboard and responsive refinements; document saved-data boundaries and local validation.
-- Package the private Chrome pilot with unchanged Google permissions and reviewed calendar writers. Broader website work stays on hold.
+- Skip to workspace navigation and keyboard-operable profile suggestions with announced active choices.
 
-## 2026-10-18 — Profile and flight save policies settled
+### Improved
 
-- Record live profile editing without general Save/Discard, with validation and honest failed-save handling.
-- Record individual editable/removable flights, Add flight above the list, exact Save/Discard actions returning to the profile, and optional outbound/return entry with reversed location/timezone prefills. Keep flight dates/times user-entered and save a pair atomically.
-- Reconcile the usability plan with shipped 0.9.1 Settings, pagination, suggestions and recovery behavior. The former two save-policy blockers are resolved; implementation, accessibility/wording and the settled backup/import work remain planned.
+- Improve text contrast, input boundaries, focus outlines, target spacing, native color schemes and forced-colors support.
+- Give dialogs clearer context, restore focus across nested dialogs and expose field-specific validation errors.
+- Use slimmer participant cards with email beneath the name, timezone and local time, and an accessible calendar-connection icon.
 
-## 2026-10-15 — SlotDesk 0.9.1
+### Fixed
 
-- Implement the approved Settings, calendar chooser, header, profile pagination, familiar-face cache and participant-picker polish.
-- Replace ordinary manual confirmation work with bounded read-only verification and bell alerts for uncertain writes; keep reviewed identity-safe retries and exceptional access-loss resolution.
-- Document current data retention, recovery behavior, version changes and synthetic validation. Keep backup/import and the undecided profile/travel save model planned.
+- Prevent Enter in a meeting-review text field from sending invitations implicitly.
+- Align the participant Add button, close suggestions on outside interaction or page scrolling, and keep the suggestion list below the header.
+- Use a consistent Edit profile heading and shorter meeting-only overlap wording.
 
-## 2026-10-15 — Concrete usability planning
+## 0.9.2 — 18 October 2026
 
-- Define task flows and current-source observations for profile management, advanced rules, travel/flight entry, Settings, wording and keyboard/accessibility.
-- Keep profile and travel save boundaries explicitly open pending review of concrete examples. Preserve the settled backup/import requirements; application implementation remains planned.
+### Added
 
-## 2026-10-15 — Restore policy settled
+- Full profile/settings backup and restore, plus selected-profile import and export with Select all.
+- Cross-version column matching, missing-optional-field warnings and defaults, and required email/timezone validation for profile files.
+- Independent flight and travel forms with Save or Discard and a return-flight shortcut.
 
-- Record the own-profile exception: selected-person import cannot change it; active full restore updates it only for a matching email, otherwise preserving it. Onboarding restores still require own-profile setup.
-- Confirm profiles/settings-only backups, clearing unsent drafts on full restore and an optional current-backup download before replacement. Keep implementation planned and move to the remaining usability flows.
+### Improved
 
-## 2026-10-15 — Import policies confirmed
+- Save valid profile changes immediately and merge unrelated changes from simultaneous windows.
+- Include all supported profile settings, calendar references and time rules in portable files.
+- Protect the own profile during selected-profile imports. Full restore changes its data only when the email matches, replaces other local configuration and clears the unsent meeting draft.
+- Offer Download current backup before replacement, flag unavailable calendar references and block restoration while a calendar write is unconfirmed.
+- Clarify advanced-setting groups, calendar-source status, dialog names and keyboard focus.
 
-- Require email and timezone; use email when the name is missing. Replace matching-email profiles after one overwrite warning.
-- Include calendar assignments, flag unavailable calendars and retain selected-profile import as a local operation. Implementation remains planned.
+### Fixed
 
-## 2026-10-15 — Export/import clarification
+- Keep the last valid settings after invalid or failed edits. Roll back failed local replacements and prevent stale windows from restoring old configuration.
 
-- Separate complete portable setup backup/restore from selected-person export/import. Full restore replaces local configuration; selected-person files carry all profile settings and support Select all.
-- Record named-column version compatibility, missing-field defaults versus required-column failures, calendar access warnings and removal of a mandatory general preview. Keep base fields, duplicate behavior and selected-profile calendar assignments explicit pending choices.
+## 0.9.1 — 15 October 2026
 
-## 2026-10-15 — Next usability scope
+### Added
 
-- Record the requested keyboard/accessibility, initial wording and profile/Settings/travel UX review, with a controls inventory, proposed organization and user situations.
-- Record the owner's choice to support individual-profile selection alongside complete local profile/settings backup. Document proposed import previews, conflicts, calendar reassignment and recovery boundaries; application implementation remains planned.
+- Bell alerts for unconfirmed creation, editing and rescheduling. Read-only checks resume after reconnecting or reopening; verified failures offer an explicit retry.
 
-## 2026-10-15 — SlotDesk 0.9.0 preview
+### Improved
 
-- Implement the accepted recovery flow and five-column onboarding registration, add the private intake source/migration and record verification.
-- Create the separate SlotDesk database/table and deploy its insert-only intake after the owner configures server secrets. Configure the exact live extension endpoint, verify isolated-database insertion and duplicate preservation, and rebuild the preview. Retain 0.8.1 as the latest published pilot.
+- Save main Settings immediately, place Clear data at the bottom of the scrollable content, and keep Save/Discard in Choose calendars.
+- Paginate profiles five at a time with live search, stack profile actions and show six consistently sized familiar-person suggestions.
+- Reuse familiar-person suggestions within a 30-minute cache that extends when Manage profiles is reopened.
+- Keep the New meeting profile picker closed until activated and remove duplicate profile-management and recovery-history shortcuts.
 
+### Fixed
 
-## 2026-10-15 — Five-column leads scope agreed
+- Block calendar changes while offline and avoid duplicate writes when a confirmation is lost.
+- Keep wordmark and header dimensions stable across window widths.
 
-- Record directly user-supplied email/name/timezone, app-generated onboarding time and an optional updates-opt-in boolean. Each completed onboarding creates a lead, including when the checkbox is unchecked.
-- Record the accepted short notice and optional unchecked updates wording. Correct the assistant's unsupported interpretation of the source fields; leave private storage/endpoint implementation pending.
+## 0.9.0 — 15 October 2026
 
-## 2026-10-15 — Leads-table clarification
+### Added
 
-- Correct the earlier newsletter-specific framing: the owner requests email, name, assigned timezone and actual onboarding time in a private leads table for product analysis and possible future first-party project news.
-- Keep the proposed notice/contact choice and outstanding data-use/storage decisions explicit. No separate newsletter product, external signup requirement, collection or application change.
+- Connection, access, rate-limit and quota states with bounded read retries and cancellation.
+- Onboarding registration with email, name, timezone, completion time and a separate optional project-updates choice.
+- Read-only operation checks and explicit retry or manual-resolution handling for uncertain calendar changes.
 
-## 2026-10-15 — Accepted recovery direction and newsletter proposal
+### Improved
 
-- Record the accepted A1–G10 failure/recovery inventory, read-only setup, stale in-memory views and manual-resolution direction as planned, not implemented.
-- Record the requested contact/time/onboarding table and clarified future first-party newsletter purpose. Separate optional marketing signup, permitted data sourcing and backend/privacy work from current local-only behavior. No collection, mailing or application release change.
+- Retain authorized meeting lists after temporary refresh failures, mark stale or incomplete data, and clear details when access is lost.
+- Preserve unreadable workspaces for retry or download before an explicit reset. Retain proposed meeting edits when refreshing a changed appointment.
 
-## 2026-10-14 — SlotDesk 0.8.1
+### Fixed
 
-- Refine Settings/calendar submenus, compact source rows/info, protected own-profile layout and browser-wide date order.
-- Record accepted UX and focused synthetic validation; package the private 0.8.1 pilot.
+- Coordinate token renewal and calendar changes across windows. Reconnection does not automatically send an appointment.
 
-## 2026-10-14 — SlotDesk 0.8.0
+## 0.8.1 — 14 October 2026
 
-- Implement the authorized onboarding/profile/calendar/guest/flexibility scope and retain the supplied design assets and extension identity.
-- Record UX61–UX67/F19–F26, migration and scoped-data semantics, validation and packaged Help/privacy. Keep broader settings work and LLM/email features deferred.
-- Validate and package the 0.8.0 private pilot; preserve reviewed calendar mutation/recovery boundaries.
+### Added
 
-## 2026-10-14 — Future LLM direction and parked availability emails
+- Day-first and month-first date display independent of the clock format.
+- Calendar metadata dialogs accessible from compact calendar rows.
 
-- Park availability emails as an unconfirmed, non-blocking future feature after reviewing Gmail AMP setup/compatibility; record possible BYOK-only access without committing to it.
-- Document optional user API keys, prepared prompts and task-based selection of the cheapest reliable model, with provider/key/cost choices still open.
-- Record intended email/appointment reading, inquiry drafting/reply interpretation, factual rule-based explanations and future direct appointment creation under an explicit automation policy.
-- Preserve deterministic scheduling/write safeguards and distinguish future key/data/email/automation decisions from shipped 0.7.1. No code, permissions, package or product-version change.
+### Improved
 
-## 2026-10-14 — Structured time inquiry planning
+- Use single-row calendar choices, show the selected count below the list, and keep Settings/calendar dialogs the same size.
+- Keep Save and Discard visible in calendar selection and return to Settings afterward. Initial setup requires a valid calendar selection.
+- Keep the own profile first and remove its deletion action. Remove duplicate appearance and profile shortcuts from Settings.
 
-- Define one Ask about times flow covering every combination of one/many people and one/many options, with structured replies before booking.
-- Record single-time Yes/No and several-time multi-selection with explicit submission/None, separate EA booking confirmation and response revision/access safeguards.
-- Record the inline-only requirement: no recipient response page or Google Forms. A static preview, free-text substitution or separate reply per checkbox does not satisfy it.
-- Make the feature conditional on actual email delivery and inline submission in the intended client/account scope; distinguish submission endpoints and ordinary-email fallback from inbox storage.
-- Leave sender, service/storage, new permissions and live email delivery unimplemented; retain separate reviewed Calendar booking.
+### Fixed
 
+- Contain long emails without shifting profile actions.
 
-## 2026-10-14 — Product review planning
+## 0.8.0 — 14 October 2026
 
-- Record eight owner testing notes and follow-up answers: required timezone confirmation, every mapped profile joining automatically, and broader executive overlap flexibility.
-- Record saved overlap defaults with meeting overrides, hour-only convenience ignoring and the clarified ordinary-clash versus 23:00 example, without changing shipped behavior.
-- Add planned UX61–UX68 and roadmap linkage; preserve 0.7.1 as the shipped release.
-- Distinguish workspace calendar scope, profile availability sources and mapping-based automatic organizing-calendar participants.
+### Added
 
+- Three-step onboarding for your profile, workspace calendars and optional familiar people.
+- Searchable timezone choices, prominent profile calendar assignments and direct Travel & flights actions.
+- Email-only guests with required timezone confirmation and optional saved-profile creation.
+- Saved and per-meeting convenience-hour and ordinary-overlap preferences.
 
-## 2026-10-13 — SlotDesk 0.7.1
+### Improved
 
-- Add reviewed guest/detail editing, narrow conditional writes and duplicate-safe recovery.
-- Document UX57–UX60, editing scope/privacy and automated/browser evidence.
-- Publish the 0.7.1 pilot package while preserving the pinned extension/OAuth identity and design kit.
+- Automatically add profiles linked to the organizing calendar while preserving manual participant choices when switching calendars.
+- Use only selected workspace calendars for browsing, availability checks, suggestions and alerts, and clear excluded data across open windows.
 
-## 2026-10-13 — Reported live rescheduling progress
+## 0.7.1 — 13 October 2026
 
-- Record working No alerts, sensible replacement proposals, a successful actual reschedule and correct overlap details, as reported by the owner.
-- Remove the retired manual checklist and consolidate the validation record around actual reported and automated evidence.
-- Recheck calendar write entry points and rerun 251 existing booking/rescheduling/safety checks. No app or package change.
+### Added
 
+- Edit existing meeting titles, locations, descriptions, guests and required/optional roles with a before-and-after review.
 
-Product releases are recorded in [the complete SlotDesk changelog](docs/changelog.md).
+### Improved
 
-## 2026-10-13 — Standalone private repository
+- Preserve retained guest responses, existing meeting times, Meet links, attachments and reminders. Explain invitation withdrawal before removing a guest.
+- Refresh changed meetings in other open SlotDesk windows and recover uncertain saves against the same appointment.
 
-- Establish `Yoavfried/slotdesk` as the canonical SlotDesk source, separate from private parent-website planning.
-- Retain the complete 0.7.0 extension and engine; reorganize source into `extension/`, product records into `docs/`, and design references into `design/`.
-- Credit both GitHub accounts and add the `[Website name TBD]` parent credit.
-- Adapt preview, validation and packaging paths; add automated checks and contributor templates.
-- Keep automated validation separate from actual live reports.
-- Preserve extension identity, OAuth scopes, bundled fonts and product version 0.7.0. This migration adds no calendar behavior.
-- Preserve exact extension bytes through Git checkouts and emit the ZIP's SHA-256 alongside the package.
+### Fixed
 
-The initial commit is a curated snapshot. The original product versions remain documented; internal website plans and private audit/calendar artifacts are outside this repository.
+- Prevent guest-list edits when the complete supported roster cannot be verified.
+- Avoid false cross-window change detection caused by stored field ordering.
+
+## 0.7.0 — 13 October 2026
+
+### Added
+
+- Reviewed rescheduling for timed meetings, all-day entries and single recurring occurrences.
+- Declined-response alerts with optional-guest context, dismissal and rescheduling shortcuts.
+- Overlapping labels and expandable conflict details across displayed calendars, including meetings created outside SlotDesk.
+
+### Improved
+
+- Prefer proposals requiring fewer distinct appointments to move, then lower disruption. Keep follow-ups for appointments affected by a new overlap.
+- Preserve guests, content and existing Meet links during time changes; each reschedule is reviewed separately.
+
+## 0.6.1 — 13 October 2026
+
+### Added
+
+- Inclusive start/end date browsing without a fixed day-count limit, multiple-calendar selection and an adjustable display timezone.
+
+### Improved
+
+- Keep source-calendar names in cards and details. Cache meetings for the selected range so calendar and timezone filters update locally; date changes and Refresh reload sources.
+
+### Fixed
+
+- Remove the meeting-browser pagination cutoff while keeping timeout and repeated-page protection.
+
+## 0.6.0 — 12 October 2026
+
+### Added
+
+- Whole-week meeting browsing with Past and In progress states, two-row cards and structured details.
+- Dropdown profile calendar assignments and secondary-calendar owner suggestions.
+
+### Improved
+
+- Show the organizing calendar before search. Prefer equally inconvenient times closest to preferred-hour boundaries and show useful labeled alternatives.
+- Synchronize profiles, preferences and meeting drafts across same-account windows.
+- Use accepted or tentative invitations as partial availability evidence without claiming full calendar knowledge.
+
+### Fixed
+
+- Display saved-profile names and actual organizer emails in meeting details.
+
+## 0.5.0 — 12 October 2026
+
+### Added
+
+- A workspace menu for New meeting, Existing meetings and Manage profiles.
+- Read-only calendar/timeframe browsing with event details, guest responses and Created with SlotDesk labels.
+
+### Improved
+
+- Move familiar-person suggestions to setup and profile management. Show successful creation in a separate confirmation dialog over the workspace menu.
+- Keep dialog headings and close controls fixed while their contents scroll.
+
+### Fixed
+
+- Remove the routine status row and duplicate creation receipt.
+
+## 0.4.3 — 12 October 2026
+
+### Improved
+
+- Consolidate proposal warnings into one counted expandable list and retain concise participant fit rows.
+- Use the same warning details in final review and copied meeting information.
+
+### Fixed
+
+- Remove repeated conflict callouts, replace internal calendar-owner identifiers with readable instructions and wrap long warnings in narrow panels.
+
+## 0.4.2 — 12 October 2026
+
+### Improved
+
+- Shorten proposal headings to weekday, date and time range; show the year only for future calendar years.
+- Show date-specific GMT offsets beside timezone labels and preserve midnight and daylight-saving context.
+- Focus participant rows on fit and reasons, with local times when participant timezones differ.
+- Distinguish complete, incomplete and unknown calendar coverage, including optional participants.
+
+## 0.4.1 — 12 October 2026
+
+### Added
+
+- General Help before and after sign-in, with an accessible privacy notice.
+
+### Improved
+
+- Use a compact lime header with logo, Help and Settings, plus a green-dot email badge and disconnect icon.
+- Move Dark mode and Open full workspace to the top of Settings and remove the repeated privacy footer.
+
+### Fixed
+
+- Keep long connected-account emails on one line and remove duplicate connection labels and routine ready messages.
+
+## 0.4.0 — 12 October 2026
+
+### Added
+
+- A dark-mode toggle and searchable saved-profile selection by name or email.
+
+### Improved
+
+- Separate profile management from participant selection and reset selected participants for new meetings.
+- Clarify who receives invitations and preserve uncertain creation details for account-bound recovery.
+- Restrict calendar changes to reviewed new-event creation and coordinate sending across windows.
+
+### Fixed
+
+- Clear editor and review data on disconnect, reject stale saved-state writes and correct response handling for shared calendars.
+- Remove demo and simulated-send flows.
+
+## 0.3.5 — 12 October 2026
+
+### Improved
+
+- Replace free-text timezone entry with closed dropdowns across profile, meeting, availability, travel and flight forms.
+- Group supported timezones by region with readable place labels, preserve valid saved aliases and leave unknown values unselected for confirmation.
+
+## 0.3.4 — 11 October 2026
+
+### Added
+
+- Repository-level preview, validation and reproducible extension packaging commands.
+
+### Improved
+
+- Organize extension source, documentation and design references. Bundle self-contained installation and Google-permission guidance.
+
+## 0.3.3 — 11 October 2026
+
+### Improved
+
+- Render the VT323 wordmark directly on a full lime header with readable controls in light and dark modes.
+
+### Fixed
+
+- Remove the separate background box behind the logo.
+
+## 0.3.2 — 11 October 2026
+
+### Improved
+
+- Align typography, spacing, components, light/dark colors, focus states and motion with the interface style guide.
+
+## 0.3.1 — 11 October 2026
+
+### Added
+
+- Locally bundled VT323 and IBM Plex Mono fonts with their licenses.
+
+### Improved
+
+- Apply the wordmark and terminal-style typography to installation materials.
+
+## 0.3.0 — 11 October 2026
+
+### Added
+
+- Email-based profiles, own-profile onboarding, contact suggestions and template or manual working schedules.
+- Clock-format preferences, quick date choices, default calendar setup and editable invitation review.
+- Google Meet links by default, with invitations sent to every retained participant.
+
+### Improved
+
+- Recheck availability before sending and recover uncertain creation results using the original appointment identity.
+
+## 0.2.1 — 11 October 2026
+
+### Added
+
+- Read-only Google Calendar integration and installation guidance.
+
+### Improved
+
+- Separate Google project configuration from ordinary extension installation.
+
+## Initial development — 7–11 October 2026
+
+### Added
+
+- A scheduling engine, Google Calendar reader, saved profiles and explicit calendar-coverage handling.
+
+### Fixed
+
+- Corrected person-specific constraints, outside-working-time calculations, tentative responses and event visibility.

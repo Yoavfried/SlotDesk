@@ -2,13 +2,35 @@
   'use strict';
   const MIN=60000,overlaps=(a,b)=>a.start<b.end&&b.start<a.end;
   function durations(minutes){if(minutes<=30)return [];const floor=minutes>90?60:minutes>=60?45:30,out=[];for(let n=Math.floor((minutes-1)/15)*15;n>=floor;n-=15)out.push(n);return out;}
+  function weekStart(person,enabled){
+    if(!enabled.length)return 1;
+    if(person.workingMode!=='manual')return person.templateDays==='sun-thu'?0:1;
+    // A manual schedule owns its reference week. An inactive template must
+    // not move the deadline; start after the longest weekly break instead.
+    const active=new Set(enabled),gap=day=>{let n=0;while(n<7&&!active.has((day+6-n)%7))n++;return n;};
+    return [...enabled].sort((a,b)=>gap(b)-gap(a)||(a+6)%7-(b+6)%7)[0];
+  }
+  function workweekBoundary(person,date,last,E){
+    const zones=new Set([person.tz,person.tripTimezoneState?.baseZone]),changes=[];
+    for(const change of person.tripTimezoneState?.history||[]){zones.add(change.tz);changes.push(Date.parse(change.at));}
+    for(const trip of person.trips||[]){zones.add(trip.originZone);for(const flight of trip.flights||[]){zones.add(flight.departureZone);zones.add(flight.arrivalZone);changes.push(Date.parse(flight.departure),Date.parse(flight.arrival));}}
+    for(const travel of person.travel||[])zones.add(travel.tz);
+    // Legacy travel is keyed to home dates in the effective base zone, which
+    // can change after a one-way trip or manual timezone history entry.
+    for(const travel of person.travel||[])for(const zone of [...zones].filter(Boolean))changes.push(E.startOfDay(travel.from,zone),E.startOfDay(E.addDaysYmd(travel.to,1),zone));
+    const candidates=[...zones].filter(Boolean).map(zone=>E.startOfDay(date,zone)).concat(changes);
+    const localDate=time=>E.partsIn(time,E.tzFor(person,time).tz).ymd;
+    // Resolve the real transition into the date after the workweek. Sampling
+    // noon misses late arrivals and date-line jumps at the deadline itself.
+    return Math.min(...candidates.filter(time=>Number.isFinite(time)&&time>last&&localDate(time-1)<date&&localDate(time)>=date));
+  }
   function horizon(req,E){
     const anchor=req.anchorTz||req.people[0].tz,last=E.startOfDay(E.addDaysYmd(req.range.to,1),anchor)-1;
     const required=req.people.filter(p=>p.required!==false&&!p.isResource);return Math.min(...(required.length?required:req.people.filter(p=>p.required!==false)).map(p=>{
-      const local=E.partsIn(last,E.tzFor(p,last).tz),days=p.days||{},enabled=Object.keys(days).map(Number).filter(d=>days[d]?.on),start=enabled.length&&p.templateDays==='sun-thu'?0:1;
+      const local=E.partsIn(last,E.tzFor(p,last).tz),days=p.days||{},enabled=Object.keys(days).map(Number).filter(d=>days[d]?.on),start=weekStart(p,enabled);
       const offset=(local.wd-start+7)%7,week=E.addDaysYmd(local.ymd,-offset),final=enabled.length?Math.max(...enabled.map(d=>(d-start+7)%7)):6;
-      const end=E.addDaysYmd(week,7+final+1),zone=E.tzFor(p,E.startOfDay(E.addDaysYmd(end,-1),p.tz)+12*60*MIN).tz;
-      return E.startOfDay(end,zone);
+      const end=E.addDaysYmd(week,7+final+1);
+      return workweekBoundary(p,end,last,E);
     }));
   }
   const good=s=>!s.requiredConflictCount&&s.people.filter(p=>p.required).every(p=>!['no','bad'].includes(p.band));
@@ -62,7 +84,9 @@
     const originals=full.filter(s=>{const replacement=shorter.find(x=>!x.requiredConflictCount&&overlaps(x,s))||replacements.get(s.start);return !replacement||!s.requiredConflictCount||replacement.requiredConflictCount&&replacement.shortening.after.count>=replacement.shortening.before.count&&replacement.shortening.after.minutes>=replacement.shortening.before.minutes;});
     const requested=[...originals,...shorter],clear=requested.filter(good),normal=select(clear.filter(working),req).sort((a,b)=>(a.alternativeRank||0)-(b.alternativeRank||0)||a.day.localeCompare(b.day)||a.start-b.start),deadline=horizon(req,E);
     if(normal.length){
-      const bad=select(requested.filter(s=>!good(s)),req,normal,normal.map(s=>key(s,req))),allOptions=[...normal,...bad];
+      const groups=new Set(normal.map(s=>key(s,req))),outside=best(clear.filter(s=>!working(s)&&!groups.has(key(s,req))&&!normal.some(x=>overlaps(x,s))),true),kept=[...normal];
+      if(outside){outside.outsideWorkingHours=true;kept.push(outside);}
+      const bad=select(requested.filter(s=>!good(s)),req,kept,kept.map(s=>key(s,req))),allOptions=[...kept,...bad];
       return {...empty,options:normal.slice(0,5),allOptions,open:normal,openCount:base.open.length,clearCount:normal.length,deadline};
     }
     const later=[];

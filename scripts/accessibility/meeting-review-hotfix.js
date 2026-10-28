@@ -1,0 +1,71 @@
+async page=>{
+  const checks=[],errors=[],check=(value,name)=>{if(!value)throw Error(name);checks.push(name);};
+  page.on('pageerror',e=>errors.push(e.message));page.setDefaultTimeout(15000);
+  await page.goto('http://127.0.0.1:8893/?case=ready');
+  await page.locator('#connect').evaluate(el=>{if(!el.hidden&&!el.disabled)el.click();});
+  await page.locator('#home-new-meeting').waitFor({state:'visible'});
+  await page.locator('#home-new-meeting').click();
+  await page.locator('[data-range="custom"]').click();
+  await page.locator('#range-from').fill('2026-11-02');await page.locator('#range-to').fill('2026-11-04');await page.locator('#duration').fill('45');
+  let blocked=false;const pattern='**/__google/users/me/calendarList*';
+  await page.route(pattern,async route=>{blocked=true;await new Promise(resolve=>setTimeout(resolve,2500));try{await route.continue();}catch{}});
+  await page.getByRole('button',{name:'Find a time',exact:true}).click();
+  const cancel=page.locator('#stop-calendar-read');await cancel.waitFor({state:'visible'});
+  check(await cancel.isEnabled(),'Cancel remains enabled while search controls are disabled');
+  const placement=await cancel.evaluate(el=>{const style=getComputedStyle(el),rect=el.getBoundingClientRect();return {parent:el.closest('.results-step')!==null,position:style.position,border:parseFloat(style.borderTopWidth),radius:parseFloat(style.borderTopLeftRadius),top:rect.top};});
+  check(placement.parent&&placement.position==='static','Cancel button is in normal flow within the meeting-options section');
+  check(placement.border>=1&&placement.radius>0,'Cancel has the standard outlined pill treatment');
+  await cancel.scrollIntoViewIfNeeded();
+  await page.screenshot({path:'output/playwright/meeting-cancel-static.png'});
+  await cancel.click();await cancel.waitFor({state:'hidden'});
+  check(blocked,'Cancellation tested during the initial calendar-access check');
+  await page.getByRole('button',{name:'Find a time',exact:true}).waitFor({state:'visible'});
+  await page.waitForFunction(()=>!document.querySelector('#search-form button[type=submit]').disabled);
+  check(!(await page.locator('#results .slot-card').count()),'Cancelled search does not show partial meeting options');
+  await page.unroute(pattern);
+  await page.getByRole('button',{name:'Find a time',exact:true}).click();await page.locator('#results .slot-card').first().waitFor();
+  const count=await page.locator('#results .slot-card').count();check(count>0,'Search succeeds after cancelling');
+  await page.locator('#duration').fill('30');
+  check(await page.locator('#results .slot-card').count()===0,'Changing duration immediately removes stale actionable options');
+  await page.getByRole('button',{name:'Find a time',exact:true}).click();await page.locator('#results .slot-card').first().waitFor();
+  await page.getByRole('button',{name:'Generate planning email',exact:true}).click();
+  for(const width of [320,514,1280]){
+    await page.setViewportSize({width,height:900});
+    const gap=await page.evaluate(()=>document.querySelector('#copy-email-message').getBoundingClientRect().top-document.querySelector('#email-message').getBoundingClientRect().bottom);
+    check(gap>=14,'Planning message copy button has at least 14px separation at '+width);
+    check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'No document horizontal overflow at '+width);
+  }
+  await page.setViewportSize({width:514,height:900});await page.locator('#copy-email-message').scrollIntoViewIfNeeded();await page.screenshot({path:'output/playwright/planning-email-spacing.png'});
+  await page.getByRole('button',{name:'Close planning email',exact:true}).click();
+ await page.locator('#results .slot-card [data-review]').first().click();
+ await page.locator('#booking-dialog').waitFor({state:'visible'});
+ await page.locator('#b-start-time').dispatchEvent('input');
+ const modalPattern='**/__google/users/me/calendarList*',delay=async route=>{await new Promise(resolve=>setTimeout(resolve,1500));try{await route.continue();}catch{}};
+ await page.route(modalPattern,delay);await page.locator('#check-meeting').click();
+ const modalCancel=page.locator('#booking-dialog .calendar-read-controls button');await modalCancel.waitFor({state:'visible'});
+ check(await modalCancel.isEnabled(),'Booking availability check has an enabled inline cancel button');
+ check(await page.locator('#stop-calendar-read').isHidden(),'Main search cancel is hidden while booking review is active');
+ await modalCancel.click();await modalCancel.waitFor({state:'hidden'});await page.waitForFunction(()=>!document.querySelector('#check-meeting').disabled);
+ check(await page.locator('#booking-dialog').isVisible(),'Cancellation keeps the invitation review open');
+ check(await page.locator('#send-meeting').isDisabled(),'Cancelled recheck cannot send unchecked meeting changes');
+ await page.unroute(modalPattern);await page.getByRole('button',{name:'Close meeting review',exact:true}).click();
+ await page.locator('#meeting-workspace .back-home').click();await page.locator('#home-meetings').click();
+ await page.locator('#meetings-from').fill('2026-10-20');await page.locator('#meetings-to').fill('2026-11-15');await page.locator('#refresh-meetings').click();
+ await page.locator('[data-meeting-detail]').first().waitFor();await page.locator('[data-meeting-detail]').first().click();
+ await page.locator('#detail-reschedule').click();await page.locator('#reschedule-search').waitFor();
+ await page.locator('#r-from').fill('2026-11-02');await page.locator('#r-to').fill('2026-11-04');
+ for(const zone of await page.locator('select[id^="r-guest-zone-"]').all())await zone.selectOption('UTC',{force:true});
+ await page.route(modalPattern,delay);await page.locator('#reschedule-search button[type=submit]').click();
+ const reschedule=page.locator('#reschedule-dialog .calendar-read-controls button');await reschedule.waitFor({state:'visible'});
+ check(await reschedule.isEnabled(),'Rescheduling availability check has an enabled inline cancel button');
+ check(await page.locator('#stop-calendar-read').isHidden(),'Main search cancel stays hidden during rescheduling');
+ await reschedule.click();await reschedule.waitFor({state:'hidden'});await page.unroute(modalPattern);
+ check(await page.locator('#reschedule-dialog').isVisible(),'Cancellation keeps rescheduling open');
+ await page.locator('#reschedule-close').click();
+
+  const stats=await page.evaluate(()=>fetch('/__stats').then(r=>r.json()));
+  check(stats.posts===0&&stats.patches.length===0&&stats.unchanged===9,'All nine existing synthetic appointments remain unchanged');
+  check(errors.length===0,'No browser runtime errors');
+  return {checks,errors,stats:{reads:stats.reads,posts:stats.posts,patches:stats.patches.length,unchanged:stats.unchanged}};
+}
+

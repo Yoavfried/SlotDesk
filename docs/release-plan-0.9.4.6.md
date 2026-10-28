@@ -1,11 +1,29 @@
-# 0.9.4.6 — desktop browser compatibility
+# SlotDesk 0.9.4.6 — desktop browser compatibility
 
-Authorized by the owner on 21 October 2026: implement as much browser/desktop compatibility as possible and document remaining adjustments/store requirements. The owner requested autonomous progress and one combined list of remaining owner actions at the end.
+21 October 2026.
 
-Implemented: shared browser API/capability/launcher and safe lock adapter; serialized background authentication; independent Google authorization-code window with state/PKCE and hosted callback/exchange/refresh; session-only credentials; authenticated five-field registration relay for new targets; safe connection diagnostics; deterministic Chromium, unsigned Firefox and Safari-source packaging; privacy/help/install/support/store documentation; strict extension UTF-8 checks.
+## Added
 
-The existing Google project/approved audience, Chromium key/client/scopes, scheduling policy, reviewed mutation transports and portable-file boundaries remain. Missing safe locks continue to prevent mutations. Legacy native Chrome sign-in is retained while the new service is inactive. Server secrets never enter the extension or leads table.
+- Google authorization that can work independently of browser-account sign-in, with session-only credentials and reconnect/disconnect handling.
+- Browser-aware sidebar or full-tab launch and separate Chromium, Firefox development and Safari source packages.
+- Safe connection diagnostics in Help.
 
-Engineering evidence and exact limitations are in [testing](testing.md), [the compatibility matrix](browser-compatibility.md) and [the structured record](validation-0.9.4.6.json). The owner completed Google/Vercel activation on 21 October after the initial release. Production deployment the recorded deployment is READY and public readiness is verified true for 0.9.4.6. The Vercel connector could not manage the required variables, so the owner entered them directly. All steps remain in [one activation guide](browser-signin-setup.md) for reference; actual new-flow Google consent remains unverified.
+## Improved
 
-Not delivered: real Google consent validation for the new flow, public store publication/Google verification, signed Firefox installation, Safari authentication, untested browser/OS support, mobile or a hosted no-install workspace. Store-specific dependencies are recorded in [store readiness](extension-stores.md). Wider error-reporting and owner UX review remain open. Advanced-profile wording/UX/logic stays reserved for the owner's separate 0.9.5 review.
+- Onboarding starts with workspace calendars, followed by your profile and familiar people. Interrupted onboarding restarts at calendar selection with saved values available to prefill.
+- Suggest the profile name from exact-email matches in selected calendar metadata without replacing typed text.
+- Meeting options use three time-of-day groups and the earliest equally suitable start in each. Longer ranges show one compromise per eligible date.
+- When the selected range has no suitable option, feature a clear later-date option and a clear in-range outside-working-hours option when available, followed by the nearest in-range compromises. Generate more appends options without replacing existing cards.
+- Keep timezone and Review & create controls left-aligned; show concise warning headings and actual overlap intervals.
+
+## Fixed
+
+- Prevent unexpected page jumps from focus handling, header offsets and timezone-list scrolling.
+- Include Sunday correctly for Sunday–Thursday working weeks.
+- Keep the calendar-status icon beside each participant’s name and remove the duplicate selected-date caption.
+
+The attached extension package includes same-version hotfixes. Its contents may be newer than the automatic source archives for the original tag. Use the attached package and its published checksum.
+
+The Chromium ZIP is the desktop extension package. The Firefox XPI is unsigned; the Safari archive contains source only.
+
+To update an unpacked installation, replace the files in its existing folder, reload the extension and reopen SlotDesk. Keep the existing installation to retain saved profiles and settings.

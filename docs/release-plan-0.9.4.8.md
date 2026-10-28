@@ -1,11 +1,19 @@
-# 0.9.4.8 — onboarding leads and timezone overlays
+# SlotDesk 0.9.4.8 — onboarding records and timezone overlays
 
-Implement the owner’s 26 October request. Every completed onboarding adds a private lead, including repeat emails; the same queued completion retries without duplication. Add the reported browser name and internal onboarding UUID. Preserve the original five values in historical leads, with browser Unknown. Keep old five-field clients compatible. Update the onboarding and privacy notices. [Contract](leads-table.md).
+26 October 2026.
 
-Replace the timezone list’s layout-consuming panel with a viewport-constrained overlay shared by profile, guest, search, booking, meeting management, blockers and travel/flight controls. A search may cover following controls; opening/typing does not resize its dialog. Clicking away, leaving focus, Escape, scrolling away, closing its dialog or resizing dismisses it. Selecting a result still uses the existing profile/meeting save behavior.
+## Added
 
-Prepare [SD and bracketed SD](../design/proposals/extension-icon/README.md) with real VT323 outlines, header lime and matching bracket colors. SVG and 16/32/48/128/1024px PNG candidates are review artifacts outside the extension package. **Do not install icons before owner selection.**
+- Registration records include the reported browser name. Each completed onboarding creates a separate record; retries of that completion do not create duplicates.
 
-No Calendar writer, Google OAuth scope, calendar-deletion behavior, flight scheduling rules or cloud settings sync changes. Flight redesign and wider UX approval remain with the owner; 0.9.5 is not declared complete.
+## Improved
 
-Validation: 2,280 application checks, 73 backend checks and 22 calendar-comparison checks. Focused synthetic browser coverage and isolated migration/production deployment results are recorded in [release evidence](validation-0.9.4.8.json). Automated accessibility checks do not replace manual review.
+- Updated onboarding and privacy information to describe registration records.
+
+## Fixed
+
+- Timezone search opens above nearby controls without enlarging its dialog. Click-away, focus departure and Escape close the list, and results stay within the viewport.
+
+The Chromium ZIP is the desktop extension package. The Firefox XPI is unsigned; the Safari archive contains source only.
+
+To update an unpacked installation, replace the files in its existing folder, reload the extension and reopen SlotDesk. Keep the existing installation to retain saved profiles and settings.

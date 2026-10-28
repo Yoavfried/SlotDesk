@@ -9,6 +9,41 @@ const request=(p,extra={})=>({automaticAlternatives:true,people:Array.isArray(p)
 const search=(p,extra)=>E.findSlots(request(p,extra));
 const blocked=event('Occupied',iso('2026-10-01',0),iso('2026-12-01',0));
 
+// A manual schedule owns its next-workweek deadline, independently of the
+// inactive template retained by the profile editor.
+const sundayRange={from:'2026-11-01',to:'2026-11-01'},manualWeek=person({tz:'Asia/Jerusalem',workingMode:'manual',templateDays:'sun-thu',days:E.WEEK_MON_FRI(),manualDays:E.WEEK_MON_FRI()});
+const deadlineFor=(p,range=sundayRange,anchorTz='Asia/Jerusalem')=>P.horizon({people:[p],range,anchorTz},E);
+eq(new Date(deadlineFor(manualWeek)).toISOString(),'2026-11-06T22:00:00.000Z','manual Monday–Friday follows its actual next workweek');
+eq(deadlineFor(manualWeek),deadlineFor({...manualWeek,templateDays:'mon-fri'}),'changing an inactive template cannot move a manual deadline');
+const manualSun={...manualWeek,templateDays:'mon-fri',days:E.WEEK_SUN_THU(),manualDays:E.WEEK_SUN_THU()};
+eq(new Date(deadlineFor(manualSun)).toISOString(),'2026-11-12T22:00:00.000Z','manual Sunday–Thursday includes the following Sunday–Thursday week');
+eq(deadlineFor({...manualSun,workingMode:'template',templateDays:'sun-thu'}),deadlineFor(manualSun),'the selected template retains its reference week');
+const splitWeek={...manualWeek,days:E.WEEK([2,4],'09:00','18:00')};
+eq(new Date(deadlineFor(splitWeek)).toISOString(),'2026-11-05T22:00:00.000Z','a split manual week starts after its longest disabled-day break');
+eq(deadlineFor({...manualWeek,ignoreWorkingHours:true}),deadlineFor(manualWeek),'ignored hours retain the active saved reference week');
+let bounded=search({...manualWeek,busy:[event('Unavailable until the later week',iso('2026-10-01',0),iso('2026-11-09',0))]},{range:sundayRange,anchorTz:'Asia/Jerusalem'});
+eq(bounded.options.length,0,'inactive templates cannot admit a clear fallback from the week after the deadline');
+
+// A late arrival can change the timezone after the old noon probe. Resolve
+// midnight against the actual timeline rather than the profile base zone.
+const tripWeek=person({tz:'Asia/Jerusalem',templateDays:'sun-thu',days:E.WEEK_SUN_THU(),trips:[{id:'late-arrival',name:'Westbound',originZone:'Asia/Jerusalem',originLocation:'Jerusalem',flights:[{id:'leg',departure:'2026-11-05T08:00:00Z',arrival:'2026-11-05T18:00:00Z',departureZone:'Asia/Jerusalem',arrivalZone:'America/Los_Angeles'}]}]});
+const octoberRange={from:'2026-10-27',to:'2026-10-27'};
+eq(new Date(deadlineFor(tripWeek,octoberRange)).toISOString(),'2026-11-06T08:00:00.000Z','the deadline uses the destination timezone after a late arrival');
+bounded=search({...tripWeek,availability:[{from:'2026-11-05',to:'2026-11-05',days:[4],s:'15:00',e:'15:45',tz:'America/Los_Angeles'}]},{range:octoberRange,anchorTz:'Asia/Jerusalem',duration:45});
+eq(bounded.options[0]?.startISO,'2026-11-05T23:00:00.000Z','a valid late-Thursday destination opening remains within its workweek');
+ok(bounded.options.every(slot=>slot.end<=bounded.deadline),'the entire fallback still ends before the resolved boundary');
+const eastbound={...tripWeek,trips:[{...tripWeek.trips[0],flights:[{...tripWeek.trips[0].flights[0],arrivalZone:'Asia/Tokyo',arrival:'2026-11-05T16:00:00Z'}]}]};
+eq(new Date(deadlineFor(eastbound,octoberRange)).toISOString(),'2026-11-05T16:00:00.000Z','an arrival that jumps past local week end is itself the boundary');
+const restricted=person({tz:'UTC',days:E.WEEK_MON_FRI()});
+eq(P.horizon({people:[tripWeek,restricted],range:octoberRange,anchorTz:'Asia/Jerusalem'},E),Math.min(deadlineFor(tripWeek,octoberRange),deadlineFor(restricted,octoberRange)),'the earliest required boundary wins');
+eq(P.horizon({people:[tripWeek,{...restricted,required:false}],range:octoberRange,anchorTz:'Asia/Jerusalem'},E),deadlineFor(tripWeek,octoberRange),'optional travel/workweeks do not shrink the horizon');
+const mixedTravel=person({templateDays:'sun-thu',days:E.WEEK_SUN_THU(),trips:[{id:'westward',name:'One way',originZone:'UTC',originLocation:'Origin',flights:[{id:'west-leg',departure:'2026-11-03T12:00:00Z',arrival:'2026-11-04T00:00:00Z',departureZone:'UTC',arrivalZone:'Etc/GMT+12'}]}],travel:[{from:'2026-11-05',to:'2026-11-07',tz:'Pacific/Kiritimati'}]});
+eq(E.validate(request(mixedTravel,{range:octoberRange})).errors,[],'mixed legacy travel and modern one-way trips are valid');
+eq(new Date(deadlineFor(mixedTravel,octoberRange,'UTC')).toISOString(),'2026-11-05T12:00:00.000Z','legacy travel dates follow the effective base zone after a one-way arrival');
+bounded=search(mixedTravel,{range:octoberRange});ok(Number.isFinite(bounded.deadline),'valid mixed travel always supplies a finite calendar-read boundary');ok(bounded.options.length>0,'mixed travel does not stop an otherwise ordinary in-range search');
+const changedBase={...mixedTravel,trips:[],tripTimezoneState:{baseZone:'UTC',history:[{kind:'manual',key:'manual-west',at:'2026-11-04T00:00:00Z',tz:'Etc/GMT+12'}]}};
+eq(new Date(deadlineFor(changedBase,octoberRange,'UTC')).toISOString(),'2026-11-05T12:00:00.000Z','legacy travel also follows a saved manual base-zone change');
+
 // Exactly three local time groups, with the earliest equally suitable start, not a margin at 10:00.
 let r=search(person());eq(r.options.map(s=>s.anchorMinute),[540,720,840]);eq(r.options.length,3);
 eq([0,719,720,839,840,1439].map(P.band),['morning','morning','midday','midday','afternoon','afternoon']);
@@ -19,6 +54,15 @@ ok(r.allOptions.every(s=>s.anchorMinute%5===0),'start precision stays at five mi
 const threeWindows=[9,12,14].map(h=>({days:[2],s:String(h).padStart(2,'0')+':00',exact:true,tz:'UTC'}));
 r=search(person({availability:threeWindows,busy:[event('Noon',iso(day,12),iso(day,13)),event('Afternoon',iso(day,14),iso(day,15))]}));
 eq(r.options.length,1);eq(r.options[0].anchorMinute,540);ok(r.allOptions.length>1);ok(!r.allOptions.some(s=>s.alternativeType.startsWith('extended')),'a good working-hours choice suppresses all later dates');
+const morningOnly=person({busy:[event('Rest of working day',iso(day,9,45),iso(day,18))]});
+r=search(morningOnly,{duration:45});
+eq(r.options.map(slot=>slot.anchorMinute),[540],'the initial list keeps only the clear working-hours choice');
+eq(r.allOptions[1].anchorMinute,1080,'Generate more keeps the best clear after-work choice ahead of conflicts');
+eq(r.allOptions[1].requiredConflictCount,0);ok(r.allOptions[1].outsideWorkingHours);
+eq(r.allOptions.filter(slot=>slot.outsideWorkingHours).length,1,'at most one clear outside-work choice is appended');
+ok(!r.allOptions.some(slot=>slot.alternativeType.startsWith('extended')),'an appended outside-work choice never enables later dates');
+ok(r.allOptions.slice(2).every(slot=>slot.requiredConflictCount>0),'remaining appended representatives are in-range compromises');
+ok(r.allOptions.every((slot,i)=>r.allOptions.slice(0,i).every(other=>slot.start>=other.end||slot.end<=other.start)),'the appended clear choice never overlaps another suggestion');
 const shortAndFull=person({availability:[{days:[2],s:'09:00',e:'09:30',tz:'UTC'},{days:[2],s:'14:00',e:'15:00',tz:'UTC'}]});
 r=search(shortAndFull,{duration:45});eq(r.options.map(s=>s.duration),[45,30],'requested duration still precedes a clear shorter alternative in another group');
 
