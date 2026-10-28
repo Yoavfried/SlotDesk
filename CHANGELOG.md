@@ -2,6 +2,19 @@
 
 Changes are grouped as Added, Improved and Fixed. Entries describe the behavior released in each version, including same-version hotfixes.
 
+## 0.9.5.7 — 28 October 2026
+
+### Improved
+
+- City-based trip entry with a prefilled departure city, route-based arrival calculation and recorded times from matching calendar flights.
+- Connection city and second departure fields, plus return-route prefill.
+- Distinct coordinates for cities sharing a timezone.
+
+### Fixed
+
+- Removed required arrival date/time and timezone fields from flight entry.
+- Kept calculated arrival instants across date and daylight-saving changes.
+
 ## 0.9.5.6 — 28 October 2026
 
 ### Improved

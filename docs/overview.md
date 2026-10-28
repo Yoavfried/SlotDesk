@@ -26,7 +26,7 @@ Reviewed editing supports title, location, description and guest-list changes. R
 
 ## Plan trips
 
-Each profile has a separate Travel & flights manager. Trips can contain multiple flights, connections and a return flight. Saved flights block meetings, and arrival times determine effective scheduling timezones. Matching calendar entries can supply flight details; estimates remain editable. Changes to linked calendar entries require review before updating a saved trip.
+Each profile has a separate Travel & flights manager. Trips can contain multiple flights, connections and a return flight. Saved flights block meetings, and arrival times determine effective scheduling timezones. Choose cities and departure dates/times; arrivals and timezones are calculated. Matching calendar entries can supply recorded flight times. Changes to linked calendar entries require review before updating a saved trip.
 
 ## Save and transfer settings
 

@@ -1,10 +1,11 @@
 async page=>{
   page.setDefaultTimeout(12000);const checks=[],scans=[];const check=(v,m)=>{if(!v)throw Error(m);checks.push(m);};
   const event={id:'synthetic-flight',iCalUID:'flight@example.test',status:'confirmed',summary:'Flight TLV → LHR <img src=x onerror=alert(1)>',start:{dateTime:'2027-02-01T08:00:00Z',timeZone:'Asia/Jerusalem'},end:{dateTime:'2027-02-01T13:00:00Z'},organizer:{email:'nina@example.test'}};
-  let changed=false,missing=false;
+  let changed=false,missing=false,holdRead=null;
   await page.route('**/__google/calendars/**/events?**',async route=>{
     const res=await route.fetch(),data=await res.json(),url=new URL(route.request().url());
     if(decodeURIComponent(url.pathname).includes('nina@example.test')&&Date.parse(url.searchParams.get('timeMin'))<=Date.parse(event.start.dateTime)&&Date.parse(event.start.dateTime)<Date.parse(url.searchParams.get('timeMax'))&&!missing)data.items.push(changed?{...event,start:{...event.start,dateTime:'2027-02-01T09:00:00Z'}}:event);
+    if(holdRead&&decodeURIComponent(url.pathname).includes('nina@example.test')){const gate=holdRead;holdRead=null;gate.started();await gate.wait;}
     await route.fulfill({response:res,json:data});
   });
   await page.goto('http://127.0.0.1:8893/?case=ready');
@@ -14,13 +15,26 @@ async page=>{
   await page.locator('#home-profiles').click();await page.locator('[data-profile-travel]').first().click();await page.locator('#trip-add').click();
   await page.locator('[data-field=departureDate]').fill('2027-02-01');await page.locator('[data-field=departureDate]').blur();
   await page.waitForFunction(()=>document.querySelector('[data-match-note]').textContent.includes('Linked to'));
-  check((await page.locator('[data-place=arrival]').inputValue()).includes('LHR'),'Clear calendar match supplies destination without detection enabled');
+  check((await page.locator('[data-place=arrival]').inputValue()).includes('London'),'Clear calendar match supplies destination city without detection enabled');
   check(await page.locator('#trip-editor img').count()===0,'Calendar HTML is rendered as text');
-  check((await page.locator('[data-field=arrivalTime]').inputValue())==='13:00','Calendar arrival takes priority over an estimate');
+  check((await page.locator('[data-arrival-note="0"]').textContent()).includes('13:00'),'Calendar arrival takes priority over an estimate');
+  check(await page.locator('#trip-editor [data-field=arrivalTime],#trip-editor [data-field=arrivalDate],#trip-editor select[data-field$=Zone]').count()===0,'Linked calendar flights require no arrival or timezone fields');
   await page.locator('#trip-save').click();await page.locator('#trip-editor').waitFor({state:'hidden'});
   const saved=(await own()).trips[0].flights[0].departure;
+  await page.locator('[data-trip-edit]').click();
+  let entered,release;const pending=new Promise(resolve=>entered=resolve),wait=new Promise(resolve=>release=resolve);holdRead={started:entered,wait};
+  await page.locator('[data-field=departureDate]').dispatchEvent('change');await pending;
+  await page.locator('[data-field=departureTime]').fill('11:00');
+  const response=page.waitForResponse(item=>decodeURIComponent(item.url()).includes('/__google/calendars/nina@example.test/events?'));
+  release();await response;await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+  check((await page.locator('[data-field=departureTime]').inputValue())==='11:00','A delayed calendar response preserves a departure time typed without blurring');
+  check(!(await page.locator('[data-match-note]').textContent()).includes('Linked to'),'A delayed response cannot relink a flight whose departure was edited while loading');
+  await page.locator('#trip-name').click();await page.waitForFunction(()=>document.querySelector('[data-match-note]').textContent.includes('No matching'));
+  await page.locator('#trip-discard').click();
+  check((await own()).trips[0].flights[0].departure===saved,'Discard after a delayed calendar check leaves saved flight data unchanged');
   changed=true;await page.locator('[data-trip-edit]').click();await page.locator('[data-field=departureDate]').dispatchEvent('change');
-  await page.waitForFunction(()=>document.querySelector('[data-match-note]').textContent.includes('Linked to')&&document.querySelector('[data-field=departureTime]').value==='11:00');
+  await page.waitForFunction(()=>document.querySelector('[data-match-note]').textContent.includes('No matching'));
+  check((await page.locator('[data-field=departureTime]').inputValue())==='10:00','A changed calendar departure never silently replaces the entered departure time');
   await page.locator('#trip-discard').click();await page.locator('#trips-close').click();
   check((await own()).trips[0].flights[0].departure===saved,'Source refresh and Discard preserve saved flight times');
   await page.locator('#meeting-alerts').click();
@@ -30,6 +44,7 @@ async page=>{
   check((await page.locator('[data-field=departureTime]').inputValue())==='11:00','Review prefills updated calendar time');
   await page.locator('#trip-save').click();await page.locator('#trip-editor').waitFor({state:'hidden'});
   check((await own()).trips[0].flights[0].departure==='2027-02-01T09:00:00.000Z','Only explicit Save confirms updated flight details');
+  check((await own()).trips[0].flights[0].arrival==='2027-02-01T13:00:00.000Z'&&(await own()).trips[0].flights[0].estimated===false,'Calendar-linked arrival keeps its exact authoritative instant');
   await page.locator('#trips-close').click();await page.locator('#meeting-alerts').click();
   check(!await page.locator('[data-trip-alert]').count(),'Confirmed source update clears its alert');
   await page.locator('[data-close=alerts-dialog]').click();
@@ -50,7 +65,14 @@ async page=>{
   check((await own()).trips.length===0,'Discovery alone creates no saved trip');
   await page.addScriptTag({url:'http://127.0.0.1:8893/__axe.js'});
   const axe=await page.evaluate(()=>axe.run(document,{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21a','wcag21aa','wcag22aa','best-practice']}}));scans.push({name:'flight-alerts',violations:axe.violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>n.target)}))});
-  await page.locator('[data-trip-alert]').click();check(await page.locator('#trip-editor').isVisible(),'Possible flight starts the Add trip flow');await page.locator('#trip-discard').click();await page.locator('#trips-close').click();
+  await page.locator('[data-trip-alert]').click();check(await page.locator('#trip-editor').isVisible(),'Possible flight starts the Add trip flow');
+  await page.locator('[data-field=departureTime]').fill('11:00');await page.locator('[data-field=departureTime]').blur();
+  await page.waitForFunction(()=>document.querySelector('[data-match-note]').textContent.includes('No matching'));
+  check((await page.locator('[data-arrival-note="0"]').textContent()).includes('Estimated arrival'),'Changing a linked departure replaces the old calendar arrival with a route estimate');
+  await page.locator('#trip-save').click();await page.locator('#trip-editor').waitFor({state:'hidden'});
+  const edited=(await own()).trips[0].flights[0];
+  check(edited.departure==='2027-02-01T09:00:00.000Z'&&edited.estimated===true&&!edited.link&&!edited.label&&edited.arrival!=='2027-02-01T13:00:00.000Z','Saving a changed departure stores the calculated arrival and removes the obsolete calendar link and title');
+  await page.locator('#trips-close').click();
   const stats=await page.evaluate(()=>fetch('/__stats').then(r=>r.json()));check(stats.posts===0&&stats.patches.length===0&&stats.unchanged===9,'Flight alerts and review never write to Google calendars');
   await page.unroute('**/__google/calendars/**/events?**');if(scans.some(s=>s.violations.length))throw Error(JSON.stringify(scans));return {checks,scans};
 }

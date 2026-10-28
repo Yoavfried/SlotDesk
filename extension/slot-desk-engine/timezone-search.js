@@ -26,9 +26,15 @@
     }return results.sort((a,b)=>b.score-a.score||b.population-a.population||a.label.localeCompare(b.label));
   }
   function cityLocation(city,zone){return {id:String(city.id),name:city.name==='New York City'?'New York':city.name,country:city.country.name,countryCode:city.country.code,state:city.state||'',timezone:zone};}
+  const stateCodes=Object.fromEntries('Alabama:AL|Alaska:AK|Arizona:AZ|Arkansas:AR|California:CA|Colorado:CO|Connecticut:CT|Delaware:DE|Florida:FL|Georgia:GA|Hawaii:HI|Idaho:ID|Illinois:IL|Indiana:IN|Iowa:IA|Kansas:KS|Kentucky:KY|Louisiana:LA|Maine:ME|Maryland:MD|Massachusetts:MA|Michigan:MI|Minnesota:MN|Mississippi:MS|Missouri:MO|Montana:MT|Nebraska:NE|Nevada:NV|New Hampshire:NH|New Jersey:NJ|New Mexico:NM|New York:NY|North Carolina:NC|North Dakota:ND|Ohio:OH|Oklahoma:OK|Oregon:OR|Pennsylvania:PA|Rhode Island:RI|South Carolina:SC|South Dakota:SD|Tennessee:TN|Texas:TX|Utah:UT|Vermont:VT|Virginia:VA|Washington:WA|West Virginia:WV|Wisconsin:WI|Wyoming:WY|District of Columbia:DC'.split('|').map(pair=>{const [name,code]=pair.split(':');return [normalize(name),code.toLowerCase()];}));
+  const stateKey=value=>stateCodes[normalize(value)]||normalize(value);
   function resolve(zone,selected){
     const geo=prepare().byZone.get(canonical(zone));if(!geo)return null;
-    if(selected?.timezone&&canonical(selected.timezone)===canonical(zone)){const chosen=geo.cities.find(c=>String(c.id)===String(selected.id));if(chosen)return cityLocation(chosen,zone);}
+    if(selected?.timezone&&canonical(selected.timezone)===canonical(zone)){
+      const chosen=geo.cities.find(c=>String(c.id)===String(selected.id));if(chosen)return cityLocation(chosen,zone);
+      const name=normalize(selected.name||selected.city),country=normalize(selected.countryCode||selected.country),state=stateKey(selected.state),matches=geo.cities.filter(c=>(c.normalized===name||c.names.includes(name)||normalize(c.name==='New York City'?'New York':c.name)===name)&&(!country||normalize(c.country.code)===country||normalize(c.country.name)===country)&&(!state||c.country.code!=='US'||stateKey(c.state)===state));
+      return matches.length===1?cityLocation(matches[0],zone):null;
+    }
     const name=normalize(canonical(zone).split('/').pop().replace(/_/g,' ')),city=geo.cities.find(c=>c.normalized===name)||geo.cities.find(c=>c.names.includes(name))||geo.cities[0];return city?cityLocation(city,zone):null;
   }
   function label(zone,selected){

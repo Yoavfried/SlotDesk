@@ -1,0 +1,31 @@
+{
+  "version": "0.9.5.7",
+  "date": "2026-10-28",
+  "scope": "City-based trip entry and calculated arrivals",
+  "applicationChecks": 2648,
+  "browserAssertions": {
+    "chromeCityForm": 26,
+    "edgeCityForm": 26,
+    "chromeTripRegression": 21,
+    "chromeFlightAlerts": 23
+  },
+  "automatedAccessibilityViolations": 0,
+  "syntheticCalendarEventsUnchanged": 9,
+  "calendarWrites": 0,
+  "coverage": [
+    "Exact profile city prefill within shared timezones",
+    "City coordinates and route estimates",
+    "No required arrival inputs or timezone selectors",
+    "Connection and return route construction",
+    "Calendar arrival preservation and review alerts",
+    "Departure edits, pending calendar response and stale-link invalidation",
+    "DST fold and international date-line arrival instants",
+    "Stable narrow dialogs and search overlays",
+    "Save and Discard persistence"
+  ],
+  "limits": [
+    "Synthetic calendar transport; no real-provider or Mac validation in this change",
+    "Geographic duration estimates are not airline schedules",
+    "Firefox package is unsigned; no new native Firefox test in this change"
+  ]
+}

@@ -1,5 +1,11 @@
 # SlotDesk validation record
 
+
+## 28 October — 0.9.5.7 city-based trips
+
+**2,648 application checks** pass. City-based trip entry passes **96 browser assertions** across Chrome and Edge, including direct, connecting and return flights; exact city prefill; calendar-recorded arrivals; recalculation after departure changes; pending calendar responses; and Save/Discard persistence. Calculated arrivals are checked across daylight-saving folds and the international date line. Seven automated accessibility scans report no violations. All nine synthetic calendar appointments remain unchanged, with zero calendar writes. The tests use a local fixture; they do not establish new real-provider, Mac or native Firefox coverage. Geographic duration estimates are not airline schedules. [Machine-readable evidence](validation-0.9.5.7.json) · [Trip guide](trips-0.9.5.md).
+
+
 ## 26 October — 0.9.5.1 release preparation
 
 **2,440 application checks**, **76 backend checks**, **22 calendar comparisons** and **five endpoint-configuration checks** pass. Two focused browser journeys pass **44 assertions** and **three automated accessibility scans** without violations. All nine synthetic appointments remain unchanged, with zero Calendar writes. Firefox consent APIs are mocked in Chromium; native Firefox is not installed here. Firefox lint reports zero errors and 77 review warnings. [Machine-readable evidence](validation-0.9.5.1.json) · [Security/publication limits](release-readiness-review.md) · [Submission kit](store-kit/README.md).

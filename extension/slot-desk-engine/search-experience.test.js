@@ -38,4 +38,13 @@ const ambiguous=T.search(options,'IST').map(o=>canonical(o.value));for(const zon
 ok(T.search(options,'Antarctica').some(o=>o.value==='Antarctica/Casey'),'country zones without a large city are present');
 eq(T.search(options,'not-a-real-placexyz'),[]);eq(T.search([{value:'UTC',label:'UTC'}],'San Francisco'),[],'search cannot invent an option outside the closed dropdown');eq(T.normalize('São Paulo'),'sao paulo');ok(T.near('francisco','fransisco'));ok(T.near('mountain','mountian'));ok(!T.near('paris','perth'));eq(T.search(options,'').length,options.length);
 ok(D.cities.length>30000);ok(D.countries.length>200);eq(T.search(options,'Africa/Johannesburg')[0].value,'Africa/Johannesburg');
+const importedCity=(name,state,countryCode='US',timezone='America/Chicago')=>({id:'city:external',name,state,countryCode,timezone});
+eq(T.label('America/Los_Angeles',importedCity('San Francisco','California','US','America/Los_Angeles')),'San Francisco, CA','A city from the flight lookup survives saving into the shared timezone metadata');
+eq(T.label('America/Chicago',importedCity('Springfield','Illinois')),'Springfield, IL','Same-name cities use the selected full state name');
+eq(T.label('America/Chicago',importedCity('Springfield','MO')),'Springfield, MO','State abbreviations remain distinct');
+eq(T.resolve('America/Chicago',importedCity('Springfield','')),null,'Ambiguous imported city metadata never picks an arbitrary state');
+eq(T.resolve('America/Chicago',importedCity('Unknown city','Illinois')),null,'Unknown city metadata never selects the first city in a timezone');
+eq(T.label('America/New_York',importedCity('New York','New York','US','America/New_York')),'New York, NY','Public New York name maps to the stored New York City record');
+const originalSF=T.search(options,'San Francisco')[0].location;eq(T.resolve('America/Los_Angeles',{...originalSF,name:'Unexpected label'}).id,originalSF.id,'Recognized geography IDs remain authoritative');
+eq(T.label('Europe/London',importedCity('London','','GB','Europe/London')),'London, United Kingdom');
 console.log(checks+' search experience checks passed; stable attendees, cross-zone options, own time-off warnings, protected boundaries and offline city/country search.');
