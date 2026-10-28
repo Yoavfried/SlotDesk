@@ -1,4 +1,8 @@
 async page=>{
+  const fixtureUrl=new URL(page.url());
+  if(fixtureUrl.protocol!=='http:' || !['127.0.0.1','localhost','[::1]'].includes(fixtureUrl.hostname))throw Error('This check requires the local synthetic fixture.');
+  const fixtureState=await page.evaluate(async()=>{const r=await fetch('/__stats',{cache:'no-store'});return r.ok?r.json():null;});
+  if(fixtureState?.syntheticFixture!=='slotdesk-calendar-fixture-v1' || fixtureState.total!==9 || fixtureState.unsafeMethods!==0)throw Error('Synthetic calendar transport was not confirmed; no actions were run.');
   const checks=[],errors=[],check=(v,name)=>{if(!v)throw Error(name);checks.push(name);};page.on('pageerror',e=>errors.push(e.message));page.setDefaultTimeout(15000);
   const stats=()=>page.evaluate(()=>fetch('/__stats').then(r=>r.json()));
   await page.reload();await page.getByRole('button',{name:'New meeting Find a time,'}).click();await page.locator('[data-edit]').first().click();await page.locator('#p-zone').locator('..').locator('.timezone-trigger').click();await page.getByRole('combobox',{name:/Search timezone/i}).fill('Jerusalem');await page.getByRole('option',{name:'Jerusalem, Israel',exact:true}).click();await page.waitForTimeout(500);await page.locator('#editor [data-close="editor"]').click();

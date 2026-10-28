@@ -1201,8 +1201,8 @@ function renderTable(){
   const ex=exec(), t=el('table');
   const thead=el('thead'), hr=el('tr');
   hr.appendChild(el('th',null,'Time'));
-  const the=el('th'); the.innerHTML=execName(ex).split(' ')[0]+'<small>'+ex.tz.split('/').pop().replace(/_/g,' ')+'</small>'; hr.appendChild(the);
-  parts().forEach(p=>{ const th=el('th'); th.innerHTML=(p.name||p.city)+'<small>'+p.city+'</small>'; hr.appendChild(th); });
+  const the=el('th',null,execName(ex).split(' ')[0]); the.appendChild(el('small',null,ex.tz.split('/').pop().replace(/_/g,' '))); hr.appendChild(the);
+  parts().forEach(p=>{ const th=el('th',null,p.name||p.city); th.appendChild(el('small',null,p.city)); hr.appendChild(th); });
   thead.appendChild(hr); t.appendChild(thead);
   const tb=el('tbody');
   sorted(cands()).forEach(c=>{

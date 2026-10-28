@@ -32,7 +32,7 @@ Run the repository checks and rebuild the extension ZIP. Verify a synthetic regi
 
 Requests have a 2 KiB body cap, field validation, a fixed extension-origin CORS policy, no cookies and no submitted-value/error logging. Origin checks are not identity verification. The per-instance request throttle is coarse and is not a distributed abuse limit. These are user-reported registrations, not independently verified email identities. Wider distribution needs hosting-level abuse limits and the existing [distribution work](../docs/roadmap.md).
 
-Owners handle correction/removal and future opt-out requests directly; this implementation does not send project-update emails. No additional Google permission is requested.
+Owners follow the [registration correction/removal procedure](../docs/registration-data-removal.md) for all matching onboardings, branch copies and recovery-history limits; this implementation does not send project-update emails. No additional Google permission is requested.
 
 ## Browser labels and migration
 

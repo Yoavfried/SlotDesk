@@ -12,8 +12,8 @@ export function validate(value){
   return {email,name,timezone,onboarded_at,updates_opt_in,onboarding_id:onboarding_id.toLowerCase(),browser};
 }
 export function createIntake({insert,origin,now=Date.now}){
-  // This is coarse per-instance throttling, not identity verification. No IPs or
-  // submitted fields are logged or stored in this map. The database is insert-only.
+  // Coarse per-instance throttling, not identity verification. IP keys and counts
+  // stay in this short-lived map; no submitted fields are stored or logged here.
   const attempts=new Map();let window=0;
   return async request=>{
     const headers={'Cache-Control':'no-store','X-Content-Type-Options':'nosniff','Vary':'Origin'};

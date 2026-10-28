@@ -33,7 +33,7 @@ node -e "console.log(require('node:crypto').randomBytes(32).toString('hex'))"
 ["https://blpliafbiiidhcffegochddjhagkhhip.chromiumapp.org/google","https://37d48a39143e7524b1b43d70397319c090cb855d.extensions.allizom.org/google"]
 ```
 
-Set secret values as Sensitive where the hosting UI supports it. Changing the encryption secret invalidates current broker sessions; users can reconnect. The app origin allowlist derives from these exact returns. A later store-generated ID may differ: add its exact return, rebuild/review the package and retest before distributing. Never replace this list with a wildcard.
+Set secret values as Sensitive where the hosting UI supports it. Changing the encryption secret invalidates current broker sessions; users can reconnect. Chromium app origins derive from these exact returns. Firefox installation origins contain a varying UUID, so transport CORS accepts syntactically valid Firefox extension origins; exact HTTPS returns, encrypted origin-bound state/session and PKCE proof independently constrain sensitive operations. A later store-generated ID may differ: add its exact return, rebuild/review the package and retest before distributing. Never replace this list with a wildcard.
 
 ## 3. Redeploy and check
 

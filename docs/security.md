@@ -59,7 +59,7 @@ Ordinary backup/profile files are unencrypted JSON. They contain selected profil
 
 The separate **Download saved data** action for an unreadable workspace exports raw local recovery data. It can contain unfinished invitation details and recovery records, so it requires greater care than an ordinary backup.
 
-Disconnect clears the active connection and loaded calendar information while retaining saved configuration and unfinished operations. **Settings → Clear data** removes the connected account's saved workspace after unresolved calendar operations are handled. It does not delete Google appointments or remove a submitted registration record. Revoke the app separately through your Google account to remove its consent grant. Contact [support@buildwithspeedy.com](mailto:support@buildwithspeedy.com) for registration correction, removal or updates opt-out.
+Disconnect clears the active connection and loaded calendar information while retaining saved configuration and unfinished operations. **Settings → Clear data** removes the connected account's saved workspace after unresolved calendar operations are handled. It does not delete Google appointments or remove a submitted registration record. Revoke the app separately through your Google account to remove its consent grant. Contact [support@buildwithspeedy.com](mailto:support@buildwithspeedy.com) for registration correction, removal or updates opt-out. The [operator procedure](registration-data-removal.md) covers all matching onboardings and managed copies; recovery retention is separate from live-row removal.
 
 ## Verification and limitations
 

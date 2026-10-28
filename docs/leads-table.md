@@ -1,6 +1,6 @@
 # Onboarding leads table
 
-Original scope agreed 15 October 2026. Updated 26 October 2026 in **0.9.4.8**: record every completed onboarding separately; deduplication of people can be considered later. Existing records are retained. This supersedes the earlier email-keyed uniqueness rule.
+Since **0.9.4.8** (26 October 2026): record every completed onboarding separately; deduplication of people can be considered later. Existing records are retained. This supersedes the earlier email-keyed uniqueness rule.
 
 ## Record
 

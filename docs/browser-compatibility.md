@@ -1,44 +1,34 @@
 # Browser and desktop compatibility
 
-**Compatibility baseline: 0.9.4.6 · 21 October 2026.** 0.9.4.7 retains these platform boundaries and adds local profile rules; it does not establish new browser/provider certification. The owner authorized implementation after approving the compatibility plan. Shared runtime adapters, independent Google consent, safe launch fallback and per-browser packaging are implemented. Hosting activation completed on 21 October; public status is verified `ready:true` for 0.9.4.6. Real Google consent and some target validation remain. This matrix describes evidence, not blanket certification of every browser/version.
+Current evidence: **0.9.5.9 · 28 October 2026**. Initial targets are desktop Chrome, Edge and Firefox. Capability support, synthetic native testing, production Google authorization and store approval are separate checks.
 
-| Target | Delivered | Evidence and remaining boundary |
+| Target | Implementation and evidence | Remaining boundary |
 | --- | --- | --- |
-| Chrome desktop | Existing pinned identity/client; Chromium package; independent sign-in when activated | Existing owner-reported Chrome pilot works. New flow passes installed Chromium reference tests. Actual Chrome 155 automation refused the unpacked extension despite a returned load ID; do not count that attempt as a pass. A regular-browser new-flow check remains. |
-| Edge desktop on Windows | Same Chromium package; native side-panel adapter and full-tab workspace; independent sign-in | Actual Edge 155.0.4283.62 installed-extension native OAuth-window, Calendar browsing, two-tab connection reuse, 320/514/1280px reflow, disconnect/session cleanup and reconnect pass with synthetic provider/Calendar transport. Hosting is activated; real Google consent remains unverified. |
-| Vivaldi desktop on Windows | Same Chromium package; guarded panel/full-tab launch; independent sign-in | Actual Vivaldi 8.2.4133.84 installed extension successfully completes its native OAuth window without browser sign-in and loads calendars with the background token. Its CDP automation has limitations; broader multi-tab/responsive journey is not claimed complete. Hosting is activated; real Google consent remains unverified. |
-| Brave / Opera / Opera GX | Shared Chromium runtime and package prepared | Not installed here; target-native identity windows, privacy defaults, side-panel behavior, clipboard/download and update flow need verification. Full-tab fallback covers unavailable panel APIs, not every possible browser defect. |
-| Firefox desktop | Separate unsigned XPI; stable add-on ID; background scripts/event page; native sidebar adapter; Firefox return-address support and data declarations | Source/unit/package checks only. Actual Firefox not installed. Mozilla signing is required for normal release-channel installation; temporary development loads are not a user update channel. Consent/registration policy and the Google bootstrap need real Firefox review. |
-| Safari macOS | Separate preparation ZIP with incompatible Chrome manifest fields removed | Source only, not installable or functional sign-in. Safari lacks the WebExtensions identity flow used here: needs an Apple-specific authentication bridge, packaging/signing and actual Safari/device tests. |
-| macOS / Linux | Shared portable web UI/core | No device validation in this Windows session. Browser/OS, date inputs, clipboard/files, locks, sleep/wake and update behavior remain to test before claiming support. |
-| Mobile / hosted no-install workspace | Not delivered | Separate product, authentication, input/lifecycle and distribution work. A full extension tab is not a hosted web app. |
+| Chrome / Windows | Native Chrome 155.0.8059.41 extension/background/identity tests, account separation, reload, source update and restart data checks passed. | Production Google; persistent/store install and update; minimum versions. |
+| Edge / Windows | Shared Chromium core and panel/full-tab adapter. Edge 156.0.4314.50 passed the same lifecycle/account/data checks. | Production Google; persistent/store install and update; minimum versions. |
+| Firefox / Windows | Desktop manifest, background scripts and sidebar. Firefox 158.0.1 passed synthetic native sign-in, account switching, reload, reconnect and opt-out onboarding. | Signed install/update/restart, Google consent and native disclosures. |
+| Vivaldi / Windows | Earlier 0.9.4.6 native synthetic authorization/calendar loading passed without browser-account sign-in. | Current-build regression and actual Google. |
+| Brave / Opera / Opera GX | Shared Chromium package and guarded panel/full-tab fallback. | No native verification here. |
+| macOS / Linux | Portable core and manifests. | No native device coverage in this Windows review. |
+| Safari | Source preparation archive. | Apple auth bridge, packaging/signing and native tests; not a functional release. |
+| Android / mobile / hosted workspace | Not delivered; Firefox omits `gecko_android`. | Outside this desktop release. A full extension tab is not a hosted app. |
 
-## Shared implementation
+The [dated native report](compatibility-review-2026-10-28.md) records 64 current-build assertions and temporary-install limits. Its providers/calendars are synthetic; no real Google consent or Calendar write is claimed. Nine baseline appointments remained unchanged.
 
-`browser-platform.js` selects the browser API namespace, reports capabilities, mediates background messages and installs the launcher. Missing, synchronously throwing or rejected sidebar methods fall back to a full extension tab. Firefox uses its native sidebar API when available. The full workspace remains available in Settings. Missing Web Locks fails closed with B103 for configuration/calendar changes; no unsafe spinlock or guard removal is used.
+## Shared runtime
 
-`web-auth.js` owns one background session and serializes token requests across SlotDesk windows. `backend/google-auth.mjs` implements state/PKCE, hosted callback/code exchange, bounded refresh and authenticated registration relay. See [Google connection](google-connection.md) and [one owner activation guide](browser-signin-setup.md). No broader Google scopes, content scripts, arbitrary-site access, remote application scripts, calendar delete or calendar move operation is added.
+`browser-platform.js` wraps browser APIs, background messages and launcher fallback. Missing/rejected sidebar APIs open a full extension tab. Configuration/Calendar mutations require Web Locks and fail closed when unavailable.
 
-Browser memory-only `storage.session` needs the new `storage` permission. Profiles/settings/drafts remain local to that installed browser and Google account, without automatic cross-browser/device sync. Existing [configuration backups](export-import.md) exclude tokens and unfinished mutations. A browser restart clears the new Google session, so reconnect; it keeps local workspace configuration. Existing Chrome-managed identity is retained as a guarded legacy fallback while the service is inactive.
+The independent Google connection uses the background session broker and hosted state/PKCE service. Credentials use browser session storage/background memory. Profiles/settings/drafts remain account-separated local data with no cross-browser/device sync. Restart ends the hosted credential session; reconnecting should retain configuration. Legacy Chrome-managed authorization is a guarded fallback while the service is inactive. [Connection design](google-connection.md) · [Activation](browser-signin-setup.md).
 
-Help → Connection details reports safe capability/build/return-address information. It does not send a report or include the account email, tokens or appointments. The separate [system-wide error review](error-reporting-review.md) remains open.
+No content scripts, arbitrary-site access, remote application code, broader Google scopes, event DELETE or calendar move are introduced for these targets. Help → Connection details excludes tokens, account email and appointment content.
 
-## Build and install
+## Packaging and updates
 
-`npm run package:slotdesk` deterministically builds three artifacts plus `SHA256SUMS.txt` and `package-targets.json`. All share one scheduling/calendar/profile/UI core. `scripts/browser-targets.mjs` defines their small manifest differences and stable identities. Tests/fixtures are excluded. Development folders are `dist/chromium`, `dist/firefox` and `dist/safari-source`.
+`npm run package:slotdesk` produces Chromium ZIP, unsigned Firefox XPI, Safari source ZIP, checksums and target metadata. Tests/fixtures are excluded. Preserve the installed folder/identity for development updates. Normal Firefox installation requires signing; temporary add-ons are not an update channel.
 
-- `SlotDesk-0.9.4.7.zip`: manually loaded Chromium desktop beta.
-- `SlotDesk-0.9.4.7-Firefox-unsigned.xpi`: unsigned Firefox development port, not a normally installable signed release.
-- `SlotDesk-0.9.4.7-Safari-source.zip`: source preparation only.
+Chromium identity: `blpliafbiiidhcffegochddjhagkhhip`. Firefox: `{39c56104-958b-43a6-bcfe-5e9db811c74b}`. Register/retest any changed store-issued authorization return before distribution. [Installation](install.md) · [Stores](extension-stores.md).
 
-Chrome ID remains `blpliafbiiidhcffegochddjhagkhhip`. Firefox ID is `{39c56104-958b-43a6-bcfe-5e9db811c74b}`. Store signing can change target identities; register/retest exact generated return addresses before release. Keep the original installed Chromium folder/identity for in-place updates. See [installation](install.md) and [store readiness](extension-stores.md).
+Firefox lint has zero errors and 79 reviewed warnings. [Warning dispositions](firefox-validation-review.md) document actual escaping/link controls and the desktop-only Android warning. They do not establish Mozilla approval.
 
-## Evidence and remaining work
-
-See [validation](testing.md) and the [release scope](release-plan-0.9.4.6.md). Synthetic providers verify native browser plumbing without signing into Google or sending real invitations. They do not establish provider approval, store approval, workplace permission, actual mail delivery or owner UX readiness. Native panel capability detection/unit coverage is separate from a manual toolbar/sidebar lifecycle check.
-
-The original malformed UTF-8 summary separator is corrected and extension text now receives strict UTF-8 validation. Reviewed create/reschedule/detail-update transports remain unchanged. Lost-confirmation recovery, account checks and shared-window locks remain required on all platforms.
-
-Next: load/reload the current extension and check real consent in the owner's normal browser; verify Brave/Opera and Firefox; finish per-store policy/assets/signing work; implement/test Safari's separate auth bridge. Mobile and the parent website remain outside this release. The agreed non-flight advanced-profile settings are implemented in 0.9.4.7; flight review remains open.
-
-Primary capability sources checked 21 October 2026: [Chrome identity](https://developer.chrome.com/docs/extensions/reference/api/identity), [Edge API support](https://learn.microsoft.com/en-us/microsoft-edge/extensions/developer-guide/api-support), [Vivaldi side panels](https://vivaldi.com/blog/vivaldi-on-desktop-6-6/), [Firefox background differences](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/background), [Firefox identity](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/identity), [Firefox built-in consent](https://extensionworkshop.com/documentation/develop/firefox-builtin-data-consent/), [Safari identity support data](https://raw.githubusercontent.com/mdn/browser-compat-data/main/webextensions/api/identity.json), [Apple packaging](https://developer.apple.com/documentation/safariservices/packaging-and-distributing-safari-web-extensions-with-app-store-connect).
+[Technical release gates](release-readiness-review.md) retain the outstanding provider, signing and device checks. The [system-wide error review](error-reporting-review.md) remains separate future work.

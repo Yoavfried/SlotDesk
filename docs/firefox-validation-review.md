@@ -1,0 +1,48 @@
+# Firefox validation review — 0.9.5.9
+
+Reviewed **2026-10-28**, against source revision **`7eb54e0890e598227eed78481b640ed3278ff9ba`**. This appendix records a focused source review of the Firefox validation warnings and the packaged rendering surfaces. It is not a complete security certification or browser acceptance result.
+
+The existing `web-ext` result for package **0.9.5.9** reports **0 errors, 0 notices and 79 warnings**: **78 `UNSAFE_VAR_ASSIGNMENT` DOM warnings** and **1 Android compatibility metadata warning**. These warnings remain visible. No warning suppression or product JavaScript changes were made for this review. A source disposition does not establish Mozilla approval, signing or AMO acceptance.
+
+## Dynamic DOM warnings
+
+The review followed calendar/profile/import text into its HTML, attribute, textarea and URL contexts. It considered a calendar collaborator or file supplier who controls displayed text, without control of installed extension code or credentials. The conclusion below rests on encoding and value provenance, rather than CSP alone.
+
+| Authored source | Warnings | Warning lines | Control families reviewed |
+| --- | ---: | --- | --- |
+| [app.js](../extension/prototype/app.js) | 41 | 31, 136, 244, 259, 278–281, 292–293, 301–302, 343, 377, 379–380, 387, 392, 415, 419, 440–441, 524, 543, 584 (two), 588, 598, 625, 645, 667, 674–675, 687, 716, 721, 733, 737, 746–747, 754 | Escaped text/quoted attributes; timezone options; generated counts and indices; composed slot/notices markup; constrained provider links. |
+| [configuration-ui.js](../extension/prototype/configuration-ui.js) | 1 | 8 | Escaped imported name/email; internally generated row index. |
+| [meeting-editor.js](../extension/prototype/meeting-editor.js) | 5 | 20, 24, 26, 38, 46 | Escaped input values, textarea text, guest identities, reviews and serialized recovery text. |
+| [meeting-management.js](../extension/prototype/meeting-management.js) | 11 | 26 (two), 41, 44, 54, 78, 82, 88, 93, 116, 132 | Escaped alerts, titles, guests, warnings and recovery text; composed trip alerts; validated/generated dates and clock values. |
+| [profile-advanced.js](../extension/prototype/profile-advanced.js) | 8 | 16 (two), 23, 28, 36, 55, 61, 78 | Escaped keywords, blockers, calendar/event labels and treatment values; installed helper IDs/weekdays; escaped timezone options. |
+| [recovery-ui.js](../extension/prototype/recovery-ui.js) | 2 | 12, 22 | Escaped account/event text, timestamps and serialized operation records. |
+| [travel-editor.js](../extension/prototype/travel-editor.js) | 4 | 13–15, 20 | Escaped field values and JSON attributes; escaped timezone options; internally generated ISO occurrence values. |
+| [trips.js](../extension/prototype/trips.js) | 6 | 19–20, 74, 121, 136, 190 | Escaped names, locations, dates, calendar matches and attributes; generated indices/ISO timestamps; escaped timezone options. |
+| **Total** | **78** | | **No source-backed injection was established for these sinks under the stated attacker model.** |
+
+The principal controls are:
+
+- **Text and attributes:** `app.js:7` encodes ampersand, angle brackets and both quote characters. Equivalent local encoders appear in `meeting-editor.js:4`, `meeting-management.js:4` and `recovery-ui.js:3`. The other rendering modules receive the app encoder at `app.js:395,497,502,513`. Attacker-derived strings are encoded for element/textarea text or double-quoted attributes; they are not inserted into script, event-handler or style contexts. Provider descriptions and locations are encoded at `app.js:750–754` and `meeting-editor.js:20,36–38`.
+- **Composed markup:** `app.js:237–241,299,352–368,736,742–747` encode dynamic fields before the aggregate result/notice sinks. `trips.js:63–76,203` does the same for trip forms and alerts. Remaining unescaped fragments are installed literal markup, fixed enums, generated indices/counts or validated date/ISO values. The CSS tone enum is fixed by [workspace-model.js](../extension/slot-desk-engine/workspace-model.js):56–66 and [participant-status.js](../extension/slot-desk-engine/participant-status.js):4,32. [calendar-view.js](../extension/slot-desk-engine/calendar-view.js):3,13–20 validates the date strings used by `meeting-management.js:78`; [profile-configuration.js](../extension/slot-desk-engine/profile-configuration.js):43–54 generates the occurrence values used by `travel-editor.js:20`.
+- **URLs:** `app.js:682` requires HTTPS and exact hosts: `calendar.google.com` or `www.google.com` for Calendar, and `meet.google.com` for Meet. `app.js:687,754` then encodes the resulting `href` and uses `rel="noopener"`. This establishes the initial URL boundary; redirect behavior was not exercised.
+- **Imported files:** [configuration-files.js](../extension/slot-desk-engine/configuration-files.js):6,15–21 recursively rejects `__proto__`, `constructor` and `prototype` property keys. Its preview indices are generated by `map` at line 21. Profile fields pass through `checkProfile` at lines 24–30. [profile-configuration.js](../extension/slot-desk-engine/profile-configuration.js):28–35 and [profile-rules.js](../extension/slot-desk-engine/profile-rules.js):30–49 reject unsupported legacy expressions and treatments. Import warnings use `textContent` in `configuration-ui.js:20`.
+
+Additional HTML insertions in [timezone-picker.js](../extension/prototype/timezone-picker.js):36 and `trips.js:6` contain installed literal SVG/dialog markup. Dynamic timezone options use `textContent` at `timezone-picker.js:19`.
+
+## Android compatibility warning
+
+[browser-targets.mjs](../scripts/browser-targets.mjs):12–15 emits Gecko minimum **140.0** and built-in data-consent metadata, with no `gecko_android` entry. [package-slotdesk.mjs](../scripts/package-slotdesk.mjs):12 identifies the package as an unsigned **desktop Firefox** development package.
+
+Mozilla documents that omitting `gecko_android` means desktop-only compatibility. The Android warning is therefore **not applicable to the declared desktop target**; it does not establish Android support. See [MDN: browser_specific_settings](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/browser_specific_settings). Built-in data consent requires desktop Firefox 140 or Android Firefox 142; see [Mozilla: Firefox built-in data consent](https://extensionworkshop.com/documentation/develop/firefox-builtin-data-consent/). Keep desktop minimum 140 and do not add untested Android compatibility merely to silence the warning.
+
+## Static pages, styles and bundled lookup data
+
+The review also read [START-HERE.html](../extension/START-HERE.html), [connection-details.html](../extension/connection-details.html), [help.html](../extension/help.html), [setup.html](../extension/setup.html), the three `brand` stylesheets and `prototype/interface.css`, `pilot.css` and `styles.css`. These entries load bundled scripts/styles/fonts; external documentation and attribution links are explicit navigation links. The styles contain no remote imports, URL loads or executable expressions. The support-details renderer uses a fixed non-account field list and `textContent` at [connection-details.js](../extension/prototype/connection-details.js):5–15; its separate service-status request omits credentials. The setup form downloads a locally constructed manifest, without submitting the entered public client ID to a server ([setup.js](../extension/prototype/setup.js):5–13).
+
+[build-timezone-data.py](../scripts/build-timezone-data.py):39–42 serializes the local index as JSON inside a fixed export wrapper. A read-only structural parse confirmed that the packaged [timezone-search.js data](../extension/data/timezone-search.js) consists of exactly that wrapper, one complete JSON payload and the literal closing suffix, containing 34,173 city rows and 418 zone identifiers. [timezone-search.js logic](../extension/slot-desk-engine/timezone-search.js) searches this bundled index locally. [flight-lookup.js](../extension/slot-desk-engine/flight-lookup.js):60 loads only the relative `data/airports.json` resource and parses JSON; the packaged file contains 7,743 eight-field rows. Labels flow through the escaped/text-only renderers described above.
+
+These checks establish the data/control boundary, not the accuracy of every city, airport, coordinate, timezone mapping or arrival estimate. Upstream data provenance, freshness and all record semantics were not independently re-audited. No data JavaScript or application fixture was evaluated during the source review.
+
+## Remaining acceptance work
+
+Native Windows Firefox 158 synthetic sign-in, account switching, reload and disconnect/reconnect passed in the [dated compatibility review](compatibility-review-2026-10-28.md). Normal signed installation/update/restart, native disclosures and a real Google connection remain unverified. Temporary loading is not persistent installation. Mac coverage remains open. This appendix does not clear those acceptance items, validate hosted production logging or replace the separate Git-history/privacy review.

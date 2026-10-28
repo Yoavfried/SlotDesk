@@ -1,4 +1,8 @@
 async page=>{
+  const fixtureUrl=new URL(page.url());
+  if(fixtureUrl.protocol!=='http:' || !['127.0.0.1','localhost','[::1]'].includes(fixtureUrl.hostname))throw Error('This check requires the local synthetic fixture.');
+  const fixtureState=await page.evaluate(async()=>{const r=await fetch('/__stats',{cache:'no-store'});return r.ok?r.json():null;});
+  if(fixtureState?.syntheticFixture!=='slotdesk-calendar-fixture-v1' || fixtureState.total!==9 || fixtureState.unsafeMethods!==0)throw Error('Synthetic calendar transport was not confirmed; no actions were run.');
   const checks=[],errors=[],check=(v,label)=>{if(!v)throw Error(label);checks.push(label);};page.on('pageerror',e=>errors.push(e.message));page.setDefaultTimeout(15000);
   const saved=()=>page.evaluate(()=>JSON.parse(localStorage.getItem('slotdesk-settings-v2:google:'+encodeURIComponent('nina@example.test'))));
   await page.evaluate(()=>localStorage.clear());await page.reload();const baselineReads=(await page.evaluate(()=>fetch('/__stats').then(r=>r.json()))).reads;

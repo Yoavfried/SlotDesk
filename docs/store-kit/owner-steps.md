@@ -12,7 +12,7 @@ Preparation can proceed without signing in inside Codex. Do these account steps 
 8. **Approve the concrete public repository and submission packages.** After code/security/privacy/history review, retain the adopted MIT license and verify the supplied support contact. Explicit approval is still required before changing repository visibility. Submit the correct packages and reviewer access notes. Store/provider decisions may require changes.
 9. **Release 1.0.0 once all three listings are live.** Add real store links to README/install instructions and link listings to the public source repository where supported. Do not claim 1.0.0 publication before these facts exist. Outlook remains after 1.0.0.
 
-The sign-in rate-limit fix is prepared in `backend/`; it is not deployed by pushing this repository because the existing hosting project has no Git integration. Deploy that reviewed backend update to the existing project before wider distribution, without changing its secrets or callback settings. A preparation ZIP alone cannot update the hosted service.
+Production verification on 28 October 2026 confirmed that all eight backend source/lock/configuration hashes match the reviewed 0.9.5.9 snapshot, including the sign-in admission fix. Future pushes still do not deploy the hosted service automatically. See the [current technical review](../release-readiness-review.md).
 
 No secret needs to be pasted into this chat for these steps.
 
