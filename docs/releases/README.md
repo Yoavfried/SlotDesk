@@ -1,7 +1,8 @@
 # Release notes
 
-Canonical release notes, grouped as Added, Improved and Fixed. For earlier versions, see the [complete changelog](../changelog.md).
+Features added, improved and fixed in each packaged release. For earlier versions, see the [complete changelog](../changelog.md).
 
+- [v0.9.5.6](v0.9.5.6.md)
 - [v0.9.5.5](v0.9.5.5.md)
 - [v0.9.5.4](v0.9.5.4.md)
 - [v0.9.5.3](v0.9.5.3.md)

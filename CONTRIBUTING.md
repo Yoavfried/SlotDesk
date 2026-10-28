@@ -1,10 +1,18 @@
 # Contributing to SlotDesk
 
-SlotDesk is made by Speedy, Nina Banai and Yoav Fried. See [credits](AUTHORS.md).
+Bug reports, documentation improvements and focused code contributions are welcome. Start with the [product overview](docs/overview.md), [current scheduling rules](docs/new-meeting-current-contract.md), [roadmap](docs/roadmap.md) and [design guide](design/README.md).
 
-Before proposing a feature, read the [roadmap](docs/roadmap.md), [UX decisions](docs/ux-decisions.md) and [scheduling decisions](docs/scheduling-decisions.md). Discuss changes to scheduling semantics or user-facing flows before implementing them. Final UX acceptance belongs to the product owners.
+## Report a bug or propose a feature
 
-Use Node 22 for the checks run by CI:
+Include the SlotDesk version, browser and operating system, steps to reproduce, and expected and actual behavior. Use synthetic or redacted examples. Never attach credentials, real calendar exports, private meeting details or unredacted personal screenshots.
+
+For scheduling changes, describe how the proposed behavior affects required and optional guests, conflicts, timezones and fallback options. Discuss substantial changes before opening an implementation pull request. Report security vulnerabilities privately using [SECURITY.md](SECURITY.md).
+
+## Set up locally
+
+Use Node.js 22, matching CI. The extension has no dependency-install or frontend build step. Run `npm run dev` for a disconnected local preview, or load `extension/` as an unpacked extension. Google connection requires an approved beta account and configured OAuth credentials. The hosted services have separate instructions in [backend/](backend/README.md).
+
+Run the relevant checks before submitting a pull request:
 
 ```sh
 npm test
@@ -15,10 +23,21 @@ npm run check
 npm run package:slotdesk
 ```
 
-The extension has no dependency-install or frontend build step. The hosted registration function has its own dependencies in `backend/`. Use synthetic fixtures for development. Never commit credentials, real calendar exports or personal screenshots. Existing appointment changes must retain explicit review, account/target/version validation and duplicate-safe recovery.
+Use synthetic fixtures for calendar operations. Record which checks ran and any environment limits. Mocked transport results do not demonstrate real invitation delivery, provider recurrence behavior or workplace approval. Accessibility checks and local browser instructions are documented in [accessibility](docs/accessibility.md).
 
-Keep focused changes, meaningful validation and accurate documentation/changelog entries. Preserve the approved design assets and font/data licenses. Report vulnerabilities through [the security guidance](SECURITY.md).
+## Submit a change
 
-Follow the [design guide](design/README.md): keep the VT323 wordmark without a separate background tile and let lime fill the header. Distinguish implemented, planned and deferred decisions. Product releases belong in [the product changelog](docs/changelog.md); repository-only changes belong in [the repository changelog](CHANGELOG.md). Do not add appointment deletion, calendar moves or automatic changes to other meetings without a new accepted scope and validation. Mocked results do not establish real invitation delivery, provider recurrence behavior or work-account readiness; record controlled live evidence separately.
+Keep the change focused and explain the user-visible result. Update documentation and the changelog when behavior changes. Follow the design guide for typography, wording, layout and bundled assets. Add meaningful regression coverage when changing scheduling, persistence or calendar writes.
 
-SlotDesk uses the [MIT license](LICENSE). Contributions are provided under that license. Retain existing authorship and third-party notices; identify the license of any new third-party material. No contributor copyright assignment is required by this document.
+Preserve these calendar-write boundaries:
+
+- Require explicit review and confirmation before creating or changing a meeting.
+- Recheck the connected account, target, permissions and provider version before writing.
+- Preserve stable operation identifiers and read-back verification for uncertain results.
+- Keep unrelated appointments unchanged. Event deletion, calendar moves and automatic changes to other appointments are outside the supported feature set.
+
+Changes to those boundaries need a documented design and dedicated validation before implementation.
+
+## License and attribution
+
+Contributions are provided under the [MIT license](LICENSE). Retain existing authorship and third-party notices, and identify the license of any new third-party material. No contributor copyright assignment is required by this document. See [project credits](AUTHORS.md).

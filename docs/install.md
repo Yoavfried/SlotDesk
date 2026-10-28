@@ -1,48 +1,55 @@
-# Install the SlotDesk pilot
+# Install and update SlotDesk
 
-## 0.9.4.7 packages
+SlotDesk is currently a closed beta for approved Google test accounts. Store installation is not yet available. Download packages from [GitHub releases](https://github.com/Yoavfried/SlotDesk/releases). Browser-specific limits are listed in [browser compatibility](browser-compatibility.md).
 
-Use `SlotDesk-0.9.4.7.zip` for the manually loaded Chromium desktop beta: `chrome://extensions` (Chrome), `edge://extensions` (Edge), `vivaldi://extensions` (Vivaldi), or the browser's Extensions manager → Developer mode → Load unpacked. Extract the entire ZIP first. Retain the same installed folder/identity and use Reload when updating. Native panel availability varies; the full workspace tab is a supported fallback. Current [browser evidence and limits](browser-compatibility.md) apply.
+## Chromium browsers
 
-The owner completed [one-time Google/Vercel activation](browser-signin-setup.md) on 21 October. Public readiness is true for 0.9.4.6. Update/reload the extension to use the independent connection; testers do not create Cloud projects. Actual new-flow Google consent is the next check.
+The Chromium ZIP is used for manual installation in Chrome, Edge and compatible desktop Chromium browsers. Chrome 116 is the manifest minimum; it is not a guarantee that every later browser/OS combination has been tested.
 
-The Firefox artifact is an **unsigned development XPI**. For temporary source testing, extract it and select its manifest through `about:debugging` → This Firefox → Load Temporary Add-on. Normal release-channel distribution needs Mozilla signing; temporary loads disappear after restart. Safari's ZIP is **source preparation only**, not a working installable app; authentication and Apple packaging/signing/testing remain. Do not load Chrome's service-worker manifest as the Firefox port.
+1. Download the Chromium ZIP and extract the entire archive into a permanent folder.
+2. Open the browser's extension manager: `chrome://extensions` in Chrome, `edge://extensions` in Edge, or `vivaldi://extensions` in Vivaldi.
+3. Enable **Developer mode**, choose **Load unpacked**, and select the extracted folder containing `manifest.json`.
+4. Open SlotDesk from the browser's Extensions menu. Use **Settings → Open full workspace** for a larger tab. Browsers without a supported side panel use a full-tab workspace.
+5. Choose **Connect Google**, select an approved account and grant the requested access. If Google blocks access, contact [support](mailto:support@buildwithspeedy.com); workplace policy may also restrict the extension or permissions. Beta users do not need to create a Google Cloud project.
 
-Same Gmail on a new browser/computer does not synchronize local profiles or drafts. Existing [backup/import](export-import.md) transfers configuration only, never tokens or unfinished calendar operations. See [store preparation](extension-stores.md) before a broader distribution route.
+The ZIP contains `START-HERE.html`, Help, the privacy notice and bundled fonts/assets. When installing from source, select the repository's `extension/` folder instead of its root.
 
-Current release: **0.9.4.7**. Chromium manifest minimum is Chrome 116; this is a technical constraint, not verification of every later build. The configured build uses an existing owner-managed Google OAuth client; approved testers do not need to create a Google Cloud project.
+## First setup
 
-## Prepare the package
+1. Select the workspace calendars SlotDesk may use. At least one accessible calendar is required. Unselected calendars do not provide events or availability for scheduling, suggestions or alerts.
+2. Confirm your profile's name, timezone and availability-calendar links. Your connected email identifies your own profile.
+3. Add suggested profiles if useful, then complete setup and the registration choices shown for your browser.
 
-From the repository root, using Node.js 18+:
+A default invitation calendar can be selected later in Settings. Each new meeting requires a writable organizing calendar, which can be chosen in the meeting form. Read-only calendars can still be used for browsing and availability.
+
+Setup restarts at calendar selection if SlotDesk closes before all steps are complete. Saved values remain available to prefill. Completed setup does not repeat on each start.
+
+## Firefox and Safari artifacts
+
+The Firefox XPI is an **unsigned development package**. For temporary testing, extract it and open `about:debugging` → **This Firefox** → **Load Temporary Add-on**, then select its manifest. Temporary installations disappear after a restart; normal release-channel installation requires Mozilla signing. Use the Firefox package rather than the Chromium manifest.
+
+The Safari ZIP contains **source preparation only**. It is not an installable Safari app. Apple packaging, authentication, signing and device validation are still required.
+
+## Update an existing installation
+
+Replace the files in the existing installed folder with the new package, then click **Reload** on its extension card. Close and reopen older SlotDesk windows. Keep the same folder and installation identity to retain local profiles and settings.
+
+Do not uninstall as an update step: uninstalling can remove local data. Loading a second copy creates a separate installation. Consider downloading a backup before updating; see [backup and import/export](export-import.md).
+
+Using the same Google account in another browser or computer does not synchronize settings. Transfer configuration with a backup or selected-profile file. Credentials and pending calendar operations are not transferred by those files.
+
+## Connect, disconnect and get help
+
+The question-mark icon opens Help before or after connection. The exit icon beside the connected email disconnects Google. Disconnect keeps saved settings; **Settings → Clear data** removes the local account workspace after any uncertain calendar operation is resolved. Neither action deletes Google appointments. Read the [privacy notice](../extension/privacy.html) for storage, registration and removal details.
+
+The independent Google connection does not require signing into the browser itself. Its browser session ends when the browser closes, so reconnection may be needed. For support, use **Help → Connection details** and [support@buildwithspeedy.com](mailto:support@buildwithspeedy.com). Connection details exclude account emails, tokens and calendar content.
+
+## Build packages from source
+
+Use Node.js 22, matching CI, and run from the repository root:
 
 ```sh
 npm run package:slotdesk
 ```
 
-Give the tester `dist/SlotDesk-0.9.4.7.zip`. It includes the extension, local fonts, handoff guide, general Help and the privacy notice. Source tests and repository documentation are excluded. Do not include credentials or calendar exports.
-
-## Tester setup
-
-1. Extract the entire ZIP into a permanent folder and open `START-HERE.html`.
-2. In Chrome, open `chrome://extensions`, enable Developer mode, click Load unpacked, and select the extracted folder containing `manifest.json`.
-3. Open SlotDesk from the Extensions menu. For a larger tab, open Settings from the gear icon, then Open full workspace.
-4. Use Connect Google and select the intended approved Google account and grant the requested Calendar permissions. If blocked, ask the owner to check the approved test-user audience and scopes; organization policy may also apply.
-5. Confirm your own email, name, timezone and availability calendars. Choose the workspace calendars SlotDesk can use and a writable default invitation calendar when available. Read-only selections can browse and compare times. Optionally add familiar people, or skip this step and start using SlotDesk.
-6. Choose New meeting from the workspace menu. Search saved profiles by name or email, add the people attending by profile or email, confirm their timezones, optionally adjust Options for this meeting, search, and review a proposal. Use Copy meeting details for manual creation or Create & send invitations for a real new event.
-
-Use Existing meetings to choose one or more selected workspace calendars and a timeframe, then View details for guest responses and calendar/video links. Manage profiles has searchable saved people, Add profile and familiar-face suggestions. Existing installations retain profiles and first confirm which calendars SlotDesk should use; completed profile setup is preserved.
-
-Sending from a connected workspace creates a real event and sends invitations. For a work account, the organization must allow the extension and requested Google access; see [work-account use](security.md#work-account-use).
-
-Help is available from the question-mark icon before and after connection. The account email with a green dot shows the connection; the exit icon beside it disconnects. Dark mode is at the top of Settings. Read Help → Privacy notice for storage and data-removal details.
-
-## Updating
-
-Replace the contents of the existing installed folder with the new package and click Reload on its browser extension card. Keep the installed path and pinned identity. Close and reopen older SlotDesk windows after reloading. Saved account-specific profiles remain in the browser. Upgrades from before 0.8.0 ask you to confirm calendar scope; an already confirmed selection is retained in 0.9.4.7 and does not reopen at each start. Do not uninstall the extension as an update step, because uninstalling can remove its local workspace. Loading a second separate copy is not the normal update route.
-
-From source, load `extension/`, not the repository root. The pinned extension ID is `blpliafbiiidhcffegochddjhagkhhip`. Owner OAuth configuration and access limitations are described in [architecture](architecture.md).
-
-Version 0.9.4.6 includes the registration notice and optional updates choice introduced in the 0.9.0 preview. Its central endpoint is configured. Settings shows whether registration is saved or waiting; a failed submission stays queued locally. The private 0.9.4.7 pilot package includes this configured service. On update, Chrome may ask you to accept access to the exact registration-service host.
-
-Version 0.9.4.6 adds `storage` permission for browser-memory credentials. The independent path clears sign-in at browser exit while retaining saved workspace settings. The existing registration endpoint remains configured; the new sign-in endpoint is deployed and activated. Its public readiness is verified; that is separate from completing a real Google sign-in.
+Packages are written to `dist/` with the current manifest version. Packaging excludes source tests, developer tools and repository-only documentation. Service configuration is described in [backend setup](../backend/README.md).

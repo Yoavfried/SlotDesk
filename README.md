@@ -1,44 +1,43 @@
 ![SlotDesk — make room for what matters](design/assets/slotdesk-banner.svg)
 
-**0.9.5.5 · Google Calendar · private release-preparation build**
+SlotDesk helps executive assistants find meeting times across calendars and timezones. Compare suggestions, review invitations, and manage existing Google Calendar meetings from a browser side panel or full workspace tab.
 
-This update improves loading controls and planning-email layout, fixes invitation recovery and stale options after duration changes, and corrects later-date and after-work suggestions. [Release notes](docs/releases/v0.9.5.5.md) · [New meeting review](docs/new-meeting-review-0.9.5.5.md) · [Current scheduling rules](docs/new-meeting-current-contract.md).
+Made by **[Speedy](https://buildwithspeedy.com) — [Nina Banai](https://github.com/ninabanai-maker) and [Yoav Fried](https://github.com/Yoavfried)**.
 
-The current release includes a separate Trips manager, reviewed flight alerts, live participant clocks and portable profile/settings backups. [Version history](docs/changelog.md) · [Store submission kit](docs/store-kit/README.md).
+[Website](https://buildwithspeedy.com) · [Downloads](https://github.com/Yoavfried/SlotDesk/releases) · [Documentation](docs/README.md) · [Support](mailto:support@buildwithspeedy.com)
 
-Next: [1.0.0 publication preparation](docs/release-1.0.0-plan.md) for Chrome, Edge and Firefox. **Outlook support follows after 1.0.0.** Store/provider approvals and the remaining technical release checks are tracked in the [release-readiness review](docs/release-readiness-review.md). [Browser compatibility](docs/browser-compatibility.md) and [store requirements](docs/extension-stores.md) describe platform limits.
+**Closed beta:** Google connection is limited to approved test accounts. Store distribution is not yet available. The Chromium package can be loaded manually; the Firefox package is unsigned, and the Safari archive contains source preparation only. See [installation](docs/install.md) and [browser compatibility](docs/browser-compatibility.md).
 
-SlotDesk helps executive assistants find meeting times across people, calendars and timezones. Review a new invitation, browse existing meetings, edit its details and guests, or choose a new time for an appointment. Every calendar write requires an explicit review and confirmation.
+## Features
 
-Made by **[Speedy](https://buildwithspeedy.com) — [Nina Banai](https://github.com/ninabanai-maker) and [Yoav Fried](https://github.com/Yoavfried)**. See [project credits](AUTHORS.md).
+- Find meeting times using each participant's timezone, working hours, convenience hours, calendar availability and scheduling preferences.
+- Add saved profiles or email-only guests, mark guests optional, and compare clear and conflicting options with participant-specific details.
+- Create a reviewed invitation with an optional Google Meet link, or copy a planning email containing the displayed suggestions.
+- Browse multiple calendars, inspect guest responses and overlaps, and review edits to a meeting's details, guests or time.
+- Set profile blockers, notices, buffers and event treatment. Plan trips with multiple flights, connections and arrival-time timezone changes.
+- Back up profiles and settings locally, restore a workspace, or transfer selected profiles between installations.
 
-[Website](https://buildwithspeedy.com) · [Support](mailto:support@buildwithspeedy.com).
+Calendar changes require review and confirmation. SlotDesk does not automatically move other appointments and has no calendar-event deletion or calendar-move feature. Calendar access depends on the permissions granted by Google and your organization.
 
-## What you can do
+![Overlap details with synthetic calendar data](docs/assets/overlaps-v070.png)
 
-- Follow three-step onboarding: selected workspace calendars, your profile and optional familiar people. Incomplete setup starts again at calendars after reopening; completed setup is retained.
-- Set up email-based profiles with searchable timezones, visible calendar mappings and direct Travel & flights access.
-- Plan multi-flight trips, connections and return flights; use effective arrival timezones and reviewed flight alerts.
-- Add email guests with a meeting-only timezone; saving a profile is optional. Automatically include profiles mapped to the organizing calendar.
-- Use independent working/convenience preferences, recurring blockers and saved or per-meeting overlap ignoring. Explicit protected time remains blocked.
-- Compare suitable times, with optional guests, comfort ranking and clear warnings when calendar coverage is incomplete.
-- Create reviewed Google Calendar invitations with an optional Google Meet link.
-- Browse multiple calendars and any date range, inspect guest responses and expand overlap details.
-- Review an individual reschedule, including one recurring occurrence, while retaining the guests, meeting content and existing video link.
-- Edit a meeting’s title, location, description and guest list through a before/after review.
-- Follow up on declined invitations and plan replacement times for other overlapping appointments.
+## Install and update
 
-SlotDesk never moves another appointment automatically. Its application code has no calendar deletion or move operation. Calendar access and proposal confidence depend on the permissions actually granted.
+1. Download the Chromium ZIP from [releases](https://github.com/Yoavfried/SlotDesk/releases) and extract it into a permanent folder.
+2. Open your browser's extension manager, enable Developer mode, choose **Load unpacked**, and select the extracted folder containing `manifest.json`.
+3. Open SlotDesk, connect an approved Google account, and complete calendar selection, your profile and optional profile suggestions.
 
-## Try the approved pilot
+When updating, replace the files in the existing folder and reload the extension. Keeping the same installation preserves its local profiles and settings. For source installation, load `extension/` instead of the repository root. [Full installation instructions](docs/install.md).
 
-Download the ZIP from [releases](https://github.com/Yoavfried/slotdesk/releases), extract it and open `START-HERE.html`. Load the Chromium ZIP as an unpacked desktop extension. Other target artifacts have explicit unsigned/source-only limits; consult the compatibility matrix. Google sign-in is currently limited to the owner's approved pilot audience; a work account also needs workplace approval.
+## Privacy and accessibility
 
-For source installation, load the **`extension/`** folder. The repository move preserves the extension identity and Google OAuth configuration. [Installation and updates](docs/install.md).
+Profiles, preferences, trips and unfinished meetings are stored in the current browser. They do not synchronize across devices. Ordinary backups exclude credentials and loaded calendar events. Onboarding registration sends the fields described in the [privacy notice](extension/privacy.html); sharing that record is optional in Firefox. Optional project updates use a separate checkbox.
 
-## Develop locally
+Read [security and data handling](docs/security.md), [accessibility support](docs/accessibility.md), or [report a vulnerability privately](SECURITY.md). Use [support@buildwithspeedy.com](mailto:support@buildwithspeedy.com) for support and privacy requests.
 
-Node.js 18 or later; no application dependency installation is required.
+## Develop and contribute
+
+Use Node.js 22, matching CI. The browser application has no dependency-install or frontend build step.
 
 ```sh
 npm run dev
@@ -50,35 +49,30 @@ npm run check
 npm run package:slotdesk
 ```
 
-The preview at `http://127.0.0.1:8770/` shows the disconnected interface. Calendar connection needs the installed extension. The browser-independent service is activated; use the updated extension to connect. The native Chrome pilot remains available as a fallback when that service is inactive. Target packages are generated in ignored `dist/`.
+The local preview runs at `http://127.0.0.1:8770/`. Google connection requires an installed extension. Generated packages are written to `dist/`. The hosted service has separate dependencies and setup instructions in [backend/](backend/README.md).
 
-## Decisions, evidence and next work
+Read [contributing](CONTRIBUTING.md), the [design guide](design/README.md) and [current scheduling rules](docs/new-meeting-current-contract.md) before changing behavior. Use synthetic calendar data for development and issue reports.
 
-| Read | Purpose |
+## Project documentation
+
+| Topic | Documentation |
 | --- | --- |
-| [Product overview](docs/overview.md) | Available features and current limits |
-| [Onboarding and profiles](docs/onboarding-and-profiles.md) | Calendar scope, unsaved guests, automatic attendance and independent flexibility |
-| [UX decisions](docs/ux-decisions.md) · [scheduling rules](docs/scheduling-decisions.md) | Accepted behavior, including unimplemented/deferred decisions |
-| [Meeting editing](docs/meeting-editing.md) · [rescheduling](docs/rescheduling.md) | Guest/detail edits, individual time changes, alerts and manual follow-up |
-| [Roadmap](docs/roadmap.md) | Outlook, distribution and explicitly deferred features |
-| [Future LLM assistance](docs/llm-assistance.md) | User-supplied API keys, prepared prompts, email assistance and unconfirmed automation |
-| [Validation record](docs/testing.md) | Automated coverage and reported live results |
-| [Security and privacy](docs/security.md) | Write boundaries, local storage and work-account use |
-| [Design language](design/README.md) | Original style guide, fonts and design assets |
-| [Product changelog](docs/changelog.md) · [repository changelog](CHANGELOG.md) | Product releases and repository migration |
+| Using SlotDesk | [Product overview](docs/overview.md), [installation](docs/install.md), [backup and import/export](docs/export-import.md) |
+| Scheduling | [Current New meeting rules](docs/new-meeting-current-contract.md), [meeting editing](docs/meeting-editing.md), [rescheduling](docs/rescheduling.md) |
+| Platform and data | [Browser compatibility](docs/browser-compatibility.md), [security and privacy](docs/security.md), [accessibility](docs/accessibility.md) |
+| Project plans and history | [Roadmap](docs/roadmap.md), [release notes](docs/releases/README.md), [changelog](CHANGELOG.md) |
 
-Current exact validation counts and per-browser scope are recorded in [the validation record](docs/testing.md), alongside 22 export-comparison checks. The onboarding, scope, guest and flexibility flows have synthetic browser/transport coverage; real Google guest-edit delivery has not been independently observed. Basic live creation and the first dense-calendar integrity comparison passed. The owner also reports working decline alerts, sensible proposals, successful rescheduling and correct overlap details. Work-account access depends on the organization allowing the extension and Google permissions.
-
-![Overlap details with synthetic calendar data](docs/assets/overlaps-v070.png)
-
-## Repository map
+## Repository layout
 
 ```text
-extension/       Shared browser application, scheduling engine, bundled fonts and tests
-docs/            Product decisions, architecture, roadmap and acceptance records
-design/          Original design-kit references and documentation artwork
-scripts/         Preview, validation, synthetic fixtures and ZIP packaging
-.github/         Automated checks and contributor templates
+extension/       Browser application, scheduling engine, tests and bundled assets
+backend/         Google connection and onboarding registration services
+docs/            User guides, technical references, decisions and release history
+design/          Design guide, artwork and asset licenses
+scripts/         Local preview, checks, synthetic fixtures and packaging
+.github/         CI workflow and contribution templates
 ```
 
-The project remains private. SlotDesk uses the [MIT license](LICENSE), copyright 2026 Speedy, Nina Banai and Yoav Fried. Bundled third-party fonts and data retain their own licenses/notices. Consult the [publication checklist](docs/publication.md) before wider distribution. Calendar exports, credentials and private workplace information do not belong in this repository.
+## License and credits
+
+SlotDesk is available under the [MIT license](LICENSE), copyright 2026 Speedy, Nina Banai and Yoav Fried. Bundled third-party materials retain their own licenses. See [project credits](AUTHORS.md).

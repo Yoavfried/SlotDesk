@@ -1,37 +1,42 @@
 # SlotDesk documentation
 
-Current preparation build: **0.9.5.5**. [Release notes](releases/README.md) · [Current New meeting rules](new-meeting-current-contract.md) · [New meeting review](new-meeting-review-0.9.5.5.md) · [Release-readiness review](release-readiness-review.md) · [Store submission kit](store-kit/README.md). Chrome, Edge and Firefox publication preparation continues. Unsigned Firefox and Safari-source packages are development artifacts, not approved store releases.
+SlotDesk is a closed-beta Google Calendar scheduling extension. Start with the user guides below. Downloads are available from [GitHub releases](https://github.com/Yoavfried/SlotDesk/releases); the [installation guide](install.md) explains manual installation and browser-package limits.
 
-| Area | Records |
+## User guides
+
+| Topic | Guide |
 | --- | --- |
-| Product | [Overview](overview.md), [onboarding and profiles](onboarding-and-profiles.md), [implemented work](implemented.md), [roadmap](roadmap.md) |
-| Decisions | [UX](ux-decisions.md), [scheduling](scheduling-decisions.md), [live-feedback implementation](pending-ux-review.md), [14 October product review](product-review-2026-10-14.md), [next usability review](usability-review.md), [concrete usability flows](usability-flows.md), [profile validation inventory](profile-validation.md) |
-| Meeting management | [Editing details/guests](meeting-editing.md), [rescheduling, alerts and overlaps](rescheduling.md) |
-| Scheduling review | [19 October ranking rules, situations and result UX](scheduling-ranking-review.md) — ranking foundations and decision history |
-| 0.9.4.5 owner review | [Meeting options rows, factual statuses and warnings](meeting-options-review-0.9.4.5.md) — full 18-category source/wording/priority table accepted; final responsive/warning UX remains owner-led |
-| Advanced-profile decision record | [Advanced profile settings](advanced-profile-review-0.9.5.md) — agreed non-flight work implemented in 0.9.4.7; trip work implemented in 0.9.5 |
-| 0.9.5 implementation plan | [Trips, flights, timezone changes and Alerts entry points](trips-0.9.5.md) — implemented; live clocks and selected icon included; owner UX review remains |
-| Release split | [0.9.4.5 scope and implementation checks](release-plan-0.9.4.5.md) — non-flight advanced-profile cleanup moved to 0.9.4.7; flight work remains |
-| Search controls review | [Counts, more options, exclusions and fallback controls](search-options-review-0.9.4.5.md) — implemented 20 October policy and continuing owner review |
-| Planning email | [Plain-text options email request and proposed wording](planning-email.md) — implemented local preview/copy; separate from interactive inquiries |
-| Recovery | [Accepted connection, permission and recovery experience](recovery-experience.md), [system-wide error-reporting review](error-reporting-review.md), [Google connection and closed-beta direction](google-connection.md) |
-| Registration and leads | [Onboarding leads and browser labels](leads-table.md), [hosting and verification](registration-deployment.md) |
-| Future concepts | [Optional BYOK LLM assistance](llm-assistance.md), [unconfirmed availability emails](time-inquiries.md) |
-| Development | [Architecture](architecture.md), [engine API](engine-api.md), [installation](install.md), [local export/import](export-import.md), [browser compatibility plan](browser-compatibility.md) |
-| Accessibility | [Technical fixes, coverage and remaining checks](accessibility.md) |
-| Validation | [Validation record](testing.md), [optional calendar comparison kit](calendar-acceptance.md) |
-| Privacy and distribution | [Security/privacy](security.md), [publication checklist](publication.md) |
-| Design | [Implementation guide](../design/README.md), [original style guide](../design/reference/style-guide.html), [styling decisions](styling-0.9.4.md), [working style guide](../design/style-guide.html) |
-| Version history | [Product changelog](changelog.md), [repository changelog](../CHANGELOG.md), [migration](migration.md) |
+| Features and setup | [Product overview](overview.md), [installation and updates](install.md) |
+| People and calendars | [Onboarding and profile reference](onboarding-and-profiles.md) |
+| Scheduling | [Current New meeting rules](new-meeting-current-contract.md), [planning email](planning-email.md) |
+| Existing meetings | [Editing details and guests](meeting-editing.md), [rescheduling and alerts](rescheduling.md) |
+| Local files | [Backup, restore and selected-profile import/export](export-import.md) |
+| Data and support | [Privacy notice](../extension/privacy.html), [security/data handling](security.md), [accessibility](accessibility.md) |
+| Browser support | [Compatibility and known limits](browser-compatibility.md) |
+| Releases | [Release notes](releases/README.md), [product changelog](changelog.md), [repository changelog](../CHANGELOG.md) |
 
-Implemented means present in source. Pending validation means a stated live account/environment check remains. Planned means accepted but unfinished. Deferred means intentionally outside current development. Proposed candidates are not implementation promises.
+## Contributor and technical references
 
-Made by **Speedy — Nina Banai and Yoav Fried**. Next: [1.0.0 publication preparation](release-1.0.0-plan.md) for Chrome, Edge and Firefox. Outlook is deferred until afterward.
+| Topic | Reference |
+| --- | --- |
+| Contributions | [Contributing](../CONTRIBUTING.md), [security reporting](../SECURITY.md) |
+| Architecture | [Application architecture](architecture.md), [engine API](engine-api.md), [backend setup](../backend/README.md) |
+| Interface design | [Design guide](../design/README.md), [working style guide](../design/style-guide.html) |
+| Verification | [Validation record](testing.md), [optional calendar comparison kit](calendar-acceptance.md), [New meeting review](new-meeting-review-0.9.5.5.md) |
+| Distribution | [Store submission kit](store-kit/README.md), [store requirements](extension-stores.md), [release-readiness review](release-readiness-review.md) |
+| Project plans | [Roadmap](roadmap.md), [1.0.0 release plan](release-1.0.0-plan.md) |
+| Future concepts | [Optional LLM assistance](llm-assistance.md), [availability inquiries](time-inquiries.md) |
 
-## 0.9.4.8
+## Design decisions and history
 
-[Release scope](release-plan-0.9.4.8.md) · [Evidence](validation-0.9.4.8.json) · [Lead/browser rules](leads-table.md) · [Icon proposals awaiting selection](../design/proposals/extension-icon/README.md).
+Decision records explain the reasons behind changes and may describe superseded behavior. Use the current guides and [scheduling contract](new-meeting-current-contract.md) for implemented behavior.
 
-## 0.9.4.9
+- [UX decisions](ux-decisions.md) and [scheduling decisions](scheduling-decisions.md).
+- [Meeting-option statuses and data sources](meeting-options-review-0.9.4.5.md).
+- [Advanced profile settings](advanced-profile-review-0.9.5.md) and [trip design](trips-0.9.5.md).
+- [Search controls and fallback decisions](search-options-review-0.9.4.5.md).
+- [Connection recovery](recovery-experience.md) and [error-reporting review](error-reporting-review.md).
 
-[Profile meeting controls](release-plan-0.9.4.9.md) · [Validation](validation-0.9.4.9.json).
+A planned or proposed feature is not an available feature. Validation reports apply to the version and environment they identify. Browser packages do not imply store approval.
+
+Made by **[Speedy](https://buildwithspeedy.com), [Nina Banai](https://github.com/ninabanai-maker) and [Yoav Fried](https://github.com/Yoavfried)**. Support: [support@buildwithspeedy.com](mailto:support@buildwithspeedy.com).

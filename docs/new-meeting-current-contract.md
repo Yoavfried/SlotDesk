@@ -44,7 +44,7 @@ The complete proposed interval is checked against effective zones, dates, DST an
 - Starts normally use 10-minute units. Five-minute starts qualify when needed to avoid required-person conflicts, or improve optional attendance without worsening required fit. Partial reduction of an optional clash is insufficient. Automatic starts never use finer units; deliberate manual-time review is separate.
 - Required people determine feasibility. Explicit flight/manual/buffer inconvenience ranks before ordinary working-hour preference. Required guests have equal priority: worst burden, then total burden. Own-profile usual-hour fit is separate. Disruption and affected appointments matter; optional attendance breaks otherwise comparable ties.
 - Exactly three groups apply in the search timezone: before 12:00, 12:00–14:00, and 14:00 onward. Evening/night are not additional groups.
-- For one to three selected dates, retain at most one representative per group/date. Longer ranges retain one per eligible date. Within the applicable group/date and request category, use the best fit and earliest equally suitable start. Omit dates without feasible candidates.
+- Working-hours representatives use at most one choice per group/date for one to three selected dates, or one per eligible date for longer ranges. Clear outside-working-hours choices have a separate limit of one per eligible date. Within the applicable category, use the best fit and earliest equally suitable start. Omit dates without feasible candidates.
 - Displayed options never overlap one another, including across durations/categories/batches. Touching endpoints are allowed. This is separate from a suggestion overlapping an existing appointment.
 
 ## Initial options and Generate more
@@ -53,14 +53,14 @@ A clear option has no known required-person conflict and satisfies active hard r
 
 | Situation | Display behavior |
 | --- | --- |
-| Clear working-hours options exist in range | Initially show only those representatives, up to five. Generate more appends remaining clear working-hours representatives, at most one eligible best clear outside-working-hours choice, then in-range compromises. No later dates. |
-| No clear working-hours option exists in range | Feature at most one clear later working-hours option, then at most one clear outside-working-hours option inside the dates, followed by up to three in-range compromises. |
-| Neither independent featured choice exists | Feature one clear combined later-date/outside-working-hours choice if it qualifies. Do not add it when either independent category exists. |
-| More in-range compromises exist | Generate more appends up to three representatives, preserving existing cards/order/expanded warnings. It never adds another later option or broadens permissions. |
+| Clear working-hours options exist in range | Initially show only those representatives, up to five. Generate more appends remaining clear working-hours representatives, eligible clear outside-working-hours date representatives, then in-range compromises. Appended choices respect groups/dates already used by the normal choices. No later dates. |
+| No clear working-hours option, but clear outside-working-hours options exist in range | Initially show up to three clear choices on different eligible dates, at most one per day. Requested-duration choices take priority over shortened choices. Spread dates within that duration category; shortening fills only remaining initial places. Generate more appends the remaining clear date representatives, then in-range compromises. No later dates. |
+| No clear option exists in range | Feature at most one clear later working-hours option, followed by up to three in-range compromises. If no later working-hours choice qualifies, the single featured choice may instead be a clear later outside-working-hours choice. |
+| More retained options exist | Generate more appends up to three representatives, preserving existing cards/order/expanded warnings. It never adds another later option or broadens permissions. |
 
-With sufficient compromises, the fallback initial list has three to five cards. Otherwise show fewer. Never manufacture cards to reach a count.
+With sufficient compromises and no clear in-range option, the initial list has three or four cards. When a clear in-range option exists, compromises remain behind Generate more. Show fewer cards when fewer choices qualify; never manufacture cards to reach a count.
 
-The single outside-working-hours choice uses the earliest eligible date, then closest collective working-time fit and earliest equally suitable start, preserving duration and explicit-inconvenience priorities. It must fit an unused group/date and not overlap retained choices. Requested duration normally precedes shortening, subject to the clear-shortening exception below.
+Each outside-working-hours date representative uses the closest collective working-time fit and earliest equally suitable start, preserving duration and explicit-inconvenience priorities. An eligible date is the local date in the selected search timezone, after applying weekdays, leave, flights and other active restrictions. Within each duration category, three initial places use first/middle/last dates; two places use first/last; one uses the earliest. For an even number of dates, the middle choice uses the earlier middle date. Remaining clear dates retain requested-duration-before-shortening order, then chronological order within each category, ahead of compromises. No retained choices overlap. Requested duration normally precedes shortening, subject to the clear-shortening exception below.
 
 ## Shortening
 
@@ -77,7 +77,7 @@ At one start, keep the longest duration fully resolving the applicable conflict.
 
 ## Later-date deadline
 
-Later dates qualify only through the fallback behavior above, with no known required-person conflict. Later shortening additionally requires no qualifying shortened option inside the dates. Later conflicting alternatives are never offered.
+Later dates qualify only when there is no clear in-range choice, including clear outside-working-hours or shortened choices, and must have no known required-person conflict. Later shortening additionally requires no qualifying shortened option inside the dates. Later conflicting alternatives are never offered.
 
 Anchor to the week containing the selected search end. Stop at the earliest required participant's following-workweek end; optional guests do not shorten it. Ignoring working rules retains the saved reference workweek. Template schedules retain their chosen Sunday- or Monday-based reference. Manual schedules start after their longest disabled-weekday break; ties favor the earliest weekday in Monday–Sunday order. All-day/no-enabled-day schedules use Monday–Sunday.
 

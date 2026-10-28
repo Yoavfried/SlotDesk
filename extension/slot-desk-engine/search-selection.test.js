@@ -78,15 +78,75 @@ r=search(person({days:allDays,busy:[event('Busy until later',iso(day,0),iso('202
 eq(r.options.length,4);eq(r.options[0].day,'2026-11-13');eq(r.options[0].anchorMinute,540);eq(r.allOptions.filter(s=>s.alternativeType.startsWith('extended')).length,1);
 eq(r.options.slice(1).map(s=>s.day),['2026-11-03','2026-11-04','2026-11-05']);
 
-// Two distinct featured clear choices are permitted: later working hours and in-range after work.
+// A clear in-range after-work choice stands alone initially and suppresses later dates.
 const officeBusy=person({busy:[event('Office fully occupied',iso(day,9),iso(day,18))]});
-r=search(officeBusy);eq(r.options.length,5);eq(r.options[0].alternativeType,'extended');eq(r.options[0].day,'2026-11-04');eq(r.options[0].anchorMinute,540);
-eq(r.options[1].day,day);ok(r.options[1].outsideWorkingHours);ok(!r.options[1].requiredConflictCount);eq(r.options.filter(s=>s.day===day&&!s.requiredConflictCount).length,1);
-eq(r.options.slice(2).map(s=>P.band(s.anchorMinute)),['morning','midday','afternoon']);
+r=search(officeBusy);eq(r.options.length,1);eq(r.options[0].alternativeType,'requested');eq(r.options[0].day,day);eq(r.options[0].anchorMinute,1080);
+ok(r.options[0].outsideWorkingHours);ok(!r.options[0].requiredConflictCount);eq(r.options.filter(s=>s.day===day&&!s.requiredConflictCount).length,1);
+eq(r.allOptions.slice(1).map(s=>P.band(s.anchorMinute)),['morning','midday','afternoon']);
+ok(!r.allOptions.some(s=>s.alternativeType.startsWith('extended')),'an in-range clear after-work choice suppresses even clear later working hours');
+eq(r.allOptions.slice(0,r.options.length),r.options,'the displayed initial choices are the prefix consumed by Generate more');
 
-// When later office hours never open, keep only the in-range outside-work choice; no combined extra.
+// The same initial behavior applies whether later office hours open or not.
 const longOffice=person({busy:Array.from({length:20},(_,i)=>{const d=E.addDaysYmd(day,i);return event('Office '+i,iso(d,9),iso(d,18));})});
-r=search(longOffice);eq(r.options.length,4);eq(r.options[0].day,day);ok(r.options[0].outsideWorkingHours);ok(!r.allOptions.some(s=>s.alternativeType.startsWith('extended')));
+r=search(longOffice);eq(r.options.length,1);eq(r.options[0].day,day);ok(r.options[0].outsideWorkingHours);ok(!r.allOptions.some(s=>s.alternativeType.startsWith('extended')));
+
+// Longer after-work ranges initially spread up to three dates; every remaining
+// clear date representative remains ahead of conflicts in append-three batches.
+const officeEachDay=Array.from({length:10},(_,i)=>{const d=E.addDaysYmd(day,i);return event('Office day '+i,iso(d,9),iso(d,18));});
+const tenOffice=person({days:allDays,busy:officeEachDay});
+r=search(tenOffice,{range:ten,duration:45});
+eq(r.options.map(s=>s.day),[day,'2026-11-07','2026-11-12'],'initial dates use first, middle and last eligible dates');
+ok(r.options.every(s=>s.anchorMinute===1080&&s.duration===45&&s.outsideWorkingHours&&!s.requiredConflictCount),'each initial date keeps its best full-length clear after-work time');
+const tenClear=r.allOptions.filter(s=>s.outsideWorkingHours&&!s.requiredConflictCount),tenBad=r.allOptions.filter(s=>s.requiredConflictCount);
+eq(tenClear.length,10);eq(new Set(tenClear.map(s=>s.day)).size,10,'at most one clear after-work option is retained per day');
+eq(r.allOptions.slice(0,10),tenClear,'all remaining clear date representatives precede every compromise');
+eq(tenBad.length,10,'Generate more can still reach one working-hours compromise per selected date');
+eq(r.clearCount,10);eq(r.allOptions.slice(0,3),r.options);
+ok(r.allOptions.every(s=>s.day>=ten.from&&s.day<=ten.to&&!s.alternativeType.startsWith('extended')),'append batches never broaden the dates when a clear in-range choice exists');
+const batches=[];for(let n=r.options.length;n<r.allOptions.length;n+=3)batches.push(r.allOptions.slice(n,n+3));
+ok(batches.every(batch=>batch.length<=3),'Generate more consumes at most three frozen representatives at a time');
+eq(batches.flat(),r.allOptions.slice(3),'each retained option remains reachable without recomputing or repeating an option');
+ok(r.allOptions.every((s,i)=>r.allOptions.slice(0,i).every(other=>s.start>=other.end||s.end<=other.start)),'clear spread and later compromise batches remain mutually non-overlapping');
+
+// Two eligible dates produce two choices. Three produce three, one per day;
+// normal working-hours choices retain their existing group-based initial list.
+r=search(tenOffice,{range:{from:day,to:'2026-11-04'},duration:45});eq(r.options.map(s=>s.day),[day,'2026-11-04']);
+r=search(tenOffice,{range:{from:day,to:'2026-11-05'},duration:45});eq(r.options.map(s=>s.day),[day,'2026-11-04','2026-11-05']);
+r=search(person({busy:officeEachDay.map(ev=>({...ev,start:new Date(Date.parse(ev.start)+45*60000).toISOString()}))}),{range:{from:day,to:'2026-11-05'},duration:45});
+eq(r.options.map(s=>[s.day,s.anchorMinute]),[[day,540],['2026-11-04',540],['2026-11-05',540]],'three clear working-hour mornings stay the initial choices');
+eq(r.allOptions.filter(s=>s.outsideWorkingHours).map(s=>s.day),[day,'2026-11-04','2026-11-05'],'eligible after-work dates remain available after the normal initial list');
+ok(r.allOptions.slice(0,3).every(s=>!s.outsideWorkingHours),'after-work choices never displace normal clear choices');
+
+// Search-date distribution omits nonworking and explicitly protected dates;
+// optional conflicts and unknown coverage do not make a required-person choice disappear.
+const week={from:day,to:'2026-11-09'},leave={id:'Leave',calendarId:'work',title:'Leave',allDay:true,start:'2026-11-04',end:'2026-11-05',tz:'UTC',override:'leave'};
+r=search(person({busy:[...officeEachDay,leave]}),{range:week,duration:45});
+eq(r.options.map(s=>s.day),[day,'2026-11-05','2026-11-09'],'distribution uses eligible dates rather than the midpoint of the whole calendar range');
+eq(r.allOptions.filter(s=>s.outsideWorkingHours).map(s=>s.day),[day,'2026-11-05','2026-11-09','2026-11-06'],'the remaining eligible Friday stays reachable before conflicts');
+ok(!r.allOptions.some(s=>['2026-11-04','2026-11-07','2026-11-08'].includes(s.day)),'leave and nonworking dates never become overlap alternatives for this guest');
+const optionalAfterwork=person({id:'optional-afterwork',email:'optional-afterwork@example.test',required:false,busy:[blocked]});
+r=search([person({days:allDays,busy:officeEachDay,calendar:'none',coverages:[]}),optionalAfterwork],{range:ten,duration:45});
+eq(r.options.map(s=>s.day),[day,'2026-11-07','2026-11-12']);
+ok(r.options.every(s=>!s.requiredConflictCount&&s.people[0].confirmed===false&&s.people[1].required===false),'optional overlaps remain disclosed without excluding clear required-person after-work choices');
+const protectedEvening={...event('Protected evening',iso('2026-11-04',18),iso('2026-11-04',20)),override:'protected'};
+const blockMorning={...event('Protected morning',iso('2026-11-04',7),iso('2026-11-04',9)),override:'protected'};
+r=search(person({days:allDays,busy:[...officeEachDay,protectedEvening,blockMorning]}),{range:{from:day,to:'2026-11-05'},duration:45});
+eq(r.options.map(s=>s.day),[day,'2026-11-05'],'explicit protection removes the entire date from clear after-work choices when both outside-work windows are blocked');
+ok(r.allOptions.every(s=>s.day!=='2026-11-04'||s.start>=instant('2026-11-04',9)&&s.end<=instant('2026-11-04',18)),'hidden compromise choices still respect every explicit block');
+
+// Date diversity cannot move an early shortened meeting ahead of a later
+// requested-duration choice. Fill three full choices before using shortening.
+const noMorning=officeEachDay.map((ev,i)=>{const d=E.addDaysYmd(day,i);return {...event('Protected morning '+i,iso(d,7),iso(d,9)),override:'protected'};}),earlyShort={...event('Early evening closes',iso(day,18,30),iso(day,20)),override:'protected'},durationPriority=person({days:allDays,busy:[...officeEachDay,...noMorning,earlyShort]});
+r=search(durationPriority,{range:{from:day,to:'2026-11-04'},duration:45});
+eq(r.options.map(s=>[s.day,s.duration]),[['2026-11-04',45],[day,30]],'a later full-duration date precedes an earlier clear shortened date');
+eq(r.allOptions.slice(0,r.options.length),r.options,'duration ordering preserves the initial pool prefix');
+r=search(durationPriority,{range:{from:day,to:'2026-11-06'},duration:45});
+eq(r.options.map(s=>[s.day,s.duration]),[['2026-11-04',45],['2026-11-05',45],['2026-11-06',45]],'three full-duration dates keep the early shortened date behind Generate more');
+eq(r.allOptions[3].day,day);eq(r.allOptions[3].duration,30,'the shortened clear date remains before every overlapping alternative');
+r=search(durationPriority,{range:ten,duration:45});
+eq(r.options.map(s=>s.day),['2026-11-04','2026-11-08','2026-11-12'],'first/middle/last spreading occurs within the full-duration category');
+ok(r.allOptions.slice(0,9).every(s=>s.duration===45&&!s.requiredConflictCount),'all remaining full-length clear dates precede the early shortened date');
+eq([r.allOptions[9].day,r.allOptions[9].duration],[day,30]);
 
 // Combined later/outside-work is used only if both independent featured choices are absent.
 const combined={...longOffice,busy:[...longOffice.busy,event('Whole requested day',iso(day,0),iso('2026-11-04',0))]};

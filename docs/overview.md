@@ -1,48 +1,41 @@
-# SlotDesk product overview
+# Product overview
 
-0.9.4.7 adds the [agreed advanced profile settings](release-plan-0.9.4.7.md). Travel/flight redesign remains pending owner review; existing browser/store limits still apply.
+SlotDesk helps executive assistants find, compare and book meeting times across Google calendars and timezones. It runs in a browser side panel or full workspace tab. The current release is a closed desktop beta; Google connection is limited to approved accounts. See [installation](install.md) and [browser compatibility](browser-compatibility.md).
 
-**Current version: 0.9.4.7 · Google Calendar first · private desktop-extension beta**
+![SlotDesk workspace menu with synthetic data](assets/workspace-menu-light.png)
 
-SlotDesk helps executive assistants find, compare and book meeting times across calendars and timezones. Profiles represent people by email. Calendars provide availability sources and a writable organizing calendar; they are not the profile identity.
+## Set up people and calendars
 
-![SlotDesk workspace menu with synthetic test data](assets/workspace-menu-light.png)
+Onboarding begins with workspace calendars, followed by your profile and optional profile suggestions. At least one accessible calendar is required to complete setup. A default invitation calendar is optional; a writable organizing calendar must be selected before a new meeting can be searched or sent. Interrupted onboarding starts again at calendar selection with saved entries available to prefill.
 
-## Available in the pilot
+Profiles identify people by email. Link calendars that describe their availability, select a timezone, and configure working days/hours, convenience hours, notices, buffers, blockers and event treatment. Profiles linked to the organizing calendar are included automatically unless removed from that meeting. Guests can also be added by email without saving a profile; their meeting timezone must be confirmed before searching.
 
-- A home menu for New meeting, Existing meetings and Manage profiles, with a separate creation confirmation that returns to the menu.
-- Browsing across selected calendars and an unrestricted date range, with an adjustable display timezone, cached selection changes, SlotDesk origin tags, all-day/recurring/free meetings, guest responses and explicit incomplete/busy-only access.
-- Reviewed editing of title, location, description, added/removed guests and Required/Optional roles, with retained responses and explicit removal consequences.
-- Fixed dialog headings and close buttons; action-local errors and progress replace the historical status strip.
+## Find and create a meeting
 
-- Search saved profiles by name/email, add only attendees, and manage profiles in a separate searchable view.
-- Own-profile onboarding, short participant profile creation, editable profiles and up to six suggested people from calendar appearances.
-- Template or manual working schedules, optional working-day/hour enforcement, convenience ranking and a system-wide 24-hour/AM-PM preference.
-- Calendar reads with pagination, recurring events, normalized visibility, explicit coverage/failure status and deduplication across sources.
-- Positive availability, manual travel, confirmable non-LLM timezone clues, exact flight timing, leave/holiday exceptions and configurable radii/notice.
-- Optional guests that prefer suitable times without blocking proposals; full participant-local dates and times; ordered fallback categories and explicit last-resort warnings.
-- Compact proposal dates with future years only, date-specific GMT offsets, participant fit and explicit calendar-data confidence.
-- Editable meeting review, copied details, fresh availability checks, new invitations to every retained attendee, Google Meet and unfinished-send recovery.
-- A compact logo/Help/Settings row, connected email badge with disconnect icon, dark mode/full workspace at the top of Settings, and a privacy notice accessible through Help. Local fonts and the supplied design language are retained.
+Choose participants, duration, dates and search timezone. Each search refreshes selected calendar availability. Required participants determine feasibility; optional guests influence the ranking without blocking a suggestion. Options show each person's local time and relevant conflicts or restrictions. Unknown availability is shown separately from a known conflict.
 
-The [implemented work register](implemented.md) includes F01–F04, the original four defects, and F05–F18 follow-up features. The [UX register](ux-decisions.md) covers the later setup and booking decisions.
+The search compares times under the [current scheduling rules](new-meeting-current-contract.md), including qualified shorter or later alternatives. **Generate more options** appends further suggestions. A planning-email preview produces editable text for copying; it does not send mail or create an appointment.
 
-## Validation and work-account readiness
+Review the invitation's calendar, participants, time and other details before sending. A Google Meet link can be included. SlotDesk verifies uncertain results against the same event rather than immediately sending another invitation.
 
-The project owner reports that basic live connection, setup, search and booking work. Current automated and per-browser evidence is recorded separately in the validation record. The disposable dense-calendar creation/export integrity check passed. The owner additionally reports working No alerts, suitable proposals, successful rescheduling and correct overlap details. Work-account access depends on the organization allowing the extension and Google permissions. See [testing](testing.md) and [security/privacy](security.md). A selected profile or timezone does not establish access to someone's calendar; unavailable data is marked unconfirmed.
+## Manage existing meetings
 
-## Meeting management and next work
+Browse one or more workspace calendars across a chosen date range. Adjust the display timezone, inspect guest responses and overlap details, and identify meetings created with SlotDesk. Calendar-filter changes use the loaded cache; date changes and Refresh meetings load data again. Incomplete loading is labelled.
 
-[Meeting editing](meeting-editing.md), [reviewed rescheduling](rescheduling.md), declined-invitation alerts and overlap details are implemented. Occupied proposals favor fewer appointments to move and offer replacement actions for the OTHER meetings. No appointment moves automatically; deletion and calendar moves remain unsupported. Outlook is the accepted next calendar provider. [Optional user-key LLM assistance](llm-assistance.md) and live flight APIs remain deferred. Availability emails are an unconfirmed future feature; LLM-assisted direct appointment creation is a future request with its authorization policy still open. None is implemented in the current release.
+Reviewed editing supports title, location, description and guest-list changes. Rescheduling changes the selected appointment's time, including one recurring occurrence, while retaining its other details. Alerts surface declined invitations and overlapping appointments for follow-up. No other appointment moves automatically.
 
-SlotDesk is made by **[Speedy](https://buildwithspeedy.com)**, Nina Banai and Yoav Fried. Public support is [support@buildwithspeedy.com](mailto:support@buildwithspeedy.com). Broader website implementation and private venture planning remain outside this repository.
+## Plan trips
 
-Version 0.8.1 adds [three-step onboarding and calendar scope](onboarding-and-profiles.md), main profile mappings, direct travel access, searchable timezone selection, email-first guests and independent saved/meeting-specific flexibility. No LLM or email feature is implemented.
+Each profile has a separate Travel & flights manager. Trips can contain multiple flights, connections and a return flight. Saved flights block meetings, and arrival times determine effective scheduling timezones. Matching calendar entries can supply flight details; estimates remain editable. Changes to linked calendar entries require review before updating a saved trip.
 
+## Save and transfer settings
 
-Version 0.9.2 adds automatic read-only confirmation through bell alerts, offline write blocking, immediate Settings preferences, responsive profile pagination, six familiar-face suggestions with a sliding cache and a stable header. See [version history](changelog.md).
+Profiles, preferences, trips and unfinished meeting details stay in the current browser. Local backups restore a workspace; selected-profile files transfer individual people and their settings. Imports check calendar references against the receiving account. They do not change Google appointments or calendar-sharing permissions. See [backup and import/export](export-import.md).
 
-Version 0.9.3 adds a documented accessibility pass and repeatable local checks. The overall UX, actions/buttons, responsive layout and wording review remains open for owner approval; technical checks do not decide readiness. See [accessibility](accessibility.md).
+## Current limits
 
+Google Calendar is the supported provider; Outlook is planned after the first public release. Public store distribution, wider platform coverage, cloud settings synchronization, email-reading and LLM features are not available. There is no calendar-event deletion or calendar-move feature.
 
-Version 0.9.4.6 adds shared browser adapters, guarded native-sidebar/full-tab launch, independent Google OAuth code, memory-only credentials and safe connection details. [Owner hosting activation](browser-signin-setup.md) completed on 21 October; public readiness is verified true. Actual new-flow Google consent remains to be checked in the updated extension. [The support matrix](browser-compatibility.md) distinguishes actual Edge/Vivaldi/Chromium evidence from unsigned Firefox, Safari-source and unverified targets. No public store release is made.
+See [security and privacy](security.md), [accessibility](accessibility.md), [validation](testing.md), [release history](releases/README.md) and [roadmap](roadmap.md) for details.
+
+SlotDesk is made by **[Speedy](https://buildwithspeedy.com), [Nina Banai](https://github.com/ninabanai-maker) and [Yoav Fried](https://github.com/Yoavfried)**. Support: [support@buildwithspeedy.com](mailto:support@buildwithspeedy.com).

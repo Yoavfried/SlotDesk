@@ -1,9 +1,16 @@
 # Security reporting
 
-SlotDesk is preparing its first public release. It currently uses a private repository and an approved Google beta audience. The supported public release will be finalized before publication. Support and private security reports: [support@buildwithspeedy.com](mailto:support@buildwithspeedy.com). Website: [buildwithspeedy.com](https://buildwithspeedy.com).
+Report suspected vulnerabilities privately to **[support@buildwithspeedy.com](mailto:support@buildwithspeedy.com)**. Do not disclose vulnerability details in a public issue. GitHub's private vulnerability reporting can also be used when available in this repository's Security tab.
 
-Do not include credentials, private calendar data, personal exports or vulnerability details in public issues. If GitHub private vulnerability reporting is enabled, use the repository’s Security tab to report privately. Otherwise email support@buildwithspeedy.com privately. Do not assume an unconfigured public form is monitored.
+Include:
 
-Include the affected version/browser, minimal reproduction using synthetic data, expected behavior and observed impact. Remove tokens and personal data from attachments.
+- The affected SlotDesk version, browser and operating system.
+- Reproduction steps using synthetic or redacted data.
+- Expected and observed behavior, and the potential impact.
+- Relevant logs or screenshots with credentials and personal information removed.
 
-Maintainers: verify private reporting and a reachable contact before making the repository public. Track the actual supported release and remediation status. [Security architecture and limitations](docs/security.md) · [Release review](docs/release-readiness-review.md).
+Never send access tokens, client secrets, passwords, real calendar exports or unnecessary private meeting content. If sensitive information is needed to investigate, arrange its transfer with support first.
+
+SlotDesk is currently in closed beta. Security reports should identify whether they affect the latest prerelease or an older version; upgrading to the latest prerelease is recommended before reproducing an issue.
+
+Read [security and data handling](docs/security.md) for calendar-write boundaries, local storage, Google permissions and current limitations. The [privacy notice](extension/privacy.html) describes the data processed by the extension and its hosted services.

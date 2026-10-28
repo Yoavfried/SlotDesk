@@ -11,10 +11,10 @@ about: Describe a reproducible SlotDesk issue using synthetic or redacted inform
 
 ## Version and environment
 
-SlotDesk version, Chrome version, side panel/full workspace, provider and relevant permission level.
+SlotDesk version, browser/version, operating system, side panel or full workspace, and relevant calendar permissions.
 
-## Calendar integrity
+## Calendar operation, if relevant
 
-Was an operation confirmed, uncertain or rejected? Identify the type of operation without exposing private event details. Check the same appointment before attempting another write.
+Was a create, edit or reschedule operation confirmed, uncertain or rejected? Describe the operation without private event details. Check the same appointment before attempting another write after an uncertain result.
 
-Do not attach tokens, raw work-calendar exports, private meeting contents or unredacted screenshots.
+Do not attach tokens, raw calendar exports, private meeting contents or unredacted screenshots. Report security vulnerabilities privately using SECURITY.md.

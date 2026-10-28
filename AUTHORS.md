@@ -7,17 +7,17 @@ SlotDesk is made by **[Speedy](https://buildwithspeedy.com)**:
 
 Support: [support@buildwithspeedy.com](mailto:support@buildwithspeedy.com).
 
-These project credits complement individual Git commit attribution.
+These credits complement individual Git commit attribution. SlotDesk is licensed under [MIT](LICENSE), copyright 2026 Speedy, Nina Banai and Yoav Fried.
 
-## Typography and third-party materials
+## Third-party materials
 
-The supplied SlotDesk design kit uses VT323 and IBM Plex Mono. Keep their original license texts with the extension and the design references:
+Bundled fonts, icons and data retain their original licenses and notices:
 
-- [VT323 license](extension/fonts/LICENSE-VT323.txt)
-- [IBM Plex Mono license](extension/fonts/LICENSE-IBM-Plex-Mono.txt)
-- [DM Sans license](extension/fonts/LICENSE-DM-Sans.txt)
-- [Airport lookup data license](extension/data/LICENSE-Airports.txt) and [pinned source](design/airports-source.json)
+- [VT323](extension/fonts/LICENSE-VT323.txt), used for the wordmark.
+- [IBM Plex Mono](extension/fonts/LICENSE-IBM-Plex-Mono.txt), used for interface labels.
+- [DM Sans](extension/fonts/LICENSE-DM-Sans.txt), used for ordinary interface text.
+- [Geographic name data](extension/data/GEONAMES-NOTICE.txt).
+- [Airport lookup data](extension/data/LICENSE-Airports.txt), with its [source record](design/airports-source.json).
+- [Lucide airplane icon](extension/icons/LICENSE-Lucide.txt), with the bundled attribution and license.
 
-The README banner uses vector outlines from the supplied fonts so the actual wordmark renders on GitHub without an installed font. Brackets use the design's 55% opacity and the full banner uses the lime field `#D8E84A`.
-
-SlotDesk is licensed under [MIT](LICENSE), copyright 2026 Speedy, Nina Banai and Yoav Fried, adopted with owner approval on 26 October 2026. Third-party fonts and data retain the licenses/notices linked above. Repository public visibility remains a separate approval.
+The repository banner uses vector outlines so the SlotDesk wordmark displays without locally installed fonts. The [design guide](design/README.md) describes the logo, colors and interface assets.

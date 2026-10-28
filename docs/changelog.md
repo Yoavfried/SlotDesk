@@ -2,6 +2,20 @@
 
 Changes are grouped as Added, Improved and Fixed. Entries describe the behavior released in each version, including same-version hotfixes.
 
+## 0.9.5.6 — 28 October 2026
+
+### Improved
+
+- Clear after-work suggestions span up to three eligible dates, with at most one per day. Longer ranges use the first, middle and last eligible dates.
+- When clear choices exist inside the selected dates, overlapping alternatives appear only through Generate more. Remaining clear dates appear before conflicting choices.
+- Clear in-range choices prevent later-date fallbacks from expanding the search.
+- Repository guides now focus on installation, features, contribution, security reporting, data handling and accessibility support.
+
+### Fixed
+
+- Release descriptions no longer repeat their titles. Dates and Added, Improved and Fixed sections remain visible.
+- Updated outdated installation and profile-management guidance.
+
 ## 0.9.5.5 — 28 October 2026
 
 ### Improved

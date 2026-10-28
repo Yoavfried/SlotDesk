@@ -53,6 +53,25 @@
     const distance=s=>{const p=s.people.filter(p=>p.required),values=p.map(p=>p.distance||0),minutes=p.map(p=>p.usualInconvenientMinutes||0);return [s.score?.explicitMax||0,s.score?.explicitTotal||0,Math.max(0,...minutes),minutes.reduce((a,b)=>a+b,0),Math.max(0,...values),values.reduce((a,b)=>a+b,0)];};
     return [...slots].sort((a,b)=>(a.alternativeRank||0)-(b.alternativeRank||0)||a.day.localeCompare(b.day)||(outside?distance(a).reduce((v,n,i)=>v||n-distance(b)[i],0):R.quality(a,b))||a.start-b.start)[0];
   }
+  const requestOrder=(a,b)=>(a.alternativeRank||0)-(b.alternativeRank||0)||a.day.localeCompare(b.day)||a.start-b.start;
+  function outsideChoices(slots,req,occupied=[],usedGroups=[]){
+    const groups=new Set(usedGroups),days=[...new Set(slots.map(s=>s.day))].sort(),out=[];
+    for(const day of days){
+      const choice=best(slots.filter(s=>s.day===day&&!groups.has(key(s,req))&&![...occupied,...out].some(x=>overlaps(x,s))),true);
+      if(choice){choice.outsideWorkingHours=true;out.push(choice);}
+    }
+    return out.sort(requestOrder);
+  }
+  function spreadDates(slots){
+    const ordered=[...slots].sort(requestOrder),out=[];
+    for(const rank of [...new Set(ordered.map(s=>s.alternativeRank||0))]){
+      const group=ordered.filter(s=>(s.alternativeRank||0)===rank),count=Math.min(3-out.length,group.length);
+      if(count===1)out.push(group[0]);
+      else for(let i=0;i<count;i++)out.push(group[Math.floor(i*(group.length-1)/(count-1))]);
+      if(out.length===3)break;
+    }
+    return out;
+  }
   function find(req,E){
     const fixed={...req,step:10,spacingMode:'automatic',perDayMode:'automatic',minDuration:30,extendDays:0,want:5},base=E.evaluate(fixed),empty={options:[],allOptions:[],open:[],openCount:0,clearCount:0,rejected:base.rejected,rejectionDetails:base.rejectionDetails,protectedConflicts:base.protectedConflicts,errors:base.errors,warnings:base.warnings};
     if(base.errors.length)return empty;
@@ -84,10 +103,14 @@
     const originals=full.filter(s=>{const replacement=shorter.find(x=>!x.requiredConflictCount&&overlaps(x,s))||replacements.get(s.start);return !replacement||!s.requiredConflictCount||replacement.requiredConflictCount&&replacement.shortening.after.count>=replacement.shortening.before.count&&replacement.shortening.after.minutes>=replacement.shortening.before.minutes;});
     const requested=[...originals,...shorter],clear=requested.filter(good),normal=select(clear.filter(working),req).sort((a,b)=>(a.alternativeRank||0)-(b.alternativeRank||0)||a.day.localeCompare(b.day)||a.start-b.start),deadline=horizon(req,E);
     if(normal.length){
-      const groups=new Set(normal.map(s=>key(s,req))),outside=best(clear.filter(s=>!working(s)&&!groups.has(key(s,req))&&!normal.some(x=>overlaps(x,s))),true),kept=[...normal];
-      if(outside){outside.outsideWorkingHours=true;kept.push(outside);}
+      const outside=outsideChoices(clear.filter(s=>!working(s)),req,normal,normal.map(s=>key(s,req))),kept=[...normal,...outside];
       const bad=select(requested.filter(s=>!good(s)),req,kept,kept.map(s=>key(s,req))),allOptions=[...kept,...bad];
-      return {...empty,options:normal.slice(0,5),allOptions,open:normal,openCount:base.open.length,clearCount:normal.length,deadline};
+      return {...empty,options:normal.slice(0,5),allOptions,open:normal,openCount:base.open.length,clearCount:kept.length,deadline};
+    }
+    if(clear.length){
+      const outside=outsideChoices(clear,req),initial=spreadDates(outside),shown=new Set(initial),kept=[...initial,...outside.filter(s=>!shown.has(s))];
+      const bad=select(requested.filter(s=>!good(s)),req,kept),allOptions=[...kept,...bad];
+      return {...empty,options:initial,allOptions,open:outside,openCount:base.open.length,clearCount:outside.length,deadline};
     }
     const later=[];
     const from=E.addDaysYmd(req.range.to,1),to=E.partsIn(deadline-1,req.anchorTz||req.people[0].tz).ymd;
@@ -95,11 +118,11 @@
       for(const s of [...extended.open,...extended.taken])if(s.end<=deadline&&good(s))later.push(label(s,'extended',2));
       if(!later.some(working)&&!shorter.some(good))for(const s of shortChoices(range,'extended-shorter',3))if(s.end<=deadline&&good(s))later.push(s);
     }
-    const laterWorking=best(later.filter(working)),within=best(clear.filter(s=>!laterWorking||!overlaps(s,laterWorking)),true),featured=[laterWorking,within].filter(Boolean);
+    const laterWorking=best(later.filter(working)),featured=[laterWorking].filter(Boolean);
     if(!featured.length){const combined=best(later,true);if(combined)featured.push(combined);}
     for(const slot of featured){slot.featuredFallback=true;slot.outsideWorkingHours=!working(slot);}
     const bad=select(requested.filter(s=>!good(s)),req,featured),allOptions=[...featured,...bad];
-    return {...empty,options:[...featured,...bad.slice(0,3)],allOptions,open:within?[within]:[],openCount:base.open.length,clearCount:within?1:0,deadline};
+    return {...empty,options:[...featured,...bad.slice(0,3)],allOptions,open:[],openCount:base.open.length,clearCount:0,deadline};
   }
   return {durations,horizon,perfect,good,working,band,select,find};
 });
