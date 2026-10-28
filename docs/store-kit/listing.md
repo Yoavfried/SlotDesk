@@ -38,9 +38,11 @@ Website: https://buildwithspeedy.com
 
 Support: support@buildwithspeedy.com
 
+Source code (MIT): https://github.com/Yoavfried/SlotDesk
+
 ## Source-code destination
 
-Once the repository is public, append this concise line to each store description: `Source code (MIT): https://github.com/Yoavfried/SlotDesk`. Also use that address in any dedicated source-code field. Keep the Speedy website as the product homepage. Add live store links to the repository only after they exist.
+The repository is public under MIT. The full description above includes its source-code link; also use that address in any dedicated source-code field. Keep the Speedy website as the product homepage. Add live store links to the repository only after they exist.
 
 ## Fields pending owner setup
 

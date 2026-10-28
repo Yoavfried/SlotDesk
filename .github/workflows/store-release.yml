@@ -1,0 +1,201 @@
+name: Prepare and submit store updates
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Stable release tag matching the extension version, for example v1.0.1
+        required: true
+        type: string
+      target:
+        description: Prepare only, or submit an update to an enabled store
+        required: true
+        default: prepare
+        type: choice
+        options: [prepare, chrome, edge, firefox, all]
+      confirm_tag:
+        description: For submissions, type the exact tag again; leave empty for prepare
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: store-release-${{ github.event.release.tag_name || inputs.tag }}
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    if: github.repository == 'Yoavfried/SlotDesk' && (github.event_name != 'release' || !github.event.release.prerelease)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    outputs:
+      tag: ${{ steps.metadata.outputs.tag }}
+      commit: ${{ steps.metadata.outputs.commit }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ github.event.release.tag_name || inputs.tag }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: '22'
+          package-manager-cache: false
+      - name: Validate release request
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name || inputs.tag }}
+          RELEASE_TARGET: ${{ inputs.target || 'prepare' }}
+          CONFIRM_TAG: ${{ inputs.confirm_tag }}
+        run: |
+          node --input-type=module <<'NODE'
+          import {validateCheckout, releaseVersion, validateSubmissionRef} from './scripts/store-release.mjs';
+          const tag = process.env.RELEASE_TAG;
+          releaseVersion(tag);
+          validateCheckout(process.cwd(), tag);
+          if (process.env.GITHUB_EVENT_NAME === 'workflow_dispatch' && process.env.RELEASE_TARGET !== 'prepare') {
+            if (process.env.CONFIRM_TAG !== tag) throw new Error('Type the exact release tag in confirm_tag before requesting submission.');
+            validateSubmissionRef(process.env.GITHUB_REF, tag);
+          }
+          NODE
+      - run: npm test
+      - run: npm run test:backend
+      - run: npm run test:calendar-kit
+      - run: npm run test:release
+      - run: node --test scripts/store-release.test.mjs
+      - run: npm run check
+      - name: Prepare packages and verify matching Firefox source
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name || inputs.tag }}
+        run: node scripts/store-release.mjs prepare --tag "$RELEASE_TAG" --output release-bundle
+      - name: Record approved source revision
+        id: metadata
+        run: |
+          node --input-type=module <<'NODE'
+          import {readFileSync, appendFileSync} from 'node:fs';
+          const release = JSON.parse(readFileSync('release-bundle/release.json', 'utf8'));
+          appendFileSync(process.env.GITHUB_OUTPUT, `tag=${release.tag}\ncommit=${release.commit}\n`);
+          appendFileSync(process.env.GITHUB_STEP_SUMMARY, `Prepared **${release.tag}** from \`${release.commit}\`. Firefox source rebuild: **byte-identical**. Store jobs are disabled unless explicitly configured.\n`);
+          NODE
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: store-release-bundle
+          path: release-bundle/
+          if-no-files-found: error
+          retention-days: 30
+          overwrite: true
+
+  chrome:
+    needs: prepare
+    if: vars.SLOTDESK_CHROME_ENABLED == 'true' && ((github.event_name == 'release' && vars.SLOTDESK_STORE_AUTO_SUBMIT == 'true') || (github.event_name == 'workflow_dispatch' && (inputs.target == 'chrome' || inputs.target == 'all')))
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: chrome-web-store
+    concurrency:
+      group: slotdesk-chrome-store
+      cancel-in-progress: false
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ needs.prepare.outputs.commit }}
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: '22'
+          package-manager-cache: false
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: store-release-bundle
+          path: release-bundle
+      - uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093 # v3.0.0
+        id: google
+        with:
+          workload_identity_provider: ${{ vars.CWS_WIF_PROVIDER }}
+          service_account: ${{ vars.CWS_SERVICE_ACCOUNT }}
+          token_format: access_token
+          access_token_scopes: https://www.googleapis.com/auth/chromewebstore
+          access_token_lifetime: 1800s
+          create_credentials_file: false
+          export_environment_variables: false
+      - name: Upload and submit Chrome update for review
+        env:
+          RELEASE_TAG: ${{ needs.prepare.outputs.tag }}
+          SLOTDESK_STORE_SUBMISSION_ENABLED: ${{ vars.SLOTDESK_CHROME_ENABLED }}
+          SLOTDESK_SUBMISSION_APPROVED_TAG: ${{ needs.prepare.outputs.tag }}
+          SLOTDESK_EXPECTED_COMMIT: ${{ needs.prepare.outputs.commit }}
+          CWS_PUBLISHER_ID: ${{ vars.CWS_PUBLISHER_ID }}
+          CWS_ITEM_ID: ${{ vars.CWS_ITEM_ID }}
+          CWS_ACCESS_TOKEN: ${{ steps.google.outputs.access_token }}
+        run: node scripts/store-release.mjs submit --directory release-bundle --tag "$RELEASE_TAG" --store chrome
+
+  edge:
+    needs: prepare
+    if: vars.SLOTDESK_EDGE_ENABLED == 'true' && ((github.event_name == 'release' && vars.SLOTDESK_STORE_AUTO_SUBMIT == 'true') || (github.event_name == 'workflow_dispatch' && (inputs.target == 'edge' || inputs.target == 'all')))
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: edge-addons
+    concurrency:
+      group: slotdesk-edge-store
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ needs.prepare.outputs.commit }}
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: '22'
+          package-manager-cache: false
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: store-release-bundle
+          path: release-bundle
+      - name: Upload and submit Edge update for certification
+        env:
+          RELEASE_TAG: ${{ needs.prepare.outputs.tag }}
+          SLOTDESK_STORE_SUBMISSION_ENABLED: ${{ vars.SLOTDESK_EDGE_ENABLED }}
+          SLOTDESK_SUBMISSION_APPROVED_TAG: ${{ needs.prepare.outputs.tag }}
+          SLOTDESK_EXPECTED_COMMIT: ${{ needs.prepare.outputs.commit }}
+          EDGE_FIRST_PUBLICATION_COMPLETE: ${{ vars.EDGE_FIRST_PUBLICATION_COMPLETE }}
+          EDGE_PRODUCT_ID: ${{ vars.EDGE_PRODUCT_ID }}
+          EDGE_CLIENT_ID: ${{ secrets.EDGE_CLIENT_ID }}
+          EDGE_API_KEY: ${{ secrets.EDGE_API_KEY }}
+        run: node scripts/store-release.mjs submit --directory release-bundle --tag "$RELEASE_TAG" --store edge
+
+  firefox:
+    needs: prepare
+    if: vars.SLOTDESK_FIREFOX_ENABLED == 'true' && ((github.event_name == 'release' && vars.SLOTDESK_STORE_AUTO_SUBMIT == 'true') || (github.event_name == 'workflow_dispatch' && (inputs.target == 'firefox' || inputs.target == 'all')))
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: firefox-addons
+    concurrency:
+      group: slotdesk-firefox-store
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ needs.prepare.outputs.commit }}
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: '22'
+          package-manager-cache: false
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: store-release-bundle
+          path: release-bundle
+      - name: Submit Firefox update with matching source archive
+        env:
+          RELEASE_TAG: ${{ needs.prepare.outputs.tag }}
+          SLOTDESK_STORE_SUBMISSION_ENABLED: ${{ vars.SLOTDESK_FIREFOX_ENABLED }}
+          SLOTDESK_SUBMISSION_APPROVED_TAG: ${{ needs.prepare.outputs.tag }}
+          SLOTDESK_EXPECTED_COMMIT: ${{ needs.prepare.outputs.commit }}
+          AMO_API_KEY: ${{ secrets.AMO_API_KEY }}
+          AMO_API_SECRET: ${{ secrets.AMO_API_SECRET }}
+        run: node scripts/store-release.mjs submit --directory release-bundle --tag "$RELEASE_TAG" --store firefox

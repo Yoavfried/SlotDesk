@@ -2,6 +2,8 @@
 
 Prepared 26 October 2026 for Chrome Web Store, Microsoft Edge Add-ons and Firefox AMO. These are review drafts, not live listings. The installed beta remains Google-only; Outlook follows 1.0.0.
 
+The [MIT source repository](https://github.com/Yoavfried/SlotDesk) is public as of 28 October 2026. The prepared full store description includes its source link. Source publication does not change beta access or establish store approval.
+
 Upload `SlotDesk-VERSION-Chromium-store.zip` to Chrome and Edge. It omits the development `key` field rejected by store upload validation. The ordinary `SlotDesk-VERSION.zip` keeps the unpacked beta identity and is for manual installations. Firefox uses the separate `Firefox-unsigned.xpi`. Store-issued IDs and Google return configuration remain release gates.
 
 - [Listing copy](listing.md)
@@ -10,6 +12,7 @@ Upload `SlotDesk-VERSION-Chromium-store.zip` to Chrome and Edge. It omits the de
 - [Reviewer instructions](reviewer-instructions.md)
 - [Owner publication steps](owner-steps.md)
 - [Recorded store identities](store-identities.md)
+- [Store update automation](release-automation.md)
 - [Adopted MIT license](license-proposal.md)
 
 Use the approved C2 icon in [the icon assets](../../design/assets/icons/README.md), the real wordmark and synthetic-data screenshots. Never upload private calendars or screenshots showing real personal data. Store screenshots must match the submitted build. Use [buildwithspeedy.com](https://buildwithspeedy.com) as the approved website. Do not invent listing URLs.

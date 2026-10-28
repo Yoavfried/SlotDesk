@@ -70,7 +70,7 @@ backend/         Google connection and onboarding registration services
 docs/            User guides, technical references, decisions and release history
 design/          Design guide, artwork and asset licenses
 scripts/         Local preview, checks, synthetic fixtures and packaging
-.github/         CI workflow and contribution templates
+.github/         CI and store-release workflows, contribution templates
 ```
 
 ## License and credits
