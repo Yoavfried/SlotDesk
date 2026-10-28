@@ -2,6 +2,24 @@
 
 Changes are grouped as Added, Improved and Fixed. Entries describe the behavior released in each version, including same-version hotfixes.
 
+## 1.0.0 — Store submission candidate
+
+Prepared 28 October 2026. These packages are candidates for store review; the store listings are not yet live.
+
+### Added
+
+- A public privacy notice and MIT source repository linked from the submission materials.
+- Reproducible Firefox source archives with exact build instructions and package checksums.
+
+### Improved
+
+- Store packages offer optional email updates about SlotDesk only, with matching privacy text.
+- Versioned release preparation validates package contents and verifies the Firefox source rebuild before producing upload files.
+
+### Fixed
+
+- Chrome and Edge upload packages omit the development manifest key rejected by store validation.
+
 ## 0.9.5.9 — 28 October 2026
 
 ### Fixed

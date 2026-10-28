@@ -16,7 +16,7 @@
     "test:backend": "node --test backend/intake.test.mjs && node backend/google-auth.test.mjs",
     "test:release": "node scripts/configure-leads.test.mjs && node scripts/reference-safety.test.mjs && node --test scripts/store-distribution.test.mjs"
   },
-  "version": "0.9.5.9",
+  "version": "1.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/Yoavfried/slotdesk.git"

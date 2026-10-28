@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "SlotDesk",
   "homepage_url": "https://buildwithspeedy.com",
-  "version": "0.9.5.9",
+  "version": "1.0.0",
   "minimum_chrome_version": "116",
   "description": "Find meeting times across timezones, check Google Calendar conflicts, and review invitations and changes before sending.",
   "permissions": [

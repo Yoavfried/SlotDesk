@@ -7,7 +7,7 @@ The Google OAuth app is currently in Testing. A reviewer needs an approved Googl
 ## Review flow
 
 1. Install the matching signed/store package. Open SlotDesk from the toolbar (sidebar/panel or workspace tab).
-2. Connect Google Calendar. Choose workspace calendars before setting up your own profile, then optionally add suggested profiles and finish setup. In Firefox, registration sharing is optional and defaults off; project updates are separate.
+2. Connect Google Calendar. Choose workspace calendars before setting up your own profile, then optionally add suggested profiles and finish setup. In Firefox, registration sharing is optional and defaults off; optional SlotDesk updates are separate.
 3. In New meeting, select participant profiles or add email guests and confirm their timezones. Search a date range; review local times and specific conflicts.
 4. Review a new invitation before any send. Existing meetings opens selected calendars for the chosen range and supports reviewed individual editing/rescheduling.
 5. In Manage profiles, review advanced rules, then open Travel & flights to review Trips. Trip changes are local configuration; they do not modify Calendar events.

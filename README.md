@@ -6,7 +6,7 @@ Made by **[Speedy](https://buildwithspeedy.com) — [Nina Banai](https://github.
 
 [Website](https://buildwithspeedy.com) · [Downloads](https://github.com/Yoavfried/SlotDesk/releases) · [Documentation](docs/README.md) · [Support](mailto:support@buildwithspeedy.com)
 
-**Closed beta:** Google connection is limited to approved test accounts. Store distribution is not yet available. The Chromium package can be loaded manually; the Firefox package is unsigned, and the Safari archive contains source preparation only. See [installation](docs/install.md) and [browser compatibility](docs/browser-compatibility.md).
+**Store submission candidate:** Version 1.0.0 is prepared for store review and is not yet published in stores. Google connection remains limited to approved test accounts. The Chromium package can be loaded manually; the Firefox package is unsigned, and the Safari archive contains source preparation only. See [installation](docs/install.md) and [browser compatibility](docs/browser-compatibility.md).
 
 ## Features
 
