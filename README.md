@@ -31,7 +31,7 @@ When updating, replace the files in the existing folder and reload the extension
 
 ## Privacy and accessibility
 
-Profiles, preferences, trips and unfinished meetings are stored in the current browser. They do not synchronize across devices. Ordinary backups exclude credentials and loaded calendar events. Onboarding registration sends the fields described in the [privacy notice](extension/privacy.html); sharing that record is optional in Firefox. Optional project updates use a separate checkbox.
+Profiles, preferences, trips and unfinished meetings are stored in the current browser. They do not synchronize across devices. Ordinary backups exclude credentials and loaded calendar events. Onboarding registration sends the fields described in the [privacy notice](extension/privacy.html); sharing that record is optional in Firefox. Optional email updates use a separate checkbox. Store packages limit these to SlotDesk updates; the unpacked beta also offers updates about future projects.
 
 Read [security and data handling](docs/security.md), [accessibility support](docs/accessibility.md), or [report a vulnerability privately](SECURITY.md). Use [support@buildwithspeedy.com](mailto:support@buildwithspeedy.com) for support and privacy requests.
 

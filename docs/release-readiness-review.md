@@ -54,4 +54,4 @@ Application, backend, calendar-comparison, endpoint-configuration and repository
 | Hosting | Owner-level secret/log/drain/retention/access checks, distributed abuse limit and isolated synthetic removal rehearsal. |
 | Publication | Existing public privacy URL matches the notice; Google/store approvals, final media and concrete publication approval. |
 
-MIT, team attribution, publisher registrations and previously accepted UX review remain complete. Website work is separate. Keep the repository private; label 1.0.0 only when the selected listings are live. [Submission kit](store-kit/README.md) · [Release plan](release-1.0.0-plan.md).
+MIT, team attribution, publisher registrations and previously accepted UX review remain complete. The website now deploys from TheBestProject; its public privacy route is being prepared separately. The completed source/history review does not require waiting for store approvals to publish the source, but repository visibility remains private until explicit owner instruction. Announce 1.0.0 only when the selected listings are live. [Submission kit](store-kit/README.md) · [Release plan](release-1.0.0-plan.md).

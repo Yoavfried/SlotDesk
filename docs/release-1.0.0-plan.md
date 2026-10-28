@@ -32,7 +32,7 @@ The [root LICENSE](../LICENSE) and bundled `extension/LICENSE.txt` contain the a
 ## Distribution gates
 
 - Use [the store checklist](extension-stores.md) for real publisher accounts, platform identities, signing, listing assets, data declarations, reviewer access, provider approvals and actual install/update tests.
-- Match the published privacy notice and optional-updates wording to the implemented data flow. Use support@buildwithspeedy.com for support/privacy contact and buildwithspeedy.com as the website. The owner reports the SlotDesk page already exists; website pages and their repository are managed separately and are outside this workstream. Use the existing product/privacy URLs when completing the submission forms.
+- Match the public privacy notice and optional-updates wording to the store build. Use support@buildwithspeedy.com for support/privacy contact and buildwithspeedy.com as the website. The website now deploys from `ninabanai-maker/TheBestProject/main`; prepare only a standalone SlotDesk privacy page, a small Privacy link and necessary concise factual corrections. Verify the planned `https://buildwithspeedy.com/slotdesk/privacy.html` route before using it in submission forms. No separate support page is planned.
 - Review Google scopes and production consent/verification requirements at submission time. Closed-beta OAuth setup is not production approval.
 - Validate the intended browser/OS combinations. Keep unsigned Firefox and Safari source limitations explicit until signing/authentication/runtime requirements are met.
 - Verify clean install, update with retained settings, backup/import migration, browser restart, account changes, connection loss and recovery; preserve calendar integrity.
