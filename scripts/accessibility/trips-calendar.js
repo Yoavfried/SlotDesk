@@ -65,6 +65,10 @@ async page=>{
   check(await leg(0).locator('[data-field=departureDate]').inputValue()==='2027-02-10'&&await leg(0).locator('[data-field=departureTime]').inputValue()==='10:00','Selecting an appointment prefills its departure date and time');
   check((await page.locator('[data-place=arrival][data-index="0"]').inputValue()).includes('London'),'A recognizable calendar route prefills its destination city');
   check((await own()).trips.length===2,'Selecting an appointment still requires Save');
+  const editable=await leg(0).locator('[data-field=departureDate]').isEditable()&&await leg(0).locator('[data-field=departureTime]').isEditable();
+  await departure(0,'2027-02-09','11:15');
+  check(editable&&await leg(0).locator('[data-field=departureDate]').inputValue()==='2027-02-09'&&await leg(0).locator('[data-field=departureTime]').inputValue()==='11:15','A selected calendar appointment leaves departure date and time editable without resetting new values');
+  await departure(0,'2027-02-10','10:00');
   await save();const imported=(await own()).trips.find(trip=>trip.name==='Manual appointment').flights[0];
   check(imported.link?.eventId===ordinary.id&&imported.arrival==='2027-02-10T13:20:00.000Z'&&!imported.estimated,'Manual selection keeps the ordinary appointment’s recorded arrival');
 
@@ -99,6 +103,7 @@ async page=>{
   await page.locator('#trip-calendar-return').click();await page.locator('#trip-discard').click();
 
   await page.locator('#trip-add').click();await page.locator('#trip-name').fill('Connection origin check');await city(0,'arrival','New York','New York');await page.locator('[data-connection="0"]').check();await city(0,'arrival','Paris','Paris');
+  check(await page.evaluate(()=>{const before=(a,b)=>!!(a&&b&&(a.compareDocumentPosition(b)&Node.DOCUMENT_POSITION_FOLLOWING));return before(document.querySelector('[data-calendar-flight="0"]'),document.querySelector('[data-place=departure][data-index="0"]'))&&before(document.querySelector('[data-calendar-flight="1"]'),document.querySelector('[data-place=arrival][data-index="0"]'))&&before(document.querySelector('[data-calendar-flight="1"]'),document.querySelector('[data-leg-fields="1"]'));}),'Each calendar import button appears above its flight’s city and departure fields');
   const via=await page.locator('[data-place=arrival][data-index="0"]').inputValue(),destination=await page.locator('[data-place=arrival][data-index="1"]').inputValue();
   await picker(1,'2027-02-12');await row(draftEvent.summary).locator('[data-calendar-pick]').click();
   check(await page.locator('#trip-calendar-picker').isVisible()&&(await page.locator('#trip-calendar-feedback').textContent()).includes('Change the connection city'),'Selecting a connecting flight from a different city is rejected inside the picker');

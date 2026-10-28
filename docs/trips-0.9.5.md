@@ -25,7 +25,7 @@ A connection’s departure must be after the preceding arrival. Saving never sil
 
 ## Add from calendar
 
-Use **Add from calendar** inside the trip editor to choose an appointment manually. Choose dates and calendars, then select the appointment to return to the form. The picker starts with the profile’s linked calendars; other selected workspace calendars are available.
+Use **Add from calendar** above a flight’s fields to choose an appointment manually. Selection fills the departure date/time and any identifiable cities; these fields remain editable before saving. Choose dates and calendars, then select the appointment to return to the form. The picker starts with the profile’s linked calendars; other selected workspace calendars are available.
 
 Manual selection works with Event detection off and does not require a flight keyword. SlotDesk uses the appointment’s recorded times and checks its title, location and description for identifiable airport codes or city routes. Missing cities or departure details remain for you to complete. An all-day entry supplies its date, but does not establish exact flight times.
 

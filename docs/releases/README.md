@@ -2,6 +2,7 @@
 
 Features added, improved and fixed in each packaged release. For earlier versions, see the [complete changelog](../changelog.md).
 
+- [v0.9.5.9](v0.9.5.9.md)
 - [v0.9.5.8](v0.9.5.8.md)
 - [v0.9.5.7](v0.9.5.7.md)
 - [v0.9.5.6](v0.9.5.6.md)

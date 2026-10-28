@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "SlotDesk",
   "homepage_url": "https://buildwithspeedy.com",
-  "version": "0.9.5.8",
+  "version": "0.9.5.9",
   "minimum_chrome_version": "116",
   "description": "Find meeting times, review every detail, and send Google Calendar invitations.",
   "permissions": [

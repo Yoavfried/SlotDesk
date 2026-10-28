@@ -2,6 +2,12 @@
 
 Changes are grouped as Added, Improved and Fixed. Entries describe the behavior released in each version, including same-version hotfixes.
 
+## 0.9.5.9 — 28 October 2026
+
+### Fixed
+
+- Moved Add from calendar above flight fields and connection fields. Selected appointment details remain editable before saving.
+
 ## 0.9.5.8 — 28 October 2026
 
 ### Added
