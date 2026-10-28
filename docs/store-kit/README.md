@@ -9,6 +9,7 @@ Upload `SlotDesk-VERSION-Chromium-store.zip` to Chrome and Edge. It omits the de
 - [Permissions and data declarations](declarations.md)
 - [Reviewer instructions](reviewer-instructions.md)
 - [Owner publication steps](owner-steps.md)
+- [Recorded store identities](store-identities.md)
 - [Adopted MIT license](license-proposal.md)
 
 Use the approved C2 icon in [the icon assets](../../design/assets/icons/README.md), the real wordmark and synthetic-data screenshots. Never upload private calendars or screenshots showing real personal data. Store screenshots must match the submitted build. Use [buildwithspeedy.com](https://buildwithspeedy.com) as the approved website. Do not invent listing URLs.
