@@ -14,7 +14,7 @@
     "fixtures:slotdesk": "node scripts/calendar-test/generate.mjs",
     "package:slotdesk": "node scripts/package-slotdesk.mjs",
     "test:backend": "node --test backend/intake.test.mjs && node backend/google-auth.test.mjs",
-    "test:release": "node scripts/configure-leads.test.mjs && node scripts/reference-safety.test.mjs"
+    "test:release": "node scripts/configure-leads.test.mjs && node scripts/reference-safety.test.mjs && node --test scripts/store-distribution.test.mjs"
   },
   "version": "0.9.5.9",
   "repository": {

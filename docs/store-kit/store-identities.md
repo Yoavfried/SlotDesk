@@ -26,3 +26,9 @@ The broker derives allowed Chromium origins from its return list. Keep `SLOTDESK
 ## Other store drafts
 
 Chrome's store-issued item ID and Firefox's submission result have not yet been recorded. Do not substitute the unpacked Chromium beta ID for a store-issued identity. See [owner publication steps](owner-steps.md).
+
+## Store email-updates scope
+
+The next generated `chromium-store` and `firefox` packages limit the separate optional email-updates choice to SlotDesk. Both registration labels read: “You may email me occasional updates about SlotDesk. I can opt out at any time.” Their bundled privacy notice uses “optional SlotDesk-updates box” and states: “If you opted in, the owners may use your address for occasional updates about SlotDesk; you can opt out at any time by emailing” the support address. Registration collection, product analysis and the private leads table remain unchanged. The ordinary unpacked `chromium` beta and `safari-source` retain the existing broader project-updates wording.
+
+This is a packaging transform for the next final store build. Existing version 0.9.5.9 outputs and uploaded drafts have not been rebuilt or replaced. Replace the affected draft uploads after preparing and checking the next final store packages, and publish the corresponding generated store privacy notice at the store listing's privacy-policy URL.
