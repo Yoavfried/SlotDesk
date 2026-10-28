@@ -46,8 +46,15 @@
       const name=cityName(tz.split('/').pop().replace(/_/g,' ')),found=eligible.filter(c=>cityName(c.city)===name);return found.length===1?found[0]:null;
     }
     function route(text){const pattern=/\b([A-Z]{3})\s*(?:→|->|>|–|—|-|\bto\b)\s*([A-Z]{3})\b/gi;for(const m of String(text||'').matchAll(pattern)){const from=byCode.get(m[1].toUpperCase()),to=byCode.get(m[2].toUpperCase());if(from&&to&&from.code!==to.code)return {from,to};}return null;}
+    const cityTerms=new Map();for(const c of cityRows){const names=[c.city,...Object.keys(cityAliases).filter(alias=>cityAliases[alias]===cityName(c.city))];for(const name of names)for(const term of [name,c.label,name+' '+c.country,name+' '+countryName(c.country),...(c.country==='US'?[name+' '+c.state]:[])]){const key=normal(term);if(!cityTerms.has(key))cityTerms.set(key,[]);if(!cityTerms.get(key).includes(c))cityTerms.get(key).push(c);}}
+    function exactCities(value){const key=normal(value),airport=airportCities.get(key.toUpperCase());return airport?[airport]:cityTerms.get(key)||[];}
+    function cityRoute(text){
+      const value=String(text||'').slice(0,40000).replace(/<[^>]*>/g,' '),separator=/(?:→|->|>|–|—|\bto\b)/gi;
+      function edge(value,from){const words=normal(value).split(' ');for(let n=Math.min(12,words.length);n>0;n--){const matches=exactCities((from?words.slice(-n):words.slice(0,n)).join(' '));if(matches.length)return matches;}return [];}
+      for(const match of value.matchAll(separator)){const before=value.slice(0,match.index).split(/[\n\r;]/).at(-1),after=value.slice(match.index+match[0].length).split(/[\n\r;]/)[0],from=edge(before,true),to=edge(after,false);if(!from.length||!to.length)continue;const a=from.length===1?from[0]:null,b=to.length===1?to[0]:null;if(a&&b&&a.id===b.id)continue;return {from:a,to:b,ambiguous:!a||!b};}return null;
+    }
     function estimate(from,to){if(!point(from)||!point(to))throw new Error('Choose departure and destination cities with valid locations to calculate arrival.');const rad=v=>v*Math.PI/180,a=rad(from.lat),b=rad(to.lat),x=Math.sin((b-a)/2)**2+Math.cos(a)*Math.cos(b)*Math.sin(rad(to.lon-from.lon)/2)**2,km=6371*2*Math.asin(Math.sqrt(Math.min(1,x)));return {distanceKm:Math.round(km),minutes:Math.max(45,Math.ceil((km/800*60+45)/5)*5),coarse:from.kind==='city'||to.kind==='city'};}
-    return {search,cities,resolveCity,route,estimate,byCode,airports:airports.length};
+    return {search,cities,resolveCity,route,cityRoute,exactCities,estimate,byCode,airports:airports.length};
   }
   let loading;
   function load(fetchImpl=globalThis.fetch){if(!loading)loading=fetchImpl('data/airports.json').then(r=>{if(!r.ok)throw new Error('The local city lookup could not load. Try again to calculate arrival.');return r.json();}).then(create).catch(e=>{loading=null;throw e;});return loading;}

@@ -90,11 +90,42 @@
   function eventKey(event,calendarId){return JSON.stringify([calendarId,event.id]);}
   function signature(event){return JSON.stringify([event.status||'confirmed',event.start?.dateTime||event.start?.date||'',event.end?.dateTime||event.end?.date||'',event.location||'',event.summary||'']);}
   function linked(p,event,sameTimes=false){return (p.trips||[]).some(t=>t.flights.some(f=>f.link&&(f.link.calendarId===event.calendarId&&f.link.eventId===event.id||f.link.iCalUID&&f.link.iCalUID===event.iCalUID&&Number.isFinite(Date.parse(f.link.originalStart))&&Date.parse(f.link.originalStart)===Date.parse(event.originalStart))&&(!sameTimes||Date.parse(f.departure)===Date.parse(event.start)&&Date.parse(f.arrival)===Date.parse(event.end))));}
+  function calendarHint(event,p,lookup,options={}){
+    if(!event||event.status==='cancelled')return null;
+    const timed=instant(event.start?.dateTime)&&instant(event.end?.dateTime)&&Date.parse(event.end.dateTime)>Date.parse(event.start.dateTime),allDay=typeof event.start?.date==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(event.start.date);
+    if(!timed&&!allDay||!options.manual&&!timed)return null;
+    const text=[event.summary,event.location,event.description].filter(Boolean).join('\n').slice(0,40000),route=lookup?.route(text)||(options.manual?lookup?.cityRoute?.(text):null);
+    let from=route?.from||null,to=route?.to||null;
+    if(options.manual&&!route&&event.location){const places=lookup?.exactCities?.(event.location)||[];if(places.length===1)to=places[0];}
+    return {departure:timed?event.start.dateTime:null,arrival:timed?event.end.dateTime:null,departureDate:event.start?.date||'',arrivalDate:event.end?.date||'',allDay:!timed,departureZone:from?.tz||event.start?.timeZone||p.tz||'',arrivalZone:to?.tz||'',departureLocation:from?.label||'',arrivalLocation:to?.label||'',from,to,clear:!!(from&&to&&timed),label:event.summary||'Flight'};
+  }
+  const locationKey=value=>String(value||'').normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+  const stateNames=Object.fromEntries('Alabama:AL|Alaska:AK|Arizona:AZ|Arkansas:AR|California:CA|Colorado:CO|Connecticut:CT|Delaware:DE|Florida:FL|Georgia:GA|Hawaii:HI|Idaho:ID|Illinois:IL|Indiana:IN|Iowa:IA|Kansas:KS|Kentucky:KY|Louisiana:LA|Maine:ME|Maryland:MD|Massachusetts:MA|Michigan:MI|Minnesota:MN|Mississippi:MS|Missouri:MO|Montana:MT|Nebraska:NE|Nevada:NV|New Hampshire:NH|New Jersey:NJ|New Mexico:NM|New York:NY|North Carolina:NC|North Dakota:ND|Ohio:OH|Oklahoma:OK|Oregon:OR|Pennsylvania:PA|Rhode Island:RI|South Carolina:SC|South Dakota:SD|Tennessee:TN|Texas:TX|Utah:UT|Vermont:VT|Virginia:VA|Washington:WA|West Virginia:WV|Wisconsin:WI|Wyoming:WY|District of Columbia:DC'.split('|').map(pair=>{const [name,code]=pair.split(':');return [locationKey(name),code.toLowerCase()];}));
+  function endpoint(f,side){
+    const point=f[side==='departure'?'from':'to']||f[side+'ZoneLocation'],name=point?.city||point?.name,country=point?.countryCode||point?.country||'';
+    if(name)return {name:locationKey(name==='New York City'?'New York':name),country:locationKey(country),state:country==='US'?(stateNames[locationKey(point.state)]||locationKey(point.state)):'',label:locationKey(String(point.label||f[side+'Location']||'').replace(/\s*·\s*[A-Z]{3}$/,''))};
+    const label=f[side+'Location'];return typeof label==='string'&&label&&!label.includes('/')?{label:locationKey(label)}:null;
+  }
+  function sameEndpoint(a,b,side){const x=endpoint(a,side),y=endpoint(b,side);if(!x||!y)return false;if(x.name&&y.name)return x.name===y.name&&(!x.country||!y.country||x.country===y.country)&&(!x.state||!y.state||x.state===y.state);return !!x.label&&x.label===y.label;}
+  function sameInstant(a,b){return instant(a)&&instant(b)&&Date.parse(a)===Date.parse(b);}
+  function sameOccurrence(a,b){return sameInstant(a,b)||typeof a==='string'&&a===b&&/^\d{4}-\d{2}-\d{2}$/.test(a)&&Number.isFinite(Date.parse(a))&&new Date(a).toISOString().slice(0,10)===a;}
+  function duplicateReason(a,b){
+    const first=a.link,second=b.link,originalA=first?.originalStart||a.departure,originalB=second?.originalStart||b.departure;
+    if(first&&second){if(first.calendarId&&first.calendarId===second.calendarId&&first.eventId&&first.eventId===second.eventId)return 'calendar-event';if(first.iCalUID&&first.iCalUID===second.iCalUID&&sameOccurrence(originalA,originalB))return 'shared-calendar-event';}
+    if(!sameInstant(a.departure,b.departure))return null;
+    if(sameEndpoint(a,b,'departure')&&sameEndpoint(a,b,'arrival'))return 'same-flight';
+    if(!endpoint(a,'departure')&&!endpoint(b,'departure')&&!endpoint(a,'arrival')&&!endpoint(b,'arrival')&&sameInstant(a.arrival,b.arrival)&&a.departureZone===b.departureZone&&a.arrivalZone===b.arrivalZone)return 'same-legacy-flight';
+    return null;
+  }
+  function duplicateFlight(p,candidate,options={}){
+    const entries=[...flights(p).filter(f=>!options.excludeTripId||f.tripId!==options.excludeTripId),...(options.flights||[])];
+    for(const f of entries){if(options.excludeFlightId&&f.id===options.excludeFlightId)continue;const reason=duplicateReason(f,candidate);if(reason)return {tripId:f.tripId||null,flightId:f.id||null,flight:f,reason};}return null;
+  }
   function hints(event,p,lookup){
     if(!instant(event.start?.dateTime)||!instant(event.end?.dateTime)||Date.parse(event.end.dateTime)<=Date.parse(event.start.dateTime)||event.status==='cancelled'||event.transparency==='transparent'||event.start?.date||!event.start?.dateTime||!event.end?.dateTime)return null;
     const text=[event.summary,event.location,event.description].filter(Boolean).join(' ').slice(0,40000),terms=String(p.flightTerms??'flight, flights, ✈').split(',').map(x=>x.trim()).filter(Boolean),match=terms.some(term=>term==='✈'?text.includes(term):new RegExp('(^|[^\\p{L}\\p{N}])'+term.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'(?=$|[^\\p{L}\\p{N}])','iu').test(text)),route=lookup?.route(text);
     if(!match&&!route)return null;
-    return {departure:event.start.dateTime,arrival:event.end.dateTime,departureZone:route?.from.tz||event.start.timeZone||'',arrivalZone:route?.to.tz||'',departureLocation:route?.from.label||'',arrivalLocation:route?.to.label||'',from:route?.from||null,to:route?.to||null,clear:!!(route&&instant(event.start.dateTime)&&instant(event.end.dateTime)&&Date.parse(event.end.dateTime)>Date.parse(event.start.dateTime)),label:event.summary||'Flight'};
+    return calendarHint(event,p,lookup,{manual:true});
   }
   function observe(p,records,lookup,now=Date.now()){
     const alerts=[],links=new Map();for(const t of p.trips||[])for(const f of t.flights||[])if(f.link)links.set(eventKey({id:f.link.eventId},f.link.calendarId),{trip:t,flight:f});
@@ -110,9 +141,9 @@
     const seen=new Set();
     for(const {source,cal}of records.slice().reverse()){
       if(!(p.calendarIds||[]).includes(cal?.id)||!complete(source))continue;
-      for(const event of source.items||[]){const key=eventKey(event,cal.id),s=signature(event),shared=event.iCalUID?event.iCalUID+'|'+Date.parse(event.originalStartTime?.dateTime||event.start?.dateTime):key;if(seen.has(shared))continue;seen.add(shared);if(links.has(key)||linked(p,{...event,calendarId:cal.id,originalStart:event.originalStartTime?.dateTime||event.start?.dateTime})||(p.flightDismissals||[]).includes(key+'|'+s)||Date.parse(event.end?.dateTime)<=now)continue;const hint=hints(event,p,lookup);if(hint)alerts.push({id:'possible:'+key,kind:'possible',profileId:p.id,title:event.summary||'Possible flight',event,cal,hint,dismissKey:key+'|'+s});}
+      for(const event of source.items||[]){const key=eventKey(event,cal.id),s=signature(event),shared=event.iCalUID?event.iCalUID+'|'+Date.parse(event.originalStartTime?.dateTime||event.start?.dateTime):key;if(seen.has(shared))continue;seen.add(shared);if(links.has(key)||linked(p,{...event,calendarId:cal.id,originalStart:event.originalStartTime?.dateTime||event.start?.dateTime})||(p.flightDismissals||[]).includes(key+'|'+s)||Date.parse(event.end?.dateTime)<=now)continue;const hint=hints(event,p,lookup),candidate=hint&&{...hint,link:{calendarId:cal.id,eventId:event.id,iCalUID:event.iCalUID||'',originalStart:event.originalStartTime?.dateTime||event.start?.dateTime||''}};if(hint&&!duplicateFlight(p,candidate))alerts.push({id:'possible:'+key,kind:'possible',profileId:p.id,title:event.summary||'Possible flight',event,cal,hint,dismissKey:key+'|'+s});}
     }
     return alerts;
   }
-  return {MIN,validate,validateProfile,savedFlight,migrate,active,effective,manual,reconcile,flights,blocks,buffers,boundary,linked,hints,observe,signature,eventKey,copy,zone};
+  return {MIN,validate,validateProfile,savedFlight,migrate,active,effective,manual,reconcile,flights,blocks,buffers,boundary,linked,hints,calendarHint,duplicateFlight,observe,signature,eventKey,copy,zone};
 });

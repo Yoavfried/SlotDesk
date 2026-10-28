@@ -2,6 +2,22 @@
 
 Changes are grouped as Added, Improved and Fixed. Entries describe the behavior released in each version, including same-version hotfixes.
 
+## 0.9.5.8 — 28 October 2026
+
+### Added
+
+- Add from calendar in the trip editor, including date/calendar selection and deterministic detail prefill.
+- Duplicate-flight checks across saved links, shared event copies and matching routes/departures.
+
+### Improved
+
+- Automatic calendar matching runs on Save instead of during date/time entry.
+- Detected-flight alerts prefill available details and manual calendar selection works with detection off.
+
+### Fixed
+
+- Prevented duplicate additions through flight alerts and calendar selection.
+
 ## 0.9.5.7 — 28 October 2026
 
 ### Improved

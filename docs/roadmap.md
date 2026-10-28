@@ -4,7 +4,7 @@ Updated 26 October 2026. Status reflects agreed scope, not a promise of public a
 
 ## Current release
 
-Preparation build **0.9.5.7** includes [Firefox consent and security fixes](release-readiness-review.md) while [store preparation](store-kit/README.md) remains in progress. **0.9.5** implements [trips, flight matching and review alerts](release-plan-0.9.5.md), minute participant clocks and the selected extension icon. Wider UX readiness remains the owner’s decision. Next comes [1.0.0 publication preparation](release-1.0.0-plan.md) for Chrome, Edge and Firefox; Outlook follows after 1.0.0. Store availability and a public repository are not yet claimed.
+Preparation build **0.9.5.8** includes [Firefox consent and security fixes](release-readiness-review.md) while [store preparation](store-kit/README.md) remains in progress. **0.9.5** implements [trips, flight matching and review alerts](release-plan-0.9.5.md), minute participant clocks and the selected extension icon. Wider UX readiness remains the owner’s decision. Next comes [1.0.0 publication preparation](release-1.0.0-plan.md) for Chrome, Edge and Firefox; Outlook follows after 1.0.0. Store availability and a public repository are not yet claimed.
 
 The 22 October same-version hotfix implements the owner's [revised selection and fallback order](search-selection-2026-10-22.md): exactly three groups, earliest equally suitable starts, one representative per date for longer ranges, up to two featured clear fallbacks before three in-range compromises, and stable scrolling. Browser-based storage remains acceptable; cloud sync remains unconfirmed future feature DF11.
 

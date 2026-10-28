@@ -1,6 +1,12 @@
 # SlotDesk validation record
 
 
+## 28 October — 0.9.5.8 calendar flight selection
+
+**2,692 application checks** and **132 browser assertions** pass across Chrome and Edge. Coverage includes Save-time matching without reads during data entry, explicit appointment selection with detection off, partial route completion, exact provider timestamps, all-day entries, shared and draft duplicate prevention, alerts, fixed dialog sizing, pending-read controls and connection-origin safeguards. Seven automated accessibility scans report no violations. All nine synthetic calendar appointments remain unchanged, with zero calendar writes. No new real-provider, Mac or native Firefox validation is claimed. [Machine-readable evidence](validation-0.9.5.8.json).
+
+
+
 ## 28 October — 0.9.5.7 city-based trips
 
 **2,648 application checks** pass. City-based trip entry passes **96 browser assertions** across Chrome and Edge, including direct, connecting and return flights; exact city prefill; calendar-recorded arrivals; recalculation after departure changes; pending calendar responses; and Save/Discard persistence. Calculated arrivals are checked across daylight-saving folds and the international date line. Seven automated accessibility scans report no violations. All nine synthetic calendar appointments remain unchanged, with zero calendar writes. The tests use a local fixture; they do not establish new real-provider, Mac or native Firefox coverage. Geographic duration estimates are not airline schedules. [Machine-readable evidence](validation-0.9.5.7.json) · [Trip guide](trips-0.9.5.md).
