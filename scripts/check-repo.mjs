@@ -75,15 +75,23 @@ for (const file of files) {
 
 const app = path.join(root, 'extension');
 const manifest = JSON.parse(await read(path.join(app, 'manifest.json')));
-for(const target of ['chromium','firefox','safari-source']) {
+const sourceManifestSnapshot=JSON.stringify(manifest);
+for(const target of ['chromium','chromium-store','firefox','safari-source']) {
   const generated=browserManifest(manifest,target);
   if(generated.version!==manifest.version||generated.manifest_version!==3)errors.push(target+': invalid generated version');
   for(const script of generated.background?.scripts || [])await checkLink(path.join(app,'manifest.json'),script);
   for(const entry of [generated.background?.service_worker,generated.side_panel?.default_path,generated.sidebar_action?.default_panel].filter(Boolean))await checkLink(path.join(app,'manifest.json'),entry);
-  if(target!=='chromium'&&(generated.key||generated.oauth2||generated.side_panel||generated.permissions.includes('sidePanel')))errors.push(target+': unsupported Chromium manifest fields');
+  if(!target.startsWith('chromium')&&(generated.key||generated.oauth2||generated.side_panel||generated.permissions.includes('sidePanel')))errors.push(target+': unsupported Chromium manifest fields');
+  if(target==='chromium'&&generated.key!==manifest.key)errors.push('chromium: unpacked beta identity changed');
+  if(target==='chromium-store') {
+    if(Object.hasOwn(generated,'key'))errors.push('chromium-store: development key is not allowed in store uploads');
+    const expected=structuredClone(manifest);delete expected.key;
+    if(JSON.stringify(generated)!==JSON.stringify(expected))errors.push('chromium-store: unexpected application manifest changes');
+  }
   if(target==='firefox'&&(!generated.browser_specific_settings?.gecko?.id||!generated.background?.scripts))errors.push('firefox: stable ID/background missing');
   if(target==='safari-source'&&generated.permissions.includes('identity'))errors.push('safari-source: unsupported identity permission');
 }
+if(JSON.stringify(manifest)!==sourceManifestSnapshot)errors.push('browser packaging changed the source manifest');
 for (const key of ['side_panel', 'background']) {
   const entry = key === 'side_panel' ? manifest[key]?.default_path : manifest[key]?.service_worker;
   if (entry) await checkLink(path.join(app, 'manifest.json'), entry);

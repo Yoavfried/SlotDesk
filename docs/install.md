@@ -53,3 +53,5 @@ npm run package:slotdesk
 ```
 
 Packages are written to `dist/` with the current manifest version. Packaging excludes source tests, developer tools and repository-only documentation. Service configuration is described in [backend setup](../backend/README.md).
+
+Use `SlotDesk-VERSION.zip` for unpacked Chromium beta installations. Use `SlotDesk-VERSION-Chromium-store.zip` for Chrome Web Store or Microsoft Edge Add-ons uploads. The store package omits the development `key` field; each store assigns its own identity. Keep the unpacked package for existing manual installations so their identity and local settings remain accessible. Store-issued Google return addresses must be configured before distribution.

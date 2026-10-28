@@ -6,6 +6,7 @@ const backgroundScripts=['slot-desk-engine/recovery.js','slot-desk-engine/google
 export function browserManifest(base,target) {
   const manifest=structuredClone(base);
   if(target==='chromium')return manifest;
+  if(target==='chromium-store'){delete manifest.key;return manifest;}
   delete manifest.key;delete manifest.oauth2;delete manifest.minimum_chrome_version;delete manifest.side_panel;
   manifest.permissions=manifest.permissions.filter(p=>p!=='sidePanel');
   manifest.background={scripts:[...backgroundScripts]};

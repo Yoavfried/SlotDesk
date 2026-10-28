@@ -25,9 +25,9 @@ No content scripts, arbitrary-site access, remote application code, broader Goog
 
 ## Packaging and updates
 
-`npm run package:slotdesk` produces Chromium ZIP, unsigned Firefox XPI, Safari source ZIP, checksums and target metadata. Tests/fixtures are excluded. Preserve the installed folder/identity for development updates. Normal Firefox installation requires signing; temporary add-ons are not an update channel.
+`npm run package:slotdesk` produces an unpacked Chromium beta ZIP, a separate `Chromium-store.zip` for Chrome/Edge dashboard uploads without the development key, an unsigned Firefox XPI, a Safari source ZIP, checksums and target metadata. Tests/fixtures are excluded. Preserve the installed folder/identity for development updates. Normal Firefox installation requires signing; temporary add-ons are not an update channel.
 
-Chromium identity: `blpliafbiiidhcffegochddjhagkhhip`. Firefox: `{39c56104-958b-43a6-bcfe-5e9db811c74b}`. Register/retest any changed store-issued authorization return before distribution. [Installation](install.md) · [Stores](extension-stores.md).
+Unpacked Chromium beta identity: `blpliafbiiidhcffegochddjhagkhhip`. Firefox: `{39c56104-958b-43a6-bcfe-5e9db811c74b}`. Each Chromium store assigns its own identity. Register/retest any changed store-issued authorization return before distribution. [Installation](install.md) · [Stores](extension-stores.md).
 
 Firefox lint has zero errors and 79 reviewed warnings. [Warning dispositions](firefox-validation-review.md) document actual escaping/link controls and the desktop-only Android warning. They do not establish Mozilla approval.
 
