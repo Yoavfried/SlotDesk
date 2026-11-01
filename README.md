@@ -6,7 +6,9 @@ Made by **[Speedy](https://buildwithspeedy.com) — [Nina Banai](https://github.
 
 [Website](https://buildwithspeedy.com) · [Downloads](https://github.com/Yoavfried/SlotDesk/releases) · [Documentation](docs/README.md) · [Support](mailto:support@buildwithspeedy.com)
 
-**Store submission candidate:** Version 1.0.0 is prepared for store review and is not yet published in stores. Google connection remains limited to approved test accounts. The Chromium package can be loaded manually; the Firefox package is unsigned, and the Safari archive contains source preparation only. See [installation](docs/install.md) and [browser compatibility](docs/browser-compatibility.md).
+**[Install for Firefox](https://addons.mozilla.org/en-US/firefox/addon/slotdesk/)**
+
+Version 1.0.0 is available on Firefox Add-ons. Chrome and Edge store publication has not yet been confirmed; their Chromium package can be loaded manually. The Safari archive contains source preparation only. Google Calendar connection is available to Google accounts that grant the requested access, subject to account and organization policies. See [installation](docs/install.md) and [browser compatibility](docs/browser-compatibility.md).
 
 ## Features
 
@@ -23,11 +25,15 @@ Calendar changes require review and confirmation. SlotDesk does not automaticall
 
 ## Install and update
 
+**Firefox:** Open [SlotDesk on Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/slotdesk/), choose **Add to Firefox**, confirm the browser prompts, then open SlotDesk and connect Google. Firefox manages updates to the store installation.
+
+**Chrome, Edge and other Chromium browsers:**
+
 1. Download the Chromium ZIP from [releases](https://github.com/Yoavfried/SlotDesk/releases) and extract it into a permanent folder.
 2. Open your browser's extension manager, enable Developer mode, choose **Load unpacked**, and select the extracted folder containing `manifest.json`.
-3. Open SlotDesk, connect an approved Google account, and complete calendar selection, your profile and optional profile suggestions.
+3. Open SlotDesk, connect your Google account, and complete calendar selection, your profile and optional profile suggestions.
 
-When updating, replace the files in the existing folder and reload the extension. Keeping the same installation preserves its local profiles and settings. For source installation, load `extension/` instead of the repository root. [Full installation instructions](docs/install.md).
+For manual updates, replace the files in the existing folder and reload the extension. Keeping the same installation preserves its local profiles and settings. For source installation, load `extension/` instead of the repository root. [Full installation instructions](docs/install.md).
 
 ## Privacy and accessibility
 

@@ -1,6 +1,19 @@
 # Store identities
 
-Recorded 28 October 2026. These identifiers belong to draft submissions; no public listing URL is available yet.
+Publication status checked 1 November 2026. Firefox is public; Chrome and Edge publication has not yet been confirmed. The Edge identifiers below were recorded from its submission on 28 October 2026.
+
+## Firefox Add-ons
+
+| Field | Value |
+| --- | --- |
+| Public listing | [SlotDesk on Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/slotdesk/) |
+| Listing slug | `slotdesk` |
+| Add-on ID | `3110869` |
+| Extension GUID | `{39c56104-958b-43a6-bcfe-5e9db811c74b}` |
+| Published version | `1.0.0` |
+| Publication checked | 1 November 2026 |
+
+The [public Mozilla API](https://addons.mozilla.org/api/v5/addons/addon/slotdesk/) reports public add-on and version-file status, with the add-on enabled. Mozilla provides the signed package through the listing. This confirms Firefox publication only; it does not establish publication in another store or complete the three-store launch.
 
 ## Microsoft Edge Add-ons
 
@@ -23,9 +36,9 @@ Before distributing the Edge package, confirm that return through the installed 
 
 The broker derives allowed Chromium origins from its return list. Keep `SLOTDESK_ORIGIN` unchanged: the existing Chrome beta's direct registration path and the broker's registration relay use it. Store ID and Product ID are listing metadata and must not be used as the extension OAuth identity.
 
-## Other store drafts
+## Chrome store identity
 
-Chrome's store-issued item ID and Firefox's submission result have not yet been recorded. Do not substitute the unpacked Chromium beta ID for a store-issued identity. See [owner publication steps](owner-steps.md).
+Chrome's store-issued item ID has not yet been recorded. Do not substitute the unpacked Chromium beta ID for a store-issued identity. See [owner publication steps](owner-steps.md).
 
 ## Store email-updates scope
 
