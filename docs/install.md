@@ -1,6 +1,15 @@
 # Install and update SlotDesk
 
-SlotDesk 1.0.0 is available on [Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/slotdesk/). Chrome and Edge store publication has not yet been confirmed; manual packages are available from [GitHub releases](https://github.com/Yoavfried/SlotDesk/releases). Google Calendar connection is available to Google accounts that grant the requested access, subject to account and organization policies. Browser-specific limits are listed in [browser compatibility](browser-compatibility.md).
+SlotDesk 1.0.0 is available on the [Chrome Web Store](https://chromewebstore.google.com/detail/slotdesk/ajilefcckipghmgcljllklamipjjecim) and [Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/slotdesk/). Edge store publication has not yet been confirmed; manual packages are available from [GitHub releases](https://github.com/Yoavfried/SlotDesk/releases). Google Calendar connection is available to Google accounts that grant the requested access, subject to account and organization policies. Browser-specific limits are listed in [browser compatibility](browser-compatibility.md).
+
+## Chrome store installation
+
+1. Open [SlotDesk on the Chrome Web Store](https://chromewebstore.google.com/detail/slotdesk/ajilefcckipghmgcljllklamipjjecim) in desktop Chrome.
+2. Choose **Add to Chrome** and confirm the browser prompts.
+3. Open SlotDesk from the Extensions menu, then choose **Connect Google** and grant the requested access.
+4. Complete [first setup](#first-setup) below.
+
+Chrome manages updates to the store installation. Developer mode and loading unpacked files are not required. The store version has a different installation identity from the manually loaded development version. Export a backup before switching, then import it into the store installation to transfer supported profiles and settings; credentials and pending calendar operations do not transfer.
 
 ## Firefox store installation
 
@@ -11,7 +20,7 @@ SlotDesk 1.0.0 is available on [Firefox Add-ons](https://addons.mozilla.org/en-U
 
 Mozilla supplies the signed installation package, and Firefox manages its updates. Developer mode and temporary add-on loading are not required for the store version. Back up your settings before moving from a separate development installation; do not assume its data will transfer automatically.
 
-## Chromium browsers
+## Manual Chromium installation
 
 The Chromium ZIP is used for manual installation in Chrome, Edge and compatible desktop Chromium browsers. Chrome 116 is the manifest minimum; it is not a guarantee that every later browser/OS combination has been tested.
 
@@ -41,7 +50,7 @@ The Safari ZIP contains **source preparation only**. It is not an installable Sa
 
 ## Update an existing installation
 
-For the Firefox store version, use Firefox's normal add-on update controls. The remaining steps apply to manually installed Chromium packages.
+For Chrome and Firefox store versions, use the browser's normal extension update controls. The remaining steps apply to manually installed Chromium packages.
 
 Replace the files in the existing installed folder with the new package, then click **Reload** on its extension card. Close and reopen older SlotDesk windows. Keep the same folder and installation identity to retain local profiles and settings.
 

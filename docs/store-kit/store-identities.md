@@ -1,6 +1,6 @@
 # Store identities
 
-Publication status checked 1 November 2026. Firefox is public; Chrome and Edge publication has not yet been confirmed. The Edge identifiers below were recorded from its submission on 28 October 2026.
+Publication status checked 1 November 2026. Chrome and Firefox are public; Edge publication has not yet been confirmed. The Edge identifiers below were recorded from its submission on 28 October 2026.
 
 ## Firefox Add-ons
 
@@ -13,7 +13,7 @@ Publication status checked 1 November 2026. Firefox is public; Chrome and Edge p
 | Published version | `1.0.0` |
 | Publication checked | 1 November 2026 |
 
-The [public Mozilla API](https://addons.mozilla.org/api/v5/addons/addon/slotdesk/) reports public add-on and version-file status, with the add-on enabled. Mozilla provides the signed package through the listing. This confirms Firefox publication only; it does not establish publication in another store or complete the three-store launch.
+The [public Mozilla API](https://addons.mozilla.org/api/v5/addons/addon/slotdesk/) reports public add-on and version-file status, with the add-on enabled. Mozilla provides the signed package through the listing. Each store has separate approval and signing; the three-store launch remains incomplete while Edge publication is unconfirmed.
 
 ## Microsoft Edge Add-ons
 
@@ -38,7 +38,14 @@ The broker derives allowed Chromium origins from its return list. Keep `SLOTDESK
 
 ## Chrome store identity
 
-Chrome's store-issued item ID has not yet been recorded. Do not substitute the unpacked Chromium beta ID for a store-issued identity. See [owner publication steps](owner-steps.md).
+| Field | Value |
+| --- | --- |
+| Public listing | [SlotDesk on the Chrome Web Store](https://chromewebstore.google.com/detail/slotdesk/ajilefcckipghmgcljllklamipjjecim) |
+| Store-issued extension ID | `ajilefcckipghmgcljllklamipjjecim` |
+| Published version | `1.0.0` |
+| Publication checked | 1 November 2026 |
+
+The public listing and version were confirmed while signed out. The store-issued ID differs from the unpacked Chromium beta ID; treat them as separate installations when configuring authorization or transferring saved settings. See [installation](../install.md) and [owner publication steps](owner-steps.md).
 
 ## Store email-updates scope
 
