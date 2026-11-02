@@ -1,44 +1,48 @@
-# Activate browser-independent Google sign-in
+# Configure browser-independent Google sign-in
 
-Owner configuration for **0.9.4.6**. Testers do not perform these steps. **Activation completed on 21 October 2026.** The owner reports completing these steps. Production redeployment is recorded as READY, and an independent public check returned HTTP 200 with `ready:true`, version 0.9.4.6 and flow authorization-code. These instructions remain a configuration reference; completed steps do not need repeating. Next, load/reload the 0.9.4.6 extension and check real Google consent. The release preserves the existing Chrome pilot when the independent service is inactive. No Chrome Web Store listing is needed for this closed-beta setup.
+SlotDesk connects Google accounts through its hosted authorization service. This guide is for service maintainers; people installing SlotDesk do not need to configure a Google Cloud project.
 
-## 1. Add one Google Web application client
+## Google OAuth client
 
-Open the existing SlotDesk project in Google Cloud → Google Auth Platform → Clients → Create client. Choose **Web application**. Add exactly this Authorized redirect URI:
+The Google Web application client uses this authorized redirect URI:
 
 ```text
 https://slotdesk-leads.vercel.app/api/google?op=callback
 ```
 
-No Authorized JavaScript origin is needed for this server exchange. Keep the existing Chrome Extension client, existing Calendar scopes, External / Testing audience and approved test emails. Copy the new public Client ID and Client secret for entering directly into Vercel. Do not send the secret to anyone or add it to the extension.
+The callback exchanges the authorization code on the server. Client secrets must remain in hosting settings, never in the extension or repository. The existing Chrome Extension OAuth client is separate from this cross-browser connection. Keep the production audience External / In production and request only the approved Calendar scopes.
 
-## 2. Enter four Vercel environment variables
+## Production environment
 
-Open the existing **slotdesk-leads** project → Settings → Environment variables. Add these to **Production**. Preserve existing `DATABASE_URL` and `SLOTDESK_ORIGIN`.
+Configure these variables in the **slotdesk-leads** Vercel project, scoped to **Production**. Preserve the existing database configuration and registration origin.
 
 | Name | Value |
 | --- | --- |
-| `GOOGLE_WEB_CLIENT_ID` | The new Web application Client ID |
-| `GOOGLE_WEB_CLIENT_SECRET` | Its client secret, entered directly here |
-| `SLOTDESK_AUTH_SECRET` | 64 hexadecimal characters generated from 32 random bytes |
-| `SLOTDESK_AUTH_RETURN_URLS` | The complete JSON array below |
+| `GOOGLE_WEB_CLIENT_ID` | Google Web application client ID |
+| `GOOGLE_WEB_CLIENT_SECRET` | Its client secret |
+| `SLOTDESK_AUTH_SECRET` | 64 hexadecimal characters generated from 32 cryptographically random bytes |
+| `SLOTDESK_AUTH_RETURN_URLS` | JSON array of exact authorized extension returns |
 
-Generate the random secret locally with Node and copy it directly into Vercel:
-
-```sh
-node -e "console.log(require('node:crypto').randomBytes(32).toString('hex'))"
-```
+The deployed return list includes the unpacked Chromium installation, Firefox and the published Chrome installation:
 
 ```json
-["https://blpliafbiiidhcffegochddjhagkhhip.chromiumapp.org/google","https://37d48a39143e7524b1b43d70397319c090cb855d.extensions.allizom.org/google"]
+["https://blpliafbiiidhcffegochddjhagkhhip.chromiumapp.org/google","https://37d48a39143e7524b1b43d70397319c090cb855d.extensions.allizom.org/google","https://ajilefcckipghmgcljllklamipjjecim.chromiumapp.org/google"]
 ```
 
-Set secret values as Sensitive where the hosting UI supports it. Changing the encryption secret invalidates current broker sessions; users can reconnect. Chromium app origins derive from these exact returns. Firefox installation origins contain a varying UUID, so transport CORS accepts syntactically valid Firefox extension origins; exact HTTPS returns, encrypted origin-bound state/session and PKCE proof independently constrain sensitive operations. A later store-generated ID may differ: add its exact return, rebuild/review the package and retest before distributing. Never replace this list with a wildcard.
+The Chrome store return was added and the service redeployed on 2 November 2026. Edge's store return remains pending; see [store identities](store-kit/store-identities.md).
 
-## 3. Redeploy and check
+Store credentials and the encryption secret as Secret variables. Changing the encryption secret invalidates existing broker sessions and requires users to reconnect. Adding a return does not require rotating that secret or changing Google's callback.
 
-Environment changes apply to a new deployment. Redeploy the latest **slotdesk-leads** deployment from its dashboard. Open [connection service status](https://slotdesk-leads.vercel.app/api/google?op=status). It must return `"ready":true` and `"version":"0.9.4.6"`. A false status reveals no secrets and means configuration is incomplete.
+The broker derives allowed Chromium origins from the exact return list. Firefox installation origins contain a varying UUID; its stable HTTPS return, encrypted origin-bound sessions and PKCE proof constrain authorization. Never replace exact returns with a wildcard. Preserve existing entries when adding a new store identity.
 
-Load/reload the 0.9.4.6 Chromium package in your regular Vivaldi, Edge or Chrome browser. Connect Google should open Google's own account choice and permission window. Choose an already approved test email. Check that your calendar list loads; signing in does not create an invitation. If it fails, Help → Connection details provides a safe report without tokens or account/calendar contents.
+## Deploy and verify
 
-The agent's hosting connection could read this Vercel project but could not manage its environment variables; its CLI account also lacked access. The owner subsequently completed Google Cloud setup, entered the private values directly and redeployed; configuration readiness is now verified. No additional database/table configuration is needed. Firefox still needs real-browser validation and signing; Safari authentication is not implemented by these settings.
+Environment changes take effect in a new deployment. Redeploy the current production service, then run:
+
+```sh
+npm run check:auth-service
+```
+
+This checks service readiness, preflight access and authorization startup for the published Chrome, unpacked Chromium and Firefox identities. It also checks that unrelated origins remain rejected. It does not open Google, exchange credentials, register users or change calendars.
+
+The [status endpoint](https://slotdesk-leads.vercel.app/api/google?op=status) returning `ready:true` only confirms general configuration. It does not prove that a particular store identity is admitted. Every distributed identity must pass its own origin and return checks, followed by a real installed-browser connection and calendar-list check. Help → Connection details provides diagnostics without tokens or calendar contents.

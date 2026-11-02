@@ -47,6 +47,8 @@ The broker derives allowed Chromium origins from its return list. Keep `SLOTDESK
 
 The public listing and version were confirmed while signed out. The store-issued ID differs from the unpacked Chromium beta ID; treat them as separate installations when configuring authorization or transferring saved settings. See [installation](../install.md) and [owner publication steps](owner-steps.md).
 
+Its exact authorization return is `https://ajilefcckipghmgcljllklamipjjecim.chromiumapp.org/google`. This return was added to the production service on 2 November 2026, preserving the existing unpacked Chromium and Firefox returns. Live checks confirmed preflight access and authorization startup for all three identities, with unrelated origins rejected. Use `npm run check:auth-service` after configuration changes; a general `ready:true` status does not verify access for a store identity.
+
 ## Store email-updates scope
 
 The next generated `chromium-store` and `firefox` packages limit the separate optional email-updates choice to SlotDesk. Both registration labels read: “You may email me occasional updates about SlotDesk. I can opt out at any time.” Their bundled privacy notice uses “optional SlotDesk-updates box” and states: “If you opted in, the owners may use your address for occasional updates about SlotDesk; you can opt out at any time by emailing” the support address. Registration collection, product analysis and the private leads table remain unchanged. The ordinary unpacked `chromium` beta and `safari-source` retain the existing broader project-updates wording.
