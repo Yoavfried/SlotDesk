@@ -32,7 +32,7 @@ SlotDesk calls `identity.getRedirectURL('google')`. The expected Edge return is:
 https://kmackhppfgogbajpgpocmacbjhpleche.chromiumapp.org/google
 ```
 
-Before distributing the Edge package, confirm that return through the installed store identity and append it to the deployed `SLOTDESK_AUTH_RETURN_URLS`, preserving existing authorized returns. This configuration change has not been deployed. The Google web client's callback remains the hosted `/api/google?op=callback` endpoint; the extension return is the broker's final destination, not a replacement Google callback. [Identity return format](https://developer.chrome.com/docs/extensions/reference/api/identity#method-getRedirectURL).
+This exact return was added to the production `SLOTDESK_AUTH_RETURN_URLS` on 3 November 2026, preserving the existing Chrome, unpacked Chromium and Firefox returns. Live preflight and authorization-startup checks admit all four identities and reject unrelated origins. A real installed Edge connection and calendar-list check remain necessary before publication. The Google web client's callback remains the hosted `/api/google?op=callback` endpoint; the extension return is the broker's final destination, not a replacement Google callback. [Identity return format](https://developer.chrome.com/docs/extensions/reference/api/identity#method-getRedirectURL).
 
 The broker derives allowed Chromium origins from its return list. Keep `SLOTDESK_ORIGIN` unchanged: the existing Chrome beta's direct registration path and the broker's registration relay use it. Store ID and Product ID are listing metadata and must not be used as the extension OAuth identity.
 

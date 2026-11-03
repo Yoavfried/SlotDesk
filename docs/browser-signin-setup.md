@@ -23,13 +23,13 @@ Configure these variables in the **slotdesk-leads** Vercel project, scoped to **
 | `SLOTDESK_AUTH_SECRET` | 64 hexadecimal characters generated from 32 cryptographically random bytes |
 | `SLOTDESK_AUTH_RETURN_URLS` | JSON array of exact authorized extension returns |
 
-The deployed return list includes the unpacked Chromium installation, Firefox and the published Chrome installation:
+The deployed return list includes unpacked Chromium and the Firefox, Chrome and Edge store identities:
 
 ```json
-["https://blpliafbiiidhcffegochddjhagkhhip.chromiumapp.org/google","https://37d48a39143e7524b1b43d70397319c090cb855d.extensions.allizom.org/google","https://ajilefcckipghmgcljllklamipjjecim.chromiumapp.org/google"]
+["https://blpliafbiiidhcffegochddjhagkhhip.chromiumapp.org/google","https://37d48a39143e7524b1b43d70397319c090cb855d.extensions.allizom.org/google","https://ajilefcckipghmgcljllklamipjjecim.chromiumapp.org/google","https://kmackhppfgogbajpgpocmacbjhpleche.chromiumapp.org/google"]
 ```
 
-The Chrome store return was added and the service redeployed on 2 November 2026. Edge's store return remains pending; see [store identities](store-kit/store-identities.md).
+The Chrome store return was deployed on 2 November 2026; the Edge store return was deployed on 3 November 2026, preserving all existing returns. Edge publication remains pending; see [store identities](store-kit/store-identities.md).
 
 Store credentials and the encryption secret as Secret variables. Changing the encryption secret invalidates existing broker sessions and requires users to reconnect. Adding a return does not require rotating that secret or changing Google's callback.
 
@@ -43,6 +43,6 @@ Environment changes take effect in a new deployment. Redeploy the current produc
 npm run check:auth-service
 ```
 
-This checks service readiness, preflight access and authorization startup for the published Chrome, unpacked Chromium and Firefox identities. It also checks that unrelated origins remain rejected. It does not open Google, exchange credentials, register users or change calendars.
+This checks service readiness, preflight access and authorization startup for the Chrome and Edge store identities, unpacked Chromium and Firefox. It also checks that unrelated origins remain rejected. It does not open Google, exchange credentials, register users or change calendars.
 
 The [status endpoint](https://slotdesk-leads.vercel.app/api/google?op=status) returning `ready:true` only confirms general configuration. It does not prove that a particular store identity is admitted. Every distributed identity must pass its own origin and return checks, followed by a real installed-browser connection and calendar-list check. Help → Connection details provides diagnostics without tokens or calendar contents.

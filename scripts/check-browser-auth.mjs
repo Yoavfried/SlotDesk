@@ -4,8 +4,10 @@ import {CHROMIUM_ID, returnUrls} from './browser-targets.mjs';
 // Public, stateless startup checks only. Never follow the returned authorization URL.
 const endpoint='https://slotdesk-leads.vercel.app/api/google';
 const storeId='ajilefcckipghmgcljllklamipjjecim';
+const edgeId='kmackhppfgogbajpgpocmacbjhpleche';
 const cases=[
   ['Chrome store',`chrome-extension://${storeId}`,`https://${storeId}.chromiumapp.org/google`],
+  ['Edge store',`chrome-extension://${edgeId}`,`https://${edgeId}.chromiumapp.org/google`],
   ['Unpacked Chromium',`chrome-extension://${CHROMIUM_ID}`,returnUrls[0]],
   ['Firefox','moz-extension://11111111-2222-4333-8444-555555555555',returnUrls[1]]
 ];

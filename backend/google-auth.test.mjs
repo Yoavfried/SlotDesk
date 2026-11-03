@@ -37,9 +37,9 @@ f.advance(7*86400000+1);eq((await f.request('refresh',{session:credentials.sessi
 const ff=fixture(),ffStart=await(await ff.request('start',{returnUri:firefox,challenge},moz)).json();eq(new URL(ffStart.launchUrl).searchParams.get('redirect_uri'),firefox);eq((await ff.request('exchange',{state:ffStart.state,code:'synthetic-code',verifier},moz)).status,200);
 const denied=new URL(callbackUrl);denied.searchParams.set('state',ffStart.state);denied.searchParams.set('error','access_denied');const deniedResult=await ff.handler(new Request(denied));eq(new URL(deniedResult.headers.get('location')).searchParams.get('error'),'access_denied');
 
-// A healthy broker must still reject a published package whose return was not registered.
-{
-  const storeOrigin='chrome-extension://ajilefcckipghmgcljllklamipjjecim',storeReturn='https://ajilefcckipghmgcljllklamipjjecim.chromiumapp.org/google';
+// Every store identity needs its own registered return, even when the broker is healthy.
+for(const [storeName,storeId]of [['Chrome store','ajilefcckipghmgcljllklamipjjecim'],['Edge store','kmackhppfgogbajpgpocmacbjhpleche']]){
+  const storeOrigin=`chrome-extension://${storeId}`,storeReturn=`https://${storeId}.chromiumapp.org/google`;
   const missing=fixture(),status=await missing.request('status',undefined,storeOrigin);
   eq(status.status,200);eq((await status.json()).ready,true);eq(status.headers.get('access-control-allow-origin'),null);
   const missingPreflight=await missing.handler(new Request('https://slotdesk-leads.vercel.app/api/google?op=start',{method:'OPTIONS',headers:{Origin:storeOrigin}}));
@@ -52,15 +52,17 @@ const denied=new URL(callbackUrl);denied.searchParams.set('state',ffStart.state)
   eq(storePreflight.status,204);eq(storePreflight.headers.get('access-control-allow-origin'),storeOrigin);
   const storeStarted=await configured.request('start',{returnUri:storeReturn,challenge},storeOrigin),storeStart=await storeStarted.json();
   eq(storeStarted.status,200);eq(storeStarted.headers.get('access-control-allow-origin'),storeOrigin);eq(new URL(storeStart.launchUrl).searchParams.get('redirect_uri'),storeReturn);eq(configured.calls.length,0);
+  const wrongProof=await configured.request('exchange',{state:storeStart.state,code:'synthetic-store-code',verifier:'b'.repeat(64)},storeOrigin);
+  eq(wrongProof.status,401);eq((await wrongProof.json()).error,'AUTH_PROOF_INVALID');eq(configured.calls.length,0,`${storeName}: an incorrect PKCE verifier cannot reach Google`);
   const wrongOrigin=await configured.request('exchange',{state:storeStart.state,code:'synthetic-store-code',verifier},origin);
-  eq(wrongOrigin.status,401);eq((await wrongOrigin.json()).error,'AUTH_PROOF_INVALID');eq(configured.calls.length,0,'Another allowed package cannot exchange a store-origin transaction');
+  eq(wrongOrigin.status,401);eq((await wrongOrigin.json()).error,'AUTH_PROOF_INVALID');eq(configured.calls.length,0,`${storeName}: another allowed package cannot exchange its transaction`);
   const storeExchanged=await configured.request('exchange',{state:storeStart.state,code:'synthetic-store-code',verifier},storeOrigin);
   eq(storeExchanged.status,200);eq(storeExchanged.headers.get('access-control-allow-origin'),storeOrigin);eq((await storeExchanged.json()).token,token.access_token);eq(configured.calls.length,1);
   const unrelatedOrigin='chrome-extension://'+'c'.repeat(32);
   const unrelatedPreflight=await configured.handler(new Request('https://slotdesk-leads.vercel.app/api/google?op=start',{method:'OPTIONS',headers:{Origin:unrelatedOrigin}}));
   eq(unrelatedPreflight.status,403);eq(unrelatedPreflight.headers.get('access-control-allow-origin'),null);
   const unrelatedStart=await configured.request('start',{returnUri:storeReturn,challenge},unrelatedOrigin);
-  eq(unrelatedStart.status,403);eq((await unrelatedStart.json()).error,'ORIGIN_NOT_ALLOWED');eq(configured.calls.length,1,'Registering the store package does not admit unrelated extension origins');
+  eq(unrelatedStart.status,403);eq((await unrelatedStart.json()).error,'ORIGIN_NOT_ALLOWED');eq(configured.calls.length,1,`${storeName}: registration does not admit unrelated extension origins`);
 }
 
 for(const [provider,status,error]of [[{error:'invalid_client'},400,'AUTH_CONFIGURATION'],[{error:'invalid_grant'},400,'AUTH_RECONNECT'],[{...token,scope:GOOGLE_SCOPES[0]},200,'AUTH_PERMISSIONS'],[{...token,refresh_token:undefined},200,'AUTH_RECONNECT'],[{...token,access_token:null},200,'AUTH_INVALID_RESPONSE']]){
