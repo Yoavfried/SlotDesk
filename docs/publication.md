@@ -1,10 +1,10 @@
 # Distribution and publication decisions
 
-SlotDesk's [source repository](https://github.com/Yoavfried/SlotDesk) became public on 28 October 2026 under the MIT license. Public source availability is separate from extension-store publication: Google access remains a closed beta, and Chrome, Edge and Firefox listings are not yet live. The [1.0.0 plan](release-1.0.0-plan.md) records the remaining distribution work; Outlook follows 1.0.0.
+SlotDesk's [source repository](https://github.com/Yoavfried/SlotDesk) became public on 28 October 2026 under the MIT license. Version 1.0.0 is available on Chrome, Edge and Firefox through the [public store listings](install.md). Google Calendar access remains subject to the permissions granted by the account and its organization. Outlook follows 1.0.0.
 
 ## Store preparation
 
-See the [per-store readiness table](extension-stores.md) for Chrome, Edge, Firefox listed/unlisted, Safari and Opera. Generated packages are development/beta artifacts, not approved listings. [Browser evidence](browser-compatibility.md) and [Google activation](browser-signin-setup.md) are separate records. Publisher registrations are complete; final packages, reviewer access and store approvals remain separate steps.
+See [store status and release checks](extension-stores.md) for current and prospective channels. Use the public stores for normal installation and updates, or [GitHub releases](https://github.com/Yoavfried/SlotDesk/releases) for manual packages. [Browser evidence](browser-compatibility.md) and [Google activation](browser-signin-setup.md) are separate records.
 
 - Maintain accurate automated and user-reported validation evidence; do not mark unperformed checks as passed.
 - Confirm the target organization allows the extension and requested Google access for work-account use.

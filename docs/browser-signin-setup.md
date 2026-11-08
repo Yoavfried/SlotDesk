@@ -29,7 +29,7 @@ The deployed return list includes unpacked Chromium and the Firefox, Chrome and 
 ["https://blpliafbiiidhcffegochddjhagkhhip.chromiumapp.org/google","https://37d48a39143e7524b1b43d70397319c090cb855d.extensions.allizom.org/google","https://ajilefcckipghmgcljllklamipjjecim.chromiumapp.org/google","https://kmackhppfgogbajpgpocmacbjhpleche.chromiumapp.org/google"]
 ```
 
-The Chrome store return was deployed on 2 November 2026; the Edge store return was deployed on 3 November 2026, preserving all existing returns. Edge publication remains pending; see [store identities](store-kit/store-identities.md).
+The Chrome store return was deployed on 2 November 2026; the Edge store return was deployed on 3 November 2026, preserving all existing returns. See [store identities and public listings](store-kit/store-identities.md).
 
 Store credentials and the encryption secret as Secret variables. Changing the encryption secret invalidates existing broker sessions and requires users to reconnect. Adding a return does not require rotating that secret or changing Google's callback.
 

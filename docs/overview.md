@@ -1,6 +1,6 @@
 # Product overview
 
-SlotDesk helps executive assistants find, compare and book meeting times across Google calendars and timezones. It runs in a browser side panel or full workspace tab. The current release is a closed desktop beta; Google connection is limited to approved accounts. See [installation](install.md) and [browser compatibility](browser-compatibility.md).
+SlotDesk helps executive assistants find, compare and book meeting times across Google calendars and timezones. It runs in a browser side panel or full workspace tab. Version 1.0.0 is available for desktop Chrome, Edge and Firefox. Google Calendar access depends on the permissions granted by your account and organization. See [installation](install.md) and [browser compatibility](browser-compatibility.md).
 
 ![SlotDesk workspace menu with synthetic data](assets/workspace-menu-light.png)
 

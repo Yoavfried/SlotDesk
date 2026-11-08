@@ -2,9 +2,9 @@
 
 Changes are grouped as Added, Improved and Fixed. Entries describe the behavior released in each version, including same-version hotfixes.
 
-## 1.0.0 — Store submission candidate
+## 1.0.0 — Store release
 
-Prepared 28 October 2026. These packages are candidates for store review; the store listings are not yet live.
+The store submission packages were prepared on 28 October 2026. The Chrome, Edge and Firefox [store listings](docs/install.md) were all confirmed public by 8 November 2026.
 
 ### Added
 

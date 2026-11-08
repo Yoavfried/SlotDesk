@@ -1,6 +1,6 @@
 # Install and update SlotDesk
 
-SlotDesk 1.0.0 is available on the [Chrome Web Store](https://chromewebstore.google.com/detail/slotdesk/ajilefcckipghmgcljllklamipjjecim) and [Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/slotdesk/). Edge store publication has not yet been confirmed; manual packages are available from [GitHub releases](https://github.com/Yoavfried/SlotDesk/releases). Google Calendar connection is available to Google accounts that grant the requested access, subject to account and organization policies. Browser-specific limits are listed in [browser compatibility](browser-compatibility.md).
+SlotDesk 1.0.0 is available on the [Chrome Web Store](https://chromewebstore.google.com/detail/slotdesk/ajilefcckipghmgcljllklamipjjecim), [Microsoft Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/slotdesk/kmackhppfgogbajpgpocmacbjhpleche) and [Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/slotdesk/). Manual packages are available from [GitHub releases](https://github.com/Yoavfried/SlotDesk/releases). Google Calendar connection is available to Google accounts that grant the requested access, subject to account and organization policies. Browser-specific limits are listed in [browser compatibility](browser-compatibility.md).
 
 ## Chrome store installation
 
@@ -10,6 +10,15 @@ SlotDesk 1.0.0 is available on the [Chrome Web Store](https://chromewebstore.goo
 4. Complete [first setup](#first-setup) below.
 
 Chrome manages updates to the store installation. Developer mode and loading unpacked files are not required. The store version has a different installation identity from the manually loaded development version. Export a backup before switching, then import it into the store installation to transfer supported profiles and settings; credentials and pending calendar operations do not transfer.
+
+## Edge store installation
+
+1. Open [SlotDesk on Microsoft Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/slotdesk/kmackhppfgogbajpgpocmacbjhpleche) in desktop Edge.
+2. Choose **Get** and confirm the browser prompts.
+3. Open SlotDesk from the Extensions menu, then choose **Connect Google** and grant the requested access.
+4. Complete [first setup](#first-setup) below.
+
+Edge manages updates to the store installation. If you already use an unpacked copy in Edge, export a backup and import it into the store copy to transfer supported profiles and settings. Credentials and pending calendar operations do not transfer.
 
 ## Firefox store installation
 
@@ -50,7 +59,7 @@ The Safari ZIP contains **source preparation only**. It is not an installable Sa
 
 ## Update an existing installation
 
-For Chrome and Firefox store versions, use the browser's normal extension update controls. The remaining steps apply to manually installed Chromium packages.
+For Chrome, Edge and Firefox store versions, use the browser's normal extension update controls. The remaining steps apply to manually installed Chromium packages.
 
 Replace the files in the existing installed folder with the new package, then click **Reload** on its extension card. Close and reopen older SlotDesk windows. Keep the same folder and installation identity to retain local profiles and settings.
 

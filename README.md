@@ -6,9 +6,9 @@ Made by **[Speedy](https://buildwithspeedy.com) — [Nina Banai](https://github.
 
 [Website](https://buildwithspeedy.com) · [Downloads](https://github.com/Yoavfried/SlotDesk/releases) · [Documentation](docs/README.md) · [Support](mailto:support@buildwithspeedy.com)
 
-**[Install for Chrome](https://chromewebstore.google.com/detail/slotdesk/ajilefcckipghmgcljllklamipjjecim)** · **[Install for Firefox](https://addons.mozilla.org/en-US/firefox/addon/slotdesk/)**
+**[Install for Chrome](https://chromewebstore.google.com/detail/slotdesk/ajilefcckipghmgcljllklamipjjecim)** · **[Install for Edge](https://microsoftedge.microsoft.com/addons/detail/slotdesk/kmackhppfgogbajpgpocmacbjhpleche)** · **[Install for Firefox](https://addons.mozilla.org/en-US/firefox/addon/slotdesk/)**
 
-Version 1.0.0 is available on the Chrome Web Store and Firefox Add-ons. Edge store publication has not yet been confirmed; a Chromium package is available for manual installation. The Safari archive contains source preparation only. Google Calendar connection is available to Google accounts that grant the requested access, subject to account and organization policies. See [installation](docs/install.md) and [browser compatibility](docs/browser-compatibility.md).
+Version 1.0.0 is available on the Chrome Web Store, Microsoft Edge Add-ons and Firefox Add-ons. A Chromium package is available for manual installation. The Safari archive contains source preparation only. Google Calendar connection is available to Google accounts that grant the requested access, subject to account and organization policies. See [installation](docs/install.md) and [browser compatibility](docs/browser-compatibility.md).
 
 ## Features
 
@@ -27,9 +27,11 @@ Calendar changes require review and confirmation. SlotDesk does not automaticall
 
 **Chrome:** Open [SlotDesk on the Chrome Web Store](https://chromewebstore.google.com/detail/slotdesk/ajilefcckipghmgcljllklamipjjecim), choose **Add to Chrome**, confirm the browser prompts, then open SlotDesk and connect Google. Chrome manages updates to the store installation.
 
+**Edge:** Open [SlotDesk on Microsoft Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/slotdesk/kmackhppfgogbajpgpocmacbjhpleche), choose **Get**, confirm the browser prompts, then open SlotDesk and connect Google. Edge manages updates to the store installation.
+
 **Firefox:** Open [SlotDesk on Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/slotdesk/), choose **Add to Firefox**, confirm the browser prompts, then open SlotDesk and connect Google. Firefox manages updates to the store installation.
 
-**Manual Chromium installation for Edge, other compatible browsers or development:**
+**Manual Chromium installation for compatible browsers or development:**
 
 1. Download the Chromium ZIP from [releases](https://github.com/Yoavfried/SlotDesk/releases) and extract it into a permanent folder.
 2. Open your browser's extension manager, enable Developer mode, choose **Load unpacked**, and select the extracted folder containing `manifest.json`.

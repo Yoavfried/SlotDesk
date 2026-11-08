@@ -1,6 +1,6 @@
 # SlotDesk documentation
 
-SlotDesk is a closed-beta Google Calendar scheduling extension. Start with the user guides below. Downloads are available from [GitHub releases](https://github.com/Yoavfried/SlotDesk/releases); the [installation guide](install.md) explains manual installation and browser-package limits.
+SlotDesk is a Google Calendar scheduling extension for desktop browsers. The [installation guide](install.md) links to the public Chrome, Edge and Firefox listings and explains manual installation and browser-package limits.
 
 ## User guides
 

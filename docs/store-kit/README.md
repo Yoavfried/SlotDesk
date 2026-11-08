@@ -1,10 +1,10 @@
 # SlotDesk store submission kit
 
-Prepared 26 October 2026 for Chrome Web Store, Microsoft Edge Add-ons and Firefox AMO. These are review drafts, not live listings. The installed beta remains Google-only; Outlook follows 1.0.0.
+Prepared 26 October 2026 for Chrome Web Store, Microsoft Edge Add-ons and Firefox AMO. This kit contains submission materials for those channels. SlotDesk 1.0.0 is available from the [public store listings](../install.md). SlotDesk connects to Google Calendar; Outlook follows 1.0.0.
 
 The [MIT source repository](https://github.com/Yoavfried/SlotDesk) is public as of 28 October 2026. The prepared full store description includes its source link. Source publication does not change beta access or establish store approval.
 
-Upload `SlotDesk-VERSION-Chromium-store.zip` to Chrome and Edge. It omits the development `key` field rejected by store upload validation. The ordinary `SlotDesk-VERSION.zip` keeps the unpacked beta identity and is for manual installations. Firefox uses the separate `Firefox-unsigned.xpi`. Store-issued IDs and Google return configuration remain release gates.
+Upload `SlotDesk-VERSION-Chromium-store.zip` to Chrome and Edge. It omits the development `key` field rejected by store upload validation. The ordinary `SlotDesk-VERSION.zip` keeps the unpacked beta identity and is for manual installations. Firefox uses the separate `Firefox-unsigned.xpi` for submission; Mozilla provides the signed public package. Preserve the [store identities and exact Google returns](store-identities.md) for future updates.
 
 - [Listing copy](listing.md)
 - [Shared product language](../product-language.md)

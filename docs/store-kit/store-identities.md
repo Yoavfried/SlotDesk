@@ -1,6 +1,6 @@
 # Store identities
 
-Publication status checked 1 November 2026. Chrome and Firefox are public; Edge publication has not yet been confirmed. The Edge identifiers below were recorded from its submission on 28 October 2026.
+Version 1.0.0 is public on Chrome, Edge and Firefox. The dates below record when each listing was checked.
 
 ## Firefox Add-ons
 
@@ -13,18 +13,21 @@ Publication status checked 1 November 2026. Chrome and Firefox are public; Edge 
 | Published version | `1.0.0` |
 | Publication checked | 1 November 2026 |
 
-The [public Mozilla API](https://addons.mozilla.org/api/v5/addons/addon/slotdesk/) reports public add-on and version-file status, with the add-on enabled. Mozilla provides the signed package through the listing. Each store has separate approval and signing; the three-store launch remains incomplete while Edge publication is unconfirmed.
+The [public Mozilla API](https://addons.mozilla.org/api/v5/addons/addon/slotdesk/) reports public add-on and version-file status, with the add-on enabled. Mozilla provides the signed package through the listing.
 
 ## Microsoft Edge Add-ons
 
 | Field | Value |
 | --- | --- |
+| Public listing | [SlotDesk on Microsoft Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/slotdesk/kmackhppfgogbajpgpocmacbjhpleche) |
+| Published version | `1.0.0` |
+| Publication checked | 8 November 2026 |
 | Store ID | `0RDCKCL4LM2V` |
 | CRX ID | `kmackhppfgogbajpgpocmacbjhpleche` |
 | Product ID | `927da0c6-6bc0-409c-8405-de8fb781ef97` |
 | Public-key SHA-256 | `ac02a7ff56e6109f6fe2c02197fb4274de157cb8718ebe82d1c4564f56d97634` |
 
-The supplied public key decodes correctly and its SHA-256-derived extension ID matches the CRX ID. The key is public signing identity material, not an authentication secret. The unpacked beta keeps its existing development key and identity.
+The listing and published version were confirmed without signing in. The public signing key recorded at submission on 28 October 2026 decodes correctly and its SHA-256-derived extension ID matches the CRX ID. The unpacked beta keeps its existing development key and identity.
 
 SlotDesk calls `identity.getRedirectURL('google')`. The expected Edge return is:
 
@@ -32,7 +35,7 @@ SlotDesk calls `identity.getRedirectURL('google')`. The expected Edge return is:
 https://kmackhppfgogbajpgpocmacbjhpleche.chromiumapp.org/google
 ```
 
-This exact return was added to the production `SLOTDESK_AUTH_RETURN_URLS` on 3 November 2026, preserving the existing Chrome, unpacked Chromium and Firefox returns. Live preflight and authorization-startup checks admit all four identities and reject unrelated origins. A real installed Edge connection and calendar-list check remain necessary before publication. The Google web client's callback remains the hosted `/api/google?op=callback` endpoint; the extension return is the broker's final destination, not a replacement Google callback. [Identity return format](https://developer.chrome.com/docs/extensions/reference/api/identity#method-getRedirectURL).
+This exact return was added to the production `SLOTDESK_AUTH_RETURN_URLS` on 3 November 2026, preserving the existing Chrome, unpacked Chromium and Firefox returns. Live preflight and authorization-startup checks admit all four identities and reject unrelated origins. A real Google connection and calendar-list check in the Edge store build remain unverified in this record. The Google web client's callback remains the hosted `/api/google?op=callback` endpoint; the extension return is the broker's final destination, not a replacement Google callback. [Identity return format](https://developer.chrome.com/docs/extensions/reference/api/identity#method-getRedirectURL).
 
 The broker derives allowed Chromium origins from its return list. Keep `SLOTDESK_ORIGIN` unchanged: the existing Chrome beta's direct registration path and the broker's registration relay use it. Store ID and Product ID are listing metadata and must not be used as the extension OAuth identity.
 
@@ -51,6 +54,6 @@ Its exact authorization return is `https://ajilefcckipghmgcljllklamipjjecim.chro
 
 ## Store email-updates scope
 
-The next generated `chromium-store` and `firefox` packages limit the separate optional email-updates choice to SlotDesk. Both registration labels read: “You may email me occasional updates about SlotDesk. I can opt out at any time.” Their bundled privacy notice uses “optional SlotDesk-updates box” and states: “If you opted in, the owners may use your address for occasional updates about SlotDesk; you can opt out at any time by emailing” the support address. Registration collection, product analysis and the private leads table remain unchanged. The ordinary unpacked `chromium` beta and `safari-source` retain the existing broader project-updates wording.
+The `chromium-store` and `firefox` packages limit the separate optional email-updates choice to SlotDesk. Both registration labels read: “You may email me occasional updates about SlotDesk. I can opt out at any time.” Their bundled privacy notice uses “optional SlotDesk-updates box” and states: “If you opted in, the owners may use your address for occasional updates about SlotDesk; you can opt out at any time by emailing” the support address. Registration collection, product analysis and the private leads table remain unchanged. The ordinary unpacked `chromium` beta and `safari-source` retain the existing broader project-updates wording.
 
-This is a packaging transform for the next final store build. Existing version 0.9.5.9 outputs and uploaded drafts have not been rebuilt or replaced. Replace the affected draft uploads after preparing and checking the next final store packages, and publish the corresponding generated store privacy notice at the store listing's privacy-policy URL.
+This packaging transform was introduced for the 1.0.0 store build. Keep the generated notice aligned with the privacy-policy URL for future store updates.
